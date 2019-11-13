@@ -1,0 +1,49 @@
+<div class="lg:flex border rounded border-grey-light lg:border-grey-light" style="height: 194px; margin: 10px">
+  <div class="h-48 w-48 flex-none bg-cover text-center overflow-hidden bg-gray-100" style="background-image: url({{model.image.sizes.thumbx2}}); background-repeat: no-repeat;">
+  </div>
+  <div class="flex w-full bg-white">
+    <div class="px-4 py-2 flex flex-col justify-between leading-normal w-full">
+      <div class="mb-1">
+        <div class="flex">
+          <div class="text-black font-bold text-xl">
+            {{model.description}}
+          </div>
+          <ul class="ml-1">
+            <CrunchyChip
+              @tagName="li"
+              @label={{if (eq model.isRecurring true) "Recurring" "One Time"}}
+            />
+            {{#if model.ticketUrl}}
+              <CrunchyChip @tagName="li">
+                <FaIcon @icon="ticket-alt" />&nbsp;{{model.favoritesCount}}
+              </CrunchyChip>
+            {{/if}}
+            <CrunchyChip @tagName="li">
+              <FaIcon @icon="heart" />&nbsp;{{model.favoritesCount}}
+            </CrunchyChip>
+            {{#each model.business.categories as |category|}}
+              <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+                {{category.longName}}
+              </CrunchyChip>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+
+      <dl aria-label="Details for {{model.fullName}}" class="flex flex-wrap text-xs">
+        <dt class="py-1 pr-1 text-gray-600 w-1/6">Additional Info:</dt>
+        <dd class="w-5/6 truncate">{{model.fineText}}</dd>
+      </dl>
+    </div>
+
+    <div class="py-2 px-4 flex items-start text-lg">
+      <button {{action "delete" model bubbles=false}} aria-label="Delete scoop" class="text-gray-400 hover:text-gray-600">
+        <FaIcon @icon="trash" />
+      </button>
+      &nbsp;
+      <LinkTo @tagName="button" @route="authenticated.scoops.view" @model={{model.id}} @aria-label="Edit scoop" class="text-gray-400 hover:text-gray-600">
+        <FaIcon @icon="edit" />
+      </LinkTo>
+    </div>
+  </div>
+</div>

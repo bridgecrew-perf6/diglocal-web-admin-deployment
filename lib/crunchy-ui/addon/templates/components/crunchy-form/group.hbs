@@ -1,0 +1,14 @@
+{{yield (hash
+  hasError=hasError
+  label=(component "crunchy-form/group/label"
+    for=groupId
+    hasError=hasError)
+  control=(component "crunchy-form/group/control"
+    groupId=groupId
+    didBlur=didBlur
+    hasError=hasError)
+  errors=(component "crunchy-form/group/errors"
+    model=model
+    field=field
+    hasError=hasError)
+)}}

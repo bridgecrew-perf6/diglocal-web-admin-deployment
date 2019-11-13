@@ -1,0 +1,23 @@
+.treadmill-content {
+  &__fixed-header {
+    @apply fixed z-10 w-full bg-white border-b-2 border-teal-600 px-2 py-2;
+    @screen lg {
+      @apply w-container-3/4;
+    }
+    @screen xl {
+      @apply w-container-4/5;
+    }
+  }
+
+  &__col-heading {
+    @apply flex h-full items-end text-teal-600 font-medium;
+  }
+
+  &__table-body {
+    @apply mx-2;
+  }
+
+  &__table-footer {
+    @apply flex text-teal-600 font-medium text-sm p-3 items-center justify-end;
+  }
+}

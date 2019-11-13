@@ -1,0 +1,11 @@
+{{#if (has-block)}}
+  {{yield}}
+{{else}}
+  {{this.label}}
+{{/if}}
+
+{{#if this.allowClear}}
+  <button {{action "didClear"}} aria-label="Remove item" class="ml-1 {{this.buttonClass}}">
+    <FaIcon @icon="times" />
+  </button>
+{{/if}}

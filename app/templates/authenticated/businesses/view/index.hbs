@@ -1,0 +1,27 @@
+<div class="border border-gray-400 p-4 m-4">
+  <label class="w-full">Name <button class="float-right" {{action "save" model}}><FaIcon @icon="edit" /></button></label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.name}} @class="w-full" /></div>
+  <label class="w-full">What You Need To Know</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
+    <Textarea @value={{model.description}} @class="w-full" />
+  </div>
+  <label class="w-full">What The Locals Say</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
+    <Textarea @value={{model.description2}} @class="w-full" />
+  </div>
+  <label class="w-full">Insider Tip</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.tip}} @class="w-full" /></div>
+  <label class="w-full">Logo</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><img src={{model.logo.url}} alt="logo"></div>
+  <label class="w-full">Website</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.website}} @class="w-full" /></div>
+</div>
+
+<h1>Categories</h1>
+<div class="border border-gray-400 p-4 m-4">
+  {{#each model.categories as |category|}}
+    <CrunchyChip @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+      {{category.longName}}
+    </CrunchyChip>
+  {{/each}}
+</div>

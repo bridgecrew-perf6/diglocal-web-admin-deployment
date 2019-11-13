@@ -1,0 +1,20 @@
+.tabs {
+  @apply flex;
+  &__link {
+    @apply px-3 py-2 transition-fast relative block text-gray-600 font-medium border-b;
+    &:hover {
+      @apply text-gray-900;
+    }
+    &.active {
+      @apply text-teal-600 border-t border-l border-r border-b-0;
+    }
+  }
+
+  &__spacer {
+    @apply border-b;
+  }
+
+  &__content {
+    @apply p-2 border border-gray-400;
+  }
+}

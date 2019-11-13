@@ -1,0 +1,38 @@
+import Model, { attr, belongsTo } from '@ember-data/model';
+
+export default Model.extend({
+  businessApp: attr(),
+  businessBrowser: attr(),
+  pageViewApp: attr(),
+  pageViewBrowser: attr(),
+  scoopsApp: attr(),
+  scoopsBrowser: attr(),
+  visitWebsiteApp: attr(),
+  visitWebsiteBrowser: attr(),
+  visitTwitterApp: attr(),
+  visitTwitterBrowser: attr(),
+  visitFacebookApp: attr(),
+  visitFacebookBrowser: attr(),
+  visitInstagramApp: attr(),
+  visitInstagramBrowser: attr(),
+  mapClickApp: attr(),
+  mapClickBrowser: attr(),
+  viewSocialApp: attr(),
+  viewSocialBrowser: attr(),
+  phoneHotlinkApp: attr(),
+  phoneHotlinkBrowser: attr(),
+  shareScoopFacebookApp: attr(),
+  shareScoopFacebookBrowser: attr(),
+  shareScoopTwitterApp: attr(),
+  shareScoopTwitterBrowser: attr(),
+  shareScoopEmailApp: attr(),
+  shareScoopEmailBrowser: attr(),
+  clickScoopHotlinkApp: attr(),
+  clickScoopHotlinkBrowser: attr(),
+  clickScoopMarqueeApp: attr(),
+  clickScoopMarqueeBrowser: attr(),
+  marqueeScoopImpressionApp: attr(),
+  marqueeScoopImpressionBrowser: attr(),
+
+  business: belongsTo('business')
+});

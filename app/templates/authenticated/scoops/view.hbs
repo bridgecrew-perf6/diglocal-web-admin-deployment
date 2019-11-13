@@ -1,0 +1,12 @@
+<div class="border border-gray-400 p-4 m-4">
+  <label class="w-full">Description <button class="float-right" {{action "save" model}}><FaIcon @icon="edit" /></button></label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.description}} @class="w-full" /></div>
+  <label class="w-full">Additional Details</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
+    <Textarea @value={{model.fineText}} @class="w-full" />
+  </div>
+  <label class="w-full">Ticket Url</label>
+  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
+    <Input @value={{model.ticketUrl}} @class="w-full" />
+  </div>
+</div>

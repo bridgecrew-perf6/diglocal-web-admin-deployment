@@ -1,0 +1,12 @@
+<button
+  class={{concat
+    "crunchy-button "
+    (concat "crunchy-button--" type " ")
+    @class
+  }}
+  type={{@type}}
+  aria-label={{@aria-label}}
+  disabled={{this.disabled}}
+  onclick={{action "click"}}>
+  {{yield}}
+</button>

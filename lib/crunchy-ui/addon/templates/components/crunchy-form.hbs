@@ -1,0 +1,25 @@
+{{#with (component "crunchy-form/group"
+  form=this
+  model=model
+  didSubmit=didSubmit
+  isSubmitting=isSubmitting
+  ) as |groupComponent|}}
+
+  {{yield (hash
+    text-field=(component "crunchy-form/fields/text"
+      model=model
+      group=groupComponent
+      form=this)
+    text-area=(component "crunchy-form/fields/textarea"
+      model=model
+      group=groupComponent
+      form=this)
+    submit=(component "crunchy-button"
+      type="submit"
+      model=model
+      task=submitTask)
+    isSubmitting=isSubmitting
+    didSubmit=didSubmit
+  )}}
+
+{{/with}}

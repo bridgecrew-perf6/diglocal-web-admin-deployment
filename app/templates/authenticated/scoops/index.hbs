@@ -1,0 +1,61 @@
+<div class="treadmill-content__fixed-header">
+  <div class="flex h-10">
+    <div class="flex relative w-1/2">
+      <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
+        <FaIcon @icon="search" />
+      </div>
+      <Input
+        @type="search"
+        @value={{this.searchString}}
+        @key-up={{perform didSearch}}
+        @focus-out={{perform didSearch}}
+        @escape-press={{action "clearSearch"}}
+        @placeholder="Search..."
+        aria-label="Search users"
+        class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
+    </div>
+    <div class="flex w-1/2 items-center text-gray-600">
+      <select onchange={{action "sortChanged" value="target.value"}}>
+        <option value="user">Name</option>
+        <option value="email">Email</option>
+      </select>
+      <button {{action "toggleView"}}>toggle</button>
+    </div>
+  </div>
+</div>
+<div class="treadmill-content__table-body pt-32">
+  {{#if isList}}
+    {{#ella-treadmill
+      content=model
+      minColumnWidth="100%"
+      row=250 as |item index|
+    }}
+      <ScoopRow @model={{item}} />
+    {{/ella-treadmill}}
+  {{else}}
+    {{#ella-treadmill
+      content=model
+      minColumnWidth="33%"
+      row=250 as |item index|
+    }}
+      <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains">
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">{{item.description}}</div>
+          <p class="text-gray-700 text-base">
+            {{item.business.name}}
+          </p>
+        </div>
+        <div class="px-6 py-4">
+          <ul class="ml-1">
+            {{#each item.business.categories as |category|}}
+              <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+                {{category.longName}}
+              </CrunchyChip>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    {{/ella-treadmill}}
+  {{/if}}
+</div>

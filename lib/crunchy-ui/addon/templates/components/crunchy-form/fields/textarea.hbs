@@ -1,0 +1,32 @@
+{{#component group
+  field=field
+  model=model
+  didBlur=didBlur
+  as |group|}}
+
+  {{#if label}}
+    <group.label>
+      {{label}}
+    </group.label>
+  {{/if}}
+
+  <group.control as |control|>
+    <Textarea
+      @id={{control.controlId}}
+      @value={{value}}
+      @rows={{rows}}
+      @placeholder={{placeholder}}
+      @autocomplete={{autocomplete}}
+      @disabled={{disabled}}
+      @focus-out={{action (mut didBlur) true}}
+      aria-label={{aria-label}}
+      @class={{concat "px-2 py-1 border "
+        (if group.hasError "border-red-600" "border-gray-300")
+      }}
+    />
+  </group.control>
+
+  {{#if group.hasError}}
+    <group.errors />
+  {{/if}}
+{{/component}}

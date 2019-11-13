@@ -1,0 +1,16 @@
+<nav class="fixed z-10 w-full lg:w-container-3/4 xl:w-container-4/5 bg-white px-2 py-2 h-16 flex items-end">
+  <ul class="tabs w-full">
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.site-settings.index" @class="tabs__link">Details</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.site-settings.categories" @class="tabs__link">Categories</LinkTo>
+    </li>
+    <li class="tabs__spacer w-full" aria-hidden="true">
+    </li>
+  </ul>
+</nav>
+
+<div class="pt-16 relative">
+  {{outlet}}
+</div>

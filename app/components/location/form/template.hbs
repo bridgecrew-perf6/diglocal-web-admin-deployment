@@ -1,0 +1,30 @@
+<label class="w-full">Area Name <button class="float-right" {{action "save" model}}><FaIcon @icon="edit" /></button></label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.title}} @class="w-full" /></div>
+<label class="w-full">Address</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.address}} @class="w-full" /></div>
+<label class="w-full">City</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.city}} @class="w-full" /></div>
+<label class="w-full">State</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.state}} @class="w-full" /></div>
+<label class="w-full">Postal Code</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.zip}} @class="w-full" /></div>
+<label class="w-full">Telephone</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.phone}} @class="w-full" /></div>
+<label class="w-full">Geocoded Latatude</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.geocoded_lat}} @class="w-full" /></div>
+<label class="w-full">Geocoded Longitude</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.geocoded_long}} @class="w-full" /></div>
+<label class="w-full">Menu Url</label>
+<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.menu_url}} @class="w-full" /></div>
+
+<h1>Hours of Operation</h1>
+{{#each model.operatingHours as |item|}}
+  {{item.dayOfWeek}} {{item.openTime}} {{item.closeTime}}
+  <label class="w-full">
+    <Input
+      @type="checkbox"
+      @checked={{item.closed}}
+    />
+    Closed?
+  </label><br>
+{{/each}}

@@ -1,0 +1,58 @@
+<div class="lg:flex border rounded border-grey-light lg:border-grey-light" style="height: 194px; margin: 10px">
+  <div class="h-48 w-48 flex-none bg-cover text-center overflow-hidden bg-gray-100" style="background-image: url('{{model.logo.sizes.smallx2}}'); background-repeat: no-repeat;">
+  </div>
+  <div class="flex w-full bg-white">
+    <div class="px-4 py-2 flex flex-col justify-between leading-normal w-full">
+      <div class="mb-1">
+        <div class="flex">
+          <div class="text-black font-bold text-xl">
+            {{model.name}}
+          </div>
+          <ul class="ml-1">
+            {{#each item.categories as |category|}}
+              <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+                {{category.longName}}
+              </CrunchyChip>
+            {{/each}}
+            <CrunchyChip @tagName="li">
+              <FaIcon @icon="heart" />&nbsp;{{model.likesCount}}
+            </CrunchyChip>
+            <CrunchyChip @tagName="li">
+              <FaIcon @icon="building" />&nbsp;{{model.numberOfLocations}}
+            </CrunchyChip>
+            {{#if model.twitterUrl}}
+              <CrunchyChip @tagName="li">
+                <FaIcon @icon="twitter" @prefix="fab" />
+              </CrunchyChip>
+            {{/if}}
+            {{#if model.facebookUrl}}
+              <CrunchyChip @tagName="li">
+                <FaIcon @icon="facebook" @prefix="fab" />
+              </CrunchyChip>
+            {{/if}}
+            {{#if model.instagramUrl}}
+              <CrunchyChip @tagName="li">
+                <FaIcon @icon="instagram" @prefix="fab" />
+              </CrunchyChip>
+            {{/if}}
+          </ul>
+        </div>
+      </div>
+
+      <dl aria-label="Details for {{model.fullName}}" class="flex flex-wrap text-xs">
+        <dt class="py-1 pr-1 text-gray-600 w-1/6">Additional Info:</dt>
+        <dd class="w-5/6 truncate">{{model.fineText}}</dd>
+      </dl>
+    </div>
+
+    <div class="py-2 px-4 flex items-start text-lg">
+      <button {{action "delete" model bubbles=false}} aria-label="Delete business {{model.name}}" class="text-gray-400 hover:text-gray-600">
+        <FaIcon @icon="trash" />
+      </button>
+      &nbsp;
+      <LinkTo @tagName="button" @route="authenticated.businesses.view" @model={{model.id}} @aria-label="Edit business {{model.name}}" class="text-gray-400 hover:text-gray-600">
+        <FaIcon @icon="edit" />
+      </LinkTo>
+    </div>
+  </div>
+</div>

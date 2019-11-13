@@ -1,0 +1,13 @@
+{
+  "name": "crunchy-ui",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "ember-cli-babel": "*",
+    "ember-cli-htmlbars": "*",
+    "ember-concurrency": "^1.0.0",
+    "ember-crumbly": "^3.0.1",
+    "ember-cp-validations": "^4.0.0-beta.9"
+  }
+}

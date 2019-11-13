@@ -1,0 +1,4 @@
+<button {{action "create"}}><FaIcon @icon="plus" /></button>
+{{#if newRecord}}
+  <Location::Form @model={{newRecord}} />
+{{/if}}

@@ -1,0 +1,23 @@
+<div class="w-full text-left mr-1">
+  <nav>
+    <ul class="flex">
+      <li class="mr-6">
+        <LinkTo @route="authenticated.businesses.view.index" @model={{model.id}} @class="nav-link">Details</LinkTo>
+      </li>
+      <li class="mr-6">
+        <LinkTo @route="authenticated.businesses.view.social" @class="nav-link">Social</LinkTo>
+      </li>
+      <li class="mr-6">
+        <LinkTo @route="authenticated.businesses.view.locations" @class="nav-link">Locations</LinkTo>
+      </li>
+      <li class="mr-6">
+        <LinkTo @route="authenticated.businesses.view.scoops" @class="nav-link">Scoops</LinkTo>
+      </li>
+      <li class="mr-6">
+        <LinkTo @route="authenticated.businesses.view.photos" @class="nav-link">Photos</LinkTo>
+      </li>
+    </ul>
+  </nav>
+  {{outlet}}
+</div>
+

@@ -1,0 +1,23 @@
+{{#bread-crumbs
+  tagName="ul"
+  linkable=this.linkable
+  class="flex items-center py-2"
+  crumbClass=this.crumbClass
+  linkClass=this.linkClass
+  as |component crumb|
+}}
+  {{#bread-crumb
+    route=crumb
+    breadCrumbs=component
+    class="text-sm text-teal-700 font-medium"
+  }}
+    <span
+      class={{if (or
+        (eq crumb.path this.router.currentRouteName)
+        (eq (concat crumb.path ".index") this.router.currentRouteName)
+      ) "crunchy-breacrumbs__active-crumb text-teal-500"}}
+    >
+      {{crumb.title}}
+    </span>
+  {{/bread-crumb}}
+{{/bread-crumbs}}

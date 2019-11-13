@@ -1,0 +1,32 @@
+<CrunchyBreadcrumbs />
+
+<hr>
+
+<div class="p-3">
+  <CrunchyButton @task={{this.demoButtonTask}}> Button </CrunchyButton>
+</div>
+
+<hr>
+
+<div class="p-3">
+  <CrunchyForm
+    @model={{this}}
+    @onSubmit={{action "submitForm"}}
+    as |form|
+  >
+    <form.text-field
+      @field="favoriteColor"
+      @label="What is your favorite color?"
+    />
+
+    <form.text-area
+      @field="favoriteFood"
+      @label="What's your favorite food?"
+      @rows={{5}}
+    />
+
+    <form.submit> Submit </form.submit>
+  </CrunchyForm>
+</div>
+
+<hr>
