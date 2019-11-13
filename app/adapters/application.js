@@ -1,8 +1,11 @@
 import DS from 'ember-data';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
+import ENV from 'diglocal-manage/config/environment';
 
 export default DS.JSONAPIAdapter.extend({
+  host: ENV.apiHost,
+
   namespace: 'api/v3',
 
   session: service(),
