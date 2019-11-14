@@ -1,3 +1,7 @@
-{{#each model as |item|}}
+<EllaTreadmill
+  @content={{model}}
+  @minColumnWidth="100%"
+  @row="250" as |item|
+>
   <ScoopRow @model={{item}} />
-{{/each}}
+</EllaTreadmill>
