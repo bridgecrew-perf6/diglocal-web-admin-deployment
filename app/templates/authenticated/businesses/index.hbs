@@ -23,13 +23,13 @@
   </div>
 </div>
 <div class="treadmill-content__table-body pt-32">
-  {{#ella-treadmill
-    content=model
-    minColumnWidth="100%"
-    row=250 as |item index|
-  }}
+  <EllaTreadmill
+    @content={{model}}
+    @minColumnWidth="100%"
+    @row="250" as |item|
+  >
     <BusinessRow @model={{item}} />
-  {{/ella-treadmill}}
+  </EllaTreadmill>
 </div>
 
 <div class="flex text-teal-600 font-medium text-sm p-3 items-center justify-end">
