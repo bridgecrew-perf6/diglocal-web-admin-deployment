@@ -6,7 +6,8 @@
     ],
     "source": "functions"
   },
-  "hosting": {
+  "hosting": [{
+    "target": "dig-this",
     "public": "dist",
     "ignore": [
       "firebase.json",
@@ -19,7 +20,21 @@
         "destination": "/index.html"
       }
     ]
-  },
+  }, {
+    "target": "dig-this-staging",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }],
   "storage": {
     "rules": "storage.rules"
   },

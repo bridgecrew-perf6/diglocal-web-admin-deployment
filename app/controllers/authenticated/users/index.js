@@ -1,8 +1,7 @@
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
 import { oneWay } from '@ember/object/computed';
-import { get, set, setProperties } from '@ember/object';
+import { set, setProperties } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;

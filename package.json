@@ -15,7 +15,10 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test"
+    "test": "ember test",
+    "deploy:staging": "firebase use dig-this && ember build -e staging && firebase deploy --only hosting:dig-this-staging && firebase deploy --only functions",
+    "deploy:production": "firebase use dig-this && ember build -e production && firebase deploy --only hosting:dig-this && firebase deploy --only functions"
+
   },
   "devDependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",

@@ -1,7 +1,0 @@
-{
-  "projects": {
-    "default": "dig-this",
-    "demo": "dig-this",
-    "production": "dig-this"
-  }
-}

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "dig-this": {
+      "hosting": {
+        "dig-this-staging": [
+          "dig-this-staging"
+        ],
+        "dig-this": [
+          "dig-this"
+        ]
+      }
+    }
+  }
+}

@@ -47,17 +47,13 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
-    ENV.apiHost = 'http://localhost:3000/';
+    ENV.apiHost = 'http://localhost:3000';
 
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-  }
-
-  if (environment === 'production') {
-    ENV.apiHost = 'https://diglocal-staging.herokuapp.com/';
   }
 
   if (environment === 'test') {
@@ -72,8 +68,12 @@ module.exports = function(environment) {
     ENV.APP.autoboot = false;
   }
 
+  if (environment === 'staging') {
+    ENV.apiHost = 'https://diglocal-staging.herokuapp.com';
+  }
+
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    ENV.apiHost = 'https://diglocal.herokuapp.com';
   }
 
   return ENV;
