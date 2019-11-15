@@ -9,7 +9,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   queryParams: {
    search: { refreshModel: true },
- },
+  },
 
   breadCrumb: Object.freeze({
     title: 'Businesses'
