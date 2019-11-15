@@ -3,7 +3,7 @@
   @isHorizontal=true
   @dragEndAction={{action "dragEnd"}} as |item|>
   <div class="max-w-sm m-2 rounded overflow-hidden shadow-lg">
-    <img class="w-24" src={{item.image.url}} >
+    <img class="w-24" src={{item.sizes.medium}} >
     <span>{{item.position}}</span>
   </div>
 </DragSortList>
