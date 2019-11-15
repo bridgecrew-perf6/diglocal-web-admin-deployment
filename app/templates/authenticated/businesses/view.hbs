@@ -1,23 +1,27 @@
-<div class="w-full text-left mr-1">
-  <nav>
-    <ul class="flex">
-      <li class="mr-6">
-        <LinkTo @route="authenticated.businesses.view.index" @model={{model.id}} @class="nav-link">Details</LinkTo>
-      </li>
-      <li class="mr-6">
-        <LinkTo @route="authenticated.businesses.view.social" @class="nav-link">Social</LinkTo>
-      </li>
-      <li class="mr-6">
-        <LinkTo @route="authenticated.businesses.view.locations" @class="nav-link">Locations</LinkTo>
-      </li>
-      <li class="mr-6">
-        <LinkTo @route="authenticated.businesses.view.scoops" @class="nav-link">Scoops</LinkTo>
-      </li>
-      <li class="mr-6">
-        <LinkTo @route="authenticated.businesses.view.photos" @class="nav-link">Photos</LinkTo>
-      </li>
-    </ul>
-  </nav>
+<nav class="fixed z-10 w-full lg:w-container-3/4 xl:w-container-4/5 bg-white px-2 pt-2 pb-0 h-26 flex flex-wrap items-end">
+  <h1 class="w-full flex-shrink-0 text-lg font-semibold h-10 ml-1">
+    {{model.name}}
+  </h1>
+  <ul class="tabs w-full">
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.businesses.view.index" @model={{model.id}} @class="tabs__link">Details</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.businesses.view.social" @class="tabs__link">Social</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.businesses.view.locations" @class="tabs__link">Locations</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.businesses.view.scoops" @class="tabs__link">Scoops</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.businesses.view.photos" @class="tabs__link">Photos</LinkTo>
+    </li>
+    <li class="tabs__spacer w-full" aria-hidden="true">
+    </li>
+  </ul>
+</nav>
+<div class="pt-26 relative lg:max-w-container-3/4 xl:max-w-container-4/5">
   {{outlet}}
 </div>
-

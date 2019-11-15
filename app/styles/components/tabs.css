@@ -1,20 +1,30 @@
 .tabs {
   @apply flex;
+
   &__link {
-    @apply px-3 py-2 transition-fast relative block text-gray-600 font-medium border-b;
+    @apply px-3 py-2 transition-fast relative block text-gray-600 font-medium border-b border-gray-400;
     &:hover {
       @apply text-gray-900;
     }
     &.active {
-      @apply text-teal-600 border-t border-l border-r border-b-0;
+      @apply text-teal-600 border-t border-l border-r border-b-0 border-gray-400;
     }
   }
 
   &__spacer {
-    @apply border-b;
-  }
-
-  &__content {
-    @apply p-2 border border-gray-400;
+    @apply border-b border-gray-400;
   }
 }
+
+/* .tabs-fixed {
+  @apply flex;
+  &__link {
+    @apply px-3 py-2 transition-fast relative block text-gray-600 font-medium;
+    &:hover {
+      @apply text-gray-900;
+    }
+    &.active {
+      @apply text-white bg-teal-600;
+    }
+  }
+} */

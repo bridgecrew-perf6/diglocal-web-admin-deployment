@@ -4,29 +4,29 @@
   didBlur=didBlur
   as |group|}}
 
-  {{#if label}}
-    <group.label class={{labelClass}}>
-      {{label}}
+  {{#if @label}}
+    <group.label class={{@labelClass}}>
+      {{@label}}
     </group.label>
   {{/if}}
 
   <group.control as |control|>
     <Input
       @id={{control.controlId}}
-      @value={{value}}
-      @type={{type}}
-      @placeholder={{placeholder}}
-      @autocomplete={{autocomplete}}
-      @disabled={{disabled}}
+      @value={{this.value}}
+      @type={{@type}}
+      @placeholder={{@placeholder}}
+      @disabled={{@disabled}}
       @focus-out={{action (mut didBlur) true}}
-      aria-label={{aria-label}}
+      aria-label={{@aria-label}}
+      @autocomplete={{@autocomplete}}
       @class={{concat "crunchy-form__input "
-        controlClass
+        @controlClass
       }}
     />
   </group.control>
 
   {{#if group.hasError}}
-    <group.errors class={{errorClass}} />
+    <group.errors class={{@errorClass}} />
   {{/if}}
 {{/component}}

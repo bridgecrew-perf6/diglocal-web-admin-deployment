@@ -18,6 +18,10 @@ module.exports = {
       },
       maxWidth: {
         'container': '1280px',
+        'container-1/4': '320px',
+        'container-1/5': '256px',
+        'container-3/4': '960px',
+        'container-4/5': '1024px',
       },
       maxHeight: {
         xs: '20rem',
