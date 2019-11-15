@@ -63,3 +63,18 @@ button:disabled, input:disabled {
     }
   }
 }
+
+.crunchy-form__group-control {
+  > .emberTagInput {
+    @apply bg-white border border-gray-300 rounded-lg py-1 px-4 block w-full leading-normal;
+
+    &--readOnly {
+      @apply bg-gray-100 border-transparent cursor-not-allowed;
+    }
+
+    > .emberTagInput-tag {
+      @apply py-1 px-2 rounded font-bold text-white text-xs bg-blue-500;
+    }
+  }
+
+}

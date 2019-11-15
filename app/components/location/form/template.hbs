@@ -1,30 +1,146 @@
-<label class="w-full">Area Name <button class="float-right" {{action "save" model}}><FaIcon @icon="edit" /></button></label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.title}} @class="w-full" /></div>
-<label class="w-full">Address</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.address}} @class="w-full" /></div>
-<label class="w-full">City</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.city}} @class="w-full" /></div>
-<label class="w-full">State</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.state}} @class="w-full" /></div>
-<label class="w-full">Postal Code</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.zip}} @class="w-full" /></div>
-<label class="w-full">Telephone</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.phone}} @class="w-full" /></div>
-<label class="w-full">Geocoded Latatude</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.geocoded_lat}} @class="w-full" /></div>
-<label class="w-full">Geocoded Longitude</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.geocoded_long}} @class="w-full" /></div>
-<label class="w-full">Menu Url</label>
-<div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700"><Input @value={{model.menu_url}} @class="w-full" /></div>
+<div class="flex mb-3 justify-between">
+  <h1 class="font-semibold text-lg"> {{if this.isReadonly model.title "New Location"}} </h1>
+  {{#if this.isReadonly}}
+    <div class="flex">
+      <CrunchyButton
+        @onClick={{action "delete"}}
+        @class="crunchy-button--icon mr-2"
+        @aria-label="Delete location">
+        <FaIcon @icon="trash" />
+      </CrunchyButton>
+      <CrunchyButton
+        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+        @class="crunchy-button--icon"
+        @aria-label="Edit location">
+        <FaIcon @icon="edit" />
+      </CrunchyButton>
+    </div>
+  {{else}}
+    <CrunchyButton
+      @onClick={{action "cancel"}}
+      @class="crunchy-button--icon"
+      @aria-label="Close form">
+      <FaIcon @icon="times" />
+    </CrunchyButton>
+  {{/if}}
+</div>
+<CrunchyForm @model={{@model}}
+  @onSubmit={{action "save"}}
+  @onCancel={{action "cancel"}}
+  as |form|>
 
-<h1>Hours of Operation</h1>
-{{#each model.operatingHours as |item|}}
-  {{item.dayOfWeek}} {{item.openTime}} {{item.closeTime}}
-  <label class="w-full">
-    <Input
-      @type="checkbox"
-      @checked={{item.closed}}
+  {{#if this.isEditing}}
+    <form.text-field
+      @field="title"
+      @label="Location Name"
+      @aria-label="Location Name"
+      @disabled={{this.isReadonly}}
     />
-    Closed?
-  </label><br>
-{{/each}}
+  {{/if}}
+
+  <form.text-field
+    @field="address"
+    @label="Address"
+    @autocomplete="street-address"
+    @aria-label="Address"
+    @disabled={{this.isReadonly}}
+  />
+
+  <div class="w-full flex">
+    <div class="mr-4 flex-grow">
+      <form.text-field
+        @field="city"
+        @label="City"
+        @autocomplete="address-level2"
+        @aria-label="City"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+
+    <div class="mr-4 w-48 flex-shrink">
+      <form.text-field
+        @field="state"
+        @label="State"
+        @autocomplete="address-level1"
+        @aria-label="State"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+
+    <div class="w-32 flex-shrink">
+      <form.text-field
+        @field="zip"
+        @label="Postal Code"
+        @autocomplete="postal-code"
+        @aria-label="Postal Code"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+  </div>
+
+  <div class="w-full flex">
+    <div class="mr-4 flew-grow">
+      <form.text-field
+        @field="phone"
+        @label="Telephone"
+        @autocomplete="tel"
+        @aria-label="Telephone"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+    <div class="flex-grow">
+      <form.text-field
+        @field="menu_url"
+        @label="Menu Url"
+        @autocomplete="url"
+        @aria-label="Menu Url"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+  </div>
+
+  <div class="w-full flex">
+    <div class="mr-4 flex-grow">
+      <form.text-field
+        @field="geocoded_lat"
+        @label="Geocoded Latitude"
+        @aria-label="Geocoded Latitude"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+    <div class="flex-grow">
+      <form.text-field
+        @field="geocoded_long"
+        @label="Geocoded Longitude"
+        @aria-label="Geocoded Longitude"
+        @disabled={{this.isReadonly}}
+      />
+    </div>
+  </div>
+
+  <label for="hours-of-operation" class="crunchy-form__group-label">
+    Hours of Operation
+  </label>
+
+  <fieldset name="hours-of-operation">
+    {{#each model.operatingHours as |item|}}
+      {{item.dayOfWeek}} {{item.openTime}} {{item.closeTime}}
+      <label class="w-full">
+        <Input
+          @type="checkbox"
+          @checked={{item.closed}}
+        />
+        Closed?
+      </label><br>
+    {{else}}
+      <p class="mb-3 text-sm italic mx-2"> No hours found </p>
+    {{/each}}
+  </fieldset>
+
+  {{#if this.isEditing}}
+    <div class="flex justify-end mt-2">
+      <form.submit @value="Submit" @class="mr-2"/>
+      <form.cancel @value="Cancel" />
+    </div>
+  {{/if}}
+</CrunchyForm>

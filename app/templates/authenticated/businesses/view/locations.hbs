@@ -1,6 +1,6 @@
 <div class="p-4">
   <Location::Create @business={{model.business}} class="mb-4" />
   {{#each model.locations as |item|}}
-    <Location::Listing @model={{item}} @class="border border-gray-300 rounded" />
+    <Location::Form @model={{item}} @class="border border-gray-300 rounded" />
   {{/each}}
 </div>
