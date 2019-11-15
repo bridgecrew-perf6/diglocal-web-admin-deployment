@@ -1,7 +1,7 @@
 {{#bread-crumbs
   tagName="ul"
   linkable=this.linkable
-  class="flex items-center py-2"
+  class="py-2"
   crumbClass=this.crumbClass
   linkClass=this.linkClass
   as |component crumb|
@@ -9,13 +9,15 @@
   {{#bread-crumb
     route=crumb
     breadCrumbs=component
-    class="text-sm text-teal-700 font-medium"
+    class="inline text-sm text-gray-600 font-medium"
   }}
     <span
-      class={{if (or
-        (eq crumb.path this.router.currentRouteName)
-        (eq (concat crumb.path ".index") this.router.currentRouteName)
-      ) "crunchy-breacrumbs__active-crumb text-teal-500"}}
+      class={{concat "hover:text-gray-800"
+        (if (or
+          (eq crumb.path this.router.currentRouteName)
+          (eq (concat crumb.path ".index") this.router.currentRouteName))
+          "crunchy-breacrumbs__active-crumb text-gray-800")
+        }}
     >
       {{crumb.title}}
     </span>

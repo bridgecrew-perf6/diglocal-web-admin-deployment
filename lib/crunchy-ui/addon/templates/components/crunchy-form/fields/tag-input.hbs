@@ -1,0 +1,26 @@
+{{#component group
+  model=model
+  didBlur=didBlur
+  as |group|}}
+
+  {{#if @label}}
+    <group.label class={{@labelClass}}>
+      {{@label}}
+    </group.label>
+  {{/if}}
+
+  <group.control as |control|>
+    <TagInput
+      @tags={{@tags}}
+      @readOnly={{@disabled}}
+      @addTag={{action "addTag"}}
+      @removeTagAtIndex={{action "removeTagAtIndex"}}
+      as |tag|>
+      {{tag}}
+    </TagInput>
+  </group.control>
+
+  {{#if group.hasError}}
+    <group.errors class={{@errorClass}} />
+  {{/if}}
+{{/component}}

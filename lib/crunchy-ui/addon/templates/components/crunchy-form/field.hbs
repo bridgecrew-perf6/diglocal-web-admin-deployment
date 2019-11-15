@@ -1,0 +1,19 @@
+{{#component group
+  field=@field
+  model=@model
+  as |group|}}
+
+  {{#if @label}}
+    <group.label class={{@labelClass}}>
+      {{@label}}
+    </group.label>
+  {{/if}}
+
+  <group.control as |control|>
+    {{yield (hash controlId=control.controlId)}}
+  </group.control>
+
+  {{#if group.hasError}}
+    <group.errors class={{@errorClass}} />
+  {{/if}}
+{{/component}}

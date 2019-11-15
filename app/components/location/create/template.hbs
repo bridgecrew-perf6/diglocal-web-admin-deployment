@@ -1,4 +1,13 @@
-<button {{action "create"}}><FaIcon @icon="plus" /></button>
-{{#if newRecord}}
-  <Location::Form @model={{newRecord}} />
+<div class="flex justify-end mb-3">
+  <CrunchyButton
+    @onClick={{action "create"}}
+    @aria-label="Add a new location"
+    @class="crunchy-button--primary"
+    @disabled={{this.hasNewRecord}}>
+    <FaIcon @icon="plus" @size="sm" /> Add Location
+  </CrunchyButton>
+</div>
+
+{{#if this.hasNewRecord}}
+  <Location::Form @model={{this.newRecord}} @isEditing={{true}} />
 {{/if}}

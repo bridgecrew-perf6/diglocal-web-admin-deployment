@@ -6,6 +6,10 @@
   ) as |groupComponent|}}
 
   {{yield (hash
+    field=(component "crunchy-form/field"
+      model=model
+      group=groupComponent
+      form=this)
     text-field=(component "crunchy-form/fields/text"
       model=model
       group=groupComponent
@@ -14,10 +18,19 @@
       model=model
       group=groupComponent
       form=this)
+    tag-input=(component "crunchy-form/fields/tag-input"
+      model=model
+      group=groupComponent
+      form=this)
     submit=(component "crunchy-button"
       type="submit"
       model=model
       task=submitTask)
+    cancel=(component "crunchy-button"
+      type="button"
+      class="crunchy-button--cancel"
+      model=model
+      task=cancelTask)
     isSubmitting=isSubmitting
     didSubmit=didSubmit
   )}}

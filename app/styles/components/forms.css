@@ -1,0 +1,80 @@
+.crunchy-form {
+
+  &__group-label {
+    @apply block text-sm font-semibold text-gray-700 mb-1;
+  }
+
+  &__group-control {
+    @apply mb-3;
+  }
+
+  &__input, &__textarea {
+    @apply border border-gray-300 rounded-lg py-1 px-4 block w-full leading-normal;
+    &:focus, &:active {
+      @apply bg-white border-gray-300;
+    }
+    &:disabled {
+      @apply bg-gray-100 border-transparent;
+    }
+  }
+}
+
+input::placeholder {
+  @apply text-gray-600;
+}
+button:disabled, input:disabled {
+  @apply cursor-not-allowed;
+}
+
+.crunchy-button {
+  &--primary, &--submit {
+    @apply bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded border border-blue-500;
+
+    &:hover, &:active {
+      @apply bg-blue-700 border-transparent;
+    }
+
+    &:disabled {
+      @apply bg-blue-300 border-blue-300;
+    }
+  }
+
+  &--outline, &--cancel {
+    @apply bg-transparent text-blue-700 text-sm font-semibold py-2 px-4 rounded border border-blue-500;
+
+    &:hover, &:active {
+      @apply bg-blue-700 text-white border-transparent;
+    }
+
+    &:disabled {
+      @apply bg-transparent text-blue-400 border-blue-300;
+    }
+  }
+
+  &--icon {
+    @apply bg-transparent text-blue-500 font-semibold;
+
+    &:hover, &:active {
+      @apply text-blue-700;
+    }
+
+    &:disabled {
+      @apply text-blue-400;
+    }
+  }
+}
+
+.crunchy-form__group-control {
+  > .emberTagInput {
+    @apply bg-white border border-gray-300 rounded-lg py-1 px-4 block w-full leading-normal;
+
+    &--readOnly {
+      @apply bg-gray-100 border-transparent cursor-not-allowed;
+    }
+
+    > .emberTagInput-tag {
+      @apply py-1 px-2 rounded font-bold text-white text-xs bg-blue-500;
+    }
+  }
+
+}
