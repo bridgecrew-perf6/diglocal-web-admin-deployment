@@ -2,39 +2,31 @@
   <div class="h-48 w-48 flex-none bg-cover text-center overflow-hidden bg-gray-100" style="background-image: url('{{model.logo.sizes.smallx2}}'); background-repeat: no-repeat;">
   </div>
   <div class="flex w-full bg-white">
-    <div class="px-4 py-2 flex flex-col justify-between leading-normal w-full">
+    <div class="px-4 py-2 flex flex-col leading-normal w-full">
       <div class="mb-1">
         <div class="flex">
           <div class="text-black font-bold text-xl">
             {{model.name}}
           </div>
           <ul class="ml-1">
-            {{#each model.categories as |category|}}
-              <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
-                {{category.longName}}
-              </CrunchyChip>
-            {{/each}}
-            <CrunchyChip @tagName="li">
-              <FaIcon @icon="user" />&nbsp;{{model.users.length}}
-            </CrunchyChip>
-            <CrunchyChip @tagName="li">
+            <CrunchyChip @tagName="li" @title={{concat model.likesCount " likes"}}>
               <FaIcon @icon="heart" />&nbsp;{{model.likesCount}}
             </CrunchyChip>
-            <CrunchyChip @tagName="li">
+            <CrunchyChip @tagName="li" @title={{concat model.numberOfLocations " locations"}}>
               <FaIcon @icon="building" />&nbsp;{{model.numberOfLocations}}
             </CrunchyChip>
             {{#if model.twitterUrl}}
-              <CrunchyChip @tagName="li">
+              <CrunchyChip @tagName="li" @title={{model.twitterUrl}}>
                 <FaIcon @icon="twitter" @prefix="fab" />
               </CrunchyChip>
             {{/if}}
             {{#if model.facebookUrl}}
-              <CrunchyChip @tagName="li">
+              <CrunchyChip @tagName="li" @title={{model.facebookUrl}}>
                 <FaIcon @icon="facebook" @prefix="fab" />
               </CrunchyChip>
             {{/if}}
             {{#if model.instagramUrl}}
-              <CrunchyChip @tagName="li">
+              <CrunchyChip @tagName="li" @title={{model.instagramUrl}}>
                 <FaIcon @icon="instagram" @prefix="fab" />
               </CrunchyChip>
             {{/if}}
@@ -42,10 +34,21 @@
         </div>
       </div>
 
-      <dl aria-label="Details for {{model.fullName}}" class="flex flex-wrap text-xs">
-        <dt class="py-1 pr-1 text-gray-600 w-1/6">Additional Info:</dt>
-        <dd class="w-5/6 truncate">{{model.description}}</dd>
+      <dl aria-label="Details for {{model.fullName}}" class="flex flex-col text-xs relative">
+        <dt class="py-1 pr-1 text-gray-600">Description:</dt>
+        <dd class="truncate">
+          {{model.description}}
+        </dd>
       </dl>
+
+      <ul class="ml-1 self-end">
+        {{#each model.categories as |category|}}
+          <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+            {{category.longName}}
+          </CrunchyChip>
+        {{/each}}
+      </ul>
+
     </div>
 
     <div class="py-2 px-4 flex items-start text-lg">
