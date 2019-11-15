@@ -1,5 +1,5 @@
-@import 'components/input';
-@import 'components/header';
-@import 'components/category-chips';
-@import 'components/treadmill-content';
-@import 'components/tabs';
+@import 'components/forms.css';
+@import 'components/header.css';
+@import 'components/category-chips.css';
+@import 'components/treadmill-content.css';
+@import 'components/tabs.css';

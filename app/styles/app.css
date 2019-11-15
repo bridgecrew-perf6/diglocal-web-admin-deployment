@@ -1,13 +1,11 @@
 @import "tailwindcss/base";
 
 @import "tailwindcss/components";
-@import "components.css";
-
 @import "tailwindcss/utilities";
+
+@import "components.css";
 @import "utilities.css";
 
 body {
   @apply antialiased;
 }
-
-

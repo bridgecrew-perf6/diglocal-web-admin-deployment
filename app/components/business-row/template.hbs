@@ -2,9 +2,9 @@
   <div class="h-48 w-48 flex-none bg-cover text-center overflow-hidden bg-gray-100" style="background-image: url('{{model.logo.sizes.smallx2}}'); background-repeat: no-repeat;">
   </div>
   <div class="flex w-full bg-white">
-    <div class="px-4 py-2 flex flex-col leading-normal w-full">
+    <div class="px-4 py-2 flex flex-col justify-between leading-normal w-full">
       <div class="mb-1">
-        <div class="flex">
+        <div class="flex mb-1">
           <div class="text-black font-bold text-xl">
             {{model.name}}
           </div>
@@ -32,30 +32,28 @@
             {{/if}}
           </ul>
         </div>
+        <ul>
+          {{#each model.categories as |category|}}
+            <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+              {{category.longName}}
+            </CrunchyChip>
+          {{/each}}
+        </ul>
       </div>
 
-      <dl aria-label="Details for {{model.fullName}}" class="flex flex-col text-xs relative">
-        <dt class="py-1 pr-1 text-gray-600">Description:</dt>
-        <dd class="truncate">
+      <dl aria-label="Details for {{model.fullName}}" class="flex flex-col text-xs mb-4">
+        <dt class="py-1 pr-1 text-gray-600">Additional Details:</dt>
+        <dd class="">
           {{model.description}}
         </dd>
       </dl>
 
-      <ul class="ml-1 self-end">
-        {{#each model.categories as |category|}}
-          <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
-            {{category.longName}}
-          </CrunchyChip>
-        {{/each}}
-      </ul>
-
     </div>
 
     <div class="py-2 px-4 flex items-start text-lg">
-      <button {{action "delete" model bubbles=false}} aria-label="Delete business {{model.name}}" class="text-gray-400 hover:text-gray-600">
+      <button {{action "delete" model bubbles=false}} aria-label="Delete business {{model.name}}" class="text-gray-400 hover:text-gray-600 mr-2">
         <FaIcon @icon="trash" />
       </button>
-      &nbsp;
       <LinkTo @tagName="button" @route="authenticated.businesses.view" @model={{model.id}} @aria-label="Edit business {{model.name}}" class="text-gray-400 hover:text-gray-600">
         <FaIcon @icon="edit" />
       </LinkTo>

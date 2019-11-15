@@ -8,5 +8,9 @@
   aria-label={{@aria-label}}
   disabled={{this.disabled}}
   onclick={{action "click"}}>
-  {{yield}}
+  {{#if (has-block)}}
+    {{yield}}
+  {{else}}
+    {{@value}}
+  {{/if}}
 </button>
