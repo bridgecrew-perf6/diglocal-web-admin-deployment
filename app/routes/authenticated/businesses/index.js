@@ -26,7 +26,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
       query = Object.assign({ filter, page /*, sort */ }, query);
-      query.include = 'categories';
+      query.include = 'categories,users';
 
       // Return a Promise that resolves with the array of fetched data
       // and the total available records

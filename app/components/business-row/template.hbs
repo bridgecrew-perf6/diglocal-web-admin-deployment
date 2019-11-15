@@ -9,11 +9,14 @@
             {{model.name}}
           </div>
           <ul class="ml-1">
-            {{#each item.categories as |category|}}
+            {{#each model.categories as |category|}}
               <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
                 {{category.longName}}
               </CrunchyChip>
             {{/each}}
+            <CrunchyChip @tagName="li">
+              <FaIcon @icon="user" />&nbsp;{{model.users.length}}
+            </CrunchyChip>
             <CrunchyChip @tagName="li">
               <FaIcon @icon="heart" />&nbsp;{{model.likesCount}}
             </CrunchyChip>
