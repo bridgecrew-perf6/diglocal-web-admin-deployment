@@ -1,5 +1,10 @@
+html {
+  /* rem base */
+  font-size: 14px;
+}
+
 body {
   > * {
-    @apply text-brand-black;
+    @apply text-black font-poppins bg-white;
   }
 }

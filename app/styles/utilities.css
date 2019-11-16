@@ -14,36 +14,6 @@
   @apply p-2;
 }
 
-
-.nav-link {
-  @apply px-2 -mx-2 py-1 transition-fast relative block text-gray-600 font-medium;
-  &:hover {
-    @apply translate-r-2px text-gray-900;
-  }
-
-  &.active {
-    @apply text-teal-600;
-    @apply bg-teal-200;
-  }
-}
-
-.scrollbar-w-2::-webkit-scrollbar {
-    width: .5rem!important;
-    height: .5rem!important;
-}
-
-.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
-    border-radius: .25rem!important;
-}
-
-.scrollbar-thumb-gray::-webkit-scrollbar-thumb {
-    background-color: #cbd5e0!important;
-}
-
-.scrollbar-track-gray-lighter::-webkit-scrollbar-track {
-    background-color: #e2e8f0!important;
-}
-
 .h-screen-less-16 {
   height: calc(100vh - 4rem);
 }

@@ -7,8 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'brand-primary': '#017375',
-        'brand-primary-light': '#97c9Ca',
+        'brand-primary': {
+          'light': '#97c9Ca', // brand color
+          'default': '#017375', // brand color
+          'darker': '#006666' // TBD? Need to confirm hover on buttons
+        },
         'brand-primary-accent': '#8aae3f',
         'brand-secondary': '#f0f3f4',
         'brand-secondary-accent': '#7e1534',
@@ -16,10 +19,20 @@ module.exports = {
         'brand-gray': '#c8d1d3',
         'black': '#1b1c20',
         'white': '#ffffff',
+        'gray': {
+          100: '#f7fafc', // default
+          200: '#f0f3f4', // brand-gray-light
+          300: '#e2e8f0', // default
+          400: '#c8d1d3', // brand-gray
+          500: '#a0aec0', // default
+          600: '#718096', // default
+          700: '#4a5568', // default
+          800: '#2d3748', // default
+          900: '#1a202c', // default
+        },
       },
       fontFamily: {
-        'exo-2': 'exo-2',
-        'work-sans': 'work-sans'
+        'poppins': 'Poppins',
       },
       inset: {
         '16': '4rem'

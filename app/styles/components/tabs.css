@@ -2,12 +2,12 @@
   @apply flex;
 
   &__link {
-    @apply px-3 py-2 transition-fast relative block text-gray-600 font-medium border-b border-gray-400;
+    @apply px-3 py-2 transition-fast relative block text-base font-medium border-b border-gray-400;
     &:hover {
-      @apply text-gray-900;
+      @apply text-brand-primary;
     }
     &.active {
-      @apply text-teal-600 border-t border-l border-r border-b-0 border-gray-400;
+      @apply text-brand-primary border-t border-l border-r border-b-0 border-gray-400;
     }
   }
 

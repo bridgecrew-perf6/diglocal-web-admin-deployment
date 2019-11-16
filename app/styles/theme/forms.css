@@ -1,7 +1,7 @@
 .crunchy-form {
 
   &__group-label {
-    @apply block text-sm font-semibold text-gray-700 mb-1;
+    @apply block text-base font-poppins font-bold text-black mb-2;
   }
 
   &__group-control {
@@ -9,9 +9,9 @@
   }
 
   &__input, &__textarea {
-    @apply border border-gray-300 rounded-lg py-1 px-4 block w-full leading-normal;
+    @apply border border-gray-400 rounded-lg py-3 px-4 block w-full leading-normal;
     &:focus, &:active {
-      @apply bg-white border-gray-300;
+      @apply bg-white border-gray-400;
     }
     &:disabled {
       @apply bg-gray-100 border-transparent;
@@ -22,44 +22,44 @@
 input::placeholder {
   @apply text-gray-600;
 }
-button:disabled, input:disabled {
+button:disabled, input:disabled, textarea:disabled {
   @apply cursor-not-allowed;
 }
 
 .crunchy-button {
   &--primary, &--submit {
-    @apply bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded border border-blue-500;
+    @apply bg-brand-primary border-brand-primary border text-white text-base font-medium py-2 px-4 rounded;
 
     &:hover, &:active {
-      @apply bg-blue-700 border-transparent;
+      @apply bg-brand-primary-darker border-transparent;
     }
 
     &:disabled {
-      @apply bg-blue-300 border-blue-300;
+      @apply bg-brand-primary border-brand-primary opacity-75;
     }
   }
 
   &--outline, &--cancel {
-    @apply bg-transparent text-blue-700 text-sm font-semibold py-2 px-4 rounded border border-blue-500;
+    @apply bg-transparent text-brand-primary border-brand-primary text-base font-medium py-2 px-4 rounded border;
 
     &:hover, &:active {
-      @apply bg-blue-700 text-white border-transparent;
+      @apply bg-brand-primary text-white border-transparent;
     }
 
     &:disabled {
-      @apply bg-transparent text-blue-400 border-blue-300;
+      @apply bg-transparent text-brand-primary border-brand-primary;
     }
   }
 
   &--icon {
-    @apply bg-transparent text-blue-500 font-semibold;
+    @apply bg-transparent text-brand-primary text-lg;
 
     &:hover, &:active {
-      @apply text-blue-700;
+      /* @apply text-brand-primary-darker; */
     }
 
     &:disabled {
-      @apply text-blue-400;
+      /* @apply text-brand-primary opacity-75; */
     }
   }
 }
@@ -73,7 +73,7 @@ button:disabled, input:disabled {
     }
 
     > .emberTagInput-tag {
-      @apply py-1 px-2 rounded font-bold text-white text-xs bg-blue-500;
+      @apply py-1 px-2 rounded font-bold text-white text-xs bg-brand-primary;
     }
   }
 
