@@ -1,10 +1,14 @@
+@import "theme/fonts";
 @import "tailwindcss/base";
 
 @import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
 @import "components.css";
+
+@import "tailwindcss/utilities";
 @import "utilities.css";
+
+@import "theme/base.css";
+@import "theme/forms.css";
 
 body {
   @apply antialiased;

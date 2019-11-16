@@ -1,0 +1,5 @@
+body {
+  > * {
+    @apply text-brand-black;
+  }
+}

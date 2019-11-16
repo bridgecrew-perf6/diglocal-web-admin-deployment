@@ -6,6 +6,21 @@
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        'brand-primary': '#017375',
+        'brand-primary-light': '#97c9Ca',
+        'brand-primary-accent': '#8aae3f',
+        'brand-secondary': '#f0f3f4',
+        'brand-secondary-accent': '#7e1534',
+        'brand-gray-light': '#f0f3f4',
+        'brand-gray': '#c8d1d3',
+        'black': '#1b1c20',
+        'white': '#ffffff',
+      },
+      fontFamily: {
+        'exo-2': 'exo-2',
+        'work-sans': 'work-sans'
+      },
       inset: {
         '16': '4rem'
       },
