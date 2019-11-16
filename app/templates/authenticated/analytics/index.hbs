@@ -16,8 +16,8 @@
     </div>
     <div class="flex w-1/2 items-center justify-start text-gray-600">
       <EmberFlatpickr
-        @allowInput=true
-        @appendDataInput=true
+        @allowInput={{true}}
+        @appendDataInput={{true}}
         @date={{readonly dateRange}}
         @mode="range"
         @onClose={{perform didSearch}}
