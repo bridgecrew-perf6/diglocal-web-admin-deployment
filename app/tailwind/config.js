@@ -26,7 +26,7 @@ module.exports = {
           300: '#e2e8f0', // default
           400: '#c8d1d3', // brand-gray
           500: '#a0aec0', // default
-          600: '#718096', // default
+          600: '#767676', // brand
           700: '#4a5568', // default
           800: '#2d3748', // default
           900: '#1a202c', // default

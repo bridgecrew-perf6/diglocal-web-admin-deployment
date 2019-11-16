@@ -3,16 +3,30 @@ import Component from '@ember/component';
 import { set } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
+import  { inject as service } from '@ember/service';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default Component.extend({
+  store: service(),
+
   isEditing: false,
   isReadonly: not('isEditing'),
 
   classNames: [ 'border rounded p-4' ],
 
   classNameBindings: [ 'isEditing:bg-gray-100' ],
+
+  init() {
+    this._super(...arguments);
+    set(this, 'categoryOptions', []);
+    this.loadCategories.perform();
+  },
+
+  loadCategories: task(function* () {
+    let categories = yield this.store.findAll('category');
+    set(this, 'categoryOptions', categories);
+  }),
 
   didSearch: task(function* () {
     yield timeout(INPUT_DEBOUNCE);
@@ -33,6 +47,7 @@ export default Component.extend({
   actions: {
     save() {
       this.model.save();
+      this.set('isEditing', false);
     },
     cancel() {
       this.rollbackModel();

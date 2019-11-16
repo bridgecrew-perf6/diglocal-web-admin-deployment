@@ -62,6 +62,10 @@ button:disabled, input:disabled, textarea:disabled {
   &--link {
     @apply transition bg-transparent text-brand-primary border-brand-primary font-medium;
 
+    &-bold {
+      @apply font-bold;
+    }
+
     &:hover, &:active {
       /* @apply font-semibold; */
     }
@@ -82,19 +86,4 @@ button:disabled, input:disabled, textarea:disabled {
       /* @apply text-brand-primary opacity-75; */
     }
   }
-}
-
-.crunchy-form__group-control {
-  > .emberTagInput {
-    @apply bg-white border border-gray-300 rounded-lg py-1 px-4 block w-full leading-normal;
-
-    &--readOnly {
-      @apply bg-gray-100 border-transparent cursor-not-allowed;
-    }
-
-    > .emberTagInput-tag {
-      @apply py-1 px-2 rounded font-bold text-white text-xs bg-brand-primary;
-    }
-  }
-
 }

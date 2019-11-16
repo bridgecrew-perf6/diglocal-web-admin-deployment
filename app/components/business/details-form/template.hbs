@@ -73,25 +73,25 @@
 
   <form.field @field="categories" @label="Categories">
     {{#if this.isEditing}}
-      <TagInput
-        @tags={{model.categories}}
-        @placeholder="Type here..."
-        @addTag={{action "addCategory"}}
-        @removeTagAtIndex={{action "removeCategory"}}
-        @onKeyUp={{action "searchCategoryMatch"}}
-        @readOnly={{this.isReadonly}}
-        as |tag|>
-          {{tag.longName}}
-      </TagInput>
+      <PowerSelectMultiple
+        @searchEnabled={{true}}
+        @searchField="longName"
+        @options={{this.categoryOptions}}
+        @selected={{model.categories}}
+        @placeholder="Select category tags..."
+        @onChange={{action (mut model.categories)}} as |category|>
+        {{category.longName}}
+      </PowerSelectMultiple>
     {{else}}
       <ul>
         {{#each model.categories as |category|}}
-          <CrunchyChip @style="light" @tagName="li" @class={{concat "crunchy-chip__" category.shortName}}>
+          <CrunchyChip @tagName="li">
             {{category.longName}}
           </CrunchyChip>
         {{/each}}
       </ul>
     {{/if}}
+
   </form.field>
 
   {{#if this.isEditing}}

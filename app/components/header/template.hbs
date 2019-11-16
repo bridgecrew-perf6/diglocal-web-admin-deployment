@@ -22,17 +22,14 @@
       </svg>
     </div>
     {{#if session.isAuthenticated}}
-      <a href="/"> DigLocal Adminstrator Tool </a>
+      <LinkTo @route="authenticated"> DigLocal Adminstrator Tool </LinkTo>
     {{/if}}
   </div>
   <div class="header-nav-right">
-    {{!-- TODO - eventually this will be a dropdown menu it looks like --}}
     {{#if session.isAuthenticated}}
-      <ul>
-        <li class="h-full">
-          <button {{action "logout"}}> Logout </button>
-        </li>
-      </ul>
+      <CrunchyButton @onClick={{action "logout"}} @class="crunchy-button--link crunchy-button--link-bold">
+        Logout
+      </CrunchyButton>
     {{/if}}
   </div>
 </nav>

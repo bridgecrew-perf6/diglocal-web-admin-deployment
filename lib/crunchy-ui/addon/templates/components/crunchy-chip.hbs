@@ -1,7 +1,9 @@
 {{#if (has-block)}}
   {{yield}}
 {{else}}
-  {{this.label}}
+  <span class="whitespace-no-wrap">
+    {{this.label}}
+  </span>
 {{/if}}
 
 {{#if this.allowClear}}

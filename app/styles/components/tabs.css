@@ -1,4 +1,4 @@
-.tabs {
+/* .tabs {
   @apply flex;
 
   &__link {
@@ -14,7 +14,7 @@
   &__spacer {
     @apply border-b border-gray-400;
   }
-}
+} */
 
 /* .tabs-fixed {
   @apply flex;
@@ -28,3 +28,24 @@
     }
   }
 } */
+
+.tabs {
+  @apply flex text-lg;
+
+  &__tab {
+    @apply border-l border-brand-primary px-3 py-1;
+    &:first-child {
+      @apply border-l-0;
+    }
+  }
+
+  &__link {
+    @apply text-brand-primary block font-medium whitespace-no-wrap;
+    /* &:hover {
+      @apply text-brand-primary;
+    } */
+    &.active {
+      @apply text-brand-primary font-bold;
+    }
+  }
+}
