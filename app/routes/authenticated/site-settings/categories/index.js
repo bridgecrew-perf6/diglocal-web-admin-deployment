@@ -29,11 +29,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
         }
       });
     });
-  },
-  actions: {
-    create() {
-      let record = this.store.createRecord('category');
-      // this.transitionTo('authenticated.businesses.edit', record);
-    }
   }
 });
