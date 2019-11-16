@@ -1,0 +1,69 @@
+<div class="flex mb-3 justify-between">
+  <h1 class="font-semibold text-lg"> {{if this.isReadonly "Category Details" "Edit Category Details"}} </h1>
+  {{#if this.isReadonly}}
+    <CrunchyButton
+      @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+      @class="crunchy-button--icon"
+      @aria-label="Edit category details">
+      <FaIcon @icon="edit" />
+    </CrunchyButton>
+  {{else}}
+    <CrunchyButton
+      @onClick={{action "cancel"}}
+      @class="crunchy-button--icon"
+      @aria-label="Close form">
+      <FaIcon @icon="times" />
+    </CrunchyButton>
+  {{/if}}
+</div>
+
+<CrunchyForm
+  @model={{model}}
+  @onSubmit={{action "save"}}
+  @onCancel={{action "cancel"}}
+  as |form|>
+
+  <form.text-field
+    @field="metaTitle"
+    @label="Meta Title"
+    @aria-label="Meta Title"
+    @disabled={{this.isReadonly}}
+  />
+
+  <form.text-field
+    @field="shortName"
+    @label="Short Name TODO: auto generate as slug"
+    @aria-label="Short Name"
+    @disabled={{this.isReadonly}}
+  />
+
+  <form.text-field
+    @field="longName"
+    @label="Long Name"
+    @aria-label="Long Name"
+    @disabled={{this.isReadonly}}
+  />
+
+  <form.text-area
+    @field="metaDescription"
+    @label="Meta Description"
+    @aria-label="Meta Description"
+    @rows=3
+    @disabled={{this.isReadonly}}
+  />
+
+  <form.text-area
+    @field="metaH1"
+    @label="Meta H1"
+    @aria-label="Meta H1"
+    @rows=3
+    @disabled={{this.isReadonly}}
+  />
+
+  {{#if this.isEditing}}
+    <div class="flex justify-end mt-2">
+      <form.submit @value="Submit" @class="mr-2"/>
+      <form.cancel @value="Cancel" />
+    </div>
+  {{/if}}
+</CrunchyForm>
