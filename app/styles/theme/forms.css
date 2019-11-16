@@ -1,11 +1,19 @@
 .crunchy-form {
 
+  &__group {
+    @apply mb-3;
+  }
+
   &__group-label {
     @apply block text-base font-poppins font-bold text-black mb-2;
   }
 
   &__group-control {
-    @apply mb-3;
+    /* @apply mb-1; */
+  }
+
+  &__group-error {
+    @apply text-brand-error text-xs font-medium;
   }
 
   &__input, &__textarea {
@@ -28,7 +36,7 @@ button:disabled, input:disabled, textarea:disabled {
 
 .crunchy-button {
   &--primary, &--submit {
-    @apply bg-brand-primary border-brand-primary border text-white text-base font-medium py-2 px-4 rounded;
+    @apply transition bg-brand-primary border-brand-primary border text-white text-base font-medium py-2 px-4 rounded;
 
     &:hover, &:active {
       @apply bg-brand-primary-darker border-transparent;
@@ -40,7 +48,7 @@ button:disabled, input:disabled, textarea:disabled {
   }
 
   &--outline, &--cancel {
-    @apply bg-transparent text-brand-primary border-brand-primary text-base font-medium py-2 px-4 rounded border;
+    @apply transition bg-transparent text-brand-primary border-brand-primary text-base font-medium py-2 px-4 rounded border;
 
     &:hover, &:active {
       @apply bg-brand-primary text-white border-transparent;
@@ -51,8 +59,20 @@ button:disabled, input:disabled, textarea:disabled {
     }
   }
 
+  &--link {
+    @apply transition bg-transparent text-brand-primary border-brand-primary font-medium;
+
+    &:hover, &:active {
+      /* @apply font-semibold; */
+    }
+
+    &:disabled {
+      /* @apply bg-transparent text-brand-primary; */
+    }
+  }
+
   &--icon {
-    @apply bg-transparent text-brand-primary text-lg;
+    @apply transition bg-transparent text-brand-primary;
 
     &:hover, &:active {
       /* @apply text-brand-primary-darker; */
