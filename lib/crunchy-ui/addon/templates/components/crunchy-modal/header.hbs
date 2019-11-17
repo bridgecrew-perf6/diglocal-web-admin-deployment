@@ -1,0 +1,10 @@
+{{yield}}
+
+<CrunchyButton
+  @onClick={{action "close"}}
+  @disabled={{this.isDisabled}}
+  @aria-label="Close modal window"
+  @class="crunchy-confirm__close absolute top-0 right-0 py-1 px-2 leading-none overflow-hidden"
+>
+  <span aria-hidden="true">&times;</span>
+</CrunchyButton>

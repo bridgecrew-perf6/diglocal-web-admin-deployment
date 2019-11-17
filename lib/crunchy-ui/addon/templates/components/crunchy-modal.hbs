@@ -1,0 +1,10 @@
+<ModalDialog
+  @clickOutsideToClose={{@clickOutsideToClose}}
+  @translucentOverlay={{@translucentOverlay}}
+>
+  {{yield (hash
+    header=(component "crunchy-modal/header" onClose=@onClose)
+    body=(component "crunchy-modal/body")
+    footer=(component "crunchy-modal/footer")
+  )}}
+</ModalDialog>

@@ -12,16 +12,36 @@
 }
 
 .crunchy-confirm {
-  &__modal-body {
-
+  &__close  {
+    @apply text-5xl font-thin font-sans py-0 px-3;
   }
+
+  &__modal-body {
+    @apply my-1 mx-3;
+  }
+
   &__modal-footer {
-    @apply mt-2 flex justify-end;
+    @apply flex justify-end;
     > .crunchy-button {
       @apply ml-2;
     }
   }
   &__modal-errors {
     @apply mt-1;
+  }
+}
+
+.crunchy-modal {
+  &__close {
+
+  }
+  &__header {
+
+  }
+  &__body {
+
+  }
+  &__footer {
+
   }
 }
