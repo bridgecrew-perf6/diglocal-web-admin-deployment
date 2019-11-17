@@ -35,7 +35,7 @@ button:disabled, input:disabled, textarea:disabled {
 }
 
 .crunchy-button {
-  &--primary, &--submit {
+  &--primary, &--submit, &--modal-confirm {
     @apply transition bg-brand-primary border-brand-primary border text-white text-base font-medium py-2 px-4 rounded;
 
     &:hover, &:active {
@@ -47,7 +47,7 @@ button:disabled, input:disabled, textarea:disabled {
     }
   }
 
-  &--outline, &--cancel {
+  &--outline, &--cancel, &--modal-cancel {
     @apply transition bg-transparent text-brand-primary border-brand-primary text-base font-medium py-2 px-4 rounded border;
 
     &:hover, &:active {

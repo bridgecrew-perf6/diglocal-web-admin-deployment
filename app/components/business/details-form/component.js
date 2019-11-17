@@ -1,11 +1,8 @@
-import config from 'diglocal-manage/config/environment';
 import Component from '@ember/component';
 import { set } from '@ember/object';
 import { not } from '@ember/object/computed';
-import { task, timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import  { inject as service } from '@ember/service';
-
-const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default Component.extend({
   store: service(),
@@ -16,6 +13,8 @@ export default Component.extend({
   classNames: [ 'border rounded p-4' ],
 
   classNameBindings: [ 'isEditing:bg-gray-100' ],
+
+  showDestroyModal:  false,
 
   init() {
     this._super(...arguments);
@@ -28,11 +27,6 @@ export default Component.extend({
     set(this, 'categoryOptions', categories);
   }),
 
-  didSearch: task(function* () {
-    yield timeout(INPUT_DEBOUNCE);
-    set(this, 'search', this.searchString);
-  }).restartable(),
-
   rollbackModel() {
     if (this.model && this.model.get('hasDirtyAttributes')) {
       this.model.rollbackAttributes();
@@ -41,6 +35,10 @@ export default Component.extend({
 
   willDestroyElement() {
     this.rollbackModel();
+    this.setProperties({
+      showDestroyModal: false,
+      isEditing: false
+    });
     this._super(...arguments);
   },
 
@@ -56,15 +54,7 @@ export default Component.extend({
     delete() {
       this.model.deleteRecord();
       this.model.save();
+      this.router.transitionTo('authenticated.businesses');
     },
-    addCategory() {
-
-    },
-    removeCategory() {
-
-    },
-    searchCategoryMatch() {
-
-    }
   },
 });

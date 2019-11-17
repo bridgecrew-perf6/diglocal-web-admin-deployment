@@ -10,3 +10,18 @@
     @apply font-bold text-brand-primary;
   }
 }
+
+.crunchy-confirm {
+  &__modal-body {
+
+  }
+  &__modal-footer {
+    @apply mt-2 flex justify-end;
+    > .crunchy-button {
+      @apply ml-2;
+    }
+  }
+  &__modal-errors {
+    @apply mt-1;
+  }
+}
