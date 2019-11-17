@@ -27,10 +27,12 @@
             <CrunchyChip
               @tagName="li"
               @label={{model.profileStatus}}
+              @title="Profile Status"
             />
             <CrunchyChip
               @tagName="li"
               @label={{html-safe (concat "&hearts; " model.favoritesCount)}}
+              @title="Favorites Count"
             />
           </ul>
         </div>
