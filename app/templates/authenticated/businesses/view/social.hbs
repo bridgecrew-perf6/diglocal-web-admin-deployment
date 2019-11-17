@@ -1,35 +1,3 @@
-<div class="border border-gray-400 p-4 m-4">
-  <label class="w-full">Twitter</label>
-  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
-    <Input @value={{model.twitterUrl}} @class="w-full" />
-    <label class="w-full">
-      <Input
-        @type="checkbox"
-        @checked={{model.embedTwitterEnabled}}
-      />
-      Display Twitter Feed
-    </label>
-  </div>
-  <label class="w-full">Instagram</label>
-  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
-    <Input @value={{model.instagramUrl}} @class="w-full" />
-    <label class="w-full">
-      <Input
-        @type="checkbox"
-        @checked={{model.embedInstagramEnabled}}
-      />
-      Display Instagram Feed
-    </label>
-  </div>
-  <label class="w-full">Facebook</label>
-  <div class="p-2 border-t border-gray-300 font-mono text-xs text-gray-700">
-    <Input @value={{model.facebookUrl}} @class="w-full" />
-    <label class="w-full">
-      <Input
-        @type="checkbox"
-        @checked={{model.embedFacebookEnabled}}
-      />
-      Display Facebook Feed
-    </label>
-  </div>
+<div class="p-4">
+  <Business::SocialForm @model={{this.model}} />
 </div>
