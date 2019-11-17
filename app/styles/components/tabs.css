@@ -1,20 +1,20 @@
-.tabs {
+/* .tabs {
   @apply flex;
 
   &__link {
-    @apply px-3 py-2 transition-fast relative block text-gray-600 font-medium border-b border-gray-400;
+    @apply px-3 py-2 transition-fast relative block text-base font-medium border-b border-gray-400;
     &:hover {
-      @apply text-gray-900;
+      @apply text-brand-primary;
     }
     &.active {
-      @apply text-teal-600 border-t border-l border-r border-b-0 border-gray-400;
+      @apply text-brand-primary border-t border-l border-r border-b-0 border-gray-400;
     }
   }
 
   &__spacer {
     @apply border-b border-gray-400;
   }
-}
+} */
 
 /* .tabs-fixed {
   @apply flex;
@@ -28,3 +28,24 @@
     }
   }
 } */
+
+.tabs {
+  @apply flex text-lg;
+
+  &__tab {
+    @apply border-l border-brand-primary px-3 py-1;
+    &:first-child {
+      @apply border-l-0;
+    }
+  }
+
+  &__link {
+    @apply text-brand-primary block font-medium whitespace-no-wrap;
+    /* &:hover {
+      @apply text-brand-primary;
+    } */
+    &.active {
+      @apply text-brand-primary font-bold;
+    }
+  }
+}

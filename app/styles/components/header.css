@@ -1,6 +1,6 @@
 .header {
   @apply fixed top-0 inset-x-0 flex h-16 w-full z-100;
-  @apply bg-white border-b border-gray-200;
+  @apply bg-brand-gray-light text-brand-primary font-normal text-xl;
 
   .header-nav {
     @apply max-w-container flex justify-between w-full py-2 px-4 mx-auto;
@@ -16,14 +16,14 @@
 }
 
 .nav-link {
-  @apply px-2 -mx-2 py-1 transition-fast relative block text-gray-600 font-medium;
-  &:hover {
-    @apply translate-r-2px text-gray-900;
-  }
+  @apply px-2 py-2 transition relative block text-xl text-brand-primary font-normal;
+  /* &:hover {
+    @apply font-bold;
+  } */
 
   &.active {
-    @apply text-teal-600;
-    @apply bg-teal-100;
+    @apply text-brand-primary font-bold;
+    /* @apply bg-brand-primary-light; */
   }
 }
 

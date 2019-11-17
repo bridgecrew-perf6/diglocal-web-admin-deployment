@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Poppins Regular'), local('Poppins-Regular'), url('https://fonts.googleapis.com/css?family=Poppins&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Poppins Bold'), local('Poppins-Bold'), url('https://fonts.googleapis.com/css?family=Poppins:700&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Poppins Light'), local('Poppins-Light'), url('https://fonts.googleapis.com/css?family=Poppins:300&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Poppins Regular'), local('Poppins-Regular'), url('https://fonts.googleapis.com/css?family=Poppins&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Poppins Medium'), local('Poppins-Medium'), url('https://fonts.googleapis.com/css?family=Poppins:500&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Poppins Semi-Bold'), local('Poppins-Semi-Bold'), url('https://fonts.googleapis.com/css?family=Poppins:600&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Poppins Bold'), local('Poppins-Bold'), url('https://fonts.googleapis.com/css?family=Poppins:700&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Poppins Extra-Bold'), local('Poppins-Extra-Bold'), url('https://fonts.googleapis.com/css?family=Poppins:800&display=swap') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Poppins Black'), local('Poppins-Black'), url('https://fonts.googleapis.com/css?family=Poppins:900&display=swap') format('truetype');
+}

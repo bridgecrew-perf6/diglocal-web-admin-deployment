@@ -50,12 +50,14 @@
 
     </div>
 
-    <div class="py-2 px-4 flex items-start text-lg">
-      <button {{action "delete" model bubbles=false}} aria-label="Delete business {{model.name}}" class="text-gray-400 hover:text-gray-600 mr-2">
-        <FaIcon @icon="trash" />
-      </button>
-      <LinkTo @tagName="button" @route="authenticated.businesses.view" @model={{model.id}} @aria-label="Edit business {{model.name}}" class="text-gray-400 hover:text-gray-600">
-        <FaIcon @icon="edit" />
+    <div class="py-2 px-4 flex items-start">
+      <LinkTo
+        @route="authenticated.businesses.view"
+        @model={{model.id}}
+        @aria-label="View business details"
+        class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+      >
+        View Business
       </LinkTo>
     </div>
   </div>

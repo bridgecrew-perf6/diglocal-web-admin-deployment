@@ -1,10 +1,5 @@
-import config from 'diglocal-manage/config/environment';
 import Component from '@ember/component';
-import { set } from '@ember/object';
 import { not } from '@ember/object/computed';
-import { task, timeout } from 'ember-concurrency';
-
-const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default Component.extend({
   isEditing: false,
@@ -14,10 +9,7 @@ export default Component.extend({
 
   classNameBindings: [ 'isEditing:bg-gray-100' ],
 
-  didSearch: task(function* () {
-    yield timeout(INPUT_DEBOUNCE);
-    set(this, 'search', this.searchString);
-  }).restartable(),
+  showDestroyModal:  false,
 
   rollbackModel() {
     if (this.model && this.model.get('hasDirtyAttributes')) {
@@ -27,6 +19,10 @@ export default Component.extend({
 
   willDestroyElement() {
     this.rollbackModel();
+    this.setProperties({
+      showDestroyModal: false,
+      isEditing: false
+    });
     this._super(...arguments);
   },
 
@@ -42,6 +38,7 @@ export default Component.extend({
     delete() {
       this.model.deleteRecord();
       this.model.save();
-    }
+      this.router.transitionTo('authenticated.businesses');
+    },
   },
 });

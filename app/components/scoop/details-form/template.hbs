@@ -46,9 +46,22 @@
   />
 
   {{#if this.isEditing}}
-    <div class="flex justify-end mt-2">
-      <form.submit @value="Submit" @class="mr-2"/>
-      <form.cancel @value="Cancel" />
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
+      <div>
+        <form.submit @value="Submit" @class="mr-2"/>
+        <form.cancel @value="Cancel" />
+      </div>
     </div>
   {{/if}}
 </CrunchyForm>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{action "delete"}}
+  @onCancel={{action (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{model.description}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>

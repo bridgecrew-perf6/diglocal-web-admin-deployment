@@ -73,31 +73,44 @@
 
   <form.field @field="categories" @label="Categories">
     {{#if this.isEditing}}
-      <TagInput
-        @tags={{model.categories}}
-        @placeholder="Type here..."
-        @addTag={{action "addCategory"}}
-        @removeTagAtIndex={{action "removeCategory"}}
-        @onKeyUp={{action "searchCategoryMatch"}}
-        @readOnly={{this.isReadonly}}
-        as |tag|>
-          {{tag.longName}}
-      </TagInput>
+      <PowerSelectMultiple
+        @searchEnabled={{true}}
+        @searchField="longName"
+        @options={{this.categoryOptions}}
+        @selected={{model.categories}}
+        @placeholder="Select category tags..."
+        @onChange={{action (mut model.categories)}} as |category|>
+        {{category.longName}}
+      </PowerSelectMultiple>
     {{else}}
       <ul>
         {{#each model.categories as |category|}}
-          <CrunchyChip @style="light" @tagName="li" @class={{concat "crunchy-chip__" category.shortName}}>
+          <CrunchyChip @tagName="li">
             {{category.longName}}
           </CrunchyChip>
         {{/each}}
       </ul>
     {{/if}}
+
   </form.field>
 
   {{#if this.isEditing}}
-    <div class="flex justify-end mt-2">
-      <form.submit @value="Submit" @class="mr-2"/>
-      <form.cancel @value="Cancel" />
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
+      <div>
+        <form.submit @value="Submit" @class="mr-2"/>
+        <form.cancel @value="Cancel" />
+      </div>
     </div>
   {{/if}}
 </CrunchyForm>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{action "delete"}}
+  @onCancel={{action (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{model.name}}</span> and all related content?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>

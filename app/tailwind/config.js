@@ -6,6 +6,35 @@
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        'brand-primary': {
+          'light': '#97c9Ca', // brand color
+          'default': '#017375', // brand color
+          'darker': '#006666' // TBD? Need to confirm hover on buttons
+        },
+        'brand-primary-accent': '#8aae3f',
+        'brand-secondary': '#f0f3f4',
+        'brand-secondary-accent': '#932445',
+        'brand-error': '#e02020',
+        'brand-gray-light': '#f0f3f4',
+        'brand-gray': '#c8d1d3',
+        'black': '#1b1c20',
+        'white': '#ffffff',
+        'gray': {
+          100: '#f7fafc', // default
+          200: '#f0f3f4', // brand-gray-light
+          300: '#e2e8f0', // default
+          400: '#c8d1d3', // brand-gray
+          500: '#a0aec0', // default
+          600: '#767676', // brand
+          700: '#4a5568', // default
+          800: '#2d3748', // default
+          900: '#1a202c', // default
+        },
+      },
+      fontFamily: {
+        'poppins': 'Poppins',
+      },
       inset: {
         '16': '4rem'
       },

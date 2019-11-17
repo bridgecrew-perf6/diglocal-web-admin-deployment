@@ -7,7 +7,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   afterModel(model) {
-    let modelName = model.name;
+    let modelName = model.description;
 
     if (modelName) {
       this.set('breadCrumb', {

@@ -1,6 +1,6 @@
 .treadmill-content {
   &__fixed-header {
-    @apply fixed z-10 w-full bg-white border-b-2 border-teal-600 px-2 py-2;
+    @apply fixed z-10 w-full bg-white border-b-2 border-brand-primary px-2 py-2;
     @screen lg {
       @apply w-container-3/4;
     }
@@ -10,7 +10,7 @@
   }
 
   &__col-heading {
-    @apply flex h-full items-end text-teal-600 font-medium;
+    @apply flex h-full items-end text-brand-primary font-medium;
   }
 
   &__table-body {
@@ -18,6 +18,6 @@
   }
 
   &__table-footer {
-    @apply flex text-teal-600 font-medium text-sm p-3 items-center justify-end;
+    @apply flex text-brand-primary font-medium text-sm p-3 items-center justify-end;
   }
 }

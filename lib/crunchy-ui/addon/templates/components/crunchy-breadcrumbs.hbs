@@ -9,15 +9,13 @@
   {{#bread-crumb
     route=crumb
     breadCrumbs=component
-    class="inline text-sm text-gray-600 font-medium"
+    class="inline"
   }}
     <span
-      class={{concat "hover:text-gray-800"
-        (if (or
+      class={{if (or
           (eq crumb.path this.router.currentRouteName)
           (eq (concat crumb.path ".index") this.router.currentRouteName))
-          "crunchy-breacrumbs__active-crumb text-gray-800")
-        }}
+          "crunchy-breadcrumbs__active-crumb"}}
     >
       {{crumb.title}}
     </span>
