@@ -4,7 +4,7 @@
 */
 
 .ember-modal-dialog {
-  @apply rounded bg-brand-gray-light p-8 border-brand-gray relative max-w-xl text-xl;
+  /* @apply rounded bg-brand-gray-light border-brand-gray relative max-w-xl text-xl; */
 }
 .ember-modal-overlay.translucent {
   background-color: rgba(2, 2, 2, .75);

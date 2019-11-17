@@ -1,0 +1,58 @@
+<div class="flex text-center text-xs font-medium">
+  <div class="w-1/6 bg-white h-12 py-2 px-1 border-b border-gray-300 text-left font-bold">
+    {{@model.business.name}}
+  </div>
+  <div class="flex w-1/6">
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.pageViewApp @model.pageViewBrowser @model.businessApp @model.businessBrowser @model.scoopsApp @model.scoopsBrowser @model.marqueeScoopImpressionApp @model.marqueeScoopImpressionBrowser}}
+      {{/if}}
+    </div>
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.pageViewApp @model.businessApp @model.scoopsApp @model.marqueeScoopImpressionApp}}
+      {{/if}}
+    </div>
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.pageViewBrowser @model.businessBrowser @model.scoopsBrowser @model.marqueeScoopImpressionBrowser}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="flex w-1/6">
+    <div class="w-1/3 bg-white h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.pageViewApp @model.pageViewBrowser}}
+      {{/if}}
+    </div>
+    <div class="w-1/3 bg-white h-12 py-2 px-1 border-b border-gray-300">{{@model.pageViewApp}}</div>
+    <div class="w-1/3 bg-white h-12 py-2 px-1 border-b border-gray-300">{{@model.pageViewBrowser}}</div>
+  </div>
+  <div class="flex w-1/6">
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.businessApp @model.businessBrowser}}
+      {{/if}}
+    </div>
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">{{@model.businessApp}}</div>
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">{{@model.businessBrowser}}</div>
+  </div>
+  <div class="flex w-1/6">
+    <div class="w-1/3 bg-white h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.scoopsApp @model.scoopsBrowser}}
+      {{/if}}
+    </div>
+    <div class="w-1/3 bg-white h-12 py-2 px-1 border-b border-gray-300">{{@model.scoopsApp}}</div>
+    <div class="w-1/3 bg-white h-12 py-2 px-1 border-b border-gray-300">{{@model.scoopsBrowser}}</div>
+  </div>
+  <div class="flex w-1/6">
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">
+      {{#if @model}}
+        {{add @model.marqueeScoopImpressionApp @model.marqueeScoopImpressionBrowser}}
+      {{/if}}
+    </div>
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">{{@model.marqueeScoopImpressionApp}}</div>
+    <div class="w-1/3 bg-gray-100 h-12 py-2 px-1 border-b border-gray-300">{{@model.marqueeScoopImpressionBrowser}}</div>
+  </div>
+</div>

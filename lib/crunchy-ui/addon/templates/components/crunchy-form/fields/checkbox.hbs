@@ -1,0 +1,29 @@
+{{#component group
+  field=field
+  model=model
+  didBlur=didBlur
+  as |group|}}
+
+  <div class="flex w-full">
+    <group.control as |control|>
+      <Input
+        @id={{control.controlId}}
+        @checked={{this.value}}
+        @type="checkbox"
+        @disabled={{@disabled}}
+        aria-label={{@aria-label}}
+        @class={{concat "crunchy-form__checkbox mr-1 "
+          @controlClass
+        }}
+      />
+    </group.control>
+
+    <group.label class={{concat "crunchy-form__group-label--checkbox " @labelClass}}>
+      {{@label}}
+    </group.label>
+  </div>
+
+  {{#if group.hasError}}
+    <group.errors class={{@errorClass}} />
+  {{/if}}
+{{/component}}

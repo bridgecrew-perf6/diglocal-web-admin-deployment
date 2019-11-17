@@ -6,6 +6,11 @@
 
   &__group-label {
     @apply block text-base font-poppins font-bold text-black mb-2;
+
+    &--checkbox {
+      @apply font-medium text-brand-primary;
+      @apply mb-0;
+    }
   }
 
   &__group-control {

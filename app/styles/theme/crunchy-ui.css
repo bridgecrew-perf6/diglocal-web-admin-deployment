@@ -12,16 +12,35 @@
 }
 
 .crunchy-confirm {
-  &__modal-body {
-
-  }
   &__modal-footer {
-    @apply mt-2 flex justify-end;
+    @apply flex justify-end;
     > .crunchy-button {
       @apply ml-2;
     }
   }
   &__modal-errors {
     @apply mt-1;
+  }
+}
+
+.crunchy-modal {
+  @apply py-8;
+  @apply rounded bg-brand-gray-light border-brand-gray relative max-w-xl text-xl;
+
+  &__close {
+    @apply text-5xl font-thin font-sans py-0 px-3;
+  }
+  &__header {
+    @apply font-bold text-4xl;
+    @apply px-8;
+    &--border-b {
+      @apply border-b border-brand-gray pb-4;
+    }
+  }
+  &__body {
+    @apply px-8;
+  }
+  &__footer {
+    @apply px-8;
   }
 }

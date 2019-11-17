@@ -1,7 +1,12 @@
 import Component from '@ember/component';
+import { set } from '@ember/object';
 import { not } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
+import  { inject as service } from '@ember/service';
 
 export default Component.extend({
+  store: service(),
+
   isEditing: false,
   isReadonly: not('isEditing'),
 
@@ -10,6 +15,17 @@ export default Component.extend({
   classNameBindings: [ 'isEditing:bg-gray-100' ],
 
   showDestroyModal:  false,
+
+  init() {
+    this._super(...arguments);
+    set(this, 'categoryOptions', []);
+    this.loadCategories.perform();
+  },
+
+  loadCategories: task(function* () {
+    let categories = yield this.store.findAll('category');
+    set(this, 'categoryOptions', categories);
+  }),
 
   rollbackModel() {
     if (this.model && this.model.get('hasDirtyAttributes')) {
@@ -38,6 +54,7 @@ export default Component.extend({
     delete() {
       this.model.deleteRecord();
       this.model.save();
+      this.router.transitionTo('authenticated.businesses');
     },
   },
 });
