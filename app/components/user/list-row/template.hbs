@@ -48,13 +48,14 @@
       </dl>
     </div>
 
-    <div class="py-2 px-4 flex items-start text-lg">
-      <button {{action "delete" model bubbles=false}} aria-label="Delete user {{model.user}}" class="text-gray-400 hover:text-gray-600">
-        <FaIcon @icon="trash" />
-      </button>
-      &nbsp;
-      <LinkTo @tagName="button" @route="authenticated.users.view" @model={{model.id}} @aria-label="Edit user {{model.user}}" class="text-gray-400 hover:text-gray-600">
-        <FaIcon @icon="edit" />
+    <div class="py-2 px-4 flex items-start">
+      <LinkTo
+        @route="authenticated.users.view"
+        @model={{model.id}}
+        @aria-label="View user details"
+        class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+      >
+        View User
       </LinkTo>
     </div>
   </div>

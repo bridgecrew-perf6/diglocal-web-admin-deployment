@@ -1,0 +1,71 @@
+<div class="flex mb-3 justify-between">
+  <h1 class="font-semibold text-lg"> {{if this.isReadonly "User Details" "Edit User Details"}} </h1>
+  {{#if this.isReadonly}}
+    <CrunchyButton
+      @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+      @class="crunchy-button--icon"
+      @aria-label="Edit user details">
+      <FaIcon @icon="edit" />
+    </CrunchyButton>
+  {{else}}
+    <CrunchyButton
+      @onClick={{action "cancel"}}
+      @class="crunchy-button--icon"
+      @aria-label="Close form">
+      <FaIcon @icon="times" />
+    </CrunchyButton>
+  {{/if}}
+</div>
+
+<CrunchyForm
+  @model={{model}}
+  @onSubmit={{action "save"}}
+  @onCancel={{action "cancel"}}
+  as |form|>
+
+  <form.text-field
+    @field="user"
+    @label="User Name"
+    @aria-label="Uer Name"
+    @disabled="true" {{!-this.isReadonly--}}
+  />
+
+  <form.text-field
+    @field="email"
+    @label="Email (Login)"
+    @aria-label="Email Login"
+    @disabled="true" {{!--this.isReadonly--}}
+  />
+
+  <form.checkbox
+    @field="active"
+    @label="Active"
+    @disabled={{this.isReadonly}}
+  />
+
+  <form.checkbox
+    @field="admin"
+    @label="Admin"
+    @disabled={{this.isReadonly}}
+  />
+
+  {{#if this.isEditing}}
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete user" @class="crunchy-button--outline" />
+      <div>
+        <form.submit @value="Submit" @class="mr-2"/>
+        <form.cancel @value="Cancel" />
+      </div>
+    </div>
+  {{/if}}
+</CrunchyForm>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{action "delete"}}
+  @onCancel={{action (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete the user <span class="font-semibold text-brand-primary">{{model.user}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
