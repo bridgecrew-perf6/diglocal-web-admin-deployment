@@ -8,13 +8,19 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default Controller.extend({
   queryParams: [
+    'roles',
     'search',
     'sort'
   ],
 
   search: '',
-
   searchString: oneWay('search'),
+  roles: '',
+
+  init() {
+    this._super(...arguments);
+    set(this, 'roles', []);
+  },
 
   didSearch: task(function* () {
     yield timeout(INPUT_DEBOUNCE);
@@ -30,6 +36,20 @@ export default Controller.extend({
     },
     sortChanged(key) {
       alert(key);
+    },
+    addRoleFilter(roleId, event) {
+      let { target: { checked } } = event;
+      if (checked) {
+        this.roles.addObject(roleId);
+      } else {
+        this.roles.removeObject(roleId);
+      }
+    },
+    removeRoleFilter(roleId) {
+      this.roles.removeObject(roleId);
+    },
+    clearAllFilters() {
+      this.roles.clear();
     }
   }
 });

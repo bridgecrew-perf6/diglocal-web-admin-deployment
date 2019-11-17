@@ -15,6 +15,31 @@
         class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
     </div>
     <div class="flex w-1/2 items-center text-gray-600">
+      <BasicDropdown as |dd|>
+        <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
+          Roles {{#if this.roles.length}} ({{this.roles.length}}) {{/if}} <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+        </dd.Trigger>
+        <dd.Content class="shadow p-2 border">
+          <form>
+            <fieldset>
+                <div class="p-1">
+                  <input id="admin" type="checkbox" name="admin" checked={{contains "admin" this.roles}} onchange={{action "addRoleFilter" "admin"}} >
+                  <label for="admin">Admin</label>
+                </div>
+                <div class="p-1">
+                  <input id="customer" type="checkbox" name="customer" checked={{contains "customer" this.roles}} onchange={{action "addRoleFilter" "customer"}} >
+                  <label for="customer">Customer</label>
+                </div>
+                <div class="p-1">
+                  <input id="user" type="checkbox" name="user" checked={{contains "user" this.roles}} onchange={{action "addRoleFilter" "user"}} >
+                  <label for="user">User</label>
+                </div>
+            </fieldset>
+          </form>
+        </dd.Content>
+      </BasicDropdown>
+    </div>
+    <div class="flex w-1/2 items-center text-gray-600">
       <select onchange={{action "sortChanged" value="target.value"}}>
         <option value="user">Name</option>
         <option value="email">Email</option>
