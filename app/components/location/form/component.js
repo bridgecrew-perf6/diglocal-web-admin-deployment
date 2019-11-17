@@ -9,6 +9,8 @@ export default Component.extend({
 
   classNameBindings: [ 'isEditing:bg-gray-100' ],
 
+  showDestroyModal:  false,
+
   rollbackModel() {
     if (this.model && this.model.get('hasDirtyAttributes')) {
       this.model.rollbackAttributes();
@@ -17,12 +19,17 @@ export default Component.extend({
 
   willDestroyElement() {
     this.rollbackModel();
+    this.setProperties({
+      showDestroyModal: false,
+      isEditing: false
+    });
     this._super(...arguments);
   },
 
   actions: {
     save() {
       this.model.save();
+      this.set('isEditing', false);
     },
     cancel() {
       this.rollbackModel();
@@ -31,6 +38,6 @@ export default Component.extend({
     delete() {
       this.model.deleteRecord();
       this.model.save();
-    }
-  }
+    },
+  },
 });

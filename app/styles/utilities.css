@@ -21,7 +21,3 @@
 .h-screen-less-32 {
   height: calc(100vh - 8rem);
 }
-
-.h-screen-less-56 {
-  height: calc(100vh - 14rem);
-}

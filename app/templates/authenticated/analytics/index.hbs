@@ -1,4 +1,4 @@
-<div class="treadmill-content__fixed-header">
+<div class="treadmill-content__fixed-header pb-0">
   <div class="flex h-10">
     <div class="flex relative w-1/2">
       <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
@@ -24,79 +24,19 @@
         @onChange={{action (mut dateRange)}}
         @onReady={{action "onReady"}}
         @placeholder="Pick start date"
+        class="w-full"
       />
     </div>
   </div>
-  <div class="flex text-center text-xs">
-    <div class="w-1/6 bg-gray-500 h-12"></div>
-    <div class="w-1/6 bg-gray-500 h-12">Total Impressions / Views</div>
-    <div class="w-1/6 bg-gray-500 h-12">Business Profile Page Impressions</div>
-    <div class="w-1/6 bg-gray-500 h-12">Business Listing Impressions</div>
-    <div class="w-1/6 bg-gray-500 h-12">Scoop Calendar Impressions</div>
-    <div class="w-1/6 bg-gray-500 h-12">Today Marquee Impressions</div>
-  </div>
-  <div class="flex text-center text-xs">
-    <div class="w-1/6 bg-gray-500 h-12"></div>
-    <div class="flex w-1/6 bg-gray-500 h-12">
-      <div class="w-1/3 bg-gray-400 h-12">Total</div>
-      <div class="w-1/3 bg-gray-400 h-12">App</div>
-      <div class="w-1/3 bg-gray-400 h-12">Browser</div>
-    </div>
-    <div class="flex w-1/6 bg-gray-500 h-12">
-      <div class="w-1/3 bg-gray-500 h-12">Total</div>
-      <div class="w-1/3 bg-gray-500 h-12">App</div>
-      <div class="w-1/3 bg-gray-500 h-12">Browser</div>
-    </div>
-    <div class="flex w-1/6 bg-gray-500 h-12">
-      <div class="w-1/3 bg-gray-400 h-12">Total</div>
-      <div class="w-1/3 bg-gray-400 h-12">App</div>
-      <div class="w-1/3 bg-gray-400 h-12">Browser</div>
-    </div>
-    <div class="flex w-1/6 bg-gray-500 h-12">
-      <div class="w-1/3 bg-gray-500 h-12">Total</div>
-      <div class="w-1/3 bg-gray-500 h-12">App</div>
-      <div class="w-1/3 bg-gray-500 h-12">Browser</div>
-    </div>
-    <div class="flex w-1/6 bg-gray-500 h-12">
-      <div class="w-1/3 bg-gray-400 h-12">Total</div>
-      <div class="w-1/3 bg-gray-400 h-12">App</div>
-      <div class="w-1/3 bg-gray-400 h-12">Browser</div>
-    </div>
-  </div>
+  <div class="flex h-8"></div>
+  <Analytics::TableHeader />
 </div>
-<div class="treadmill-content__table-body pt-32">
+<div class="treadmill-content__table-body pt-40">
   {{#ella-treadmill
     content=model
     minColumnWidth="100%"
-    row=50 as |item index|
+    row=48 as |item index|
   }}
-  <div class="flex text-center text-xs">
-    <div class="w-1/6 bg-gray-500 h-12">{{item.business.name}}</div>
-    <div class="flex w-1/6">
-      <div class="w-1/3 bg-gray-400 h-12">{{add item.pageViewApp item.pageViewBrowser item.businessApp item.businessBrowser item.scoopsApp item.scoopsBrowser item.marqueeScoopImpressionApp item.marqueeScoopImpressionBrowser}}</div>
-      <div class="w-1/3 bg-gray-400 h-12">{{add item.pageViewApp item.businessApp item.scoopsApp item.marqueeScoopImpressionApp}}</div>
-      <div class="w-1/3 bg-gray-400 h-12">{{add item.pageViewBrowser item.businessBrowser item.scoopsBrowser item.marqueeScoopImpressionBrowser}}</div>
-    </div>
-    <div class="flex w-1/6">
-      <div class="w-1/3 bg-gray-500 h-12">{{add item.pageViewApp item.pageViewBrowser}}</div>
-      <div class="w-1/3 bg-gray-500 h-12">{{item.pageViewApp}}</div>
-      <div class="w-1/3 bg-gray-500 h-12">{{item.pageViewBrowser}}</div>
-    </div>
-    <div class="flex w-1/6">
-      <div class="w-1/3 bg-gray-400 h-12">{{add item.businessApp item.businessBrowser}}</div>
-      <div class="w-1/3 bg-gray-400 h-12">{{item.businessApp}}</div>
-      <div class="w-1/3 bg-gray-400 h-12">{{item.businessBrowser}}</div>
-    </div>
-    <div class="flex w-1/6">
-      <div class="w-1/3 bg-gray-500 h-12">{{add item.scoopsApp item.scoopsBrowser}}</div>
-      <div class="w-1/3 bg-gray-500 h-12">{{item.scoopsApp}}</div>
-      <div class="w-1/3 bg-gray-500 h-12">{{item.scoopsBrowser}}</div>
-    </div>
-    <div class="flex w-1/6">
-      <div class="w-1/3 bg-gray-400 h-12">{{add item.marqueeScoopImpressionApp item.marqueeScoopImpressionBrowser}}</div>
-      <div class="w-1/3 bg-gray-400 h-12">{{item.marqueeScoopImpressionApp}}</div>
-      <div class="w-1/3 bg-gray-400 h-12">{{item.marqueeScoopImpressionBrowser}}</div>
-    </div>
-  </div>
+    <Analytics::TableRow @model={{item}} />
   {{/ella-treadmill}}
 </div>

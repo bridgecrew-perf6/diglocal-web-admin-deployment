@@ -1,20 +1,12 @@
 <div class="flex mb-3 justify-between">
-  <h1 class="font-semibold text-lg"> {{if this.isReadonly model.title "New Location"}} </h1>
+  <h1 class="font-semibold text-lg"> {{if this.isReadonly "Location Details" "Edit Location"}} </h1>
   {{#if this.isReadonly}}
-    <div class="flex">
-      <CrunchyButton
-        @onClick={{action "delete"}}
-        @class="crunchy-button--icon mr-2"
-        @aria-label="Delete location">
-        <FaIcon @icon="trash" />
-      </CrunchyButton>
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit location">
-        <FaIcon @icon="edit" />
-      </CrunchyButton>
-    </div>
+    <CrunchyButton
+      @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+      @class="crunchy-button--icon"
+      @aria-label="Edit location details">
+      <FaIcon @icon="edit" />
+    </CrunchyButton>
   {{else}}
     <CrunchyButton
       @onClick={{action "cancel"}}
@@ -24,6 +16,7 @@
     </CrunchyButton>
   {{/if}}
 </div>
+
 <CrunchyForm @model={{@model}}
   @onSubmit={{action "save"}}
   @onCancel={{action "cancel"}}
@@ -138,9 +131,22 @@
   </fieldset>
 
   {{#if this.isEditing}}
-    <div class="flex justify-end mt-2">
-      <form.submit @value="Submit" @class="mr-2"/>
-      <form.cancel @value="Cancel" />
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" />
+      <div>
+        <form.submit @value="Submit" @class="mr-2"/>
+        <form.cancel @value="Cancel" />
+      </div>
     </div>
   {{/if}}
 </CrunchyForm>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{action "delete"}}
+  @onCancel={{action (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete the location <span class="font-semibold text-brand-primary">{{model.title}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
