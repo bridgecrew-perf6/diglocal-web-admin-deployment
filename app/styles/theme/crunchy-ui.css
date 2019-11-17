@@ -12,14 +12,6 @@
 }
 
 .crunchy-confirm {
-  &__close  {
-    @apply text-5xl font-thin font-sans py-0 px-3;
-  }
-
-  &__modal-body {
-    @apply my-1 mx-3;
-  }
-
   &__modal-footer {
     @apply flex justify-end;
     > .crunchy-button {
@@ -32,16 +24,23 @@
 }
 
 .crunchy-modal {
-  &__close {
+  @apply py-8;
+  @apply rounded bg-brand-gray-light border-brand-gray relative max-w-xl text-xl;
 
+  &__close {
+    @apply text-5xl font-thin font-sans py-0 px-3;
   }
   &__header {
-
+    @apply font-bold text-4xl;
+    @apply px-8;
+    &--border-b {
+      @apply border-b border-brand-gray pb-4;
+    }
   }
   &__body {
-
+    @apply px-8;
   }
   &__footer {
-
+    @apply px-8;
   }
 }
