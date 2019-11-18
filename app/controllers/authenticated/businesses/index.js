@@ -30,6 +30,7 @@ export default Controller.extend({
     },
     sortChanged(key) {
       alert(key);
-    }
+    },
+    addFilter() {}
   }
 });
