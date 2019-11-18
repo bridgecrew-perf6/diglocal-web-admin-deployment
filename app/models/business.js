@@ -8,6 +8,7 @@ export default Model.extend(Trackable, {
   embedInstagramEnabled: attr(),
   embedTwitterEnabled: attr(),
   facebookUrl: attr(),
+  featured: attr(),
   followersCount: attr(),
   instagramUrl: attr(),
   likesCount: attr(),
