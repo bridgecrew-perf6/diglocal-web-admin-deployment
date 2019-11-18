@@ -37,6 +37,7 @@ Router.map(function() {
     });
     this.route('scoops', function() {
       this.route('view', { path: ':id' });
+      this.route('new');
     });
   });
 });
