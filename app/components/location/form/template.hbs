@@ -117,6 +117,31 @@
 
   <fieldset name="hours-of-operation">
     {{#each model.operatingHours as |item|}}
+      <EmberFlatpickr
+        @allowInput={{true}}
+        @appendDataInput={{true}}
+        @enableTime={{true}}
+        @noCalendar={{true}}
+        @dateFormat="h:i"
+        @date={{readonly item.openTime}}
+        @onChange={{action (mut item.openTime)}}
+        @onReady={{action "onReady"}}
+        @placeholder="Opens"
+        class="w-full"
+      />
+      <EmberFlatpickr
+        @allowInput={{true}}
+        @appendDataInput={{true}}
+        @enableTime={{true}}
+        @noCalendar={{true}}
+        @dateFormat="h:i"
+        @date={{readonly item.closeTime}}
+        @onChange={{action (mut item.closeTime)}}
+        @onReady={{action "onReady"}}
+        @placeholder="Opens"
+        class="w-full"
+      />
+
       {{item.dayOfWeek}} {{item.openTime}} {{item.closeTime}}
       <label class="w-full">
         <Input

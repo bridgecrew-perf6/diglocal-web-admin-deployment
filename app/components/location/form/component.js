@@ -27,6 +27,8 @@ export default Component.extend({
   },
 
   actions: {
+    onReady() {},
+
     save() {
       this.model.save();
       this.set('isEditing', false);
