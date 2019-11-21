@@ -1,7 +1,7 @@
 <CrunchyBreadcrumbs />
 
 <hr>
-
+{{!--
 <div class="p-3">
   <CrunchyButton @task={{this.demoButtonTask}}> Button </CrunchyButton>
 </div>
@@ -29,4 +29,39 @@
   </CrunchyForm>
 </div>
 
-<hr>
+<hr> --}}
+<div class="m-4">
+  <CrunchyMediaObject @style="horizontal" as |media|>
+    <media.image
+      @title="Avatar for item"
+      @height="200px"
+      @width="200px"
+      @url={{this.imageUrl}}
+    />
+    <media.header class="flex justify-between">
+      <p>A Horizontal Media Object</p>
+      <CrunchyButton @class="crunchy-button--outline" @value="Object action" />
+    </media.header>
+    <media.body>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non dolere, inquam, istud quam vim habeat postea videro; Videmusne ut pueri ne verberibus quidem a contemplandis rebus perquirendisque deterreantur? Duo Reges: constructio interrete. Is es profecto tu. Nunc vero a primo quidem mirabiliter occulta natura est nec perspici nec cognosci potest. Hoc sic expositum dissimile est superiori.</p>
+    </media.body>
+  </CrunchyMediaObject>
+</div>
+
+<div class="m-4">
+  <CrunchyMediaObject @style="vertical" as |media|>
+    <media.image
+      @title="Avatar for item"
+      @height="200px"
+      @width="200px"
+      @url={{this.imageUrl}}
+    />
+    <media.header class="flex justify-between p-1">
+      <p>A Vertical Media Object</p>
+      <CrunchyButton @class="crunchy-button--outline" @value="Object action" />
+    </media.header>
+    <media.body>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non dolere, inquam, istud quam vim habeat postea videro; Videmusne ut pueri ne verberibus quidem a contemplandis rebus perquirendisque deterreantur? Duo Reges: constructio interrete. Is es profecto tu. Nunc vero a primo quidem mirabiliter occulta natura est nec perspici nec cognosci potest. Hoc sic expositum dissimile est superiori.</p>
+    </media.body>
+  </CrunchyMediaObject>
+</div>

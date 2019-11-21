@@ -44,7 +44,7 @@
       row=250 as |item|
     }}
       <div class="max-w-sm rounded overflow-hidden shadow-lg">
-        <img class="w-full" src="{{item.image.sizes.thumbx2}}" alt="">
+        <img class="w-full" src={{item.image.sizes.thumbx2}} alt="">
         <div class="px-6 py-4">
           <div class="font-bold text-xl mb-2">{{item.description}}</div>
           <p class="text-gray-700 text-base">
@@ -54,7 +54,7 @@
         <div class="px-6 py-4">
           <ul class="ml-1">
             {{#each item.business.categories as |category|}}
-              <CrunchyChip @tagName="li" @style="light" @class={{concat "crunchy-chip__" category.shortName}}>
+              <CrunchyChip @tagName="li">
                 {{category.longName}}
               </CrunchyChip>
             {{/each}}

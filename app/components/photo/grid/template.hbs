@@ -1,6 +1,6 @@
 <DragSortList
   @items={{sort-by "position" model}}
-  @isHorizontal=true
+  @isHorizontal={{true}}
   @dragEndAction={{action "dragEnd"}} as |item|>
   <div class="max-w-sm m-2 rounded overflow-hidden shadow-lg">
     <img class="w-24" src={{item.sizes.medium}} >

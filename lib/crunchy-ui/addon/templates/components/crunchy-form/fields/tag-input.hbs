@@ -11,6 +11,7 @@
 
   <group.control as |control|>
     <TagInput
+      name={{control.controlId}}
       @tags={{@tags}}
       @readOnly={{@disabled}}
       @addTag={{action "addTag"}}

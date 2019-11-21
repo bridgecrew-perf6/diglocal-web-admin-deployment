@@ -9,10 +9,23 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default Controller.extend({
   queryParams: [
     'search',
-    'sort'
+    'sort',
+    'featured',
+    'categories',
+    'roles'
   ],
 
+  init() {
+    this._super(...arguments);
+    this.setProperties({
+      roles: [],
+      categories: []
+    })
+  },
+
   search: '',
+  featured: false,
+
   searchString: oneWay('search'),
 
   didSearch: task(function* () {
@@ -30,6 +43,23 @@ export default Controller.extend({
     sortChanged(key) {
 
     },
-    addFilter() {}
+    addFilter(filter, arrayName, event) {
+      let { target: { checked } } = event;
+      if (checked) {
+        this.get(arrayName).addObject(filter);
+      } else {
+        this.get(arrayName).removeObject(filter);
+      }
+    },
+    removeFilter(filter, arrayName) {
+      this.get(arrayName).removeObject(filter);
+    },
+    clearAllFilters() {
+      this.setProperties({
+        featured: null,
+        roleFilters: [],
+        categoryFilters: []
+      });
+    }
   }
 });

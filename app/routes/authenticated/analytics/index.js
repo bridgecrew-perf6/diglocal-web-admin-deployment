@@ -3,6 +3,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import removeFalsy from 'diglocal-manage/helpers/remove-falsy';
+import moment from 'moment';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   ellaSparse: service(),

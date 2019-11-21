@@ -22,18 +22,18 @@
         <dd.Content class="shadow p-2 border">
           <form>
             <fieldset>
-                <div class="p-1">
-                  <input id="admin" type="checkbox" name="admin" checked={{contains "admin" this.roles}} onchange={{action "addRoleFilter" "admin"}} >
-                  <label for="admin">Admin</label>
-                </div>
-                <div class="p-1">
-                  <input id="customer" type="checkbox" name="customer" checked={{contains "customer" this.roles}} onchange={{action "addRoleFilter" "customer"}} >
-                  <label for="customer">Customer</label>
-                </div>
-                <div class="p-1">
-                  <input id="user" type="checkbox" name="user" checked={{contains "user" this.roles}} onchange={{action "addRoleFilter" "user"}} >
-                  <label for="user">User</label>
-                </div>
+              <div class="p-1">
+                <input id="admin" type="checkbox" name="admin" checked={{contains "admin" this.roles}} onchange={{action "addRoleFilter" "admin"}} >
+                <label for="admin">Admin</label>
+              </div>
+              <div class="p-1">
+                <input id="customer" type="checkbox" name="customer" checked={{contains "customer" this.roles}} onchange={{action "addRoleFilter" "customer"}} >
+                <label for="customer">Customer</label>
+              </div>
+              <div class="p-1">
+                <input id="user" type="checkbox" name="user" checked={{contains "user" this.roles}} onchange={{action "addRoleFilter" "user"}} >
+                <label for="user">User</label>
+              </div>
             </fieldset>
           </form>
         </dd.Content>

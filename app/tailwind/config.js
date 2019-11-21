@@ -6,6 +6,10 @@
 module.exports = {
   theme: {
     extend: {
+      screens: {
+        mobile: { max: '767px' },
+        desktop: { min: '768px' },
+      },
       colors: {
         'brand-primary': {
           'light': '#97c9Ca', // brand color
@@ -33,7 +37,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        'poppins': 'Poppins',
+        'poppins': ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' ],
       },
       inset: {
         '16': '4rem'
@@ -51,6 +55,9 @@ module.exports = {
         'container-1/5': '256px',
         'container-3/4': '960px',
         'container-4/5': '1024px',
+      },
+      minHeight: {
+        '48': '12rem',
       },
       maxHeight: {
         xs: '20rem',
