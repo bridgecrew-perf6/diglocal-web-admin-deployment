@@ -1,1 +1,10 @@
-{{yield}}
+{{yield (hash
+  image=(component "crunchy-media-object/image" isVertical=this.isVertical isHorizontal=this.isHorizontal)
+)}}
+
+<div>
+  {{yield (hash
+    header=(component "crunchy-media-object/header" isVertical=this.isVertical isHorizontal=this.isHorizontal)
+    body=(component "crunchy-media-object/body" isVertical=this.isVertical isHorizontal=this.isHorizontal)
+  )}}
+</div>

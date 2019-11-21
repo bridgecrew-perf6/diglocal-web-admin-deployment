@@ -44,3 +44,43 @@
     @apply px-8;
   }
 }
+
+.crunchy-media-object {
+  @apply rounded border;
+
+  &--vertical {
+  }
+
+  &--horizontal {
+    @screen mobile {
+      @apply flex-col items-center;
+    }
+  }
+
+  &__image-wrapper {
+    @apply relative bg-brand-gray-light w-full h-full;
+
+    &--horizontal {
+      @screen desktop {
+        @apply w-auto h-auto;
+      }
+    }
+  }
+
+  &__image {
+    @apply bg-cover bg-center mx-auto;
+    @screen mobile {
+      width: 100% !important;
+    }
+    &--vertical {
+      width: 100% !important;
+    }
+  }
+
+  &__header {
+    @apply p-2;
+  }
+  &__body {
+    @apply p-2;
+  }
+}

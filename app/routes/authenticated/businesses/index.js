@@ -42,6 +42,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
     create() {
       let record = this.store.createRecord('business');
       this.transitionTo('authenticated.businesses.edit', record);
-    }
+    },
   }
 });

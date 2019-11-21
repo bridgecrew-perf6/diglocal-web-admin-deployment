@@ -1,0 +1,20 @@
+{{#if (has-block)}}
+  {{yield}}
+{{else}}
+  <div
+    style={{html-safe (concat
+      "background-image: url(" @url ");"
+      (if @isHorizontal (concat "width:" @width ";"))
+      "height:" @height ";"
+      )}}
+    class={{concat "crunchy-media-object__image "
+      (if @isHorizontal "crunchy-media-object__image--horizontal ")
+      (if @isVertical "crunchy-media-object__image--vertical ")
+    }}
+    title={{@title}}
+  >
+    {{yield}}
+  </div>
+{{/if}}
+
+{{log}}

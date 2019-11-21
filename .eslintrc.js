@@ -15,6 +15,9 @@ module.exports = {
     browser: true
   },
   rules: {
+    'no-inline-styles': {
+      allowDynamicStyles: true
+    }
   },
   overrides: [
     // node files
