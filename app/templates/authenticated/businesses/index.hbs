@@ -17,23 +17,44 @@
     <div class="flex w-1/2 items-center text-gray-600">
       <BasicDropdown as |dd|>
         <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
-          Filter <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+          Listing Type <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
         </dd.Trigger>
         <dd.Content class="shadow p-2 border">
           <form>
             <fieldset>
               <div class="p-1">
-                <input id="featured" type="checkbox" name="featured" checked={{contains "featured" this.filters}} onchange={{action "addFilter" "featured"}} >
+                <input id="featured" type="checkbox" name="featured" checked={{this.featured}} onchange={{action (mut this.featured) value="target.checked"}} >
                 <label for="admin">Featured</label>
               </div>
               <div class="p-1">
-                <input id="paying" type="checkbox" name="paying" checked={{contains "paying" this.filters}} onchange={{action "addFilter" "paying"}} >
-                <label for="paying">Paying</label>
+                <input id="paying" type="checkbox" name="paying" checked={{contains "premium" this.roles}} onchange={{action "addFilter" "paying" "roles"}} >
+                <label for="paying">Paid Listing</label>
               </div>
               <div class="p-1">
-                <input id="2types" type="checkbox" name="2types" checked={{contains "2types" this.filters}} onchange={{action "addFilter" "2types"}} >
-                <label for="2types">2 Types (What is this?)</label>
+                <input id="2types" type="checkbox" name="2types" checked={{contains "2types" this.roles}} onchange={{action "addFilter" "2types" "roles"}} >
+                <label for="2types">Paid Listing with 2 Categories</label>
               </div>
+              <div class="p-1">
+                <input id="temporary" type="checkbox" name="temporary" checked={{contains "temporary" this.roles}} onchange={{action "addFilter" "temporary" "roles"}} >
+                <label for="temporary">Non-Paying (Temporary)</label>
+              </div>
+            </fieldset>
+          </form>
+        </dd.Content>
+      </BasicDropdown>
+      <BasicDropdown as |dd|>
+        <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
+          Category <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+        </dd.Trigger>
+        <dd.Content class="shadow p-2 border">
+          <form>
+            <fieldset>
+              {{#each this.categoryOptions as |category|}}
+                <div class="p-1">
+                  <input id={{category.id}} type="checkbox" name={{category.longName}} checked={{contains category.id this.categories}} onchange={{action "addFilter" category.id "categories"}} >
+                  <label for={{category.id}}>{{category.longName}}</label>
+                </div>
+              {{/each}}
             </fieldset>
           </form>
         </dd.Content>
@@ -47,6 +68,7 @@
     </div>
   </div>
 </div>
+
 <div class="treadmill-content__table-body pt-32">
   <EllaTreadmill
     @content={{model}}
@@ -55,8 +77,10 @@
   >
     <Business::ListRow @model={{item}} />
   </EllaTreadmill>
-</div>
 
-<div class="flex text-teal-600 font-medium text-sm p-3 items-center justify-end">
-  {{model.length}} of {{model.length}}
+  {{#if this.didSearch.isRunning}}
+    <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
+      <FaIcon @icon="spinner" @spin={{true}} @size="2x" />
+    </div>
+  {{/if}}
 </div>

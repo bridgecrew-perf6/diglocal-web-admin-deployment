@@ -3,19 +3,25 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import removeFalsy from 'diglocal-manage/helpers/remove-falsy';
+import { hash } from 'rsvp';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   ellaSparse: service(),
 
   queryParams: {
    search: { refreshModel: true },
+   sort: { refreshModel: true },
+   featured: { refreshModel: true },
+   categories: { refreshModel: true },
+   roles: { refreshModel: true },
   },
 
   breadCrumb: Object.freeze({
     title: 'Businesses'
   }),
+
   model(params) {
-    return get(this, 'ellaSparse').array((range = {}, query = {}) => {
+    let businesses = get(this, 'ellaSparse').array((range = {}, query = {}) => {
       // let { sort, filter } = getProperties(this, 'sort', 'filter');
       let page = {
         limit: get(range, 'length') || 10,
@@ -37,7 +43,22 @@ export default Route.extend(AuthenticatedRouteMixin, {
         }
       });
     });
+
+    return hash({
+      businesses,
+      categories: this.store.findAll('category')
+    });
   },
+
+  setupController(controller, hash) {
+    let { businesses, categories } = hash;
+    this._super(...arguments);
+    controller.setProperties({
+      model: businesses,
+      categoryOptions: categories
+    })
+  },
+
   actions: {
     create() {
       let record = this.store.createRecord('business');
