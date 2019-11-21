@@ -10,13 +10,15 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default Controller.extend({
   queryParams: [
     'search',
-    'dateRange'
+    'dateRange',
+    'grouping'
   ],
 
   search: '',
   dateRange: [moment().subtract(1, 'month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')],
   range: oneWay('dateRange'),
   searchString: oneWay('search'),
+  grouping: 'day',
 
   didSearch: task(function* () {
     yield timeout(INPUT_DEBOUNCE);
@@ -35,6 +37,10 @@ export default Controller.extend({
       alert(key);
     },
     onClose() {},
-    onReady() {}
+    onReady() {},
+    dateGroupChanged(value) {
+      set(this, 'grouping', value);
+    }
+
   }
 });

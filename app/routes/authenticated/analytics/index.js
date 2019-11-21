@@ -10,7 +10,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   queryParams: {
    search: { refreshModel: true },
-   dateRange: { refreshModel: true }
+   dateRange: { refreshModel: true },
+   grouping: { refreshModel: true }
   },
   breadCrumb: Object.freeze({
     title: 'Analytics'
@@ -24,8 +25,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       };
 
       let filter = removeFalsy(params);
-      filter.date_range = `${moment(params.dateRange[0]).format('YYYY-MM-DD')},${moment(params.dateRange[1]).format('YYYY-MM-DD')},day`;
-
+      filter.date_range = `${moment(params.dateRange[0]).format('YYYY-MM-DD')},${moment(params.dateRange[1]).format('YYYY-MM-DD')},${params.grouping}`;
+      delete filter.grouping;
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
       query = Object.assign({ filter, page /*, sort */ }, query);

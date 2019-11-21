@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { computed, get } from '@ember/object';
 
 export default Model.extend({
   businessApp: attr(),
@@ -34,5 +35,26 @@ export default Model.extend({
   marqueeScoopImpressionApp: attr(),
   marqueeScoopImpressionBrowser: attr(),
 
-  business: belongsTo('business')
+  business: belongsTo('business'),
+
+  formattedDate: computed('id', {
+    get() {
+      let id = get(this, 'id');
+      switch(id.substr(0,2)) {
+        case '10':
+          let day = parseInt(id.substr(4,3), 10);
+          return moment().dayOfYear(day).format('ll');
+        break;
+        case '20':
+          let week = parseInt(id.substr(5,2), 10) + 1;
+          return `Week of ${moment().week(week).startOf('week').format('ll')}`;
+        break;
+        case '30':
+          let month = parseInt(id.substr(5,2), 10) - 1;
+          return `Month of ${moment().month(month).startOf('month').format('ll')}`;
+        break;
+
+      }
+    }
+  })
 });
