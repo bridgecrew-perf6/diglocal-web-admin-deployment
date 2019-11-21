@@ -40,20 +40,20 @@ export default Model.extend({
   formattedDate: computed('id', {
     get() {
       let id = get(this, 'id');
+      let span = 0;
+
       switch(id.substr(0,2)) {
         case '10':
-          let day = parseInt(id.substr(4,3), 10);
-          return moment().dayOfYear(day).format('ll');
-        break;
+          span = parseInt(id.substr(4,3), 10);
+          return moment().dayOfYear(span).format('ll');
         case '20':
-          let week = parseInt(id.substr(5,2), 10) + 1;
-          return `Week of ${moment().week(week).startOf('week').format('ll')}`;
-        break;
+          span = parseInt(id.substr(5,2), 10) + 1;
+          return `Week of ${moment().week(span).startOf('week').format('ll')}`;
         case '30':
-          let month = parseInt(id.substr(5,2), 10) - 1;
-          return `Month of ${moment().month(month).startOf('month').format('ll')}`;
-        break;
-
+          span = parseInt(id.substr(5,2), 10) - 1;
+          return `Month of ${moment().month(span).startOf('month').format('ll')}`;
+        default:
+          return;
       }
     }
   })
