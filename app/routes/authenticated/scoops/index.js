@@ -8,7 +8,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   ellaSparse: service(),
 
   queryParams: {
-   search: { refreshModel: true },
+    search: { refreshModel: true },
+    sort: { refreshModel: true },
   },
   breadCrumb: Object.freeze({
     title: 'Scoops'
@@ -20,12 +21,16 @@ export default Route.extend(AuthenticatedRouteMixin, {
         limit: get(range, 'length') || 10,
         offset: get(range, 'start') || 0
       };
-
       let filter = removeFalsy(params);
+      let sort = '';
 
+      if (filter.sort) {
+        sort = filter.sort;
+        delete filter.sort;
+      }
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
-      query = Object.assign({ filter, page /*, sort */ }, query);
+      query = Object.assign({ filter, page, sort }, query);
       query.include = 'business,business.categories';
 
       // Return a Promise that resolves with the array of fetched data

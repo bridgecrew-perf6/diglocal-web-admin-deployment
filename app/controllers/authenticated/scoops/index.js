@@ -15,6 +15,7 @@ export default Controller.extend({
   ],
 
   search: '',
+  sort: '',
 
   searchString: oneWay('search'),
 
@@ -34,7 +35,7 @@ export default Controller.extend({
       });
     },
     sortChanged(key) {
-      alert(key);
+      set(this, 'sort', key);
     }
   }
 });

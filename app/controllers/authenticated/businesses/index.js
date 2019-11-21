@@ -13,7 +13,6 @@ export default Controller.extend({
   ],
 
   search: '',
-
   searchString: oneWay('search'),
 
   didSearch: task(function* () {
@@ -29,7 +28,7 @@ export default Controller.extend({
       });
     },
     sortChanged(key) {
-      alert(key);
+
     },
     addFilter() {}
   }
