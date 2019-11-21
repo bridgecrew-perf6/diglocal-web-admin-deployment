@@ -52,35 +52,30 @@
   }
 
   &--horizontal {
-    @screen mobile {
+    /* @screen mobile {
       @apply flex-col items-center;
-    }
+    } */
+  }
+
+  &__content-wrapper {
+    @apply w-full relative;
   }
 
   &__image-wrapper {
-    @apply relative bg-brand-gray-light w-full h-full;
-
-    &--horizontal {
-      @screen desktop {
-        @apply w-auto h-auto;
-      }
-    }
+    @apply relative bg-brand-gray-light w-full h-full flex-1;
   }
 
   &__image {
-    @apply bg-cover bg-center mx-auto;
-    @screen mobile {
-      width: 100% !important;
-    }
+    @apply bg-contain bg-center bg-no-repeat mx-auto;
     &--vertical {
       width: 100% !important;
     }
   }
 
   &__header {
-    @apply p-2;
+    @apply px-2 pt-2;
   }
   &__body {
-    @apply p-2;
+    @apply px-2 pb-2;
   }
 }

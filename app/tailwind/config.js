@@ -56,6 +56,9 @@ module.exports = {
         'container-3/4': '960px',
         'container-4/5': '1024px',
       },
+      minHeight: {
+        '48': '12rem',
+      },
       maxHeight: {
         xs: '20rem',
         sm: '24rem',

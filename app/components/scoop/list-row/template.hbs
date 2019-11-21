@@ -1,50 +1,42 @@
-<div class="lg:flex border rounded border-grey-light lg:border-grey-light m-3">
-  <div class="h-48 w-48 flex-none bg-cover text-center overflow-hidden bg-gray-100" style="background-image: url({{model.image.sizes.thumbx2}}); background-repeat: no-repeat;">
-  </div>
-  <div class="flex w-full bg-white">
-    <div class="px-4 py-2 flex flex-col leading-normal w-full">
+<CrunchyMediaObject @style="horizontal" @class="min-h-48 overflow-hidden" as |card|>
+  {{#if (media "isMediumUp")}}
+    <card.image
+      @height="190px"
+      @width="190px"
+      @url={{model.image.sizes.thumbx2}}
+      class="border-r"
+    />
+  {{/if}}
+  <card.header class="flex justify-between">
+    <p class="font-bold text-xl mb-2">{{model.description}}</p>
+    <LinkTo
+      @route="authenticated.scoops.view"
+      @model={{model.id}}
+      @aria-label="View scoop details"
+      class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+    >
+      View Scoop
+    </LinkTo>
+  </card.header>
+  <card.body>
+    <p class="text-sm">{{truncate-text model.fineText limit=225}}</p>
+    <ul class="absolute left-0 bottom-0 p-2">
+      {{#each model.business.categories as |category|}}
+        <CrunchyChip @tagName="li">
+          {{category.longName}}
+        </CrunchyChip>
+      {{/each}}
 
-      <div class="text-black font-bold text-xl mb-1">
-        {{model.description}}
-      </div>
+      <CrunchyChip
+        @tagName="li"
+        @label={{if (eq model.isRecurring true) "Recurring" "One Time"}}
+      />
 
-      <ul class="mb-1">
-        {{#each model.business.categories as |category|}}
-          <CrunchyChip @tagName="li">
-            {{category.longName}}
-          </CrunchyChip>
-        {{/each}}
-
-        <CrunchyChip
-          @tagName="li"
-          @label={{if (eq model.isRecurring true) "Recurring" "One Time"}}
-        />
-
-        {{#if model.ticketUrl}}
-          <CrunchyChip @tagName="li" @title={{model.ticketUrl}}>
-            <FaIcon @icon="ticket-alt" />
-          </CrunchyChip>
-        {{/if}}
-        {{!-- <CrunchyChip @tagName="li" @title={{concat model.likesCount " favorites"}}>
-          <FaIcon @icon="heart" />&nbsp;{{model.favoritesCount}}
-        </CrunchyChip> --}}
-      </ul>
-
-      <dl aria-label="Details for {{model.fullName}}" class="flex flex-col text-xs mb-4">
-        <dt class="py-1 pr-1 text-gray-600">Additional Details:</dt>
-        <dd class="">{{model.fineText}}</dd>
-      </dl>
-    </div>
-
-    <div class="py-2 px-4 flex items-start">
-      <LinkTo
-        @route="authenticated.scoops.view"
-        @model={{model.id}}
-        @aria-label="View scoop details"
-        class="font-bold text-brand-primary whitespace-no-wrap text-sm"
-      >
-        View Scoop
-      </LinkTo>
-    </div>
-  </div>
-</div>
+      {{#if model.ticketUrl}}
+        <CrunchyChip @tagName="li" @title={{model.ticketUrl}}>
+          <FaIcon @icon="ticket-alt" />
+        </CrunchyChip>
+      {{/if}}
+    </ul>
+  </card.body>
+</CrunchyMediaObject>

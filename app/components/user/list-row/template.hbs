@@ -1,64 +1,59 @@
-<div class="lg:flex border rounded border-grey-light lg:border-grey-light" style="height: 194px; margin: 10px">
-  <div class="h-48 w-48 flex-none bg-cover text-center overflow-hidden bg-gray-100" style="background-image: url('{{model.avatarSrc256}}'); background-repeat: no-repeat;">
-    {{#firebase-uploader pathName=pathName uploadCompleteAction=(action "uploadComplete") as |uploader|}}
-      <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}}>
-        {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles }}
-          {{#unless uploader.uploadStatuses}}
-            <span class="my-2 text-gray-600 px-2 text-sm leading-loose mx-2 font-semibold">Click or Drop File Here</span>
-          {{/unless}}
-          {{#each uploader.uploadStatuses as |status|}}
-            {{#if (eq status.state "running")}}
-              {{crunchy-progress progress=status.progress}}
-            {{/if}}
-            <img src={{status.preview}} alt="File Upload Preview">
-          {{/each}}
-        {{/x-file-input}}
-      </CrunchyDraggableDropzone>
-    {{/firebase-uploader}}
-  </div>
-  <div class="flex w-full bg-white">
-    <div class="px-4 py-2 flex flex-col justify-between leading-normal w-full">
-      <div class="mb-1">
-        <div class="flex">
-          <div class="text-black font-bold text-xl">
-            {{model.email}}
-          </div>
-          <ul class="ml-1">
-            <CrunchyChip
-              @tagName="li"
-              @label={{model.profileStatus}}
-              @title="Profile Status"
-            />
-            <CrunchyChip
-              @tagName="li"
-              @label={{html-safe (concat "&hearts; " model.favoritesCount)}}
-              @title="Favorites Count"
-            />
-          </ul>
-        </div>
-      </div>
+<CrunchyMediaObject @style="horizontal" @class="min-h-48 overflow-hidden" as |card|>
+  {{#if (media "isMediumUp")}}
+    <card.image
+      @height="190px"
+      @width="190px"
+      @url={{model.profileImage.sizes.smallx2}}
+      class="border-r" />
+  {{/if}}
+  <card.header class="flex justify-between">
+    <p class="font-bold text-xl mb-2">{{model.email}}</p>
+    <LinkTo
+      @route="authenticated.users.view"
+      @model={{model.id}}
+      @aria-label="View user details"
+      class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+    >
+      View User
+    </LinkTo>
+  </card.header>
+  <card.body>
+    <dl aria-label="Details for user {{model.publicName}}" class="flex flex-wrap text-xs">
+      <dt class="py-1 pr-1 text-gray-600 w-1/6">Username:</dt>
+      <dd class="w-5/6">{{model.user}}</dd>
+      <dt class="py-1 pr-1 text-gray-600 w-1/6">Sign in count:</dt>
+      <dd class="w-5/6">{{model.signInCount}}</dd>
+      <dt class="py-1 pr-1 text-gray-600 w-1/6">Last signed in at:</dt>
+      <dd class="w-5/6">{{model.lastSignInAt}}</dd>
+    </dl>
+    <ul class="absolute left-0 bottom-0 p-2">
+      <CrunchyChip
+        @tagName="li"
+        @label={{model.profileStatus}}
+        @title="Profile Status"
+      />
+      <CrunchyChip
+        @tagName="li"
+        @label={{html-safe (concat "&hearts; " model.favoritesCount)}}
+        @title="Favorites Count"
+      />
+    </ul>
+  </card.body>
+</CrunchyMediaObject>
 
-      <dl aria-label="Details for {{model.fullName}}" class="flex flex-wrap text-xs">
-        <dt class="py-1 pr-1 text-gray-600 w-1/6">Bio:</dt>
-        <dd class="w-5/6 truncate">{{model.bio}}</dd>
-        <dt class="py-1 pr-1 text-gray-600 w-1/6">Username:</dt>
-        <dd class="w-5/6">{{model.user}}</dd>
-        <dt class="py-1 pr-1 text-gray-600 w-1/6">Sign in count:</dt>
-        <dd class="w-5/6">{{model.signInCount}}</dd>
-        <dt class="py-1 pr-1 text-gray-600 w-1/6">Device count:</dt>
-        <dd class="w-5/6">{{model.devices.length}}</dd>
-      </dl>
-    </div>
-
-    <div class="py-2 px-4 flex items-start">
-      <LinkTo
-        @route="authenticated.users.view"
-        @model={{model.id}}
-        @aria-label="View user details"
-        class="font-bold text-brand-primary whitespace-no-wrap text-sm"
-      >
-        View User
-      </LinkTo>
-    </div>
-  </div>
-</div>
+{{!-- TODO - do we want to allow this functionality from the list view??? --}}
+{{!-- {{#firebase-uploader pathName=pathName uploadCompleteAction=(action "uploadComplete") as |uploader|}}
+  <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}}>
+    {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles }}
+      {{#unless uploader.uploadStatuses}}
+        <span class="my-2 text-gray-600 px-2 text-sm leading-loose mx-2 font-semibold">Click or Drop File Here</span>
+      {{/unless}}
+      {{#each uploader.uploadStatuses as |status|}}
+        {{#if (eq status.state "running")}}
+          {{crunchy-progress progress=status.progress}}
+        {{/if}}
+        <img src={{status.preview}} alt="File Upload Preview">
+      {{/each}}
+    {{/x-file-input}}
+  </CrunchyDraggableDropzone>
+{{/firebase-uploader}} --}}
