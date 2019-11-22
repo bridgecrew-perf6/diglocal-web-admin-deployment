@@ -13,7 +13,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
    sort: { refreshModel: true },
    featured: { refreshModel: true },
    categories: { refreshModel: true },
-   roles: { refreshModel: true },
+   role: { refreshModel: true },
   },
 
   breadCrumb: Object.freeze({
@@ -22,16 +22,22 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   model(params) {
     let businesses = get(this, 'ellaSparse').array((range = {}, query = {}) => {
-      // let { sort, filter } = getProperties(this, 'sort', 'filter');
       let page = {
         limit: get(range, 'length') || 10,
         offset: get(range, 'start') || 0
       };
+
+      let sort = params.sort;
+      delete params.sort;
+
+      // Route specific query formatting
+      this._formatQuery(params);
+
       let filter = removeFalsy(params);
 
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
-      query = Object.assign({ filter, page /*, sort */ }, query);
+      query = Object.assign({ filter, page, sort }, query);
       query.include = 'categories,users';
 
       // Return a Promise that resolves with the array of fetched data
@@ -50,6 +56,13 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
+  _formatQuery(params) {
+    // backend wants filter attr named 'role'
+    params.role = params.roles;
+    delete params.roles;
+    return params;
+  },
+
   setupController(controller, hash) {
     let { businesses, categories } = hash;
     this._super(...arguments);
@@ -57,6 +70,18 @@ export default Route.extend(AuthenticatedRouteMixin, {
       model: businesses,
       categoryOptions: categories
     })
+  },
+
+  resetController(controller, isExiting, transition) {
+    if (isExiting && transition.targetName !== 'error') {
+      controller.setProperties({
+        roles: [],
+        categories: [],
+        search: '',
+        searchString: '',
+        featured: false,
+      });
+    }
   },
 
   actions: {

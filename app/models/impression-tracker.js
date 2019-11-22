@@ -1,5 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { computed, get } from '@ember/object';
+import moment from  'moment';
 
 export default Model.extend({
   businessApp: attr(),
