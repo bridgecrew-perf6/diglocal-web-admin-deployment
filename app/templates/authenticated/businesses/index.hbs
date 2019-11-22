@@ -1,6 +1,6 @@
-<div class="treadmill-content__fixed-header">
+<div class="treadmill-content__fixed-header text-sm">
   <div class="flex h-10">
-    <div class="flex relative w-1/2">
+    <div class="flex w-1/3 flex-shrink relative">
       <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
         <FaIcon @icon="search" />
       </div>
@@ -14,10 +14,10 @@
         aria-label="Search businesses"
         class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
     </div>
-    <div class="flex w-1/2 items-center text-gray-600">
+    <div class="flex items-center text-gray-600">
       <BasicDropdown as |dd|>
         <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
-          Listing Type <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+          <FaIcon @icon="filter" @size="xs" /> Listing Type <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
         </dd.Trigger>
         <dd.Content class="shadow p-2 border">
           <form>
@@ -26,25 +26,19 @@
                 <input id="featured" type="checkbox" name="featured" checked={{this.featured}} onchange={{action (mut this.featured) value="target.checked"}} >
                 <label for="admin">Featured</label>
               </div>
-              <div class="p-1">
-                <input id="paying" type="checkbox" name="paying" checked={{contains "premium" this.roles}} onchange={{action "addFilter" "paying" "roles"}} >
-                <label for="paying">Paid Listing</label>
-              </div>
-              <div class="p-1">
-                <input id="2types" type="checkbox" name="2types" checked={{contains "2types" this.roles}} onchange={{action "addFilter" "2types" "roles"}} >
-                <label for="2types">Paid Listing with 2 Categories</label>
-              </div>
-              <div class="p-1">
-                <input id="temporary" type="checkbox" name="temporary" checked={{contains "temporary" this.roles}} onchange={{action "addFilter" "temporary" "roles"}} >
-                <label for="temporary">Non-Paying (Temporary)</label>
-              </div>
+              {{#each this.roleOptions as |option|}}
+                <div class="p-1">
+                  <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{action "addFilter" option.value "roles"}} >
+                  <label for={{option.value}}>{{option.label}}</label>
+                </div>
+              {{/each}}
             </fieldset>
           </form>
         </dd.Content>
       </BasicDropdown>
       <BasicDropdown as |dd|>
         <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
-          Category <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+          <FaIcon @icon="filter" @size="xs" /> Category <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
         </dd.Trigger>
         <dd.Content class="shadow p-2 border">
           <form>
@@ -60,13 +54,47 @@
         </dd.Content>
       </BasicDropdown>
     </div>
-    <div class="flex w-1/2 items-center text-gray-600">
-      <select onchange={{action "sortChanged" value="target.value"}}>
-        <option value="user">Name</option>
-        <option value="likes">Likes</option>
-      </select>
+    <div class="flex flex-grow items-center justify-end text-gray-600">
+      <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} />
     </div>
   </div>
+  {{#if (or this.collectedFilters.length this.featured)}}
+    <div class="flex pt-2">
+      <button {{action "clearAllFilters"}} class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+        Clear Filters
+      </button>
+      {{#if this.featured}}
+        <CrunchyChip
+          @tagName="li"
+          @label="Featured"
+          @allowClear={{true}}
+          @onClear={{action (mut this.featured) false}}
+        />
+      {{/if}}
+      <ul aria-label="Applied filters">
+        {{#each roles as |value|}}
+          {{#let (find-by "value" value this.roleOptions) as |option|}}
+            <CrunchyChip
+              @tagName="li"
+              @label={{option.label}}
+              @allowClear={{true}}
+              @onClear={{action "removeFilter" option.value "roles"}}
+            />
+          {{/let}}
+        {{/each}}
+        {{#each categories as |id|}}
+          {{#let (peek-record-from-id id "category") as |record|}}
+            <CrunchyChip
+              @tagName="li"
+              @label={{record.longName}}
+              @allowClear={{true}}
+              @onClear={{action "removeFilter" record.id "categories"}}
+            />
+          {{/let}}
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
 </div>
 
 <div class="treadmill-content__table-body pt-32">

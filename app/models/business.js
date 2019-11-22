@@ -1,5 +1,6 @@
 import Model, { attr, hasMany } from '@ember-data/model';
 import Trackable from './mixins/trackable';
+import { computed } from '@ember/object';
 
 export default Model.extend(Trackable, {
   description2: attr(),
@@ -18,6 +19,7 @@ export default Model.extend(Trackable, {
   tip: attr(),
   twitterUrl: attr(),
   website: attr(),
+  role: attr(),
 
   /*************************
   **  Relationships       **
@@ -27,5 +29,31 @@ export default Model.extend(Trackable, {
   categories: hasMany('category'),
   scoops: hasMany('scoop'),
   locations: hasMany('location'),
-  users: hasMany('user')
+  users: hasMany('user'),
+
+  /*************************
+  ** Computed  Properties **
+  *************************/
+
+  displayRole: computed('role', {
+    get() {
+      let role = this.role;
+      let display;
+      switch(role) {
+        case 'premium':
+        display = 'Paid Listing';
+        break;
+        case '2types':
+        display = 'Paid Listing with 2 Categories';
+        break;
+        case 'temporary':
+        display = 'Non-Paying (Temporary)';
+        break;
+        default:
+        display = role;
+      }
+      return display;
+    }
+  }),
+  
 });

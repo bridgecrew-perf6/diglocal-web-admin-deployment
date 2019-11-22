@@ -1,10 +1,21 @@
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { oneWay } from '@ember/object/computed';
+import { oneWay, union } from '@ember/object/computed';
 import { set, setProperties } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
+
+const roleOptions = [
+  { value: 'premium', label: 'Paid Listing'},
+  { value: '2types', label: 'Paid Listing with 2 Categories'},
+  { value: 'temporary', label: 'Non-Paying (Temporary)'},
+];
+
+const sortMenuOptions = {
+  likes_count: 'Sort by likes',
+  name: 'Sort by name'
+};
 
 export default Controller.extend({
   queryParams: [
@@ -19,7 +30,9 @@ export default Controller.extend({
     this._super(...arguments);
     this.setProperties({
       roles: [],
-      categories: []
+      categories: [],
+      roleOptions,
+      sortMenuOptions
     })
   },
 
@@ -33,15 +46,17 @@ export default Controller.extend({
     set(this, 'search', this.searchString);
   }).restartable(),
 
+  collectedFilters: union(
+    'roles',
+    'categories'
+  ),
+
   actions: {
     clearSearch() {
       setProperties(this, {
         search: '',
         searchString: ''
       });
-    },
-    sortChanged(key) {
-
     },
     addFilter(filter, arrayName, event) {
       let { target: { checked } } = event;
@@ -57,8 +72,8 @@ export default Controller.extend({
     clearAllFilters() {
       this.setProperties({
         featured: null,
-        roleFilters: [],
-        categoryFilters: []
+        roles: [],
+        categories: []
       });
     }
   }
