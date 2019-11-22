@@ -23,7 +23,7 @@ export default Controller.extend({
     'sort',
     'featured',
     'categories',
-    { roles: 'role' }
+    'roles'
   ],
 
   init() {
@@ -57,9 +57,6 @@ export default Controller.extend({
         search: '',
         searchString: ''
       });
-    },
-    sortChanged(key) {
-
     },
     addFilter(filter, arrayName, event) {
       let { target: { checked } } = event;

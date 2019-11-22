@@ -13,7 +13,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
    sort: { refreshModel: true },
    featured: { refreshModel: true },
    categories: { refreshModel: true },
-   role: { refreshModel: true },
+   roles: { refreshModel: true },
   },
 
   breadCrumb: Object.freeze({

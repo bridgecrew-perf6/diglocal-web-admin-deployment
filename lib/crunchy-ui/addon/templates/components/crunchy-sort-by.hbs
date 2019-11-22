@@ -1,5 +1,5 @@
 <CrunchyButton
-  @class="crunchy-sort-by__toggle px-2 py-1"
+  @class="crunchy-sort-by__toggle p-1 mr-1"
   @onClick={{action "toggleSort"}}
   @aria-label={{this.ariaLabelForToggle}}>
   {{#if this.sortDescending}}
@@ -12,14 +12,14 @@
 <BasicDropdown as |dd|>
   <dd.Trigger class="crunchy-sort-by__menu-trigger flex items-center p-1">
     <span class="hidden md:block">{{this.sortMenuName}}</span>
-    <span class="md:hidden">Sort…</span>
-    <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+    <span class="md:hidden">Sort</span>
+    <FaIcon @icon="angle-down" @size="xs" class="ml-2" />
   </dd.Trigger>
 
   <dd.Content class="crunchy-sort-by__dd-menu shadow p-2 border">
     <ul role="menu">
       {{#each-in @sortMenuOptions as |key label|}}
-        <li class="crunchy-sort-by__menu-item py-2 text-sm" role="menuitem" {{action "didSelectSortAttr" key dd}}>
+        <li class="crunchy-sort-by__menu-item py-2 cursor-pointer hover:text-brand-primary" role="menuitem" {{action "didSelectSortAttr" key dd}}>
           {{label}}
         </li>
       {{/each-in}}
