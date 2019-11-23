@@ -1,6 +1,6 @@
 <div class="treadmill-content__fixed-header pb-0">
   <div class="flex h-10">
-    <div class="flex relative w-1/2">
+    <div class="flex relative w-1/3">
       <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
         <FaIcon @icon="search" />
       </div>
@@ -14,22 +14,30 @@
         aria-label="Search for business..."
         class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
     </div>
-    <div class="flex w-1/2 items-center justify-start text-gray-600">
-      <EmberFlatpickr
-        @allowInput={{true}}
-        @appendDataInput={{true}}
-        @date={{readonly dateRange}}
-        @mode="range"
-        @onClose={{perform didSearch}}
-        @onChange={{action (mut dateRange)}}
-        @onReady={{action "onReady"}}
-        @placeholder="Pick start date"
-        class="w-full"
-      />
-      <select onchange={{action "dateGroupChanged" value="target.value"}}>
-        <option value="day">Day</option>
-        <option value="week">Week</option>
-        <option value="month">Month</option>
+    <div class="flex w-2/3 items-center justify-start text-gray-600">
+      <div class="flex items-center w-full justify-center">
+        <label class="whitespace-no-wrap ml-2 mr-4">Date range:</label>
+        <div class="relative">
+          <EmberFlatpickr
+            @allowInput={{false}}
+            @appendDataInput={{true}}
+            @date={{readonly dateRange}}
+            @mode="range"
+            @onClose={{perform didSearch}}
+            @onChange={{action (mut dateRange)}}
+            @onReady={{action "onReady"}}
+            @placeholder="Pick start date"
+            class="rounded border-0 p-3 pl-8 w-64 border border-gray-300 bg-gray-100 focus:bg-white h-10"
+          />
+          <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
+            <FaIcon @icon="calendar" />
+          </div>
+        </div>
+      </div>
+      <select onchange={{action "dateGroupChanged" value="target.value"}} class="bg-white">
+        <option value="day" selected={{eq this.grouping "day"}}>Results by day</option>
+        <option value="week" selected={{eq this.grouping "week"}}>Results by week</option>
+        <option value="month" selected={{eq this.grouping "month"}}>Results by month</option>
       </select>
     </div>
   </div>

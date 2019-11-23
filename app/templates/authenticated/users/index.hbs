@@ -1,6 +1,6 @@
 <div class="treadmill-content__fixed-header">
   <div class="flex h-10">
-    <div class="flex relative w-1/2">
+    <div class="flex relative w-1/3">
       <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
         <FaIcon @icon="search" />
       </div>
@@ -14,38 +14,44 @@
         aria-label="Search users"
         class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
     </div>
-    <div class="flex w-1/2 items-center text-gray-600">
+    <div class="flex w-2/3 items-center justify-between text-gray-600">
       <BasicDropdown as |dd|>
         <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
-          Roles {{#if this.roles.length}} ({{this.roles.length}}) {{/if}} <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
+          <FaIcon @icon="filter" @size="xs" /> Roles <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
         </dd.Trigger>
         <dd.Content class="shadow p-2 border">
           <form>
-            <fieldset>
+            {{#each this.roleOptions as |option|}}
               <div class="p-1">
-                <input id="admin" type="checkbox" name="admin" checked={{contains "admin" this.roles}} onchange={{action "addRoleFilter" "admin"}} >
-                <label for="admin">Admin</label>
+                <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{action "addFilter" option.value "roles"}} >
+                <label for={{option.value}}>{{option.label}}</label>
               </div>
-              <div class="p-1">
-                <input id="customer" type="checkbox" name="customer" checked={{contains "customer" this.roles}} onchange={{action "addRoleFilter" "customer"}} >
-                <label for="customer">Customer</label>
-              </div>
-              <div class="p-1">
-                <input id="user" type="checkbox" name="user" checked={{contains "user" this.roles}} onchange={{action "addRoleFilter" "user"}} >
-                <label for="user">User</label>
-              </div>
-            </fieldset>
+            {{/each}}
           </form>
         </dd.Content>
       </BasicDropdown>
-    </div>
-    <div class="flex w-1/2 items-center text-gray-600">
-      <select onchange={{action "sortChanged" value="target.value"}}>
-        <option value="user">Name</option>
-        <option value="email">Email</option>
-      </select>
+      <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} />
     </div>
   </div>
+  {{#if (or this.roles.length)}}
+    <div class="flex pt-2">
+      <button {{action "clearAllFilters"}} class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+        Clear Filters
+      </button>
+      <ul aria-label="Applied filters">
+        {{#each roles as |value|}}
+          {{#let (find-by "value" value this.roleOptions) as |option|}}
+            <CrunchyChip
+              @tagName="li"
+              @label={{option.label}}
+              @allowClear={{true}}
+              @onClear={{action "removeFilter" option.value "roles"}}
+            />
+          {{/let}}
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
 </div>
 <div class="treadmill-content__table-body pt-32">
   {{#ella-treadmill

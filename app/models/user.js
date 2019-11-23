@@ -4,6 +4,7 @@ import { computed, get } from '@ember/object';
 export default Model.extend({
   active: attr(),
   admin: attr(),
+  role: attr(),
   businessName: attr(),
   email: attr(),
   favoritesCount: attr(),
