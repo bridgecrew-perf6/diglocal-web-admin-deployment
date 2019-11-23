@@ -20,13 +20,24 @@
   <card.body>
     <dl aria-label="Details for user {{model.publicName}}" class="flex flex-wrap text-xs">
       <dt class="py-1 pr-1 text-gray-600 w-1/6">Username:</dt>
-      <dd class="w-5/6">{{model.user}}</dd>
+      <dd class="py-1 w-5/6">{{model.user}}</dd>
       <dt class="py-1 pr-1 text-gray-600 w-1/6">Sign in count:</dt>
-      <dd class="w-5/6">{{model.signInCount}}</dd>
+      <dd class="py-1 w-5/6">{{model.signInCount}}</dd>
       <dt class="py-1 pr-1 text-gray-600 w-1/6">Last signed in at:</dt>
-      <dd class="w-5/6">{{model.lastSignInAt}}</dd>
+      <dd class="py-1 w-5/6">
+        {{#if model.lastSignInAt}}
+          {{moment-calendar model.lastSignInAt}}
+        {{else}}
+          N/A
+        {{/if}}
+      </dd>
     </dl>
     <ul class="absolute left-0 bottom-0 p-2">
+      <CrunchyChip
+        @tagName="li"
+        @label={{capitalize model.role}}
+        @title="Role"
+      />
       <CrunchyChip
         @tagName="li"
         @label={{model.profileStatus}}

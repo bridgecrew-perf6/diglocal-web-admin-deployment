@@ -6,20 +6,34 @@ import { task, timeout } from 'ember-concurrency';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
+const roleOptions = [
+  { value: 'admin', label: 'Admin'},
+  { value: 'customer', label: 'Customer'},
+  { value: 'user', label: 'User'},
+];
+
 export default Controller.extend({
+  sortMenuOptions: Object.freeze({
+    user: 'Sort by username',
+    email: 'Sort by email'
+  }),
+
   queryParams: [
     'roles',
     'search',
     'sort'
   ],
 
+  sort: '',
   search: '',
   searchString: oneWay('search'),
-  roles: '',
 
   init() {
     this._super(...arguments);
-    set(this, 'roles', []);
+    this.setProperties({
+      roles: [],
+      roleOptions
+    });
   },
 
   didSearch: task(function* () {
@@ -34,19 +48,16 @@ export default Controller.extend({
         searchString: ''
       });
     },
-    sortChanged(key) {
-      alert(key);
-    },
-    addRoleFilter(roleId, event) {
+    addFilter(filter, arrayName, event) {
       let { target: { checked } } = event;
       if (checked) {
-        this.roles.addObject(roleId);
+        this.get(arrayName).addObject(filter);
       } else {
-        this.roles.removeObject(roleId);
+        this.get(arrayName).removeObject(filter);
       }
     },
-    removeRoleFilter(roleId) {
-      this.roles.removeObject(roleId);
+    removeFilter(filter, arrayName) {
+      this.get(arrayName).removeObject(filter);
     },
     clearAllFilters() {
       this.roles.clear();

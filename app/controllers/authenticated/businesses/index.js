@@ -12,12 +12,12 @@ const roleOptions = [
   { value: 'temporary', label: 'Non-Paying (Temporary)'},
 ];
 
-const sortMenuOptions = {
-  likes_count: 'Sort by likes',
-  name: 'Sort by name'
-};
-
 export default Controller.extend({
+  sortMenuOptions: Object.freeze({
+    likes_count: 'Sort by likes',
+    name: 'Sort by name'
+  }),
+
   queryParams: [
     'search',
     'sort',
@@ -31,11 +31,11 @@ export default Controller.extend({
     this.setProperties({
       roles: [],
       categories: [],
-      roleOptions,
-      sortMenuOptions
+      roleOptions
     })
   },
 
+  sort: '',
   search: '',
   featured: false,
 

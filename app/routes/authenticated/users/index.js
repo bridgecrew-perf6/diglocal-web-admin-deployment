@@ -9,14 +9,16 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   queryParams: {
    search: { refreshModel: true },
-   roles: { refreshModel: true }
+   roles: { refreshModel: true },
+   sort: { refreshModel: true },
   },
+
   breadCrumb: Object.freeze({
     title: 'Users'
   }),
+
   model(params) {
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
-      // let { sort, filter } = getProperties(this, 'sort', 'filter');
       let page = {
         limit: get(range, 'length') || 10,
         offset: get(range, 'start') || 0
@@ -24,9 +26,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
       let filter = removeFalsy(params);
 
+      let sort = filter.sort;
+      delete filter.sort;
+
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
-      query = Object.assign({ filter, page /*, sort */ }, query);
+      query = Object.assign({ filter, page, sort }, query);
       query.include = 'profileImages';
 
       // Return a Promise that resolves with the array of fetched data
@@ -38,5 +43,16 @@ export default Route.extend(AuthenticatedRouteMixin, {
         }
       });
     });
-  }
+  },
+
+  resetController(controller, isExiting, transition) {
+    if (isExiting && transition.targetName !== 'error') {
+      controller.setProperties({
+        sort: '',
+        search: '',
+        searchString: '',
+        roles: []
+      });
+    }
+  },
 });

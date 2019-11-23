@@ -27,13 +27,13 @@ export default Route.extend(AuthenticatedRouteMixin, {
         offset: get(range, 'start') || 0
       };
 
-      let sort = params.sort;
-      delete params.sort;
-
       // Route specific query formatting
       this._formatQuery(params);
 
       let filter = removeFalsy(params);
+
+      let sort = filter.sort;
+      delete filter.sort;
 
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
@@ -80,6 +80,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
         search: '',
         searchString: '',
         featured: false,
+        sort: ''
       });
     }
   },

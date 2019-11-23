@@ -7,6 +7,11 @@ import { task, timeout } from 'ember-concurrency';
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default Controller.extend({
+  sortMenuOptions: Object.freeze({
+    created_at: 'Sort by creation date',
+    paid_rank: 'Sort by paid rank'
+  }),
+
   isList: true,
 
   queryParams: [
@@ -15,7 +20,7 @@ export default Controller.extend({
   ],
 
   search: '',
-  sort: '',
+  sort: '-created_at',
 
   searchString: oneWay('search'),
 
