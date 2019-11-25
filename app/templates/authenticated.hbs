@@ -1,7 +1,7 @@
 <div class="w-full max-w-container mx-auto px-6">
   <div class="lg:flex -mx-6">
     {{#if (or this.showSidebar media.isLargeUp)}}
-      <div id="sidebar" class="fixed inset-0 pt-16 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 pt-0 lg:w-1/4 block xl:w-1/5 border-r">
+      <div id="sidebar" class="fixed inset-0 pt-16 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 pt-0 lg:w-1/5 block xl:w-1/5 border-r">
         <div id="nav_wrapper" class="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block relative lg:sticky lg:top-16 bg-white lg:bg-transparent">
           {{#if media.isMobile}}
             <div class="flex justify-end">
@@ -27,7 +27,7 @@
       </div>
     {{/if}}
     <div class="sub-header fixed w-full max-w-container top-16 h-10 z-80 bg-white flex">
-      <div class="border-b lg:w-container-1/4 xl:w-container-1/5 h-full flex items-center order-last lg:order-first">
+      <div class="border-b lg:w-container-1/5 xl:w-container-1/5 h-full flex items-center order-last lg:order-first">
         {{#if media.isMobile}}
           <button {{action (mut this.showSidebar) true}} class="p-2 text-gray-500 text-4xl" aria-label="Menu"> &#9776; </button>
         {{/if}}
