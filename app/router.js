@@ -30,6 +30,7 @@ Router.map(function() {
         this.route('photos');
         this.route('scoops');
         this.route('social');
+        this.route('users');
       });
     });
     this.route('users', function() {

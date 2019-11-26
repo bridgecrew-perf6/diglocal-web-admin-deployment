@@ -54,11 +54,11 @@
   {{/if}}
 </div>
 <div class="treadmill-content__table-body pt-32">
-  {{#ella-treadmill
-    content=model
-    minColumnWidth="100%"
-    row=250 as |item|
-  }}
+  <EllaTreadmill
+    @content={{model}}
+    @minColumnWidth="100%"
+    @row="250" as |item|
+  >
     <User::ListRow @model={{item}} />
-  {{/ella-treadmill}}
+  </EllaTreadmill>
 </div>
