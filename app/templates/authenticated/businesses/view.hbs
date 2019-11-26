@@ -1,4 +1,4 @@
-<nav class="fixed z-10 w-full lg:w-container-3/4 xl:w-container-4/5 bg-white px-2 pt-2 pb-2 h-16 flex flex-wrap items-center">
+<nav class="fixed z-10 w-full lg:w-container-4/5 xl:w-container-4/5 bg-white px-2 pt-2 pb-2 h-16 flex flex-wrap items-center">
   <ul class="tabs w-full">
     <li class="tabs__tab">
       <LinkTo @route="authenticated.businesses.view.index" @model={{model.id}} @class="tabs__link">Details</LinkTo>
@@ -22,6 +22,6 @@
     </li>
   </ul>
 </nav>
-<div class="pt-16 relative lg:max-w-container-3/4 xl:max-w-container-4/5">
+<div class="pt-16 relative lg:max-w-container-4/5 xl:max-w-container-4/5">
   {{outlet}}
 </div>

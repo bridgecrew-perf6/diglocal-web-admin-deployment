@@ -7,20 +7,6 @@
     @screen xl {
       @apply w-container-4/5;
     }
-    /*
-    * Hack to ensure the content in the fixed header isn't cut off at certain screen sizes
-    */
-    & > div {
-      @media screen and (min-width: 1024px) and (max-width: 1099px) {
-        max-width: 85%;
-      }
-      @media screen and (min-width: 1100px) and (max-width: 1179px) {
-        max-width: 88%;
-      }
-      @media screen and (min-width: 1180px) and (max-width: 1280px) {
-        max-width: 95%;
-      }
-    }
   }
 
   &__col-heading {
