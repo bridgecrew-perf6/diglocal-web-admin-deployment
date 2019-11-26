@@ -5,8 +5,13 @@ import { task } from 'ember-concurrency';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   model() {
+    let region = this.store.peekRecord('region', 1);
+
+    if (!region) {
+      region = this.store.push({data: { id: 1, type: 'region' }});
+    }
     return this.store.createRecord('category', {
-      regionId: 1
+      region
     });
   },
   saveModel: task(function*(model) {
