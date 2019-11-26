@@ -5,7 +5,9 @@ import { task } from 'ember-concurrency';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   model() {
-    return this.store.createRecord('category');
+    return this.store.createRecord('category', {
+      regionId: 1
+    });
   },
   saveModel: task(function*(model) {
     yield model.save();
