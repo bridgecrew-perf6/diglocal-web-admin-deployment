@@ -19,6 +19,13 @@
     </LinkTo>
   </card.header>
   <card.body>
+    <p class="mb-2 font-bold text-brand-primary text-sm inline-block tracking-wide" title="Event date">
+      <span class="mr-1">{{if model.eventDate (moment-calendar model.eventDate)}}</span>
+      <CrunchyChip
+        @tagName="li"
+        @label={{if (eq model.isRecurring true) "Recurring" "One Time"}}
+      />
+    </p>
     <p class="text-sm">{{truncate-text model.fineText limit=225}}</p>
     <ul class="absolute left-0 bottom-0 p-2">
       {{#each model.business.categories as |category|}}
@@ -26,11 +33,6 @@
           {{category.longName}}
         </CrunchyChip>
       {{/each}}
-
-      <CrunchyChip
-        @tagName="li"
-        @label={{if (eq model.isRecurring true) "Recurring" "One Time"}}
-      />
 
       {{#if model.ticketUrl}}
         <CrunchyChip @tagName="li" @title={{model.ticketUrl}}>

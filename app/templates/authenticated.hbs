@@ -1,7 +1,7 @@
-<div class="w-full max-w-container mx-auto px-6">
+<div class="w-full mx-auto px-6">
   <div class="lg:flex -mx-6">
     {{#if (or this.showSidebar media.isLargeUp)}}
-      <div id="sidebar" class="fixed inset-0 pt-16 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 pt-0 lg:w-1/5 block xl:w-1/5 border-r">
+      <div id="sidebar" class="fixed inset-0 pt-16 h-full bg-white z-90 w-full border-b -mb-16 lg:-mb-0 lg:static lg:h-auto lg:overflow-y-visible lg:border-b-0 pt-0 lg:w-1/6 block border-r">
         <div id="nav_wrapper" class="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block relative lg:sticky lg:top-16 bg-white lg:bg-transparent">
           {{#if media.isMobile}}
             <div class="flex justify-end">
@@ -14,7 +14,7 @@
               </button>
             </div>
           {{/if}}
-          <nav role="navigation" class="px-6 pt-6 overflow-y-auto text-base lg:text-sm lg:py-12 lg:pt-4 lg:pl-6 lg:pr-8 h-screen-less-16">
+          <nav role="navigation" class="px-6 pt-4 overflow-y-auto text-base lg:text-sm lg:py-12 lg:pt-4 h-(screen-16) xl:w-64 max-w-full xl:ml-auto">
             <div class="mb-8">
               <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
               <LinkTo @class="nav-link" @route="authenticated.businesses">Businesses</LinkTo>
@@ -26,22 +26,20 @@
         </div>
       </div>
     {{/if}}
-    <div class="sub-header fixed w-full max-w-container top-16 h-10 z-80 bg-white flex">
-      <div class="border-b lg:w-container-1/5 xl:w-container-1/5 h-full flex items-center order-last lg:order-first">
+    <div class="sub-header fixed w-full top-16 h-10 z-80 bg-white flex">
+      <div class="border-b lg:border-b-0 lg:w-1/6 h-full flex items-center order-last lg:order-first">
         {{#if media.isMobile}}
-          <button {{action (mut this.showSidebar) true}} class="p-2 text-gray-500 text-4xl" aria-label="Menu"> &#9776; </button>
+          <button {{action (mut this.showSidebar) true}} class="p-2 text-brand-primary text-3xl" aria-label="Menu"> &#9776; </button>
         {{/if}}
       </div>
-      <div class="w-full lg:w-container-3/4 xl:w-container-4/5 h-full flex items-center border-b">
+      <div class="w-full lg:w-5/6 h-full flex items-center border-b">
         <CrunchyBreadcrumbs @class="ml-2"/>
       </div>
     </div>
-    <div id="content_wrapper" class="min-h-screen w-full lg:static lg:max-h-full lg:overflow-visible lg:w-container-3/4 xl:w-container-4/5">
-      <div class="content relative">
-        <main role="main" class="pt-26 pb-16 w-full ">
-          {{outlet}}
-        </main>
-      </div>
+    <div class="w-full lg:static lg:max-h-full lg:overflow-visible lg:w-5/6">
+      <main role="main" class="pt-26 pb-16 w-full relative">
+        {{outlet}}
+      </main>
     </div>
   </div>
 </div>

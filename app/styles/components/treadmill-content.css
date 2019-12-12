@@ -1,11 +1,8 @@
 .treadmill-content {
   &__fixed-header {
-    @apply fixed z-10 w-full bg-white border-b-2 border-brand-primary px-2 py-2 text-sm;
+    @apply fixed z-10 w-full bg-white border-b-2 border-brand-primary px-2 py-2;
     @screen lg {
-      @apply w-container-3/4;
-    }
-    @screen xl {
-      @apply w-container-4/5;
+      @apply w-5/6;
     }
   }
 

@@ -1,7 +1,13 @@
 .crunchy-chip {
   @apply text-brand-primary bg-brand-gray-light;
-}
 
+  &--primary {
+    @apply bg-brand-primary text-white;
+  }
+  &--outline {
+    @apply bg-white border-brand-primary border text-brand-primary;
+  }
+}
 
 .crunchy-breadcrumbs {
   @apply text-sm text-gray-600 font-normal;
