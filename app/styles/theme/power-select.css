@@ -1,0 +1,13 @@
+.ember-power-select-options {
+  .ember-power-select-option {
+    @apply truncate py-1;
+  }
+}
+
+.ember-basic-dropdown-trigger.ember-power-select-trigger {
+  @apply py-1;
+}
+
+.ember-power-select-search-input {
+  @apply py-1;
+}

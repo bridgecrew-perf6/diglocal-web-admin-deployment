@@ -49,6 +49,9 @@
   &__footer {
     @apply px-8;
   }
+  form {
+    @apply text-base;
+  }
 }
 
 .crunchy-media-object {
@@ -72,7 +75,7 @@
     &--no-bg {
       @apply bg-transparent;
     }
-  }  
+  }
 
   &__image {
     @apply bg-contain bg-center bg-no-repeat mx-auto;
