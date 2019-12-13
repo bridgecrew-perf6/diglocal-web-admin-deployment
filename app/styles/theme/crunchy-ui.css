@@ -69,7 +69,10 @@
 
   &__image-wrapper {
     @apply relative bg-brand-gray-light w-full h-full flex-1;
-  }
+    &--no-bg {
+      @apply bg-transparent;
+    }
+  }  
 
   &__image {
     @apply bg-contain bg-center bg-no-repeat mx-auto;
