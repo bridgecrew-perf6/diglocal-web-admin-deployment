@@ -1,47 +1,5 @@
-
-{{!-- <EllaTreadmill
-  @content={{model}}
-  @minColumnWidth="100%"
-  @row="150" as |item|
->
-  <User::ListRow @model={{item}} />
-</EllaTreadmill> --}}
-
-
 <div class="fixed z-10 w-full bg-white px-2 py-2 lg:w-5/6">
-  <div class="flex h-10">
-    <div class="flex relative w-1/3">
-      {{!-- <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
-        <FaIcon @icon="search" />
-      </div>
-      <Input
-        @type="search"
-        @value={{this.searchString}}
-        @key-up={{perform didSearch}}
-        @focus-out={{perform didSearch}}
-        @escape-press={{action "clearSearch"}}
-        @placeholder="Search..."
-        aria-label="Search users"
-        class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" /> --}}
-    </div>
-    <div class="flex w-2/3 items-center justify-between text-gray-600">
-      {{!-- <BasicDropdown as |dd|>
-        <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
-          <FaIcon @icon="filter" @size="xs" /> Roles <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
-        </dd.Trigger>
-        <dd.Content class="shadow p-2 border">
-          <form>
-            {{#each this.roleOptions as |option|}}
-              <div class="p-1">
-                <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{action "addFilter" option.value "roles"}} >
-                <label for={{option.value}}>{{option.label}}</label>
-              </div>
-            {{/each}}
-          </form>
-        </dd.Content>
-      </BasicDropdown>
-      <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} /> --}}
-    </div>
+  <div class="flex h-10 justify-end">
     <CrunchyButton
       @onClick={{action (mut this.showAddUserModal) true}}
       @aria-label="Add a new location"
@@ -50,7 +8,6 @@
       <FaIcon @icon="plus" @size="sm" /> Add User
     </CrunchyButton>
   </div>
-
 </div>
 <div class="treadmill-content__table-body pt-16">
   <EllaTreadmill
@@ -58,7 +15,7 @@
     @minColumnWidth="100%"
     @row="140" as |item|
   >
-    <User::ListRow @model={{item}} />
+    <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
   </EllaTreadmill>
 </div>
 
@@ -73,6 +30,7 @@
     </modal.header>
     <CrunchyForm @model={{this}} @onSubmit={{action "addUser"}} @onCancel={{action "cancel"}} as |form|>
       <modal.body>
+          <p>Added users will have admin privileges for this business, including the ability to create, edit, and delete content.</p>
           <form.field @label="Select user" class="mt-4">
             <PowerSelect
               @search={{perform searchUsers}}
@@ -84,12 +42,14 @@
               @onChange={{action (mut this.userToAdd)}} as |user|
               >
                 <span class="ml-1">{{user.email}}</span>
-                <span class="text-sm text-gray-600">@{{user.user}}</span>
+                {{#if (not (eq user.id this.userToAdd.id))}}<span class="text-sm text-gray-600">@{{user.user}}</span>{{/if}}
             </PowerSelect>
           </form.field>
-          {{#if this.userToAdd}}
-
-          {{/if}}
+          <div class="my-4">
+            {{#if this.userToAdd}}
+              <Business::Owner::ListRow @model={{this.userToAdd}} @isRemovable={{false}} />
+            {{/if}}
+          </div>
       </modal.body>
       <modal.footer class="flex justify-end">
         <form.cancel @value="Cancel" />

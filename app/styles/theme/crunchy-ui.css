@@ -44,7 +44,7 @@
     }
   }
   &__body {
-    @apply px-8;
+    @apply px-8 py-2;
   }
   &__footer {
     @apply px-8;

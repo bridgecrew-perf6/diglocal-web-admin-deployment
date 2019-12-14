@@ -23,12 +23,15 @@ export default Controller.extend({
     return this.store.query('user', { filter });
   }).restartable(),
 
-  saveAction: task(function* () {
-    // the api isn't sending back users via relationships currently...hence next line
-    this.business.get('users').addObjects(this.model.users);
+  saveTask: task(function* () {
     this.business.get('users').addObject(this.userToAdd);
     yield this.business.save();
     set(this, 'showAddUserModal', false);
+  }),
+
+  removeTask: task(function* (user) {
+    this.business.get('users').removeObject(user);
+    yield this.business.save();
   }),
 
   actions: {
@@ -37,10 +40,10 @@ export default Controller.extend({
       this.business.rollbackAttributes();
     },
     addUser() {
-      this.saveAction.perform();
+      this.saveTask.perform();
     },
-    removeUser() {
-
+    removeUser(user) {
+      this.removeTask.perform(user);
     }
   }
 });
