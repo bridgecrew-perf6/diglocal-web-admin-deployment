@@ -25,15 +25,10 @@
         />
       </ul>
     </div>
-    {{#if this.isLinkable}}
-      <LinkTo
-        @route="authenticated.users.view"
-        @model={{model.id}}
-        @aria-label="View user details"
-        class="font-bold text-brand-primary whitespace-no-wrap text-sm block"
-      >
-        View User
-      </LinkTo>
+    {{#if this.isRemovable}}
+      <CrunchyButton @class="crunchy-button--link" @onClick={{action (mut this.showRemoveModal) true}}>
+        <FaIcon @icon="trash" /> Remove
+      </CrunchyButton>
     {{/if}}
   </card.header>
   <card.body>
@@ -53,23 +48,16 @@
         </dd>
       </div>
     </dl>
-    <ul aria-label="Additional profile details for {{model.fullName}}">
-      <CrunchyChip
-        @tagName="li"
-        @label={{model.profileStatus}}
-        @title={{concat "Profile status is " (capitalize model.profileStatus)}}
-      />
-      <CrunchyChip
-        @tagName="li"
-        @title="Sign in count"
-      >
-        <FaIcon @icon="sign-in-alt" />&nbsp;{{model.signInCount}}
-      </CrunchyChip>
-      <CrunchyChip
-        @tagName="li"
-        @label={{html-safe (concat "&hearts; " model.favoritesCount)}}
-        @title={{concat model.favoritesCount " favorites"}}
-      />
-    </ul>
   </card.body>
 </CrunchyMediaObject>
+
+{{#if this.isRemovable}}
+  <CrunchyConfirm
+    @show={{this.showRemoveModal}}
+    @confirmText="Remove"
+    @onConfirm={{action "remove" model}}
+    @onCancel={{action (mut this.showRemoveModal) false}}
+  >
+    <p class="mb-4">Are you sure you want to remove <span class="font-semibold text-brand-accent">{{model.email}}</span> as a business admin?</p>
+  </CrunchyConfirm>
+{{/if}}

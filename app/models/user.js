@@ -1,4 +1,4 @@
-import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
+import Model, { attr, hasMany } from '@ember-data/model';
 import { computed, get } from '@ember/object';
 
 export default Model.extend({
@@ -29,7 +29,7 @@ export default Model.extend({
   headline: attr(),
 
   businesses: hasMany('business'),
-  profileImage: belongsTo('profileImage'),
+  profileImages: hasMany('profileImage'),
 
   profileStatus: computed({
     get() {

@@ -1,18 +1,16 @@
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
-import { get } from '@ember/object';
+import { hash } from 'rsvp';
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  model(params, transition) {
-    let businessId = get(transition, 'to.parent.params.id');
-    let filter = { businesses: businessId };
+  model() {
+    let business = this.modelFor('authenticated.businesses.view');
 
-    return this.store.query('user', { filter });
+    return hash({
+      business,
+      users: business.hasMany('users').reload()
+    });
   },
 
-  actions: {
-    save(model) {
-      model.save();
-    }
-  }
+
 });

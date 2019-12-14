@@ -1,7 +1,13 @@
 .crunchy-chip {
   @apply text-brand-primary bg-brand-gray-light;
-}
 
+  &--primary {
+    @apply bg-brand-primary text-white;
+  }
+  &--outline {
+    @apply bg-white border-brand-primary border text-brand-primary;
+  }
+}
 
 .crunchy-breadcrumbs {
   @apply text-sm text-gray-600 font-normal;
@@ -38,10 +44,13 @@
     }
   }
   &__body {
-    @apply px-8;
+    @apply px-8 py-2;
   }
   &__footer {
     @apply px-8;
+  }
+  form {
+    @apply text-base;
   }
 }
 
@@ -63,6 +72,9 @@
 
   &__image-wrapper {
     @apply relative bg-brand-gray-light w-full h-full flex-1;
+    &--no-bg {
+      @apply bg-transparent;
+    }
   }
 
   &__image {

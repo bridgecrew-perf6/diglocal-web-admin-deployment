@@ -1,0 +1,45 @@
+<div
+  class={{concat "mx-auto flex-none bg-cover bg-center bg-no-repeat text-center overflow-hidden bg-gray-100 "
+    (if @circular "rounded-full " "rounded ")
+  }}
+  style="background-image: url('{{@model.url}}'); height:{{@height}}; width:{{@width}}"
+>
+  {{!-- {{#if this.isEditing}}
+    {{#firebase-uploader
+      pathName=pathName
+      uploadCompleteAction=(action "uploadComplete")
+      class="h-full w-full flex items-center justify-center bg-gray-200 opacity-75"
+      as |uploader|}}
+      <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}}>
+        {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles }}
+          {{#unless uploader.uploadStatuses}}
+            <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+              <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+              Click or drop file here
+            </span>
+          {{/unless}}
+          {{#each uploader.uploadStatuses as |status|}}
+            {{#if (eq status.state "running")}}
+              <img src={{status.preview}} alt="File Upload Preview">
+              <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+            {{/if}}
+          {{/each}}
+        {{/x-file-input}}
+      </CrunchyDraggableDropzone>
+    {{/firebase-uploader}}
+  {{/if}} --}}
+</div>
+
+{{!-- {{#if this.canEdit}}
+  <div class="flex justify-center w-full p-1">
+    <CrunchyButton @class="crunchy-button--link text-sm" @onClick={{perform this.editAvatar}}>
+      <FaIcon @icon="pencil-alt" /> Edit image
+    </CrunchyButton>
+  </div>
+{{else if this.isEditing}}
+  <div class="flex justify-center w-full p-1">
+    <CrunchyButton @class="crunchy-button--link text-sm" @onClick={{action (mut this.isEditing) false}}>
+      Cancel
+    </CrunchyButton>
+  </div>
+{{/if}} --}}

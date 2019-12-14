@@ -1,7 +1,60 @@
-<EllaTreadmill
-  @content={{model}}
-  @minColumnWidth="100%"
-  @row="250" as |item|
->
-  <User::ListRow @model={{item}} />
-</EllaTreadmill>
+<div class="fixed z-10 w-full bg-white px-2 py-2 lg:w-5/6">
+  <div class="flex h-10 justify-end">
+    <CrunchyButton
+      @onClick={{action (mut this.showAddUserModal) true}}
+      @aria-label="Add a new location"
+      @class="crunchy-button--primary whitespace-no-wrap"
+      @disabled={{this.showAddUserModal}}>
+      <FaIcon @icon="plus" @size="sm" /> Add User
+    </CrunchyButton>
+  </div>
+</div>
+<div class="treadmill-content__table-body pt-16">
+  <EllaTreadmill
+    @content={{model.users}}
+    @minColumnWidth="100%"
+    @row="140" as |item|
+  >
+    <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
+  </EllaTreadmill>
+</div>
+
+{{#if this.showAddUserModal}}
+  <CrunchyModal
+    @clickOutsideToClose={{false}}
+    @translucentOverlay={{true}}
+    @onClose={{action "cancel"}}
+    as |modal|>
+    <modal.header>
+      Add a user
+    </modal.header>
+    <CrunchyForm @model={{this}} @onSubmit={{action "addUser"}} @onCancel={{action "cancel"}} as |form|>
+      <modal.body>
+          <p>Added users will have admin privileges for this business, including the ability to create, edit, and delete content.</p>
+          <form.field @label="Select user" class="mt-4">
+            <PowerSelect
+              @search={{perform searchUsers}}
+              @searchEnabled={{true}}
+              @loadingMessage="Searching users...."
+              @placeholder="Click to search"
+              @selected={{this.userToAdd}}
+              @allowClear={{true}}
+              @onChange={{action (mut this.userToAdd)}} as |user|
+              >
+                <span class="ml-1">{{user.email}}</span>
+                {{#if (not (eq user.id this.userToAdd.id))}}<span class="text-sm text-gray-600">@{{user.user}}</span>{{/if}}
+            </PowerSelect>
+          </form.field>
+          <div class="my-4">
+            {{#if this.userToAdd}}
+              <Business::Owner::ListRow @model={{this.userToAdd}} @isRemovable={{false}} />
+            {{/if}}
+          </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <form.cancel @value="Cancel" />
+        <form.submit @class="ml-2">Add User</form.submit>
+      </modal.footer>
+    </CrunchyForm>
+  </CrunchyModal>
+{{/if}}
