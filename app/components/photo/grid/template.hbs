@@ -2,8 +2,24 @@
   @items={{sort-by "position" model}}
   @isHorizontal={{true}}
   @dragEndAction={{action "dragEnd"}} as |item|>
-  <div class="max-w-sm m-2 rounded overflow-hidden shadow-lg">
-    <img class="w-24" src={{item.sizes.medium}} >
-    <span>{{item.position}}</span>
+  <div
+    class={{concat "w-48 h-48 m-4 border rounded overflow-hidden bg-contain bg-no-repeat bg-center relative cursor-pointer "
+      (if (contains item this.selectedPhotos) "shadow-outline ")
+    }}
+    style="background-image: url('{{if item.isNew item.url item.sizes.mobile}}');"
+    {{action "select" item}}
+  >
+    {{!-- <div class="absolute top-0 right-0 w-6 h-6 rounded-full m-1 bg-brand-gray-light text-base font-semiold text-center">
+      {{item.position}}
+    </div> --}}
+    <div class="absolute top-0 right-0 w-6 h-6 flex items-center justify-center m-1">
+      <Input
+        @type="checkbox"
+        @checked={{contains item this.selectedPhotos}}
+        @keyPress={{action "checkboxSelect" item}}
+        @click={{action "checkboxSelect" item}}
+        @touchStart={{action "checkboxSelect" item}}
+      />
+    </div>
   </div>
 </DragSortList>

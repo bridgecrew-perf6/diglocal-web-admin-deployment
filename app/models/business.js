@@ -55,5 +55,5 @@ export default Model.extend(Trackable, {
       return display;
     }
   }),
-  
+
 });
