@@ -42,3 +42,14 @@
     Forgot Password?
   </CrunchyButton>
 {{/if}}
+
+<div class="my-6 flex flex-col items-center">
+  <CrunchyButton @class="crunchy-button--auth crunchy-button--google w-full mb-4 max-w-xs" @onClick={{perform authenticateWithProvider "google"}}>
+    <img class="auth-provider-icon" src="/icons/google.svg">
+    <span class="auth-provider-text"> Sign in with Google </span>
+  </CrunchyButton>
+  <CrunchyButton @class="crunchy-button--auth crunchy-button--facebook w-full mb-4 max-w-xs" @onClick={{perform authenticateWithProvider "facebook"}}>
+    <img class="auth-provider-icon" src="/icons/facebook.svg">
+    <span class="auth-provider-text"> Sign in with Facebook </span>
+  </CrunchyButton>
+</div>
