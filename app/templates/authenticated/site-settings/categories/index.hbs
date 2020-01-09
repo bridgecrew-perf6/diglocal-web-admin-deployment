@@ -31,7 +31,7 @@
     <label class="block text-gray-700 text-sm font-bold mb-2" for="long_name_{{index}}">
       Long Name: {{item.longName}}
       <LinkTo @tagName="button" @route="authenticated.site-settings.categories.view" @model={{item.id}} @aria-label="Edit category {{item.longName}}" class="text-gray-400 hover:text-gray-600 float-right">
-        <FaIcon @icon="edit" />
+        <FaIcon @icon="edit" @size="lg" />
       </LinkTo>
     </label>
 

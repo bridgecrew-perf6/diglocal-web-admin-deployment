@@ -90,5 +90,12 @@ export default Route.extend(AuthenticatedRouteMixin, {
       let record = this.store.createRecord('business');
       this.transitionTo('authenticated.businesses.edit', record);
     },
+    loading(transition) {
+      let controller = this.controllerFor('authenticated.businesses.index');
+      controller.set('isLoading', true);
+      transition.promise.finally(function() {
+        controller.set('isLoading', false);
+      });
+    }
   }
 });

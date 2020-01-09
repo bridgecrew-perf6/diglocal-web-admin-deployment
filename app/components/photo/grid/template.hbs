@@ -9,9 +9,6 @@
     style="background-image: url('{{if item.isNew item.url item.sizes.mobile}}');"
     {{action "select" item}}
   >
-    {{!-- <div class="absolute top-0 right-0 w-6 h-6 rounded-full m-1 bg-brand-gray-light text-base font-semiold text-center">
-      {{item.position}}
-    </div> --}}
     <div class="absolute top-0 right-0 w-6 h-6 flex items-center justify-center m-1">
       <Input
         @type="checkbox"
@@ -23,3 +20,9 @@
     </div>
   </div>
 </DragSortList>
+
+{{#if (or (not this.model) (eq this.model.length 0))}}
+  <div class="border rounded bg-brand-gray-light m-4 p-6 max-w-3xl">
+    <p> No photos found. </p>
+  </div>
+{{/if}}
