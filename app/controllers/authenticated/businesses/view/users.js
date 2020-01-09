@@ -27,6 +27,7 @@ export default Controller.extend({
     this.business.get('users').addObject(this.userToAdd);
     yield this.business.save();
     set(this, 'showAddUserModal', false);
+    set(this, 'userToAdd', null);
   }),
 
   removeTask: task(function* (user) {
