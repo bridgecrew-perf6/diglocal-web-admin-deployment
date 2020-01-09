@@ -55,7 +55,6 @@
     @translucentOverlay={{true}}
     @onClose={{action "cancelUpload"}}
     as |modal|>
-    {{#if (lt this.model.businessImages.length 10)}}
     <DigImageUploader
       @modelType="business-image"
       @belongsToModelType="business"
@@ -100,8 +99,10 @@
       </modal.body>
       <modal.footer class="flex justify-end">
         <ul class="text-sm">
-          {{#if (gt uploader.uploadImageTask.performCount 1)}}
-            <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
             {{#if uploader.errorTasks.length}}
               <li>{{pluralize uploader.errorTasks.length "error"}}</li>
             {{/if}}
@@ -112,14 +113,5 @@
         </ul>
       </modal.footer>
     </DigImageUploader>
-    {{else}}
-      <modal.header>
-        Oh no!
-      </modal.header>
-      <modal.body>
-        <p class="mb-2">This business already has 10 photos uploaded.</p>
-        <p>If you want to upload new photos, you will need to delete some existing ones first.</p>
-      </modal.body>
-    {{/if}}
   </CrunchyModal>
 {{/if}}

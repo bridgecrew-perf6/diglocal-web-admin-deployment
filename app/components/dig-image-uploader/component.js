@@ -107,7 +107,6 @@ export default Component.extend({
     this.setProperties({
       totalFiles: 0,
       totalFilesUploaded: 0,
-      uploadLimit: 10
     });
     this._super(...arguments);
   },
@@ -117,7 +116,7 @@ export default Component.extend({
       set(this, 'totalFiles', files.length);
 
       for (let file of files) {
-        this.uploadTasks.pushObject(this.uploadImageTask.perform(file, this.store));
+        this.uploadTasks.pushObject(this.uploadImageTask.perform(file));
       }
     }
   }
