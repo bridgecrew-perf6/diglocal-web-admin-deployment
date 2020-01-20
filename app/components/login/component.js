@@ -50,7 +50,8 @@ export default Component.extend(Validations, {
     const auth = yield get(this, 'firebaseApp').auth();
     try {
       const authProvider = new firebase.auth[`${capitalize(provider)}AuthProvider`]();
-      return auth.signInWithPopup(authProvider);
+      let authenticatedUser = yield auth.signInWithPopup(authProvider);
+      return authenticatedUser;
     } catch(e) {
       // console.log(e);
       set(this, 'error', e);

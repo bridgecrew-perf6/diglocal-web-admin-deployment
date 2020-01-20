@@ -4,7 +4,9 @@
   as |form|
 >
   {{#if this.error}}
-    <p class="text-red-600 text-xs font-semibold mb-3"> {{or this.error.message "Oops! An unknown error occurred."}} </p>
+    <DigErrorsList as |list|>
+      <list.error>{{or this.error.message "An unknown error occurred."}}</list.error>
+    </DigErrorsList>
   {{/if}}
 
   <div class="mb-4">
