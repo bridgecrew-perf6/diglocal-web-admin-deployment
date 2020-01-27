@@ -45,6 +45,12 @@
     @disabled={{this.isReadonly}}
   />
 
+  <form.checkbox
+    @field="active"
+    @label="Active?"
+    @disabled={{this.active}}
+  />
+
   {{#if this.isEditing}}
     <div class="flex justify-between mt-8">
       <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
