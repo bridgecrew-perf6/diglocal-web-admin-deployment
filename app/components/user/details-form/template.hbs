@@ -24,10 +24,10 @@
   as |form|>
 
   <form.text-field
-    @field="user"
-    @label="User Name"
-    @aria-label="Uer Name"
-    @disabled="true" {{!-this.isReadonly--}}
+    @field="publicName"
+    @label="Public Name"
+    @aria-label="Public Name"
+    @disabled={{this.isReadonly}}
   />
 
   <form.text-field
@@ -47,6 +47,13 @@
     @field="admin"
     @label="Admin"
     @disabled={{this.isReadonly}}
+  />
+
+  <form.text-field
+    @field="user"
+    @label="User Name"
+    @aria-label="User Name"
+    @disabled="true" {{!-this.isReadonly--}}
   />
 
   {{#if this.isEditing}}
