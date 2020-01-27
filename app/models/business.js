@@ -1,4 +1,4 @@
-import Model, { attr, hasMany } from '@ember-data/model';
+import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import Trackable from './mixins/trackable';
 import { computed } from '@ember/object';
 
@@ -27,8 +27,9 @@ export default Model.extend(Trackable, {
 
   businessImages: hasMany('businessImage'),
   categories: hasMany('category'),
-  scoops: hasMany('scoop'),
   locations: hasMany('location'),
+  region: belongsTo('region'),
+  scoops: hasMany('scoop'),
   users: hasMany('user'),
 
   /*************************

@@ -9,5 +9,9 @@ export default Model.extend({
   metaDescription: attr(),
   metaH1: attr(),
 
+  /*************************
+  **  Relationships       **
+  *************************/
+
   region: belongsTo('region')
 });

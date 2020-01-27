@@ -36,7 +36,15 @@ export default Model.extend({
   marqueeScoopImpressionApp: attr(),
   marqueeScoopImpressionBrowser: attr(),
 
+  /*************************
+  **  Relationships       **
+  *************************/
+
   business: belongsTo('business'),
+
+  /*************************
+  ** Computed  Properties **
+  *************************/
 
   formattedDate: computed('id', {
     get() {

@@ -14,5 +14,9 @@ export default Model.extend({
   postAt: attr(),
   image: attr(),
 
+  /*************************
+  **  Relationships       **
+  *************************/
+
   business: belongsTo('business'),
 });

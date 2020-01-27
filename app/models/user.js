@@ -28,6 +28,10 @@ export default Model.extend({
   bio: attr(),
   headline: attr(),
 
+  /*************************
+  **  Relationships       **
+  *************************/
+
   businesses: hasMany('business'),
   profileImages: hasMany('profileImage'),
 

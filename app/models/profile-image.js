@@ -5,5 +5,9 @@ export default Model.extend({
   url: attr(),
   sizes: attr(),
 
+  /*************************
+  **  Relationships       **
+  *************************/
+
   user: belongsTo('user')
 });

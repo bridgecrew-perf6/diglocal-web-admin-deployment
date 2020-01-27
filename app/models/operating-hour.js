@@ -6,5 +6,9 @@ export default Model.extend({
   dayOfWeek: attr(),
   openTime: attr(),
 
+  /*************************
+  **  Relationships       **
+  *************************/
+
   location: belongsTo('location')
 });
