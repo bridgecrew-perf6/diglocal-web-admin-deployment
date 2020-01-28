@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noEmitOnError": false,
+    "noEmit": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "baseUrl": ".",
+    "module": "es6",
+    "experimentalDecorators": true,
+    "paths": {
+      "diglocal-manage/tests/*": [
+        "tests/*"
+      ],
+      "diglocal-manage/*": [
+        "app/*",
+        "lib/crunchy-ui/app/*"
+      ],
+      "crunchy-ui": [
+        "lib/crunchy-ui/addon"
+      ],
+      "crunchy-ui/*": [
+        "lib/crunchy-ui/addon/*"
+      ],
+      "crunchy-ui/test-support": [
+        "lib/crunchy-ui/addon-test-support"
+      ],
+      "crunchy-ui/test-support/*": [
+        "lib/crunchy-ui/addon-test-support/*"
+      ],
+      "*": [
+        "types/*"
+      ]
+    }
+  },
+  "include": [
+    "app/**/*",
+    "tests/**/*",
+    "types/**/*",
+    "lib/crunchy-ui/**/*"
+  ]
+}
