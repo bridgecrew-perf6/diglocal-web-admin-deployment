@@ -2,9 +2,8 @@ import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import { classNames, classNameBindings } from '@ember-decorators/component';
 import { not } from '@ember/object/computed';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-@classic
 @classNames('border rounded p-4')
 @classNameBindings('isEditing:bg-gray-100')
 export default class DetailsForm extends Component {
@@ -20,25 +19,25 @@ export default class DetailsForm extends Component {
     }
   }
 
-  willDestroyElement() {
+  willDestroy() {
     this.rollbackModel();
     this.setProperties({
       showDestroyModal: false,
       isEditing: false
     });
-    super.willDestroyElement(...arguments);
+    super.willDestroy(...arguments);
   }
 
   @action
   save() {
     this.model.save();
-    this.set('isEditing', false);
+    this.isEditing = false;
   }
 
   @action
   cancel() {
     this.rollbackModel();
-    this.set('isEditing', false);
+    this.isEditing = false;
   }
 
   @action
