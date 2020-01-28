@@ -10,8 +10,7 @@ import Component from '@ember/component';
 export default class DetailsForm extends Component {
   isEditing = false;
 
-  @not('isEditing')
-  isReadonly;
+  @not('isEditing') isReadonly;
 
   showDestroyModal = false;
 

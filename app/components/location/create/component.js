@@ -5,8 +5,7 @@ import { get, set, action, computed } from '@ember/object';
 
 @classic
 export default class Create extends Component {
-  @service
-  store;
+  @service store;
 
   @computed('business', 'newRecord.isDeleted')
   get hasNewRecord() {

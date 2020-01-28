@@ -8,8 +8,7 @@ import Component from '@ember/component';
 @tagName('header')
 @classNames('header')
 export default class Header extends Component {
-  @service
-  session;
+  @service session;
 
   onLogout() {}
 

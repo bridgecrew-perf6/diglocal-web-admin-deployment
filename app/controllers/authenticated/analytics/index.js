@@ -18,11 +18,9 @@ export default class IndexController extends Controller {
   search = '';
   dateRange = [moment().subtract(1, 'month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 
-  @oneWay('dateRange')
-  range;
+  @oneWay('dateRange') range;
 
-  @oneWay('search')
-  searchString;
+  @oneWay('search') searchString;
 
   grouping = 'day';
 

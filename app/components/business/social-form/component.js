@@ -10,13 +10,11 @@ import { task } from 'ember-concurrency';
 @classNames('border rounded p-4')
 @classNameBindings('isEditing:bg-gray-100')
 export default class SocialForm extends Component {
-  @service
-  store;
+  @service store;
 
   isEditing = false;
 
-  @not('isEditing')
-  isReadonly;
+  @not('isEditing') isReadonly;
 
   showDestroyModal = false;
 

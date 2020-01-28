@@ -5,11 +5,8 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
-  @service
-  session;
-
-  @service
-  firebaseApp;
+  @service session;
+  @service firebaseApp;
 
   model() {
     // return this.firebaseApp.auth().then(({currentUser}) =>

@@ -6,11 +6,8 @@ import { task, all } from 'ember-concurrency';
 
 @classic
 export default class PhotosController extends Controller {
-  @service
-  store;
-
-  @service
-  session;
+  @service store;
+  @service session;
 
   init() {
     super.init(...arguments);

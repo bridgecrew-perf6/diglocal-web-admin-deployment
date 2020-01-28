@@ -6,8 +6,7 @@ import Component from '@ember/component';
 
 @classic
 export default class EditableAvatar extends Component {
-  @service
-  uploader;
+  @service uploader;
 
   pathName = '/assets/images/';
   keyForAvatar = 'avatar';

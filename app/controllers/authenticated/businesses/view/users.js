@@ -11,11 +11,8 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
 
 @classic
 export default class UsersController extends Controller {
-  @service
-  store;
-
-  @alias('model.business')
-  business;
+  @service store;
+  @alias('model.business') business;
 
   showAddUserModal = false;
   userToAdd = null;

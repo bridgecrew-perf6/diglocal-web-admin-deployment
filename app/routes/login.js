@@ -4,8 +4,7 @@ import Route from '@ember/routing/route';
 
 @classic
 export default class LoginRoute extends Route {
-  @service
-  session;
+  @service session;
 
   beforeModel() {
     if (this.session.isAuthenticated) {

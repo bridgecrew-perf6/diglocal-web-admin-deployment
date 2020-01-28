@@ -5,78 +5,34 @@ import Trackable from './mixins/trackable';
 
 @classic
 export default class Business extends Model.extend(Trackable) {
-  @attr()
-  description2;
-
-  @attr()
-  description;
-
-  @attr()
-  embedFacebookEnabled;
-
-  @attr()
-  embedInstagramEnabled;
-
-  @attr()
-  embedTwitterEnabled;
-
-  @attr()
-  facebookUrl;
-
-  @attr()
-  featured;
-
-  @attr()
-  followersCount;
-
-  @attr()
-  instagramUrl;
-
-  @attr()
-  likesCount;
-
-  @attr()
-  logo;
-
-  @attr()
-  name;
-
-  @attr()
-  numberOfLocations;
-
-  @attr()
-  tip;
-
-  @attr()
-  twitterUrl;
-
-  @attr()
-  website;
-
-  @attr()
-  role;
+  @attr() description2;
+  @attr() description;
+  @attr() embedFacebookEnabled;
+  @attr() embedInstagramEnabled;
+  @attr() embedTwitterEnabled;
+  @attr() facebookUrl;
+  @attr() featured;
+  @attr() followersCount;
+  @attr() instagramUrl;
+  @attr() likesCount;
+  @attr() logo;
+  @attr() name;
+  @attr() numberOfLocations;
+  @attr() tip;
+  @attr() twitterUrl;
+  @attr() website;
+  @attr() role;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  @hasMany('businessImage')
-  businessImages;
-
-  @hasMany('category')
-  categories;
-
-  @hasMany('location')
-  locations;
-
-  @belongsTo('region')
-  region;
-
-  @hasMany('scoop')
-  scoops;
-
-  @hasMany('user')
-  users;
+  @belongsTo('region') region;
+  @hasMany('businessImage') businessImages;
+  @hasMany('category') categories;
+  @hasMany('location') locations;
+  @hasMany('scoop') scoops;
+  @hasMany('user') users;
 
   /*************************
   ** Computed  Properties **
