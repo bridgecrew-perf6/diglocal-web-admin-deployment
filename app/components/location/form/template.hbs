@@ -116,7 +116,7 @@
   </label>
 
   <fieldset name="hours-of-operation">
-    {{#each model.operatingHours as |item|}}
+    {{#each this.model.operatingHours as |item|}}
       <EmberFlatpickr
         @allowInput={{true}}
         @appendDataInput={{true}}
@@ -172,6 +172,6 @@
   @onConfirm={{action "delete"}}
   @onCancel={{action (mut this.showDestroyModal) false}}
 >
-  <p>Are you sure you want to delete the location <span class="font-semibold text-brand-primary">{{model.title}}</span>?</p>
+  <p>Are you sure you want to delete the location <span class="font-semibold text-brand-primary">{{this.model.title}}</span>?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>

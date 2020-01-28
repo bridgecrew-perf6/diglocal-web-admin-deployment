@@ -18,7 +18,7 @@
 </div>
 
 <CrunchyForm
-  @model={{model}}
+  @model={{this.model}}
   @onSubmit={{action "save"}}
   @onCancel={{action "cancel"}}
   as |form|>
@@ -77,6 +77,6 @@
   @onConfirm={{action "delete"}}
   @onCancel={{action (mut this.showDestroyModal) false}}
 >
-  <p>Are you sure you want to delete the category <span class="font-semibold text-brand-primary">{{model.longName}}</span>?</p>
+  <p>Are you sure you want to delete the category <span class="font-semibold text-brand-primary">{{this.model.longName}}</span>?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>

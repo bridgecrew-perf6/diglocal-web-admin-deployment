@@ -3,15 +3,15 @@
     <card.image
       @height="190px"
       @width="190px"
-      @url={{model.image.sizes.thumbx2}}
+      @url={{this.model.image.sizes.thumbx2}}
       class="border-r"
     />
   {{/if}}
   <card.header class="flex justify-between">
-    <p class="font-bold text-xl mb-2">{{model.description}}</p>
+    <p class="font-bold text-xl mb-2">{{this.model.description}}</p>
     <LinkTo
       @route="authenticated.scoops.view"
-      @model={{model.id}}
+      @model={{this.model.id}}
       @aria-label="View scoop details"
       class="font-bold text-brand-primary whitespace-no-wrap text-sm"
     >
@@ -20,22 +20,22 @@
   </card.header>
   <card.body>
     <p class="mb-2 font-bold text-brand-primary text-sm inline-block tracking-wide" title="Event date">
-      <span class="mr-1">{{if model.eventDate (moment-calendar model.eventDate)}}</span>
+      <span class="mr-1">{{if this.model.eventDate (moment-calendar this.model.eventDate)}}</span>
       <CrunchyChip
         @tagName="li"
-        @label={{if (eq model.isRecurring true) "Recurring" "One Time"}}
+        @label={{if (eq this.model.isRecurring true) "Recurring" "One Time"}}
       />
     </p>
-    <p class="text-sm">{{truncate-text model.fineText limit=225}}</p>
+    <p class="text-sm">{{truncate-text this.model.fineText limit=225}}</p>
     <ul class="absolute left-0 bottom-0 p-2">
-      {{#each model.business.categories as |category|}}
+      {{#each this.model.business.categories as |category|}}
         <CrunchyChip @tagName="li">
           {{category.longName}}
         </CrunchyChip>
       {{/each}}
 
-      {{#if model.ticketUrl}}
-        <CrunchyChip @tagName="li" @title={{model.ticketUrl}}>
+      {{#if this.model.ticketUrl}}
+        <CrunchyChip @tagName="li" @title={{this.model.ticketUrl}}>
           <FaIcon @icon="ticket-alt" />
         </CrunchyChip>
       {{/if}}

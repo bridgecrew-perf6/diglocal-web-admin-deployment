@@ -21,12 +21,12 @@
         </g>
       </svg>
     </div>
-    {{#if session.isAuthenticated}}
+    {{#if this.session.isAuthenticated}}
       <LinkTo @route="authenticated"> DigLocal Adminstrator Tool </LinkTo>
     {{/if}}
   </div>
   <div class="header-nav-right">
-    {{#if session.isAuthenticated}}
+    {{#if this.session.isAuthenticated}}
       <CrunchyButton @onClick={{action "logout"}} @class="crunchy-button--link crunchy-button--link-bold">
         Logout
       </CrunchyButton>

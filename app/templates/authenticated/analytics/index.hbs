@@ -7,8 +7,8 @@
       <Input
         @type="search"
         @value={{this.searchString}}
-        @key-up={{perform didSearch}}
-        @focus-out={{perform didSearch}}
+        @key-up={{perform this.didSearch}}
+        @focus-out={{perform this.didSearch}}
         @escape-press={{action "clearSearch"}}
         @placeholder="Search..."
         aria-label="Search for business..."
@@ -21,10 +21,10 @@
           <EmberFlatpickr
             @allowInput={{false}}
             @appendDataInput={{true}}
-            @date={{readonly dateRange}}
+            @date={{readonly this.dateRange}}
             @mode="range"
-            @onClose={{perform didSearch}}
-            @onChange={{action (mut dateRange)}}
+            @onClose={{perform this.didSearch}}
+            @onChange={{action (mut this.dateRange)}}
             @onReady={{action "onReady"}}
             @placeholder="Pick start date"
             class="rounded border-0 p-3 pl-8 w-64 border border-gray-300 bg-gray-100 focus:bg-white h-10"
@@ -46,7 +46,7 @@
 </div>
 <div class="treadmill-content__table-body pt-40">
   {{#ella-treadmill
-    content=model
+    content=this.model
     minColumnWidth="100%"
     row=48 as |item|
   }}

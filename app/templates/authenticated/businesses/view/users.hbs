@@ -12,7 +12,7 @@
 </div>
 <div class="treadmill-content__table-body pt-16">
   <EllaTreadmill
-    @content={{model.users}}
+    @content={{this.model.users}}
     @minColumnWidth="100%"
     @row="140" as |item|
   >
@@ -34,7 +34,7 @@
           <p>Added users will have admin privileges for this business, including the ability to create, edit, and delete content.</p>
           <form.field @label="Select user" class="mt-4">
             <PowerSelect
-              @search={{perform searchUsers}}
+              @search={{perform this.searchUsers}}
               @searchEnabled={{true}}
               @loadingMessage="Searching users...."
               @placeholder="Click to search"
