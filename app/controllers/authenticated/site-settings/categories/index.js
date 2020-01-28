@@ -1,31 +1,34 @@
-import Controller from '@ember/controller';
-import { set, setProperties } from '@ember/object';
+import classic from 'ember-classic-decorator';
 import { oneWay } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { set, setProperties, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import config from 'diglocal-manage/config/environment';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
-export default Controller.extend({
-  queryParams: [
+@classic
+export default class IndexController extends Controller {
+  queryParams = [
     'search'
-  ],
+  ];
 
-  search: '',
+  search = '';
 
-  searchString: oneWay('search'),
+  @oneWay('search')
+  searchString;
 
-  didSearch: task(function* () {
+  @(task(function* () {
     yield timeout(INPUT_DEBOUNCE);
     set(this, 'search', this.searchString);
-  }).restartable(),
+  }).restartable())
+  didSearch;
 
-  actions: {
-    clearSearch() {
-      setProperties(this, {
-        search: '',
-        searchString: ''
-      });
-    }
+  @action
+  clearSearch() {
+    setProperties(this, {
+      search: '',
+      searchString: ''
+    });
   }
-});
+}

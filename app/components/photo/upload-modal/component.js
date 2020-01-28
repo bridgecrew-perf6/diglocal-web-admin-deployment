@@ -1,6 +1,6 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Component from '@ember/component';
 
-export default Component.extend({
-  actions: {
-  }
-});
+@classic
+export default class UploadModal extends Component {}

@@ -1,18 +1,23 @@
-import Controller from '@ember/controller';
-import {  set } from '@ember/object';
-import { task, all } from 'ember-concurrency';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
+import { set, action } from '@ember/object';
+import { task, all } from 'ember-concurrency';
 
-export default Controller.extend({
-  store: service(),
-  session: service(),
+@classic
+export default class PhotosController extends Controller {
+  @service
+  store;
+
+  @service
+  session;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     set(this, 'selectedPhotos', []);
-  },
+  }
 
-  deleteItems: task(function*(items) {
+  @task(function*(items) {
     try {
       items.invoke('deleteRecord');
       yield all(items.invoke('save'));
@@ -24,29 +29,37 @@ export default Controller.extend({
       set(this, 'errorMessage', 'Oops! An error occurred. Unable to delete all selected photos.');
     }
     set(this, 'showDestroyModal', false);
-  }),
+  })
+  deleteItems;
 
-  onUploadComplete: task(function*(/*response*/) {
-  }).enqueue(),
+  @(task(function*(/*response*/) {
+  }).enqueue())
+  onUploadComplete;
 
-  onAllFilesUploadComplete: task(function*() {
+  @task(function*() {
     yield this.model.business.hasMany('businessImages').reload();
     set(this, 'showUploadModal', false);
-  }),
+  })
+  onAllFilesUploadComplete;
 
-  actions: {
-    cancelUpload() {
-      set(this, 'showUploadModal', false);
-    },
-    didSelectFile([ file ]) {
-      this.postPhoto.perform(file);
-    },
-    deleteSelected() {
-      set(this, 'errorMessage', null);
-      this.deleteItems.perform(this.selectedPhotos);
-    },
-    clearAllSelected() {
-      this.selectedPhotos.clear();
-    }
+  @action
+  cancelUpload() {
+    set(this, 'showUploadModal', false);
   }
-});
+
+  @action
+  didSelectFile([ file ]) {
+    this.postPhoto.perform(file);
+  }
+
+  @action
+  deleteSelected() {
+    set(this, 'errorMessage', null);
+    this.deleteItems.perform(this.selectedPhotos);
+  }
+
+  @action
+  clearAllSelected() {
+    this.selectedPhotos.clear();
+  }
+}

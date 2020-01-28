@@ -1,6 +1,7 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({
-  classNames: [ 'dig-errors bg-white font-medium' ],
-
-});
+@classic
+@classNames('dig-errors bg-white font-medium')
+export default class DigErrorsList extends Component {}

@@ -1,14 +1,22 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import Trackable from './mixins/trackable';
 
-export default Model.extend(Trackable, {
-  sizes: attr(),
-  url: attr(),
-  position: attr(),
+@classic
+export default class BusinessImage extends Model.extend(Trackable) {
+  @attr()
+  sizes;
+
+  @attr()
+  url;
+
+  @attr()
+  position;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  business: belongsTo('business')
-});
+  @belongsTo('business')
+  business;
+}

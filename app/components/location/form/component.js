@@ -1,21 +1,25 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
+import { classNames, classNameBindings } from '@ember-decorators/component';
 import { not } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Component.extend({
-  isEditing: false,
-  isReadonly: not('isEditing'),
+@classic
+@classNames('border rounded p-4')
+@classNameBindings('isEditing:bg-gray-100')
+export default class Form extends Component {
+  isEditing = false;
 
-  classNames: [ 'border rounded p-4' ],
+  @not('isEditing')
+  isReadonly;
 
-  classNameBindings: [ 'isEditing:bg-gray-100' ],
-
-  showDestroyModal:  false,
+  showDestroyModal = false;
 
   rollbackModel() {
     if (this.model && this.model.get('hasDirtyAttributes')) {
       this.model.rollbackAttributes();
     }
-  },
+  }
 
   willDestroyElement() {
     this.rollbackModel();
@@ -23,23 +27,27 @@ export default Component.extend({
       showDestroyModal: false,
       isEditing: false
     });
-    this._super(...arguments);
-  },
+    super.willDestroyElement(...arguments);
+  }
 
-  actions: {
-    onReady() {},
+  @action
+  onReady() {}
 
-    save() {
-      this.model.save();
-      this.set('isEditing', false);
-    },
-    cancel() {
-      this.rollbackModel();
-      this.set('isEditing', false);
-    },
-    delete() {
-      this.model.deleteRecord();
-      this.model.save();
-    },
-  },
-});
+  @action
+  save() {
+    this.model.save();
+    this.set('isEditing', false);
+  }
+
+  @action
+  cancel() {
+    this.rollbackModel();
+    this.set('isEditing', false);
+  }
+
+  @action
+  delete() {
+    this.model.deleteRecord();
+    this.model.save();
+  }
+}

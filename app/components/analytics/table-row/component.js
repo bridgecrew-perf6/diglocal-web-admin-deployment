@@ -1,5 +1,7 @@
+import classic from 'ember-classic-decorator';
+import { classNames } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({
-  classNames: [ 'analytics-table-row' ],
-});
+@classic
+@classNames('analytics-table-row')
+export default class TableRow extends Component {}

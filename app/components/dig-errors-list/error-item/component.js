@@ -1,6 +1,8 @@
+import classic from 'ember-classic-decorator';
+import { classNames, tagName } from '@ember-decorators/component';
 import Component from '@ember/component';
 
-export default Component.extend({
-  tagName: 'li',
-  classNames: 'dig-errors__item'
-});
+@classic
+@tagName('li')
+@classNames('dig-errors__item')
+export default class ErrorItem extends Component {}

@@ -1,50 +1,60 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
+import { alias } from '@ember/object/computed';
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { set } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { set, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import { inject as service } from '@ember/service';
 import removeFalsy from 'diglocal-manage/helpers/remove-falsy';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
 
-export default Controller.extend({
-  store: service(),
+@classic
+export default class UsersController extends Controller {
+  @service
+  store;
 
-  business: alias('model.business'),
+  @alias('model.business')
+  business;
 
-  showAddUserModal: false,
-  userToAdd: null,
+  showAddUserModal = false;
+  userToAdd = null;
 
-  searchUsers: task(function* (search) {
+  @(task(function* (search) {
     yield timeout(INPUT_DEBOUNCE);
     let filter = Object.assign({}, { search });
     filter = removeFalsy(filter);
     return this.store.query('user', { filter });
-  }).restartable(),
+  }).restartable())
+  searchUsers;
 
-  saveTask: task(function* () {
+  @task(function* () {
     this.business.get('users').addObject(this.userToAdd);
     yield this.business.save();
     set(this, 'showAddUserModal', false);
     set(this, 'userToAdd', null);
-  }),
+  })
+  saveTask;
 
-  removeTask: task(function* (user) {
+  @task(function* (user) {
     this.business.get('users').removeObject(user);
     yield this.business.save();
-  }),
+  })
+  removeTask;
 
-  actions: {
-    cancel() {
-      set(this, 'showAddUserModal', false);
-      this.business.rollbackAttributes();
-    },
-    addUser() {
-      this.saveTask.perform();
-    },
-    removeUser(user) {
-      this.removeTask.perform(user);
-    }
+  @action
+  cancel() {
+    set(this, 'showAddUserModal', false);
+    this.business.rollbackAttributes();
   }
-});
+
+  @action
+  addUser() {
+    this.saveTask.perform();
+  }
+
+  @action
+  removeUser(user) {
+    this.removeTask.perform(user);
+  }
+}

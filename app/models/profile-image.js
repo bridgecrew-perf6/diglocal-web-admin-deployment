@@ -1,13 +1,21 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  position: attr(),
-  url: attr(),
-  sizes: attr(),
+@classic
+export default class ProfileImage extends Model {
+  @attr()
+  position;
+
+  @attr()
+  url;
+
+  @attr()
+  sizes;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  user: belongsTo('user')
-});
+  @belongsTo('user')
+  user;
+}

@@ -1,14 +1,24 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  closed: attr(),
-  closeTime: attr(),
-  dayOfWeek: attr(),
-  openTime: attr(),
+@classic
+export default class OperatingHour extends Model {
+  @attr()
+  closed;
+
+  @attr()
+  closeTime;
+
+  @attr()
+  dayOfWeek;
+
+  @attr()
+  openTime;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  location: belongsTo('location')
-});
+  @belongsTo('location')
+  location;
+}

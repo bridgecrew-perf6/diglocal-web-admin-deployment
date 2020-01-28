@@ -1,15 +1,16 @@
+import classic from 'ember-classic-decorator';
+import { action } from '@ember/object';
 import Component from '@ember/component';
 
-export default Component.extend({
-  isRemovable: true,
-  showRemoveModal: false,
+@classic
+export default class ListRow extends Component {
+  isRemovable = true;
+  showRemoveModal = false;
+  onRemove() {}
 
-  onRemove() {},
-
-  actions: {
-    remove() {
-      this.onRemove(this.model);
-      this.set('showRemoveModal', false);
-    }
+  @action
+  remove() {
+    this.onRemove(this.model);
+    this.set('showRemoveModal', false);
   }
-});
+}

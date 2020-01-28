@@ -1,22 +1,48 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  active: attr(),
-  description: attr(),
-  eventDate: attr(),
-  eventEndTime: attr(),
-  eventStartTime: attr(),
-  fineText: attr(),
-  image: attr(),
-  imageThumb: attr(),
-  isRecurring: attr(),
-  paidRank: attr(),
-  postAt: attr(),
-  ticketUrl: attr(),
+@classic
+export default class Scoop extends Model {
+  @attr()
+  active;
+
+  @attr()
+  description;
+
+  @attr()
+  eventDate;
+
+  @attr()
+  eventEndTime;
+
+  @attr()
+  eventStartTime;
+
+  @attr()
+  fineText;
+
+  @attr()
+  image;
+
+  @attr()
+  imageThumb;
+
+  @attr()
+  isRecurring;
+
+  @attr()
+  paidRank;
+
+  @attr()
+  postAt;
+
+  @attr()
+  ticketUrl;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  business: belongsTo('business'),
-});
+  @belongsTo('business')
+  business;
+}

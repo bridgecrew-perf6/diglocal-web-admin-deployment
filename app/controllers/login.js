@@ -1,5 +1,7 @@
+import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  isLogin: true
-});
+@classic
+export default class LoginController extends Controller {
+  isLogin = true;
+}

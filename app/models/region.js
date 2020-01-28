@@ -1,13 +1,21 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, hasMany } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr(),
-  longName: attr(),
+@classic
+export default class Region extends Model {
+  @attr()
+  name;
+
+  @attr()
+  longName;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  businesses: hasMany('business'),
-  categories: hasMany('category')
-});
+  @hasMany('business')
+  businesses;
+
+  @hasMany('category')
+  categories;
+}
