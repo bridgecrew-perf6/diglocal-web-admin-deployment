@@ -1,12 +1,13 @@
 import { action } from '@ember/object';
 import { classNames, classNameBindings } from '@ember-decorators/component';
 import { not } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 
 @classNames('border rounded p-4')
 @classNameBindings('isEditing:bg-gray-100')
 export default class DetailsForm extends Component {
-  isEditing = false;
+  @tracked isEditing = false;
 
   @not('isEditing') isReadonly;
 
