@@ -4,14 +4,9 @@ import Controller from '@ember/controller';
 
 @classic
 export default class AuthenticatedController extends Controller {
-  @service('session')
-  session;
-
-  @service
-  router;
-
-  @service('media')
-  media;
+  @service session;
+  @service router;
+  @service media;
 
   init() {
     super.init(...arguments);

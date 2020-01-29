@@ -1,4 +1,3 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import { classNames, classNameBindings } from '@ember-decorators/component';
 import { not } from '@ember/object/computed';
@@ -14,8 +13,8 @@ export default class DetailsForm extends Component {
   showDestroyModal = false;
 
   rollbackModel() {
-    if (this.model && this.model.get('hasDirtyAttributes')) {
-      this.model.rollbackAttributes();
+    if (this.args.model && this.args.model.get('hasDirtyAttributes')) {
+      this.args.model.rollbackAttributes();
     }
   }
 
@@ -30,7 +29,7 @@ export default class DetailsForm extends Component {
 
   @action
   save() {
-    this.model.save();
+    this.args.model.save();
     this.isEditing = false;
   }
 
@@ -42,8 +41,8 @@ export default class DetailsForm extends Component {
 
   @action
   delete() {
-    this.model.deleteRecord();
-    this.model.save();
+    this.args.model.deleteRecord();
+    this.args.model.save();
     this.router.transitionTo('authenticated.businesses');
   }
 }

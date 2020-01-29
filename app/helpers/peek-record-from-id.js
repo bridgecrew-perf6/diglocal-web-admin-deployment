@@ -9,8 +9,7 @@ import Helper from '@ember/component/helper';
 */
 @classic
 export default class PeekRecordFromId extends Helper {
-  @service
-  store;
+  @service store;
 
   compute([ id, recordType ]) {
     if (!id || !recordType) {

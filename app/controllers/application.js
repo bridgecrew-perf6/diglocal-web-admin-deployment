@@ -6,17 +6,11 @@ import { get, action, computed } from '@ember/object';
 
 @classic
 export default class ApplicationController extends Controller {
-  @service('session')
-  session;
+  @service session;
+  @service firebaseApp;
+  @service router;
 
-  @service
-  firebaseApp;
-
-  @service
-  router;
-
-  @readOnly('session.isAuthenticated')
-  isAuthenticated;
+  @readOnly('session.isAuthenticated') isAuthenticated;
 
   @computed('router.currentRouteName')
   get displayOutlet() {
