@@ -18,7 +18,6 @@ const Validations = buildValidations({
   }),
 });
 
-
 export default Component.extend(Validations, {
   session: service('session'),
   firebaseApp: service(),
