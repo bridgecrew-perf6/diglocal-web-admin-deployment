@@ -7,8 +7,8 @@
       <Input
         @type="search"
         @value={{this.searchString}}
-        @key-up={{perform didSearch}}
-        @focus-out={{perform didSearch}}
+        @key-up={{perform this.didSearch}}
+        @focus-out={{perform this.didSearch}}
         @escape-press={{action "clearSearch"}}
         @placeholder="Search..."
         aria-label="Search users"
@@ -24,7 +24,7 @@
 
 <div class="treadmill-content__table-body pt-26">
   <EllaTreadmill
-    @content={{model}}
+    @content={{this.model}}
     @minColumnWidth="100%"
     @row="84" as |item index|
   >

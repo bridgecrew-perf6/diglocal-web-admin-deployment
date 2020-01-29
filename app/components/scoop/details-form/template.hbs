@@ -18,7 +18,7 @@
 </div>
 
 <CrunchyForm
-  @model={{model}}
+  @model={{@model}}
   @onSubmit={{action "save"}}
   @onCancel={{action "cancel"}}
   as |form|>
@@ -45,6 +45,12 @@
     @disabled={{this.isReadonly}}
   />
 
+  <form.checkbox
+    @field="active"
+    @label="Active?"
+    @disabled={{this.active}}
+  />
+
   {{#if this.isEditing}}
     <div class="flex justify-between mt-8">
       <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
@@ -62,6 +68,6 @@
   @onConfirm={{action "delete"}}
   @onCancel={{action (mut this.showDestroyModal) false}}
 >
-  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{model.description}}</span>?</p>
+  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.description}}</span>?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>

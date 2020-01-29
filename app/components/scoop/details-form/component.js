@@ -1,44 +1,48 @@
-import Component from '@ember/component';
+import { action } from '@ember/object';
+import { classNames, classNameBindings } from '@ember-decorators/component';
 import { not } from '@ember/object/computed';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  isEditing: false,
-  isReadonly: not('isEditing'),
+@classNames('border rounded p-4')
+@classNameBindings('isEditing:bg-gray-100')
+export default class DetailsForm extends Component {
+  isEditing = false;
 
-  classNames: [ 'border rounded p-4' ],
+  @not('isEditing') isReadonly;
 
-  classNameBindings: [ 'isEditing:bg-gray-100' ],
-
-  showDestroyModal:  false,
+  showDestroyModal = false;
 
   rollbackModel() {
-    if (this.model && this.model.get('hasDirtyAttributes')) {
-      this.model.rollbackAttributes();
+    if (this.args.model && this.args.model.get('hasDirtyAttributes')) {
+      this.args.model.rollbackAttributes();
     }
-  },
+  }
 
-  willDestroyElement() {
+  willDestroy() {
     this.rollbackModel();
     this.setProperties({
       showDestroyModal: false,
       isEditing: false
     });
-    this._super(...arguments);
-  },
+    super.willDestroy(...arguments);
+  }
 
-  actions: {
-    save() {
-      this.model.save();
-      this.set('isEditing', false);
-    },
-    cancel() {
-      this.rollbackModel();
-      this.set('isEditing', false);
-    },
-    delete() {
-      this.model.deleteRecord();
-      this.model.save();
-      this.router.transitionTo('authenticated.businesses');
-    },
-  },
-});
+  @action
+  save() {
+    this.args.model.save();
+    this.isEditing = false;
+  }
+
+  @action
+  cancel() {
+    this.rollbackModel();
+    this.isEditing = false;
+  }
+
+  @action
+  delete() {
+    this.args.model.deleteRecord();
+    this.args.model.save();
+    this.router.transitionTo('authenticated.businesses');
+  }
+}

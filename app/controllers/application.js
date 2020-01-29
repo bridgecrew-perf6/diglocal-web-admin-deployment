@@ -1,25 +1,27 @@
-import Controller from '@ember/controller';
-import { get, computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { get, action, computed } from '@ember/object';
 
-export default Controller.extend({
-  session: service('session'),
-  firebaseApp: service(),
-  router: service(),
+@classic
+export default class ApplicationController extends Controller {
+  @service session;
+  @service firebaseApp;
+  @service router;
 
-  isAuthenticated: readOnly('session.isAuthenticated'),
+  @readOnly('session.isAuthenticated') isAuthenticated;
 
-  displayOutlet: computed('router.currentRouteName', function() {
+  @computed('router.currentRouteName')
+  get displayOutlet() {
     // prevent flash render of protected content while user logs out
     let current = get(this, 'router.currentRouteName')
 
     return ['login'].includes(current);
-  }),
-
-  actions: {
-    logout() {
-      get(this, 'session').invalidate();
-    }
   }
-});
+
+  @action
+  logout() {
+    get(this, 'session').invalidate();
+  }
+}

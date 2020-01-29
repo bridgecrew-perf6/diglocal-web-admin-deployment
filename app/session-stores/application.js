@@ -1,3 +1,5 @@
+import classic from 'ember-classic-decorator';
 import FirebaseSessionStore from 'emberfire/session-stores/firebase';
 
-export default FirebaseSessionStore.extend();
+@classic
+export default class Application extends FirebaseSessionStore {}

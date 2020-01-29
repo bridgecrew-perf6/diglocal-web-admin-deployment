@@ -1,10 +1,11 @@
+import { action } from '@ember/object';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default class ViewRoute extends Route.extend(AuthenticatedRouteMixin) {
   model(params) {
     return this.store.findRecord('scoop', params.id, { include: 'business' } );
-  },
+  }
 
   afterModel(model) {
     let modelName = model.description;
@@ -14,11 +15,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
         title: modelName
       });
     }
-  },
-
-  actions: {
-    save(model) {
-      model.save();
-    }
   }
-});
+
+  @action
+  save(model) {
+    model.save();
+  }
+}

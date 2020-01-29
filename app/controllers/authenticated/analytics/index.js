@@ -1,45 +1,57 @@
+import classic from 'ember-classic-decorator';
+import { oneWay } from '@ember/object/computed';
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { oneWay } from '@ember/object/computed';
-import { set, setProperties } from '@ember/object';
+import { set, setProperties, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
-export default Controller.extend({
-  queryParams: [
+@classic
+export default class IndexController extends Controller {
+  queryParams = [
     'search',
     'dateRange',
     'grouping'
-  ],
+  ];
 
-  search: '',
-  dateRange: [moment().subtract(1, 'month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')],
-  range: oneWay('dateRange'),
-  searchString: oneWay('search'),
-  grouping: 'day',
+  search = '';
+  dateRange = [moment().subtract(1, 'month').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD')];
 
-  didSearch: task(function* () {
+  @oneWay('dateRange') range;
+
+  @oneWay('search') searchString;
+
+  grouping = 'day';
+
+  @(task(function* () {
     yield timeout(INPUT_DEBOUNCE);
     set(this, 'search', this.searchString);
     set(this, 'dateRange', this.range);
-  }).restartable(),
+  }).restartable())
+  didSearch;
 
-  actions: {
-    clearSearch() {
-      setProperties(this, {
-        search: '',
-        searchString: ''
-      });
-    },
-    sortChanged(key) {
-      alert(key);
-    },
-    onClose() {},
-    onReady() {},
-    dateGroupChanged(value) {
-      set(this, 'grouping', value);
-    }
-
+  @action
+  clearSearch() {
+    setProperties(this, {
+      search: '',
+      searchString: ''
+    });
   }
-});
+
+  @action
+  sortChanged(key) {
+    alert(key);
+  }
+
+  @action
+  onClose() {}
+
+  @action
+  onReady() {}
+
+  @action
+  dateGroupChanged(value) {
+    set(this, 'grouping', value);
+  }
+}

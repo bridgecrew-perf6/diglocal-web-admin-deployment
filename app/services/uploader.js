@@ -1,14 +1,19 @@
+import classic from 'ember-classic-decorator';
 import Service from '@ember/service';
 import config from 'diglocal-manage/config/environment';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import { task } from 'ember-concurrency';
 
-export default Service.extend({
-  ajax: service(),
-  store: service(),
+@classic
+export default class UploaderService extends Service {
+  @service
+  ajax;
 
-  handleUploadComplete: task(function*(details, callback) {
+  @service
+  store;
+
+  @task(function*(details, callback) {
     let generatedSizes = ['64_outside', '128_outside', '256_outside', '512_outside', '1024_outside', '2048_outside'];
 
     /* Generate Thumbnails */
@@ -41,4 +46,5 @@ export default Service.extend({
       callback(asset);
     }
   })
-});
+  handleUploadComplete;
+}

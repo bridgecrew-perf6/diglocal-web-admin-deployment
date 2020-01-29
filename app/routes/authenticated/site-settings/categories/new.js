@@ -1,9 +1,11 @@
+import classic from 'ember-classic-decorator';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
-import { get } from '@ember/object';
+import { get, action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+@classic
+export default class NewRoute extends Route.extend(AuthenticatedRouteMixin) {
   model() {
     let region = this.store.peekRecord('region', 1);
 
@@ -13,20 +15,23 @@ export default Route.extend(AuthenticatedRouteMixin, {
     return this.store.createRecord('category', {
       region
     });
-  },
-  saveModel: task(function*(model) {
+  }
+
+  @(task(function*(model) {
     yield model.save();
     alert('saved!');
     this.transitionTo('authenticated.site-settings.categories.view', model);
-  }).drop(),
+  }).drop())
+  saveModel;
 
-  actions: {
-    save(model) {
-      get(this, 'saveModel').perform(model);
-    },
-    cancel(model) {
-      model.deleteRecord();
-      this.transitionTo('authenticated.site-settings.categories');
-    }
+  @action
+  save(model) {
+    get(this, 'saveModel').perform(model);
   }
-});
+
+  @action
+  cancel(model) {
+    model.deleteRecord();
+    this.transitionTo('authenticated.site-settings.categories');
+  }
+}

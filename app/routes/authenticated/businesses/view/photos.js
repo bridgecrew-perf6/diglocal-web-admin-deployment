@@ -1,8 +1,10 @@
+import classic from 'ember-classic-decorator';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+@classic
+export default class PhotosRoute extends Route.extend(AuthenticatedRouteMixin) {
   model() {
     // let businessId = this.paramsFor('authenticated.businesses.view').id;
     // let filter = { business: businessId };
@@ -13,7 +15,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       business,
       businessImages: business.hasMany('businessImages').load()
     });
-  },
+  }
 
   resetController(controller, isExiting, transition) {
     if (isExiting && transition.targetName !== 'error') {
@@ -22,6 +24,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
         errorMessage: null
       });
     }
-  },
-
-});
+  }
+}

@@ -4,6 +4,8 @@ import { get, getProperties, set } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
+import firebase from 'firebase/app';
+import { capitalize } from '@ember/string';
 
 const Validations = buildValidations({
   'username': validator('presence', {
@@ -15,7 +17,6 @@ const Validations = buildValidations({
     description: 'Password'
   }),
 });
-
 
 export default Component.extend(Validations, {
   session: service('session'),
@@ -34,6 +35,21 @@ export default Component.extend(Validations, {
     const auth = yield get(this, 'firebaseApp').auth();
     try {
       let authenticatedUser = yield auth.signInWithEmailAndPassword(email, password);
+      return authenticatedUser;
+    } catch(e) {
+      // console.log(e);
+      set(this, 'error', e);
+    }
+    set(this, 'authenticating', false);
+  }),
+
+  authenticateWithProvider: task(function* (provider) {
+
+    set(this, 'authenticating', true);
+    const auth = yield get(this, 'firebaseApp').auth();
+    try {
+      const authProvider = new firebase.auth[`${capitalize(provider)}AuthProvider`]();
+      let authenticatedUser = yield auth.signInWithPopup(authProvider);
       return authenticatedUser;
     } catch(e) {
       // console.log(e);

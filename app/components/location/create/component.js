@@ -1,19 +1,21 @@
-import Component from '@ember/component';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
-import { get, set, computed } from '@ember/object';
+import Component from '@ember/component';
+import { get, set, action, computed } from '@ember/object';
 
-export default Component.extend({
-  store: service(),
+@classic
+export default class Create extends Component {
+  @service store;
 
-  hasNewRecord: computed('business', 'newRecord.isDeleted', function() {
+  @computed('business', 'newRecord.isDeleted')
+  get hasNewRecord() {
     return this.newRecord && !this.newRecord.get('isDeleted');
-  }),
-
-  actions: {
-    create() {
-      set(this, 'newRecord', this.store.createRecord('location', {
-        business: get(this, 'business')
-      }));
-    }
   }
-});
+
+  @action
+  create() {
+    set(this, 'newRecord', this.store.createRecord('location', {
+      business: get(this, 'business')
+    }));
+  }
+}

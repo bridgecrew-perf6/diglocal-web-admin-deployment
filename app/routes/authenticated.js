@@ -1,10 +1,12 @@
+import classic from 'ember-classic-decorator';
+import { inject as service } from '@ember/service';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  session: service(),
-  firebaseApp: service(),
+@classic
+export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
+  @service session;
+  @service firebaseApp;
 
   model() {
     // return this.firebaseApp.auth().then(({currentUser}) =>
@@ -12,4 +14,4 @@ export default Route.extend(AuthenticatedRouteMixin, {
     // );
     return this.firebaseApp.auth();
   }
-});
+}

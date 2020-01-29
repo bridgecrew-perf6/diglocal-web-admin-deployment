@@ -1,21 +1,23 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
-export default Model.extend({
-  address: attr(),
-  city: attr(),
-  state: attr(),
-  zip: attr(),
-  phone: attr(),
-  title: attr(),
-  geocoded_lat: attr(),
-  geocoded_long: attr(),
-  menu_url: attr(),
+@classic
+export default class Location extends Model {
+  @attr() address;
+  @attr() city;
+  @attr() state;
+  @attr() zip;
+  @attr() phone;
+  @attr() title;
+  @attr() geocoded_lat;
+  @attr() geocoded_long;
+  @attr() menu_url;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  business: belongsTo('business'),
-  operatingHours: hasMany('operatingHours'),
-  scoops: hasMany('scoop')
-});
+  @belongsTo('business') business;
+  @hasMany('operatingHours') operatingHours;
+  @hasMany('scoop') scoops;
+}

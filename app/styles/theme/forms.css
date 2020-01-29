@@ -22,7 +22,7 @@
   }
 
   &__input, &__textarea {
-    @apply border border-gray-400 rounded-lg py-3 px-4 block w-full leading-normal;
+    @apply border border-gray-400 rounded py-3 px-4 block w-full leading-normal;
     &:focus, &:active {
       @apply bg-white border-gray-400;
     }
@@ -40,6 +40,42 @@ button:disabled, input:disabled, textarea:disabled {
 }
 
 .crunchy-button {
+  &--auth {
+    @apply shadow-md text-base font-medium py-2 px-10 rounded flex justify-start items-center;
+    &:hover, &:active {
+      @apply shadow-lg;
+    }
+    &:disabled {
+      @apply shadow-md;
+    }
+
+    .auth-provider-icon {
+      border: none;
+      display: inline-block;
+      height: 18px;
+      vertical-align: middle;
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .auth-provider-text {
+      padding-left: 16px;
+      flex-grow: 1;
+      text-align: left;
+    }
+  }
+
+  &--facebook {
+    background-color: #3b5998;
+    color: #fff;
+  }
+
+  &--google {
+    background-color: #fff;
+    color: #757575;
+  }
+
+
   &--primary, &--submit, &--modal-confirm {
     @apply transition bg-brand-primary border-brand-primary border text-white text-base font-medium py-2 px-4 rounded;
 

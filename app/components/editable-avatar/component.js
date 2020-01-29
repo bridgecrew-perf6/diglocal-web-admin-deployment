@@ -1,17 +1,18 @@
-import Component from '@ember/component';
-// import { task } from 'ember-concurrency';
-// import { get, set, computed } from '@ember/object';
+import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
 // TODO: This needs to be updated for Dig Local profileImage upload flow and attrs
 
-export default Component.extend({
-  uploader: service(),
+@classic
+export default class EditableAvatar extends Component {
+  @service uploader;
 
-  pathName: '/assets/images/',
-  keyForAvatar: 'avatar',
-  isReadonly: false,
-  isEditing: false,
+  pathName = '/assets/images/';
+  keyForAvatar = 'avatar';
+  isReadonly = false;
+
+  isEditing = false;
 
   // canEdit: computed('isReadonly', 'isEditing', function() {
   //   return !this.isReadonly && !this.isEditing;
@@ -37,4 +38,4 @@ export default Component.extend({
   //     this.onUploadComplete.perform(details);
   //   },
   // }
-});
+}

@@ -1,32 +1,35 @@
+import classic from 'ember-classic-decorator';
+import { readOnly } from '@ember/object/computed';
 import Service from '@ember/service';
 import { get, set, computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import { capitalize, classify } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 
-export default Service.extend({
-  session: service('session'),
+@classic
+export default class PermissionsService extends Service {
+  @service('session')
+  session;
 
-  isAuthenticated: readOnly('session.isAuthenticated'),
+  @readOnly('session.isAuthenticated')
+  isAuthenticated;
 
-  authenticatedUser: computed('session.data.authenticated.user', 'isAuthenticated', {
-    get() {
-      let isAuthenticated = get(this, 'isAuthenticated');
+  @(computed('session.data.authenticated.user', 'isAuthenticated').readOnly())
+  get authenticatedUser() {
+    let isAuthenticated = get(this, 'isAuthenticated');
 
-      if (!isAuthenticated) {
-        return;
-      }
-
-      return get(this, 'session.data.authenticated.user');
+    if (!isAuthenticated) {
+      return;
     }
-  }).readOnly(),
+
+    return get(this, 'session.data.authenticated.user');
+  }
 
   permissionPropertyName(recordType, forAction) {
     return `can${classify(forAction)}${classify(recordType)}Attribute`;
-  },
+  }
 
   permissionToModify(attribute, record) {
     assert(
@@ -50,12 +53,12 @@ export default Service.extend({
     });
 
     return result;
-  },
+  }
 
   updatePermissions(permissions) {
     this._updatePermissions(permissions, 'update');
     this._updatePermissions(permissions, 'create');
-  },
+  }
 
   _updatePermissions(permissions, forAction) {
     let editable = get(permissions || {}, `can${capitalize(forAction)}`) || {};
@@ -71,7 +74,7 @@ export default Service.extend({
 
       set(this, property, result);
     }
-  },
+  }
 
   _permissionsForRecord(record) {
     let recordType = get(record || {}, 'constructor.modelName');
@@ -81,5 +84,5 @@ export default Service.extend({
     }
 
     return get(this, this.permissionPropertyName(`${recordType}:${record.get('id')}`, 'update'));
-  },
-});
+  }
+}

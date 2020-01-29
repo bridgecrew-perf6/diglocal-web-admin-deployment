@@ -1,37 +1,40 @@
-import Component from '@ember/component';
-import { set } from '@ember/object';
+import classic from 'ember-classic-decorator';
+import { classNames, classNameBindings } from '@ember-decorators/component';
+import { inject as service } from '@ember/service';
 import { not } from '@ember/object/computed';
+import Component from '@ember/component';
+import { set, action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import  { inject as service } from '@ember/service';
 
-export default Component.extend({
-  store: service(),
+@classic
+@classNames('border rounded p-4')
+@classNameBindings('isEditing:bg-gray-100')
+export default class DetailsForm extends Component {
+  @service store;
 
-  isEditing: false,
-  isReadonly: not('isEditing'),
+  isEditing = false;
 
-  classNames: [ 'border rounded p-4' ],
+  @not('isEditing') isReadonly;
 
-  classNameBindings: [ 'isEditing:bg-gray-100' ],
-
-  showDestroyModal:  false,
+  showDestroyModal = false;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     set(this, 'categoryOptions', []);
     this.loadCategories.perform();
-  },
+  }
 
-  loadCategories: task(function* () {
+  @task(function* () {
     let categories = yield this.store.findAll('category');
     set(this, 'categoryOptions', categories);
-  }),
+  })
+  loadCategories;
 
   rollbackModel() {
     if (this.model && this.model.get('hasDirtyAttributes')) {
       this.model.rollbackAttributes();
     }
-  },
+  }
 
   willDestroyElement() {
     this.rollbackModel();
@@ -39,22 +42,25 @@ export default Component.extend({
       showDestroyModal: false,
       isEditing: false
     });
-    this._super(...arguments);
-  },
+    super.willDestroyElement(...arguments);
+  }
 
-  actions: {
-    save() {
-      this.model.save();
-      this.set('isEditing', false);
-    },
-    cancel() {
-      this.rollbackModel();
-      this.set('isEditing', false);
-    },
-    delete() {
-      this.model.deleteRecord();
-      this.model.save();
-      this.router.transitionTo('authenticated.businesses');
-    },
-  },
-});
+  @action
+  save() {
+    this.model.save();
+    this.set('isEditing', false);
+  }
+
+  @action
+  cancel() {
+    this.rollbackModel();
+    this.set('isEditing', false);
+  }
+
+  @action
+  delete() {
+    this.model.deleteRecord();
+    this.model.save();
+    this.router.transitionTo('authenticated.businesses');
+  }
+}
