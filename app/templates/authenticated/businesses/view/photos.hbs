@@ -58,7 +58,7 @@
     <DigImageUploader
       @modelType="business-image"
       @belongsToModelType="business"
-      @belongsToModel={{this.model.business}}
+      @belongsToModel={{@model.business}}
       @onUploadComplete={{perform this.onUploadComplete}}
       @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}}
       as |uploader|>

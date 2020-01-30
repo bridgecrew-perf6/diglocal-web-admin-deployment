@@ -21,7 +21,7 @@ export default class PermissionsService extends Service {
     let isAuthenticated = get(this, 'isAuthenticated');
 
     if (!isAuthenticated) {
-      return;
+      return null;
     }
 
     return get(this, 'session.data.authenticated.user');

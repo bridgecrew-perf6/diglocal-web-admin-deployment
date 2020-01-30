@@ -45,11 +45,6 @@ export default class PhotosController extends Controller {
   }
 
   @action
-  didSelectFile([ file ]) {
-    this.postPhoto.perform(file);
-  }
-
-  @action
   deleteSelected() {
     set(this, 'errorMessage', null);
     this.deleteItems.perform(this.selectedPhotos);

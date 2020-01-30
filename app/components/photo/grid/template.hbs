@@ -6,7 +6,7 @@
     class={{concat "w-48 h-48 m-4 border rounded overflow-hidden bg-contain bg-no-repeat bg-center relative cursor-pointer "
       (if (contains item this.selectedPhotos) "shadow-outline ")
     }}
-    style="background-image: url('{{if item.isNew item.url item.sizes.mobile}}');"
+    style={{background-image (if item.isNew item.url item.sizes.mobile)}}
     {{action "select" item}}
   >
     <div class="absolute top-0 right-0 w-6 h-6 flex items-center justify-center m-1">

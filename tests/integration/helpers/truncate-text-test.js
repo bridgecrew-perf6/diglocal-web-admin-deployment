@@ -7,11 +7,11 @@ module('Integration | Helper | truncate-text', function(hooks) {
   setupRenderingTest(hooks);
 
   // Replace this with your real tests.
-  test('it renders', async function(assert) {
+  test('it truncates to limit specified', async function(assert) {
     this.set('inputValue', '1234');
 
-    await render(hbs`{{truncate-text inputValue}}`);
+    await render(hbs`{{truncate-text inputValue limit=1}}`);
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    assert.equal(this.element.textContent.trim(), '1...');
   });
 });
