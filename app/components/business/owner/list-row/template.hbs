@@ -7,7 +7,8 @@
         style={{html-safe (concat
           (background-image this.model.profileImages.firstObject.sizes.small)
           "height:96px; width:96px;"
-          )}}>
+          )}}
+      >
         {{#unless this.model.profileImages.length}}
         <div class="flex w-full h-full items-center justify-center">
           <FaIcon @icon="user" @size="3x" class="text-gray-300" />

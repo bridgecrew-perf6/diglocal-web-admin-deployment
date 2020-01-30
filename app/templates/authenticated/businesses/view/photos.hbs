@@ -3,7 +3,7 @@
     {{#if this.selectedPhotos.length}}
       <div class="mx-4 flex items-center">
         <p>{{pluralize this.selectedPhotos.length "photo"}} selected</p>
-        <button {{action "clearAllSelected"}} class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
+        <button {{action "clearAllSelected"}} type="button" class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
           <FaIcon @icon="times" @size="xs" class="mr-1" /> Clear Selected
         </button>
       </div>

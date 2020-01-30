@@ -7,6 +7,8 @@
       (if (contains item this.selectedPhotos) "shadow-outline ")
     }}
     style={{background-image (if item.isNew item.url item.sizes.mobile)}}
+    role="button"
+    aria-label="Select photo"
     {{action "select" item}}
   >
     <div class="absolute top-0 right-0 w-6 h-6 flex items-center justify-center m-1">
@@ -16,6 +18,7 @@
         @keyPress={{action "checkboxSelect" item}}
         @click={{action "checkboxSelect" item}}
         @touchStart={{action "checkboxSelect" item}}
+        @aria-label="Is photo selected?"
       />
     </div>
   </div>
