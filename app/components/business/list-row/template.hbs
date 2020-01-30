@@ -1,4 +1,7 @@
-<CrunchyMediaObject @style="horizontal" @class="min-h-48 overflow-hidden" as |card|>
+<CrunchyMediaObject
+  @style="horizontal"
+  @class="min-h-48 overflow-hidden"
+  as |card|>
   {{#if (media "isMediumUp")}}
     <card.image
       @height="190px"
@@ -8,7 +11,7 @@
     />
   {{/if}}
   <card.header class="flex justify-between">
-    <p class="font-bold text-xl mb-2">{{this.model.name}}</p>
+    <p data-test-id="business-list-row" class="font-bold text-xl mb-2">{{this.model.name}}</p>
     <LinkTo
       @route="authenticated.businesses.view"
       @model={{this.model.id}}
