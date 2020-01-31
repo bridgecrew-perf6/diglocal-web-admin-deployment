@@ -1,16 +1,16 @@
 import { action } from '@ember/object';
 import { classNames, classNameBindings } from '@ember-decorators/component';
 import { not } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 
 @classNames('border rounded p-4')
 @classNameBindings('isEditing:bg-gray-100')
 export default class DetailsForm extends Component {
-  isEditing = false;
+  @tracked isEditing = false;
+  @tracked showDestroyModal = false;
 
   @not('isEditing') isReadonly;
-
-  showDestroyModal = false;
 
   rollbackModel() {
     if (this.args.model && this.args.model.get('hasDirtyAttributes')) {
@@ -20,10 +20,8 @@ export default class DetailsForm extends Component {
 
   willDestroy() {
     this.rollbackModel();
-    this.setProperties({
-      showDestroyModal: false,
-      isEditing: false
-    });
+    this.showDestroyModal = false;
+    this.isEditing = false;
     super.willDestroy(...arguments);
   }
 

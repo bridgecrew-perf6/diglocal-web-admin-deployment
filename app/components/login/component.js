@@ -44,7 +44,6 @@ export default Component.extend(Validations, {
   }),
 
   authenticateWithProvider: task(function* (provider) {
-
     set(this, 'authenticating', true);
     const auth = yield get(this, 'firebaseApp').auth();
     try {

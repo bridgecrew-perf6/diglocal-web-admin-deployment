@@ -2,7 +2,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
-import removeFalsy from 'diglocal-manage/helpers/remove-falsy';
+import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 import { hash } from 'rsvp';
 
 export default Route.extend(AuthenticatedRouteMixin, {
@@ -30,7 +30,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       // Route specific query formatting
       this._formatQuery(params);
 
-      let filter = removeFalsy(params);
+      let filter = removeEmpty(params);
 
       let sort = filter.sort;
       delete filter.sort;
@@ -60,6 +60,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
     // backend wants filter attr named 'role'
     params.role = params.roles;
     delete params.roles;
+    // filtering by 'featured' only is applicable when true
+    if (params.featured === false) {
+      delete params.featured;
+    }
     return params;
   },
 

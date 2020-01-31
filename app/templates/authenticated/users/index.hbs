@@ -35,7 +35,7 @@
   </div>
   {{#if (or this.roles.length)}}
     <div class="flex pt-2">
-      <button {{action "clearAllFilters"}} class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+      <button {{action "clearAllFilters"}} type="button" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
         Clear Filters
       </button>
       <ul aria-label="Applied filters">

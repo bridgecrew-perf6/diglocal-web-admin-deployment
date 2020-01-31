@@ -52,7 +52,6 @@ export default class ImpressionTracker extends Model {
   get formattedDate() {
     let id = get(this, 'id');
     let span = 0;
-
     switch(id.substr(0,2)) {
       case '10':
         span = parseInt(id.substr(4,3), 10);
@@ -64,7 +63,7 @@ export default class ImpressionTracker extends Model {
         span = parseInt(id.substr(5,2), 10) - 1;
         return `Month of ${moment().month(span).startOf('month').format('ll')}`;
       default:
-        return;
+        return '';
     }
   }
 }

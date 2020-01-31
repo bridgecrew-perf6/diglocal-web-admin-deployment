@@ -1,10 +1,10 @@
 import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
-import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
-import Trackable from './mixins/trackable';
+import { attr, hasMany, belongsTo } from '@ember-data/model';
+import Trackable from './trackable';
 
 @classic
-export default class Business extends Model.extend(Trackable) {
+export default class Business extends Trackable {
   @attr() description2;
   @attr() description;
   @attr() embedFacebookEnabled;

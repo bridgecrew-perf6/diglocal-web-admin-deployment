@@ -3,8 +3,7 @@ import { classNames, classNameBindings } from '@ember-decorators/component';
 import { inject as service } from '@ember/service';
 import { not } from '@ember/object/computed';
 import Component from '@ember/component';
-import { set, action } from '@ember/object';
-import { task } from 'ember-concurrency';
+import { action } from '@ember/object';
 
 @classic
 @classNames('border rounded p-4')
