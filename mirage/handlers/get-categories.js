@@ -1,17 +1,17 @@
 import { Collection } from 'ember-cli-mirage';
 import { camelize } from '@ember/string';
 
-const filterLocations = function(locations, request) {
+const filterCategories = function(categories, request) {
   let filters = [];
   let sort = request.queryParams['sort'];
-  let businessId = request.queryParams['filter[business]'];
+  let region = request.queryParams['filter[region]'];
 
-  if (businessId) {
-    filters.push(location => location.business && location.business.id === businessId);
+  if (region) {
+    filters.push(category => category.region && category.region === region);
   }
 
   let results = filters
-    .reduce(((results, filter) => results.filter(filter)), locations);
+    .reduce(((results, filter) => results.filter(filter)), categories);
 
   if (sort) {
     let isDescending = sort.startsWith('-');
@@ -25,15 +25,15 @@ const filterLocations = function(locations, request) {
   return results;
 };
 
-export default function getLocations(schema, request) {
-  let locations = schema.locations.all().models;
+export default function getCategories(schema, request) {
+  let categories = schema.categories.all().models;
 
   let offset = request.queryParams['page[offset]'];
   let limit = request.queryParams['page[limit]'];
 
   let results = new Collection(
-    'location',
-    filterLocations(locations, request)
+    'category',
+    filterCategories(categories, request)
   );
 
   let total = results.length;

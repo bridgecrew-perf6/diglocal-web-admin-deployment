@@ -24,28 +24,31 @@ export default function(server) {
   ];
 
   server.createList('user', 10);
-  server.createList('business', 3, 'withLocation', 'withImages', 'withScoops', {
+  server.createList('user', 4, 'adminUser');
+  server.createList('user', 3, 'customerUser'); // TODO what is this exactly??
+
+  server.createList('business', 3, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region1,
     categories: [ region1Categories[0], region1Categories[1] ]
   });
-  server.createList('business', 3, 'withLocation', 'withImages', 'withScoops', {
+  server.createList('business', 3, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region1,
     categories: [ region1Categories[2], region1Categories[3] ]
   });
-  server.createList('business', 4, 'withLocation', 'withImages', 'withScoops', {
+  server.createList('business', 4, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region2,
     categories: [ region2Categories[0], region2Categories[1] ]
   });
-  server.createList('business', 4, 'withLocation', 'withImages', 'withScoops', {
+  server.createList('business', 4, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region2,
     categories: [ region2Categories[2], region2Categories[3] ]
   });
-  server.create('business', 'withLocation', 'withImages', 'withScoops', {
+  server.create('business', 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     name: 'Business in Region 1 with really really long name',
     region: region1,
     categories: [ region1Categories[4] ]
   });
-  server.create('business', 'withLocation', 'withImages', 'withScoops', {
+  server.create('business', 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     name: 'Business in Region 2 with really really long name',
     region: region2,
     categories: [ region2Categories[4] ]

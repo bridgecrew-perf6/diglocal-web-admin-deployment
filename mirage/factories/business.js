@@ -20,6 +20,14 @@ export default Factory.extend({
     }
   }),
 
+  withBusinessOwner: trait({
+    afterCreate(business, server) {
+      server.create('user', {
+        businesses: [ business ]
+      });
+    }
+  }),
+
   withLocation: trait({
     afterCreate(business, server) {
       server.create('location', 'withHours', { business });

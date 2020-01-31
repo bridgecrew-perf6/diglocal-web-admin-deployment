@@ -1,17 +1,22 @@
 import { Collection } from 'ember-cli-mirage';
 import { camelize } from '@ember/string';
 
-const filterLocations = function(locations, request) {
+const filterUsers = function(users, request) {
   let filters = [];
   let sort = request.queryParams['sort'];
-  let businessId = request.queryParams['filter[business]'];
+  let search =  request.queryParams['filter[search]'];
+  let roles = request.queryParams['filter[roles]'];
 
-  if (businessId) {
-    filters.push(location => location.business && location.business.id === businessId);
+  if (search) {
+    filters.push(user => user.name && user.name.match(search));
+  }
+
+  if (roles) {
+    filters.push(user => user.role && roles.includes(user.role));
   }
 
   let results = filters
-    .reduce(((results, filter) => results.filter(filter)), locations);
+    .reduce(((results, filter) => results.filter(filter)), users);
 
   if (sort) {
     let isDescending = sort.startsWith('-');
@@ -25,15 +30,15 @@ const filterLocations = function(locations, request) {
   return results;
 };
 
-export default function getLocations(schema, request) {
-  let locations = schema.locations.all().models;
+export default function getUsers(schema, request) {
+  let users = schema.users.all().models;
 
   let offset = request.queryParams['page[offset]'];
   let limit = request.queryParams['page[limit]'];
 
   let results = new Collection(
-    'location',
-    filterLocations(locations, request)
+    'user',
+    filterUsers(users, request)
   );
 
   let total = results.length;

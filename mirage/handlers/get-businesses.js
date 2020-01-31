@@ -1,4 +1,5 @@
 import { Collection } from 'ember-cli-mirage';
+import { camelize } from '@ember/string';
 
 const filterBusinesses = function(businesses, request) {
   let filters = [];
@@ -6,6 +7,12 @@ const filterBusinesses = function(businesses, request) {
   let search =  request.queryParams['filter[search]'];
   let roles = request.queryParams['filter[role]'];
   let categories = request.queryParams['filter[categories]'];
+  let featured = request.queryParams['filter[featured]'];
+  let region = request.queryParams['filter[region]'];
+
+  if (region) {
+    filters.push(business => business.region && business.region.id === region);
+  }
 
   if (search) {
     filters.push(business => business.name && business.name.match(search));
@@ -21,15 +28,19 @@ const filterBusinesses = function(businesses, request) {
     })
   }
 
+  if (featured) {
+    filters.push(business => business.featured);
+  }
+
   let results = filters
     .reduce(((results, filter) => results.filter(filter)), businesses);
 
   if (sort) {
     let isDescending = sort.startsWith('-');
     if (isDescending) {
-      results = results.sortBy(sort.slice(1)).reverse();
+      results = results.sortBy(camelize(sort.slice(1))).reverse();
     } else {
-      results = results.sortBy(sort);
+      results = results.sortBy(camelize(sort));
     }
   }
 

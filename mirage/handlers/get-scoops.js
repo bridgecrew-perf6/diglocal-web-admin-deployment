@@ -1,17 +1,27 @@
 import { Collection } from 'ember-cli-mirage';
 import { camelize } from '@ember/string';
 
-const filterLocations = function(locations, request) {
+const filterScoops = function(scoops, request) {
   let filters = [];
   let sort = request.queryParams['sort'];
+  let search =  request.queryParams['filter[search]'];
   let businessId = request.queryParams['filter[business]'];
+  let region = request.queryParams['filter[region]'];
+
+  if (region) {
+    filters.push(scoop => scoop.business && scoop.business.region && scoop.business.region.id === region);
+  }
+
+  if (search) {
+    filters.push(scoop => scoop.description && scoop.description.match(search));
+  }
 
   if (businessId) {
-    filters.push(location => location.business && location.business.id === businessId);
+    filters.push(scoop => scoop.business && scoop.business.id === businessId);
   }
 
   let results = filters
-    .reduce(((results, filter) => results.filter(filter)), locations);
+    .reduce(((results, filter) => results.filter(filter)), scoops);
 
   if (sort) {
     let isDescending = sort.startsWith('-');
@@ -25,15 +35,15 @@ const filterLocations = function(locations, request) {
   return results;
 };
 
-export default function getLocations(schema, request) {
-  let locations = schema.locations.all().models;
+export default function getScoops(schema, request) {
+  let scoops = schema.scoops.all().models;
 
   let offset = request.queryParams['page[offset]'];
   let limit = request.queryParams['page[limit]'];
 
   let results = new Collection(
-    'location',
-    filterLocations(locations, request)
+    'scoop',
+    filterScoops(scoops, request)
   );
 
   let total = results.length;
