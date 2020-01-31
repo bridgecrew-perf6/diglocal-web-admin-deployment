@@ -18,7 +18,6 @@ module('Acceptance | Businesses | Index', function(hooks) {
 
     assert.equal(currentURL(), '/businesses');
     assert.dom('[data-test-id=business-list-row]').exists({ count: 5 });
-    await this.pauseTest()
   });
 
 });

@@ -8,10 +8,9 @@ import Component from '@glimmer/component';
 @classNameBindings('isEditing:bg-gray-100')
 export default class DetailsForm extends Component {
   @tracked isEditing = false;
+  @tracked showDestroyModal = false;
 
   @not('isEditing') isReadonly;
-
-  showDestroyModal = false;
 
   rollbackModel() {
     if (this.args.model && this.args.model.get('hasDirtyAttributes')) {
@@ -21,10 +20,8 @@ export default class DetailsForm extends Component {
 
   willDestroy() {
     this.rollbackModel();
-    this.setProperties({
-      showDestroyModal: false,
-      isEditing: false
-    });
+    this.showDestroyModal = false;
+    this.isEditing = false;
     super.willDestroy(...arguments);
   }
 

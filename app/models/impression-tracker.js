@@ -52,7 +52,6 @@ export default class ImpressionTracker extends Model {
   get formattedDate() {
     let id = get(this, 'id');
     let span = 0;
-
     switch(id.substr(0,2)) {
       case '10':
         span = parseInt(id.substr(4,3), 10);

@@ -64,7 +64,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   setupController(controller, hash) {
-    console.log(hash);
     let { businesses, categories } = hash;
     this._super(...arguments);
     controller.setProperties({

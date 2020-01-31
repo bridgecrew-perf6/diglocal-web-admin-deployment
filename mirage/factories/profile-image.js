@@ -2,7 +2,7 @@ import { Factory } from 'ember-cli-mirage';
 import faker from 'faker';
 
 export default Factory.extend({
-  url: faker.internet.avatar(),
+  url() { return faker.internet.avatar() },
   position: 'portrait',
 
   afterCreate(model) {
@@ -11,6 +11,7 @@ export default Factory.extend({
       sizes: {
         large: url,
         max: url,
+        small: url,
         medium: url,
         mobile: url
       }
