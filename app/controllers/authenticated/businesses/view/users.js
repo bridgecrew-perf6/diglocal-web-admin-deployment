@@ -5,7 +5,7 @@ import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
 import { set, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import removeFalsy from 'diglocal-manage/helpers/remove-falsy';
+import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
 
@@ -20,7 +20,7 @@ export default class UsersController extends Controller {
   @(task(function* (search) {
     yield timeout(INPUT_DEBOUNCE);
     let filter = Object.assign({}, { search });
-    filter = removeFalsy(filter);
+    filter = removeEmpty(filter);
     return this.store.query('user', { filter });
   }).restartable())
   searchUsers;

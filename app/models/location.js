@@ -9,9 +9,9 @@ export default class Location extends Model {
   @attr() zip;
   @attr() phone;
   @attr() title;
-  @attr() geocoded_lat;
-  @attr() geocoded_long;
-  @attr() menu_url;
+  @attr() geocodedLat;
+  @attr() geocodedLong;
+  @attr() menuUrl;
 
   /*************************
   **  Relationships       **

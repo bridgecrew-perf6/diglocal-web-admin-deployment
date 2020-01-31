@@ -2,7 +2,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
-import removeFalsy from 'diglocal-manage/helpers/remove-falsy';
+import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   ellaSparse: service(),
@@ -24,7 +24,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
         offset: get(range, 'start') || 0
       };
 
-      let filter = removeFalsy(params);
+      let filter = removeEmpty(params);
 
       let sort = filter.sort;
       delete filter.sort;

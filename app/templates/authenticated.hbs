@@ -9,6 +9,7 @@
                 {{action (mut this.showSidebar) false}}
                 class="px-6 text-5xl text-gray-600"
                 aria-label="Close"
+                type="button"
               >
                 &times;
               </button>
@@ -29,7 +30,7 @@
     <div class="sub-header fixed w-full top-16 h-10 z-80 bg-white flex">
       <div class="border-b lg:border-b-0 lg:w-1/6 h-full flex items-center order-last lg:order-first">
         {{#if this.media.isMobile}}
-          <button {{action (mut this.showSidebar) true}} class="p-2 text-brand-primary text-3xl" aria-label="Menu"> &#9776; </button>
+          <button {{action (mut this.showSidebar) true}} class="p-2 text-brand-primary text-3xl" aria-label="Menu" type="button"> &#9776; </button>
         {{/if}}
       </div>
       <div class="w-full lg:w-5/6 h-full flex items-center border-b">

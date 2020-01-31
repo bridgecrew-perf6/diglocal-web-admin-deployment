@@ -52,7 +52,6 @@ export default Component.extend({
       handler.bind(this);
       yield resizeImageToSpecificWidth(file, 128, handler);
       let fd = new FormData();
-      // temporary model for serialization
       let imageModel = this.context.store.createRecord(this.context.modelType);
       imageModel[this.context.belongsToModelType] = this.context.belongsToModel;
       fd.append('data', JSON.stringify(imageModel.serialize().data));
@@ -75,14 +74,19 @@ export default Component.extend({
 
         if (response.ok) {
           set(this, 'status', 'complete')
-          return yield response.json();
+          let json = yield response.json();
+          imageModel.setProperties({
+            id: json.data.id,
+            url: json.data.url,
+            sizes: json.data.sizes
+          });
+          return imageModel;
         } else {
-          set(this, 'status', 'error')
+          set(this, 'status', 'error');
+          imageModel.rollbackAttributes();
         }
       } catch(e) {
-        set(this, 'status', 'error')
-      } finally {
-        // destroy temporary model
+        set(this, 'status', 'error');
         imageModel.rollbackAttributes();
       }
     }

@@ -4,6 +4,7 @@ import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
 import { set, setProperties, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
+import moment from 'moment';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 

@@ -45,6 +45,10 @@ module.exports = function(environment) {
     routeIfAlreadyAuthenticated: 'authenticated.businesses'
   };
 
+  ENV['ember-cli-mirage'] = {
+    enabled: false
+  };
+
   if (environment === 'development') {
     ENV.apiHost = 'http://localhost:3000';
 
@@ -65,6 +69,16 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
+  }
+
+  if (environment === 'mirage') {
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
   }
 
   if (environment === 'staging') {

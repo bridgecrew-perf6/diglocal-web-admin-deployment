@@ -23,9 +23,6 @@ export default Component.extend({
         }
       });
     },
-    save(model) {
-      model.save();
-    },
     select(photo) {
       let alreadySelected = this.selectedPhotos.findBy('id', photo.id);
       if (alreadySelected) {

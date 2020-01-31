@@ -71,7 +71,7 @@ export default Controller.extend({
     },
     clearAllFilters() {
       this.setProperties({
-        featured: null,
+        featured: false,
         roles: [],
         categories: []
       });

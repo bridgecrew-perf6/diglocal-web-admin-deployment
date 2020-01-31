@@ -1,8 +1,9 @@
 import classic from 'ember-classic-decorator';
-import Model, { attr, belongsTo } from '@ember-data/model';
+import { attr, belongsTo } from '@ember-data/model';
+import Trackable from './trackable';
 
 @classic
-export default class Scoop extends Model {
+export default class Scoop extends Trackable {
   @attr() active;
   @attr() description;
   @attr() eventDate;

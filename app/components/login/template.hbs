@@ -47,11 +47,11 @@
 
 <div class="my-6 flex flex-col items-center">
   <CrunchyButton @class="crunchy-button--auth crunchy-button--google w-full mb-4 max-w-xs" @onClick={{perform this.authenticateWithProvider "google"}}>
-    <img class="auth-provider-icon" src="/icons/google.svg">
+    <img class="auth-provider-icon" src="/icons/google.svg" alt="" role="presentation">
     <span class="auth-provider-text"> Sign in with Google </span>
   </CrunchyButton>
   <CrunchyButton @class="crunchy-button--auth crunchy-button--facebook w-full mb-4 max-w-xs" @onClick={{perform this.authenticateWithProvider "facebook"}}>
-    <img class="auth-provider-icon" src="/icons/facebook.svg">
+    <img class="auth-provider-icon" src="/icons/facebook.svg" alt="" role="presentation">
     <span class="auth-provider-text"> Sign in with Facebook </span>
   </CrunchyButton>
 </div>

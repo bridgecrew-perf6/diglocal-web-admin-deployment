@@ -4,13 +4,16 @@
     <div class="m-2">
       <div
         class="mx-auto flex-none bg-cover bg-center bg-no-repeat text-center overflow-hidden bg-gray-100 rounded-full m-2"
-        style="background-image: url('{{this.model.profileImages.firstObject.sizes.small}}'); height:96px; width:96px"
+        style={{html-safe (concat
+          (background-image this.model.profileImages.firstObject.sizes.small)
+          "height:96px; width:96px;"
+          )}}
       >
-        {{#if (not this.model.profileImages.length)}}
+        {{#unless this.model.profileImages.length}}
         <div class="flex w-full h-full items-center justify-center">
           <FaIcon @icon="user" @size="3x" class="text-gray-300" />
         </div>
-        {{/if}}
+        {{/unless}}
       </div>
     </div>
   </card.image>
