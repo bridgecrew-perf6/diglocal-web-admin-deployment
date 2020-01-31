@@ -7,9 +7,8 @@ export default Factory.extend({
   },
   description() { return `A local favorite! ${faker.commerce.productAdjective()} Experiences, ${faker.commerce.productAdjective()} Food` },
   description2() { return `The best ${faker.commerce.product()} in town!` },
-  followersCount: '234',
-  likesCount: '1023',
-  numberOfLocations: '1',
+  followersCount() { return faker.helpers.replaceSymbolWithNumber('3##') },
+  likesCount() { return faker.helpers.replaceSymbolWithNumber('1###') },
   tip() { return faker.hacker.phrase() },
   role: 'premium',
   website: 'https://www.google.com',
@@ -31,6 +30,9 @@ export default Factory.extend({
   withLocation: trait({
     afterCreate(business, server) {
       server.create('location', 'withHours', { business });
+      business.update({
+        numberOfLocations: 1
+      });
     }
   }),
 
