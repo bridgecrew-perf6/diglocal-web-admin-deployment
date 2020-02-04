@@ -50,11 +50,11 @@
 
 <nav role="navigation" class="header-nav h-12">
   <ul class="flex">
-    <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
     <LinkTo @class="nav-link" @route="authenticated.businesses">Businesses</LinkTo>
     <LinkTo @class="nav-link" @route="authenticated.analytics">Analytics</LinkTo>
     <LinkTo @class="nav-link" @route="authenticated.users">Users</LinkTo>
     <LinkTo @class="nav-link" @route="authenticated.scoops">Scoops</LinkTo>
+    <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
   </ul>
 </nav>
 
@@ -75,11 +75,11 @@
       {{/if}}
       <nav role="navigation" class="px-6 pt-4 overflow-y-auto text-base h-screen-less-16 max-w-full">
         <div class="mb-8">
-          <LinkTo @class="nav-link--mobile" @route="authenticated.site-settings">Site Settings</LinkTo>
           <LinkTo @class="nav-link--mobile" @route="authenticated.businesses">Businesses</LinkTo>
           <LinkTo @class="nav-link--mobile" @route="authenticated.analytics">Analytics</LinkTo>
           <LinkTo @class="nav-link--mobile" @route="authenticated.users">Users</LinkTo>
           <LinkTo @class="nav-link--mobile" @route="authenticated.scoops">Scoops</LinkTo>
+          <LinkTo @class="nav-link--mobile" @route="authenticated.site-settings">Site Settings</LinkTo>
         </div>
       </nav>
     </div>

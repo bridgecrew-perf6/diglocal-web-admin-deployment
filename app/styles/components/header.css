@@ -16,10 +16,10 @@
 }
 
 .nav-link {
-  @apply mr-4 py-2 transition relative inline-block text-base text-brand-primary font-normal;
-  /* &:hover {
-    @apply font-bold;
-  } */
+  @apply px-2 mr-2 py-2 transition relative inline-block text-lg text-brand-primary font-medium;
+  &:hover {
+    @apply border-b-2 border-brand-primary;
+  }
 
   &.active {
     @apply text-brand-primary font-bold border-b-2 border-brand-primary;

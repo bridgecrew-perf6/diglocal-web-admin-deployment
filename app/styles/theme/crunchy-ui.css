@@ -10,7 +10,7 @@
 }
 
 .crunchy-breadcrumbs {
-  @apply text-sm text-gray-600 font-normal;
+  @apply text-sm text-gray-600 font-normal px-2;
 
   &__active-crumb {
     @apply font-bold text-brand-primary;
