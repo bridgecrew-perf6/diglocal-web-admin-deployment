@@ -16,9 +16,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
    roles: { refreshModel: true },
   },
 
-  breadCrumb: Object.freeze({
-    title: 'Businesses'
-  }),
+  breadCrumb: null,
 
   model(params) {
     let businesses = get(this, 'ellaSparse').array((range = {}, query = {}) => {

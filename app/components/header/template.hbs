@@ -1,14 +1,15 @@
-<nav class="header-nav max-w-container h-12 text-base">
+<nav class="header-nav max-w-container h-12 text-lg">
   <div class="header-nav-left">
     <object type="image/svg+xml" data="/logos/dig_logo.svg" class="logo">
       DigLocal Logo
     </object>
-    {{#if this.session.isAuthenticated}}
+    {{#if session.isAuthenticated}}
       <LinkTo @route="authenticated"> DigLocal Admin </LinkTo>
     {{/if}}
   </div>
   <div class="header-nav-right">
-    {{#if this.session.isAuthenticated}}
+    {{#if session.isAuthenticated}}
+      <Header::SelectRegion />
       <BasicDropdown
         @horizontalPosition="right"
         as |dd|>
@@ -18,7 +19,7 @@
             style={{background-image session.currentUser.profileImages.firstObject.sizes.mobile}}>
             {{#unless session.currentUser.profileImages.length}}
               <div class="flex w-full h-full items-center justify-center">
-                <FaIcon @icon="user" @size="lg" class="text-brand-primary mt-1 text-center" />
+                <FaIcon @icon="user" @size="lg" class="text-gray-400 mt-2 text-center" />
               </div>
             {{/unless}}
           </div>
@@ -33,7 +34,7 @@
           <hr class="py-1">
           <ul>
             <li class="py-2 px-4 w-full">
-              <CrunchyButton @onClick={{action "logout"}} @class="crunchy-button--link w-full">
+              <CrunchyButton @onClick={{action "logout" dd}} @class="crunchy-button--link w-full">
                 Logout
               </CrunchyButton>
             </li>
@@ -43,28 +44,34 @@
     {{/if}}
 
     {{#if this.media.isMobile}}
-      <button {{action (mut this.showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button"> &#9776; </button>
+      <button {{action (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button"> &#9776; </button>
     {{/if}}
   </div>
 </nav>
 
-<nav role="navigation" class="header-nav h-12">
-  <ul class="flex">
-    <LinkTo @class="nav-link" @route="authenticated.businesses">Businesses</LinkTo>
-    <LinkTo @class="nav-link" @route="authenticated.analytics">Analytics</LinkTo>
-    <LinkTo @class="nav-link" @route="authenticated.users">Users</LinkTo>
-    <LinkTo @class="nav-link" @route="authenticated.scoops">Scoops</LinkTo>
-    <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
-  </ul>
-</nav>
+{{#if session.isAuthenticated}}
+  <nav role="navigation" class="header-nav h-12">
+      {{#if (media 'isMobile')}}
+        {{!-- <Header::SelectRegion /> --}}
+      {{else}}
+        <ul class="flex">
+          <LinkTo @class="nav-link" @route="authenticated.businesses">Businesses</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.analytics">Analytics</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.users">Users</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.scoops">Scoops</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
+        </ul>
+      {{/if}}
+  </nav>
+{{/if}}
 
-{{#if this.showSidebar}}
+{{#if @showSidebar}}
   <div id="sidebar" class="fixed inset-0 h-full bg-white z-90 w-full block">
     <div id="nav_wrapper" class="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block relative lg:sticky lg:top-16 bg-white lg:bg-transparent">
-      {{#if this.media.isMobile}}
+      {{#if (media 'isMobile')}}
         <div class="flex justify-end">
           <button
-            {{action (mut this.showSidebar) false}}
+            {{action (mut @showSidebar) false}}
             class="px-6 text-5xl text-gray-600"
             aria-label="Close"
             type="button"

@@ -9,11 +9,13 @@ import Component from '@ember/component';
 @classNames('header')
 export default class Header extends Component {
   @service session;
+  @service regions;
 
   onLogout() {}
 
   @action
-  logout() {
+  logout(dd) {
+    dd.actions.close();
     this.onLogout();
   }
 }

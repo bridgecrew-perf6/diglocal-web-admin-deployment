@@ -10,10 +10,6 @@
   transform: translateX(2px) !important;
 }
 
-.content-container {
-  @apply p-2;
-}
-
 .h-screen-less-16 {
   height: calc(100vh - 4rem);
 }

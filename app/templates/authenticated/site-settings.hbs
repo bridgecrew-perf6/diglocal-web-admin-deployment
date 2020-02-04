@@ -1,5 +1,5 @@
 <nav class="fixed z-10 w-full bg-white px-2 pt-2 pb-2 h-16 flex flex-wrap items-center">
-  <ul class="tabs w-full">
+  <ul class="tabs w-full max-w-container mx-auto">
     <li class="tabs__tab">
       <LinkTo @route="authenticated.site-settings.index" @class="tabs__link">Global</LinkTo>
     </li>
@@ -11,6 +11,6 @@
   </ul>
 </nav>
 
-<div class="pt-24 relative">
+<div class="pt-16 relative">
   {{outlet}}
 </div>
