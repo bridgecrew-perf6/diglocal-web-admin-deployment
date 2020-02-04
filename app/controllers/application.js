@@ -9,6 +9,18 @@ export default class ApplicationController extends Controller {
   @service session;
   @service firebaseApp;
   @service router;
+  @service media;
+
+  init() {
+    super.init(...arguments);
+    this.router.on('routeWillChange', (/*transition*/) => {
+      if (this.showSidebar && this.media.isMobile) {
+        this.set('showSidebar', false);
+      }
+    });
+  }
+
+  showSidebar = false;
 
   @readOnly('session.isAuthenticated') isAuthenticated;
 

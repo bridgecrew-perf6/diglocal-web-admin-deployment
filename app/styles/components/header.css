@@ -1,9 +1,9 @@
 .header {
-  @apply fixed top-0 inset-x-0 flex h-16 w-full z-100;
+  @apply fixed top-0 inset-x-0 flex flex-wrap h-24 w-full z-100;
   @apply bg-brand-gray-light text-brand-primary font-normal text-xl;
 
   .header-nav {
-    @apply flex justify-between w-full py-2 px-4 mx-auto;
+    @apply flex justify-between w-full pt-1 px-2 mx-auto max-w-container;
   }
 
   .header-nav-left, .header-nav-right {
@@ -16,14 +16,20 @@
 }
 
 .nav-link {
-  @apply px-2 py-2 transition relative block text-xl text-brand-primary font-normal;
+  @apply mr-4 py-2 transition relative inline-block text-base text-brand-primary font-normal;
   /* &:hover {
     @apply font-bold;
   } */
 
   &.active {
+    @apply text-brand-primary font-bold border-b-2 border-brand-primary;
+  }
+}
+
+.nav-link--mobile {
+  @apply px-2 py-2 transition relative block text-xl text-brand-primary font-normal;
+  &.active {
     @apply text-brand-primary font-bold;
-    /* @apply bg-brand-primary-light; */
   }
 }
 

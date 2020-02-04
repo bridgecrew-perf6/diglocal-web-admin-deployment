@@ -39,12 +39,17 @@ export default class User extends Model {
   @computed
   get profileStatus() {
     let hasProfile = get(this, 'hasProfile');
-    if(hasProfile && get(this, 'isPublic')) {
+    if (hasProfile && get(this, 'isPublic')) {
       return 'Public';
     } else if (hasProfile) {
       return 'Private';
     } else {
       return 'None';
     }
+  }
+
+  @computed('givenName', 'publicName', 'user')
+  get headerDisplayName() {
+    return this.publicName || this.givenName || this.user;
   }
 }
