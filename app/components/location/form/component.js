@@ -5,8 +5,8 @@ import { not } from '@ember/object/computed';
 import Component from '@ember/component';
 
 @classic
-@classNames('border rounded p-4')
-@classNameBindings('isEditing:bg-gray-100')
+@classNames('border rounded p-4 bg-white')
+@classNameBindings('isEditing:bg-white')
 export default class Form extends Component {
   isEditing = false;
 

@@ -10,14 +10,14 @@
   transform: translateX(2px) !important;
 }
 
-.content-container {
-  @apply p-2;
-}
-
 .h-screen-less-16 {
   height: calc(100vh - 4rem);
 }
 
 .h-screen-less-32 {
   height: calc(100vh - 8rem);
+}
+
+.container {
+  @apply max-w-container mx-auto px-2;
 }

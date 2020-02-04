@@ -1,4 +1,5 @@
-<div class="px-4 pt-2 flex justify-end">
+
+<div class="container py-2 flex justify-end">
   <CrunchyButton
     @onClick={{action (mut this.showUploadModal) true}}
     @aria-label="Upload a new logo"
@@ -6,7 +7,7 @@
     Upload Logo
   </CrunchyButton>
 </div>
-<div class="p-4">
+<div class="container">
   <Business::DetailsForm @model={{@model}} />
 </div>
 

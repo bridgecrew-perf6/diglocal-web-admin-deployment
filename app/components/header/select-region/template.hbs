@@ -1,0 +1,19 @@
+<BasicDropdown
+  @horizontalPosition="right"
+  as |dd|>
+  <dd.Trigger class="flex items-center focus:outline-none mr-3 text-lg">
+    <span class="mr-1">{{this.activeRegion.longName}}</span>
+    <FaIcon @icon="angle-down" @size="xs" />
+  </dd.Trigger>
+  <dd.Content class="shadow p-1 mt-2 border rounded-sm text-lg">
+    <ul>
+      {{#each regions.regions as |region|}}
+        <li class="py-2 px-4 w-full">
+          <CrunchyButton @onClick={{action "selectRegion" region dd}} @class="crunchy-button--link w-full">
+            {{region.longName}}
+          </CrunchyButton>
+        </li>
+      {{/each}}
+    </ul>
+  </dd.Content>
+</BasicDropdown>

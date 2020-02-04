@@ -10,7 +10,7 @@
 }
 
 .crunchy-breadcrumbs {
-  @apply text-sm text-gray-600 font-normal;
+  @apply text-sm text-gray-600 font-normal px-2;
 
   &__active-crumb {
     @apply font-bold text-brand-primary;
@@ -55,7 +55,7 @@
 }
 
 .crunchy-media-object {
-  @apply rounded border;
+  @apply rounded border bg-white;
 
   &--vertical {
   }
@@ -71,7 +71,7 @@
   }
 
   &__image-wrapper {
-    @apply relative bg-brand-gray-light w-full h-full flex-1;
+    @apply relative bg-white w-full h-full flex-1;
     &--no-bg {
       @apply bg-transparent;
     }

@@ -1,13 +1,18 @@
 .header {
-  @apply fixed top-0 inset-x-0 flex h-16 w-full z-100;
-  @apply bg-brand-gray-light text-brand-primary font-normal text-xl;
+  @apply fixed top-0 inset-x-0 flex flex-wrap h-24 w-full z-100;
+  @apply font-normal text-xl;
 
   .header-nav {
-    @apply flex justify-between w-full py-2 px-4 mx-auto;
+    @apply flex w-full;
+    @apply bg-brand-gray-light text-brand-primary;
+
+    &--secondary {
+      @apply bg-brand-primary text-white;
+    }
   }
 
   .header-nav-left, .header-nav-right {
-    @apply flex items-center;
+    @apply flex items-center py-1;
   }
 }
 
@@ -16,20 +21,25 @@
 }
 
 .nav-link {
-  @apply px-2 py-2 transition relative block text-xl text-brand-primary font-normal;
-  /* &:hover {
-    @apply font-bold;
-  } */
+  @apply px-2 mr-2 py-2 transition relative inline-block text-base font-medium;
+  &:hover {
+    /* @apply border-b-2 border-white; */
+  }
 
   &.active {
-    @apply text-brand-primary font-bold;
-    /* @apply bg-brand-primary-light; */
+    @apply font-bold;
   }
 }
 
-/* ---- Dig Specific CSS ---- */
+.nav-link--mobile {
+  @apply px-2 py-2 transition relative block text-xl text-brand-primary font-normal;
+  &.active {
+    @apply text-brand-primary font-bold;
+  }
+}
+
 .logo {
-  width: 37px;
+  width: 36px;
   height: 100%;
   margin-right: 1em;
 

@@ -1,4 +1,4 @@
-<div class="p-4">
+<div class="container py-4">
   <Location::Create @business={{this.model.business}} class="mb-4" />
   {{#each this.model.locations as |item|}}
     <Location::Form @model={{item}} @class="border border-gray-300 rounded" />
