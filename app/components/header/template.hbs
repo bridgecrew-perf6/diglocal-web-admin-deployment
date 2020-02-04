@@ -1,14 +1,12 @@
-<nav class="header-nav max-w-container h-12 text-lg">
-  <div class="header-nav-left">
-    <object type="image/svg+xml" data="/logos/dig_logo.svg" class="logo">
-      DigLocal Logo
-    </object>
-    {{#if session.isAuthenticated}}
+<nav class="header-nav h-16 text-lg">
+  <div class="container flex justify-between">
+    <div class="header-nav-left">
+      <object type="image/svg+xml" data="/logos/dig_logo.svg" class="logo">
+        DigLocal Logo
+      </object>
       <LinkTo @route="authenticated"> DigLocal Admin </LinkTo>
-    {{/if}}
-  </div>
-  <div class="header-nav-right">
-    {{#if session.isAuthenticated}}
+    </div>
+    <div class="header-nav-right">
       <Header::SelectRegion />
       <BasicDropdown
         @horizontalPosition="right"
@@ -41,29 +39,29 @@
           </ul>
         </dd.Content>
       </BasicDropdown>
-    {{/if}}
 
-    {{#if this.media.isMobile}}
-      <button {{action (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button"> &#9776; </button>
-    {{/if}}
+      {{#if this.media.isMobile}}
+        <button {{action (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button"> &#9776; </button>
+      {{/if}}
+    </div>
   </div>
 </nav>
 
-{{#if session.isAuthenticated}}
-  <nav role="navigation" class="header-nav h-12">
-      {{#if (media 'isMobile')}}
-        {{!-- <Header::SelectRegion /> --}}
-      {{else}}
-        <ul class="flex">
-          <LinkTo @class="nav-link" @route="authenticated.businesses">Businesses</LinkTo>
-          <LinkTo @class="nav-link" @route="authenticated.analytics">Analytics</LinkTo>
-          <LinkTo @class="nav-link" @route="authenticated.users">Users</LinkTo>
-          <LinkTo @class="nav-link" @route="authenticated.scoops">Scoops</LinkTo>
-          <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
-        </ul>
-      {{/if}}
-  </nav>
-{{/if}}
+<nav role="navigation" class="header-nav header-nav--secondary h-12">
+  <div class="container">
+    {{#if (media 'isMobile')}}
+      {{!-- <Header::SelectRegion /> --}}
+    {{else}}
+      <ul class="flex w-full h-full items-center">
+        <LinkTo @class="nav-link" @route="authenticated.businesses">Businesses</LinkTo>
+        <LinkTo @class="nav-link" @route="authenticated.analytics">Analytics</LinkTo>
+        <LinkTo @class="nav-link" @route="authenticated.users">Users</LinkTo>
+        <LinkTo @class="nav-link" @route="authenticated.scoops">Scoops</LinkTo>
+        <LinkTo @class="nav-link" @route="authenticated.site-settings">Site Settings</LinkTo>
+      </ul>
+    {{/if}}
+  </div>
+</nav>
 
 {{#if @showSidebar}}
   <div id="sidebar" class="fixed inset-0 h-full bg-white z-90 w-full block">

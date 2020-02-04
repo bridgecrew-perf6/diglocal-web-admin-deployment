@@ -55,7 +55,7 @@
 }
 
 .crunchy-media-object {
-  @apply rounded border;
+  @apply rounded border bg-white;
 
   &--vertical {
   }
@@ -71,7 +71,7 @@
   }
 
   &__image-wrapper {
-    @apply relative bg-brand-gray-light w-full h-full flex-1;
+    @apply relative bg-white w-full h-full flex-1;
     &--no-bg {
       @apply bg-transparent;
     }

@@ -1,6 +1,6 @@
-<div class="fixed z-10 w-full bg-white px-2 py-2 lg:w-5/6">
-  <div class="flex h-10 justify-start">
-    <p class="flex items-center mx-4">Manage users with admin privileges for this business.</p>
+<div class="fixed z-10 w-full bg-white py-2">
+  <div class="container flex h-10 justify-between">
+    <p class="flex items-center mx-2">Manage users with admin privileges for this business.</p>
     <CrunchyButton
       @onClick={{action (mut this.showAddUserModal) true}}
       @aria-label="Add a new location"
@@ -10,7 +10,7 @@
     </CrunchyButton>
   </div>
 </div>
-<div class="treadmill-content__table-body pt-16">
+<div class="treadmill-content__table-body pt-20">
   <EllaTreadmill
     @content={{@model.users}}
     @minColumnWidth="100%"

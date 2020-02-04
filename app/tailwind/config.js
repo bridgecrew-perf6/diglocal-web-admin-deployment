@@ -25,15 +25,15 @@ module.exports = {
         'black': '#1b1c20',
         'white': '#ffffff',
         'gray': {
-          100: '#f7fafc', // default
-          200: '#f0f3f4', // brand-gray-light
-          300: '#e2e8f0', // default
-          400: '#c8d1d3', // brand-gray
-          500: '#a0aec0', // default
-          600: '#767676', // brand
-          700: '#4a5568', // default
-          800: '#2d3748', // default
-          900: '#1a202c', // default
+          '100': '#f9f9f9',
+          '200': '#f0f3f4', // brand-gray-light
+          '300': '#e2e8f0', // default
+          '400': '#c8d1d3', // brand-gray
+          '500': '#a0aec0', // default
+          '600': '#767676', // brand
+          '700': '#4a5568', // default
+          '800': '#2d3748', // default
+          '900': '#1a202c', // default
         },
       },
       fontFamily: {

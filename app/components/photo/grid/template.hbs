@@ -3,7 +3,7 @@
   @isHorizontal={{true}}
   @dragEndAction={{action "dragEnd"}} as |item|>
   <div
-    class={{concat "w-48 h-48 m-4 border rounded overflow-hidden bg-contain bg-no-repeat bg-center relative cursor-pointer "
+    class={{concat "w-48 h-48 m-4 border rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-white relative cursor-pointer "
       (if (contains item this.selectedPhotos) "shadow-outline ")
     }}
     style={{background-image (if item.isNew item.url item.sizes.mobile)}}

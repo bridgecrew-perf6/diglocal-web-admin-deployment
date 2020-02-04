@@ -1,2 +1,7 @@
-<Header @onLogout={{action "logout"}} @showSidebar={{showSidebar}} />
-{{outlet}}
+{{#if session.isAuthenticated}}
+  <Header @onLogout={{action "logout"}} @showSidebar={{showSidebar}} />
+{{/if}}
+
+{{#if this.displayOutlet}}
+  {{outlet}}
+{{/if}}

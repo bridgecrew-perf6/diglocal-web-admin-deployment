@@ -7,8 +7,8 @@ import { set, action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 @classic
-@classNames('border rounded p-4')
-@classNameBindings('isEditing:bg-gray-100')
+@classNames('border rounded p-4 bg-white')
+@classNameBindings('isEditing:bg-white')
 export default class DetailsForm extends Component {
   @service store;
 
