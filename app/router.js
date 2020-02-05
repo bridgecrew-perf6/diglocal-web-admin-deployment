@@ -45,6 +45,7 @@ Router.map(function() {
       });
     });
 
+    this.route('select-region');
   });
 
   this.route('404', { path: '/*' });

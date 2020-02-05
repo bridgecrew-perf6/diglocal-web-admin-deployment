@@ -1,25 +1,13 @@
 import { module, test } from 'qunit';
 import { visit, click, currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { authenticateSession, invalidateSession, currentSession } from 'ember-simple-auth/test-support';
 import { testId } from 'diglocal-manage/tests/helpers';
-import Service from '@ember/service';
-import { resolve } from 'rsvp';
-
-const firebaseAppStub = Service.extend({
-  auth() {
-    return resolve({ currentUser: { uid: 1 }});
-  },
-});
+import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
 
 module('Acceptance | Application Session', function(hooks) {
-  setupApplicationTest(hooks);
-  setupMirage(hooks);
+  setupAdminUserTest(hooks);
 
   hooks.beforeEach(function() {
-    this.owner.register('service:firebase-app', firebaseAppStub);
-    this.server.create('user', 'adminUser');
     let region = this.server.create('region');
     this.server.createList('business', 2, { region: region});
 
@@ -31,9 +19,6 @@ module('Acceptance | Application Session', function(hooks) {
     await visit('/');
 
     assert.equal(currentURL(), `/region/${this.region.id}/businesses`);
-    let CurrentUserService = this.owner.lookup('service:current-user');
-    console.log(CurrentUserService);
-    await this.pauseTest();
   });
 
   test('I am redirected to login route if I am not logged in', async function(assert) {
@@ -48,6 +33,30 @@ module('Acceptance | Application Session', function(hooks) {
     await visit(`/region/${this.region.id}/scoops`);
 
     assert.equal(currentURL(), '/login');
+  });
+
+  test('The current user is loaded with the app if I am authenticated', async function(assert) {
+    await authenticateSession();
+    await visit('/');
+
+    assert.equal(currentURL(), `/region/${this.region.id}/businesses`);
+    let currentUserService = this.owner.lookup('service:current-user');
+    assert.equal(currentUserService.user.id, this.currentUser.id);
+  });
+
+  test('The current user is not persisted after logout', async function(assert) {
+    await authenticateSession();
+    await visit('/');
+
+    assert.equal(currentURL(), `/region/${this.region.id}/businesses`);
+    let currentUserService = this.owner.lookup('service:current-user');
+    assert.equal(currentUserService.user.id, this.currentUser.id);
+
+    await click(testId('current-user-dropdown'));
+    await click(`${testId('logout')} button`);
+
+    assert.notOk(currentSession().isAuthenticated, 'Session is invalid');
+    assert.notOk(currentUserService.user);
   });
 
   test('I can logout and my session is invalidated', async function(assert) {

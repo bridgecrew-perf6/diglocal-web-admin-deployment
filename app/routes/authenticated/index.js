@@ -9,6 +9,11 @@ export default class IndexRoute extends Route.extend() {
   breadCrumb = null;
 
   redirect() {
-    this.replaceWith('authenticated.region.businesses', this.regions.activeRegion.id);
+    let activeRegion = this.regions.activeRegion;
+    if (!activeRegion) {
+      this.replaceWith('authenticated.select-region');
+    } else {
+      this.replaceWith('authenticated.region.businesses', this.regions.activeRegion.id);
+    }
   }
 }

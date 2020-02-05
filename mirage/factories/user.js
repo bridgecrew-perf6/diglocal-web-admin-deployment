@@ -39,5 +39,11 @@ export default Factory.extend({
     user.update({
       profileImages: [ profileImage ]
     });
+    if (!user.publicName) {
+      let name = `${user.givenName} ${user.surname.substring(0,1)}`;
+      user.update({
+        publicName: name
+      });
+    }
   }
 })

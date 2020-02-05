@@ -10,5 +10,6 @@ export default class HeaderSelectRegionComponent extends Component {
   logout(dd) {
     dd.actions.close();
     this.session.invalidate();
+    this.currentUser.user = null;
   }
 }

@@ -10,5 +10,6 @@ export default class RegionsService extends Service {
     this.regions = [];
   }
 
+  @tracked regions = null;
   @tracked activeRegion = null;
 }
