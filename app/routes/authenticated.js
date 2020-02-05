@@ -9,6 +9,7 @@ export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteM
   @service session;
   @service firebaseApp;
   @service regions;
+  @service currentUser;
 
   model() {
     let currentUser = this.firebaseApp.auth().then(({currentUser}) =>
@@ -17,12 +18,16 @@ export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteM
     return hash({
       currentUser,
       regions: this.store.findAll('region')
-    })
+    });
   }
 
   afterModel(hash) {
     let { currentUser, regions } = hash;
-    this.session.set('currentUser', currentUser);
+    console.log(currentUser);
+    if (!currentUser) {
+      // TODO
+    }
+    this.currentUser.user = currentUser;
     this.regions.set('regions', regions);
     this.regions.set('activeRegion', regions.firstObject);
   }

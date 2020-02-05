@@ -5,6 +5,7 @@ import { alias } from '@ember/object/computed';
 
 export default class HeaderSelectRegionComponent extends Component {
   @service regions;
+  @service router;
 
   @alias('regions.activeRegion') activeRegion;
 
@@ -12,5 +13,6 @@ export default class HeaderSelectRegionComponent extends Component {
   selectRegion(region, dd) {
     dd.actions.close();
     this.activeRegion = region;
+    this.router.transitionTo('authenticated.region', region.id);
   }
 }

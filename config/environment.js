@@ -41,8 +41,8 @@ module.exports = function(environment) {
 
   ENV['ember-simple-auth'] = {
     authenticationRoute: 'login',
-    routeAfterAuthentication: 'authenticated.businesses',
-    routeIfAlreadyAuthenticated: 'authenticated.businesses'
+    routeAfterAuthentication: 'authenticated.region.businesses',
+    routeIfAlreadyAuthenticated: 'authenticated.region.businesses'
   };
 
   ENV['ember-cli-mirage'] = {

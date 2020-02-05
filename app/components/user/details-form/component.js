@@ -48,6 +48,6 @@ export default class DetailsForm extends Component {
   delete() {
     this.model.deleteRecord();
     this.model.save();
-    this.router.transitionTo('authenticated.users');
+    this.router.transitionTo('authenticated.region.users');
   }
 }

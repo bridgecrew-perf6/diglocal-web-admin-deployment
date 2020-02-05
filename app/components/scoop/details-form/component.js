@@ -41,6 +41,6 @@ export default class DetailsForm extends Component {
   delete() {
     this.args.model.deleteRecord();
     this.args.model.save();
-    this.router.transitionTo('authenticated.businesses');
+    this.router.transitionTo('authenticated.region.businesses');
   }
 }
