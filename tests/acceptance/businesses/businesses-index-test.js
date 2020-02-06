@@ -9,14 +9,18 @@ module('Acceptance | Businesses | Index', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function() {
-    this.server.createList('business', 5);
+    let region = this.server.create('region');
+    this.server.createList('business', 5, { region: region});
+
+    this.region = region;
+    this.url = `/region/${this.region.id}/businesses`;
   });
 
   test('I can view all businesses', async function(assert) {
     await authenticateSession();
-    await visit('/businesses');
+    await visit(this.url);
 
-    assert.equal(currentURL(), '/businesses');
+    assert.equal(currentURL(), this.url);
     assert.dom('[data-test-id=business-list-row]').exists({ count: 5 });
   });
 

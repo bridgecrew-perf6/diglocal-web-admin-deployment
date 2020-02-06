@@ -6,10 +6,11 @@
   }}
   type={{@type}}
   aria-label={{@aria-label}}
+  data-test-id={{@testId}}
   disabled={{this.disabled}}
   onclick={{action "click"}}>
   {{#if (has-block)}}
-    {{yield}}
+    {{yield (hash isRunning=this.isRunning)}}
   {{else}}
     {{@value}}
   {{/if}}

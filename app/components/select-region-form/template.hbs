@@ -1,0 +1,26 @@
+<CrunchyForm
+  @model={{this}}
+  @onSubmit={{perform submit}}
+  data-test-id="select-region-form"
+  as |form|>
+  <p class="text-2xl text-brand-primary font-medium mb-2">Hi there!</p>
+  <p class="text-xl mb-4 font-medium">
+    Please select a region to continue.
+  </p>
+  <p class="italic text-gray-600 text-sm mb-4">
+    (You can always switch regions later)
+  </p>
+  <form.field @field="selected" @aria-label="Active Region" class="mt-4" data-test-id="select-active-region">
+    <PowerSelect
+      @options={{regionsService.regions}}
+      @searchEnabled={{false}}
+      @placeholder="Select region"
+      @selected={{this.selected}}
+      @allowClear={{false}}
+      @onChange={{action (mut this.selected)}} as |region|
+      >
+        <span class="">{{region.longName}}</span>
+    </PowerSelect>
+  </form.field>
+  <form.submit @value="Submit" @class="w-full mt-4" @testId="submit-region" />
+</CrunchyForm>

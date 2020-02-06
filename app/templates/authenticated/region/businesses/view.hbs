@@ -1,0 +1,28 @@
+<nav class="fixed z-10 w-full bg-white px-2 pt-2 pb-2 h-24 flex flex-wrap items-center">
+  <CrunchyBreadcrumbs @class="w-full max-w-container mx-auto" />
+  <ul class="tabs w-full max-w-container mx-auto">
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.region.businesses.view.index" @model={{this.model.id}} @class="tabs__link">Details</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.region.businesses.view.social" @class="tabs__link">Social</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.region.businesses.view.locations" @class="tabs__link">Locations</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.region.businesses.view.scoops" @class="tabs__link">Scoops</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.region.businesses.view.photos" @class="tabs__link">Photos</LinkTo>
+    </li>
+    <li class="tabs__tab">
+      <LinkTo @route="authenticated.region.businesses.view.users" @class="tabs__link">Users</LinkTo>
+    </li>
+    <li class="tabs__spacer w-full" aria-hidden="true">
+    </li>
+  </ul>
+</nav>
+<div class="pt-24">
+  {{outlet}}
+</div>
