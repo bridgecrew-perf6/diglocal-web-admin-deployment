@@ -1,4 +1,4 @@
-import DS from 'ember-data';
+import JSONAPISerializer from '@ember-data/serializer/json-api';
 import { camelize } from '@ember/string';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -11,46 +11,46 @@ const COMMON_READ_ONLY_KEYS = [
   'updatedBy'
 ];
 
-export default DS.JSONAPISerializer.extend({
-  permissions: service('permissions'),
+export default class ApplicationSerializer extends JSONAPISerializer {
+  @service permissions;
 
   normalizeResponse() {
-    let normalizedDocument = this._super(...arguments);
+    let normalizedDocument = super.normalizeResponse(...arguments);
 
-    get(this, 'permissions').updatePermissions(get(normalizedDocument, 'meta.attributePermissions'));
+    this.permissions.updatePermissions(get(normalizedDocument, 'meta.attributePermissions'));
 
     return normalizedDocument;
-  },
+  }
 
-  keyForAttribute: function(attr) {
+  keyForAttribute(attr) {
     return camelize(attr);
-  },
+  }
 
-  keyForRelationship: function(attr) {
+  keyForRelationship(attr) {
     return camelize(attr);
-  },
+  }
 
   serializeAttribute(snapshot, json, key, attributes) {
     if (COMMON_READ_ONLY_KEYS.includes(key)) {
       return;
     }
 
-    if (!get(this, 'permissions').permissionToModify(key, snapshot.record)) {
+    if (!this.permissions.permissionToModify(key, snapshot.record)) {
       return;
     }
 
-    return this._super(snapshot, json, key, attributes);
-  },
+    return super.serializeAttribute(snapshot, json, key, attributes);
+  }
 
   serializeBelongsTo(snapshot, json, relationship) {
     if (get(relationship, 'options.readOnly')) {
       return;
     }
 
-    if (!get(this, 'permissions').permissionToModify(relationship.key, snapshot.record)) {
+    if (!this.permissions.permissionToModify(relationship.key, snapshot.record)) {
       return;
     }
 
-    return this._super(snapshot, json, relationship);
+    return super.serializeBelongsTo(snapshot, json, relationship);
   }
-});
+}

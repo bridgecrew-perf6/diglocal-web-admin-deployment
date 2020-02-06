@@ -9,7 +9,7 @@ import moment from 'moment';
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 @classic
-export default class IndexController extends Controller {
+class AuthenticatedRegionAnalyticsIndexController extends Controller {
   queryParams = [
     'search',
     'dateRange',
@@ -56,3 +56,5 @@ export default class IndexController extends Controller {
     set(this, 'grouping', value);
   }
 }
+
+export default AuthenticatedRegionAnalyticsIndexController;

@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { get, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import moment from  'moment';
 
-@classic
 export default class ImpressionTracker extends Model {
   @attr() businessApp;
   @attr() businessBrowser;
@@ -50,7 +48,7 @@ export default class ImpressionTracker extends Model {
 
   @computed('id')
   get formattedDate() {
-    let id = get(this, 'id');
+    let id = this.id;
     let span = 0;
     switch(id.substr(0,2)) {
       case '10':

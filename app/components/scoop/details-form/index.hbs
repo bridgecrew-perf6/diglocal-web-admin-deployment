@@ -1,0 +1,75 @@
+<div class="border rounded p-4 bg-white mb-4">
+  <div class="flex mb-3 justify-between">
+    <h1 class="font-semibold text-lg"> {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}} </h1>
+    {{#if this.isReadonly}}
+      <CrunchyButton
+        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+        @class="crunchy-button--icon"
+        @aria-label="Edit scoop details">
+        <FaIcon @icon="edit" @size="lg" />
+      </CrunchyButton>
+    {{else}}
+      <CrunchyButton
+        @onClick={{action "cancel"}}
+        @class="crunchy-button--icon"
+        @aria-label="Close form">
+        <FaIcon @icon="times" />
+      </CrunchyButton>
+    {{/if}}
+  </div>
+
+  <CrunchyForm
+    @model={{@model}}
+    @onSubmit={{action "save"}}
+    @onCancel={{action "cancel"}}
+    as |form|>
+
+    <form.text-field
+      @field="description"
+      @label="Description"
+      @aria-label="Description"
+      @disabled={{this.isReadonly}}
+    />
+
+    <form.text-area
+      @field="fineText"
+      @label="Additional Details"
+      @aria-label="Additional Details"
+      @rows="3"
+      @disabled={{this.isReadonly}}
+    />
+
+    <form.text-field
+      @field="ticketUrl"
+      @label="Ticket Url"
+      @aria-label="Ticket Url"
+      @disabled={{this.isReadonly}}
+    />
+
+    <form.checkbox
+      @field="active"
+      @label="Active?"
+      @disabled={{this.active}}
+    />
+
+    {{#if this.isEditing}}
+      <div class="flex justify-between mt-8">
+        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
+        <div>
+          <form.submit @value="Submit" @class="mr-2"/>
+          <form.cancel @value="Cancel" />
+        </div>
+      </div>
+    {{/if}}
+  </CrunchyForm>
+</div>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{action "delete"}}
+  @onCancel={{action (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.description}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>

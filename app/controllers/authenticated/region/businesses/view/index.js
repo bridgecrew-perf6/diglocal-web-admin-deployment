@@ -1,13 +1,14 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import { set, action } from '@ember/object';
+import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 
-@classic
-export default class AuthenticatedBusinessesViewIndexController extends Controller {
+export default class AuthenticatedRegionBusinessesViewIndexController extends Controller {
   @service store;
   @service session;
+
+  @tracked showUploadModal = false;
 
   @(task(function*(/*response*/) {
   }).enqueue())
@@ -15,12 +16,12 @@ export default class AuthenticatedBusinessesViewIndexController extends Controll
 
   @task(function*() {
     yield this.model.reload();
-    set(this, 'showUploadModal', false);
+    this.showUploadModal = false;
   })
   onAllFilesUploadComplete;
 
   @action
   cancelUpload() {
-    set(this, 'showUploadModal', false);
+    this.showUploadModal = false;
   }
 }

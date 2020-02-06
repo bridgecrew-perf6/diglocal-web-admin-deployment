@@ -1,0 +1,68 @@
+<header class="header">
+  <nav class="header-nav h-16 text-lg">
+    <div class="container flex justify-between">
+      <div class="header-nav-left">
+        <object type="image/svg+xml" data="/logos/dig_logo.svg" class="logo">
+          DigLocal Logo
+        </object>
+        <LinkTo @route="authenticated"> DigLocal Admin </LinkTo>
+      </div>
+      <div class="header-nav-right">
+        {{#if regions.activeRegion}}
+          <Header::SelectRegion />
+        {{/if}}
+        <Header::CurrentUserDropdown />
+
+        {{#if this.media.isMobile}}
+          <button {{action (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button"> &#9776; </button>
+        {{/if}}
+      </div>
+    </div>
+  </nav>
+
+  <nav role="navigation" class="header-nav header-nav--secondary h-12">
+    <div class="container">
+      {{#if (media 'isMobile')}}
+        {{!-- <Header::SelectRegion /> --}}
+      {{else}}
+        <ul class="flex w-full h-full items-center">
+          {{#if regions.activeRegion}}
+            <LinkTo @class="nav-link" @route="authenticated.region.businesses" @model={{regions.activeRegion}}>Businesses</LinkTo>
+            <LinkTo @class="nav-link" @route="authenticated.region.analytics" @model={{regions.activeRegion}}>Analytics</LinkTo>
+            <LinkTo @class="nav-link" @route="authenticated.region.users" @model={{regions.activeRegion}}>Users</LinkTo>
+            <LinkTo @class="nav-link" @route="authenticated.region.scoops" @model={{regions.activeRegion}}>Scoops</LinkTo>
+            <LinkTo @class="nav-link" @route="authenticated.region.site-settings" @model={{regions.activeRegion}}>Site Settings</LinkTo>
+          {{/if}}
+        </ul>
+      {{/if}}
+    </div>
+  </nav>
+
+  {{#if @showSidebar}}
+    <div id="sidebar" class="fixed inset-0 h-full bg-white z-90 w-full block">
+      <div id="nav_wrapper" class="h-full overflow-y-auto scrolling-touch lg:h-auto lg:block relative lg:sticky lg:top-16 bg-white lg:bg-transparent">
+        {{#if (media 'isMobile')}}
+          <div class="flex justify-end">
+            <button
+              {{action (mut @showSidebar) false}}
+              class="px-6 text-5xl text-gray-600"
+              aria-label="Close"
+              type="button"
+            >
+              &times;
+            </button>
+          </div>
+        {{/if}}
+        <nav role="navigation" class="px-6 pt-4 overflow-y-auto text-base h-screen-less-16 max-w-full">
+          <div class="mb-8">
+            <LinkTo @class="nav-link--mobile" @route="authenticated.region.businesses" @model={{regions.activeRegion}}>Businesses</LinkTo>
+            <LinkTo @class="nav-link--mobile" @route="authenticated.region.analytics" @model={{regions.activeRegion}}>Analytics</LinkTo>
+            <LinkTo @class="nav-link--mobile" @route="authenticated.region.users" @model={{regions.activeRegion}}>Users</LinkTo>
+            <LinkTo @class="nav-link--mobile" @route="authenticated.region.scoops" @model={{regions.activeRegion}}>Scoops</LinkTo>
+            <LinkTo @class="nav-link--mobile" @route="authenticated.region.site-settings" @model={{regions.activeRegion}}>Site Settings</LinkTo>
+          </div>
+        </nav>
+      </div>
+    </div>
+  {{/if}}
+</header>

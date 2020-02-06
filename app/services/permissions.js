@@ -9,7 +9,7 @@ import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 
 @classic
-export default class PermissionsService extends Service {
+class PermissionsService extends Service {
   @service('session')
   session;
 
@@ -86,3 +86,5 @@ export default class PermissionsService extends Service {
     return get(this, this.permissionPropertyName(`${recordType}:${record.get('id')}`, 'update'));
   }
 }
+
+export default PermissionsService;

@@ -8,7 +8,7 @@ import Helper from '@ember/component/helper';
 *
 */
 @classic
-export default class PeekRecordFromId extends Helper {
+class PeekRecordFromId extends Helper {
   @service store;
 
   compute([ id, recordType ]) {
@@ -18,3 +18,5 @@ export default class PeekRecordFromId extends Helper {
     return this.store.peekRecord(recordType, id);
   }
 }
+
+export default PeekRecordFromId;

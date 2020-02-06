@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 
 @classic
-export default class PhotosRoute extends Route.extend() {
+class AuthenticatedRegionBusinessesViewPhotosRoute extends Route {
   model() {
     let business = this.modelFor('authenticated.region.businesses.view');
 
@@ -22,3 +22,5 @@ export default class PhotosRoute extends Route.extend() {
     }
   }
 }
+
+export default AuthenticatedRegionBusinessesViewPhotosRoute;

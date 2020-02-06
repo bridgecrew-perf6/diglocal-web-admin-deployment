@@ -8,7 +8,7 @@ import config from 'diglocal-manage/config/environment';
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 @classic
-export default class IndexController extends Controller {
+class AuthenticatedRegionSiteSettingsCategoriesIndexController extends Controller {
   queryParams = [
     'search'
   ];
@@ -32,3 +32,5 @@ export default class IndexController extends Controller {
     });
   }
 }
+
+export default AuthenticatedRegionSiteSettingsCategoriesIndexController;

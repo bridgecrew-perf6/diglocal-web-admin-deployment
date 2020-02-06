@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import { attr, hasMany, belongsTo } from '@ember-data/model';
 import Trackable from './trackable';
 
-@classic
 export default class Business extends Trackable {
   @attr() description2;
   @attr() description;

@@ -12,7 +12,7 @@ export default class AuthenticatedRegionRoute extends Route {
   breadCrumb = null;
 
   model(params) {
-    return this.store.findRecord('region', params.id);
+    return this.store.findRecord('region', params.region_id);
   }
 
   afterModel(model) {
@@ -25,7 +25,6 @@ export default class AuthenticatedRegionRoute extends Route {
    if (error instanceof NotFoundError || error instanceof ForbiddenError) {
      this.replaceWith('authenticated.select-region');
    } else {
-     // Let the route above this handle the error.
      return true;
    }
   }

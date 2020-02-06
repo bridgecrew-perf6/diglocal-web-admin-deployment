@@ -59,6 +59,7 @@
     @minColumnWidth="100%"
     @row="140" as |item|
   >
-    <User::ListRow @model={{item}} />
+    {{!-- TODO - Set linkable true and have nice UI for view --}}
+    <User::ListRow @model={{item}} @isLinkable={{false}} />
   </EllaTreadmill>
 </div>
