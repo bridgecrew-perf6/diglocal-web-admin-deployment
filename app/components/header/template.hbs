@@ -7,7 +7,9 @@
       <LinkTo @route="authenticated"> DigLocal Admin </LinkTo>
     </div>
     <div class="header-nav-right">
-      <Header::SelectRegion />
+      {{#if regions.activeRegion}}
+        <Header::SelectRegion />
+      {{/if}}
       <Header::CurrentUserDropdown />
 
       {{#if this.media.isMobile}}
@@ -23,11 +25,13 @@
       {{!-- <Header::SelectRegion /> --}}
     {{else}}
       <ul class="flex w-full h-full items-center">
-        <LinkTo @class="nav-link" @route="authenticated.region.businesses" @model={{regions.activeRegion}}>Businesses</LinkTo>
-        <LinkTo @class="nav-link" @route="authenticated.region.analytics" @model={{regions.activeRegion}}>Analytics</LinkTo>
-        <LinkTo @class="nav-link" @route="authenticated.region.users" @model={{regions.activeRegion}}>Users</LinkTo>
-        <LinkTo @class="nav-link" @route="authenticated.region.scoops" @model={{regions.activeRegion}}>Scoops</LinkTo>
-        <LinkTo @class="nav-link" @route="authenticated.region.site-settings" @model={{regions.activeRegion}}>Site Settings</LinkTo>
+        {{#if regions.activeRegion}}
+          <LinkTo @class="nav-link" @route="authenticated.region.businesses" @model={{regions.activeRegion}}>Businesses</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.region.analytics" @model={{regions.activeRegion}}>Analytics</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.region.users" @model={{regions.activeRegion}}>Users</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.region.scoops" @model={{regions.activeRegion}}>Scoops</LinkTo>
+          <LinkTo @class="nav-link" @route="authenticated.region.site-settings" @model={{regions.activeRegion}}>Site Settings</LinkTo>
+        {{/if}}
       </ul>
     {{/if}}
   </div>

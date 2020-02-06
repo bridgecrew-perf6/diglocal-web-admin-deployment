@@ -30,14 +30,11 @@
       model=model
       group=groupComponent
       form=this)
-    submit=(component "crunchy-button"
-      type="submit"
-      model=model
+    submit=(component "crunchy-form/submit"
       task=submitTask)
     cancel=(component "crunchy-button"
       type="button"
       class="crunchy-button--cancel"
-      model=model
       task=cancelTask)
     isSubmitting=isSubmitting
     didSubmit=didSubmit

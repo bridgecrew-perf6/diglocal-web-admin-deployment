@@ -1,7 +1,6 @@
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setBreakpoint } from 'ember-responsive/test-support';
-import resetStorages from 'ember-local-storage/test-support/reset-storage';
 import Service from '@ember/service';
 import { resolve } from 'rsvp';
 
@@ -31,15 +30,5 @@ export default function(hooks) {
     this.currentUser = this.server.create('user', 'adminUser', {
       id: '999'
     });
-  });
-
-  hooks.afterEach(function() {
-    if (window.localStorage) {
-      window.localStorage.clear();
-    }
-    if (window.sessionStorage) {
-      window.sessionStorage.clear();
-    }
-    resetStorages();
   });
 }

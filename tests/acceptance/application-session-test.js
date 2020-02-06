@@ -3,12 +3,14 @@ import { visit, click, currentURL } from '@ember/test-helpers';
 import { authenticateSession, invalidateSession, currentSession } from 'ember-simple-auth/test-support';
 import { testId } from 'diglocal-manage/tests/helpers';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
+import setupRegionStorage from 'diglocal-manage/tests/helpers/setup-region-storage';
 
 module('Acceptance | Application Session', function(hooks) {
   setupAdminUserTest(hooks);
+  setupRegionStorage(hooks);
 
   hooks.beforeEach(function() {
-    let region = this.server.create('region');
+    let region = this.activeRegion;
     this.server.createList('business', 2, { region: region});
 
     this.region = region;
