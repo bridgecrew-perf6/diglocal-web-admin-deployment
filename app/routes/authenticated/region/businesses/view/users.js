@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
 
-@classic
-export default class UsersRoute extends Route.extend() {
+export default class AuthenticatedRegionBusinessesViewUsersRoute extends Route {
   model() {
     let business = this.modelFor('authenticated.region.businesses.view');
 

@@ -1,20 +1,21 @@
-import classic from 'ember-classic-decorator';
 import { action } from '@ember/object';
 import Route from '@ember/routing/route';
+import { tracked } from '@glimmer/tracking';
 
-@classic
-export default class ViewRoute extends Route.extend() {
+export default class AuthenticatedRegionBusinessesViewRoute extends Route {
+  @tracked breadCrumb;
+
   model(params) {
-    return this.store.findRecord('business', params.id, { include: 'categories,scoops,locations' });
+    return this.store.findRecord('business', params.business_id, { include: 'categories,scoops,locations' });
   }
 
   afterModel(model) {
     let modelName = model.name;
 
     if (modelName) {
-      this.set('breadCrumb', {
+      this.breadCrumb = {
         title: modelName
-      });
+      };
     }
   }
 

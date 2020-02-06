@@ -3,16 +3,17 @@ import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
-export default Route.extend({
-  ellaSparse: service(),
+export default class AuthenticatedRegionScoopsIndexRoute extends Route {
+  @service ellaSparse;
 
-  queryParams: {
+  queryParams = {
     search: { refreshModel: true },
     sort: { refreshModel: true },
-  },
-  breadCrumb: Object.freeze({
+  };
+
+  breadCrumb = {
     title: 'Scoops'
-  }),
+  };
 
   model(params) {
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
@@ -40,7 +41,7 @@ export default Route.extend({
         }
       });
     });
-  },
+  }
 
   resetController(controller, isExiting, transition) {
     if (isExiting && transition.targetName !== 'error') {
@@ -50,5 +51,5 @@ export default Route.extend({
         searchString: ''
       });
     }
-  },
-});
+  }
+}

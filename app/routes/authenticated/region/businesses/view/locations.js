@@ -1,10 +1,8 @@
-import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
 import { action } from '@ember/object';
 import RSVP from 'rsvp';
 
-@classic
-export default class LocationsRoute extends Route.extend() {
+export default class AuthenticatedRegionBusinessesViewLocationsRoute extends Route {
   model() {
     let business = this.modelFor('authenticated.region.businesses.view');
     let query = {

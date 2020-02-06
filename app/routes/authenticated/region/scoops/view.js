@@ -1,18 +1,21 @@
 import { action } from '@ember/object';
 import Route from '@ember/routing/route';
+import { tracked } from '@glimmer/tracking';
 
-export default class ViewRoute extends Route.extend() {
+export default class AuthenticatedRegionScoopsViewRoute extends Route {
+  @tracked breadCrumb;
+
   model(params) {
-    return this.store.findRecord('scoop', params.id, { include: 'business' } );
+    return this.store.findRecord('scoop', params.scoop_id, { include: 'business' } );
   }
 
   afterModel(model) {
     let modelName = model.description;
 
     if (modelName) {
-      this.set('breadCrumb', {
+      this.breadCrumb = {
         title: modelName
-      });
+      };
     }
   }
 

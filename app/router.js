@@ -12,7 +12,7 @@ Router.map(function() {
   this.route('login');
 
   this.route('authenticated', { path: '/' }, function() {
-    this.route('region', { path: 'region/:id' }, function() {
+    this.route('region', { path: 'region/:region_id' }, function() {
       this.route('analytics', function() {
         this.route('index', { path: '/' });
       });
@@ -21,14 +21,14 @@ Router.map(function() {
         this.route('categories', function() {
           this.route('index', { path: '/' });
           this.route('new');
-          this.route('view', { path: ':id' });
+          this.route('view', { path: ':category_id' });
         });
       });
       this.route('site-stats', function() {
         this.route('index', { path: '/' });
       });
       this.route('businesses', function() {
-        this.route('view', { path: ':id' }, function() {
+        this.route('view', { path: ':business_id' }, function() {
           this.route('locations');
           this.route('photos');
           this.route('scoops');
@@ -37,10 +37,10 @@ Router.map(function() {
         });
       });
       this.route('users', function() {
-        this.route('view', { path: ':id' });
+        this.route('view', { path: ':user_id' });
       });
       this.route('scoops', function() {
-        this.route('view', { path: ':id' });
+        this.route('view', { path: ':scoop_id' });
         this.route('new');
       });
     });

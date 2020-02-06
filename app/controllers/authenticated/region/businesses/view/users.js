@@ -1,21 +1,21 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import { alias } from '@ember/object/computed';
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { set, action } from '@ember/object';
+import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
 
-@classic
-export default class UsersController extends Controller {
+export default class AuthenticatedRegionBusinessesViewUsersController extends Controller {
   @service store;
   @alias('model.business') business;
 
-  showAddUserModal = false;
-  userToAdd = null;
+  @tracked model;
+  @tracked showAddUserModal = false;
+  @tracked userToAdd = null;
 
   @(task(function* (search) {
     yield timeout(INPUT_DEBOUNCE);
@@ -28,8 +28,8 @@ export default class UsersController extends Controller {
   @task(function* () {
     this.business.get('users').addObject(this.userToAdd);
     yield this.business.save();
-    set(this, 'showAddUserModal', false);
-    set(this, 'userToAdd', null);
+    this.showAddUserModal = false;
+    this.userToAdd = null;
   })
   saveTask;
 
@@ -41,7 +41,7 @@ export default class UsersController extends Controller {
 
   @action
   cancel() {
-    set(this, 'showAddUserModal', false);
+    this.showAddUserModal = false;
     this.business.rollbackAttributes();
   }
 

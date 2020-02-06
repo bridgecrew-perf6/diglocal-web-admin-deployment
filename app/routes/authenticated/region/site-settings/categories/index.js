@@ -2,12 +2,13 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 
-export default Route.extend({
-  ellaSparse: service(),
+export default class AuthenticatedRegionSiteSettingsCategoriesNewRoute extends Route {
+  @service ellaSparse;
 
-  breadCrumb: Object.freeze({
+  breadCrumb = {
     title: 'Categories'
-  }),
+  };
+
   model() {
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
       // let { sort, filter } = getProperties(this, 'sort', 'filter');
@@ -29,4 +30,4 @@ export default Route.extend({
       });
     });
   }
-});
+}

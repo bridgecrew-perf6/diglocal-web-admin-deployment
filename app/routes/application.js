@@ -3,4 +3,6 @@ import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mi
 import Route from '@ember/routing/route';
 
 @classic
-export default class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {}
+class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {}
+
+export default ApplicationRoute;

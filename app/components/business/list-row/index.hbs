@@ -1,0 +1,63 @@
+<CrunchyMediaObject
+  @style="horizontal"
+  @class="min-h-48 overflow-hidden"
+  as |card|>
+  {{#if (media "isMediumUp")}}
+    <card.image
+      @height="190px"
+      @width="190px"
+      @url={{@model.logo.sizes.smallx2}}
+      class="border-r"
+    />
+  {{/if}}
+  <card.header class="flex justify-between">
+    <p data-test-id="business-list-row" class="font-bold text-xl mb-2">{{@model.name}}</p>
+    <LinkTo
+      @route="authenticated.region.businesses.view"
+      @models={{array this.regionsService.activeRegion.id @model.id}}
+      @aria-label="View business details"
+      class="font-bold text-brand-primary whitespace-no-wrap text-sm block"
+    >
+      View Business
+    </LinkTo>
+  </card.header>
+  <card.body>
+    <p class="text-sm">{{truncate-text @model.description limit=225}}</p>
+    <ul class="absolute left-0 bottom-0 p-2">
+      <CrunchyChip @tagName="li">
+        {{@model.displayRole}}
+      </CrunchyChip>
+      {{#if @model.featured}}
+        <CrunchyChip @tagName="li" @title="Featured">
+          <FaIcon @icon="star" />
+        </CrunchyChip>
+      {{/if}}
+      {{#each @model.categories as |category|}}
+        <CrunchyChip @tagName="li">
+          {{category.longName}}
+        </CrunchyChip>
+      {{/each}}
+      <CrunchyChip @tagName="li" @title={{concat @model.likesCount " likes"}}>
+        <FaIcon @icon="heart" />&nbsp;{{@model.likesCount}}
+      </CrunchyChip>
+      <CrunchyChip @tagName="li" @title={{concat @model.numberOfLocations " locations"}}>
+        <FaIcon @icon="building" />&nbsp;{{@model.numberOfLocations}}
+      </CrunchyChip>
+      {{#if @model.twitterUrl}}
+        <CrunchyChip @tagName="li" @title={{@model.twitterUrl}}>
+          <FaIcon @icon="twitter" @prefix="fab" />
+        </CrunchyChip>
+      {{/if}}
+      {{#if @model.facebookUrl}}
+        <CrunchyChip @tagName="li" @title={{@model.facebookUrl}}>
+          <FaIcon @icon="facebook" @prefix="fab" />
+        </CrunchyChip>
+      {{/if}}
+      {{#if @model.instagramUrl}}
+        <CrunchyChip @tagName="li" @title={{@model.instagramUrl}}>
+          <FaIcon @icon="instagram" @prefix="fab" />
+        </CrunchyChip>
+      {{/if}}
+    </ul>
+  </card.body>
+</CrunchyMediaObject>

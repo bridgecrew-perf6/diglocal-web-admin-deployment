@@ -6,7 +6,7 @@ import { resolve, hash } from 'rsvp';
 import { storageFor } from 'ember-local-storage';
 
 @classic
-export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
+class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   @service session;
   @service firebaseApp;
   @service('regions') regionsService;
@@ -24,7 +24,6 @@ export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteM
   }
 
   afterModel(hash) {
-    // console.log(this.activeRegionStorage.get('regionId'));
     let { currentUser, regions } = hash;
     if (!currentUser) {
       // TODO
@@ -40,3 +39,5 @@ export default class AuthenticatedRoute extends Route.extend(AuthenticatedRouteM
     }
   }
 }
+
+export default AuthenticatedRoute;

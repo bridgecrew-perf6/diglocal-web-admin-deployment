@@ -29,6 +29,16 @@ module('Acceptance | Admin User', function(hooks) {
   });
 
   module('No active region exists in storage', function() {
+    hooks.beforeEach(function() {
+      if (window.localStorage) {
+        window.localStorage.clear();
+      }
+      if (window.sessionStorage) {
+        window.sessionStorage.clear();
+      }
+      resetStorages();
+    });
+
     test('As an admin user, if no region is selected, I am prompted to select one', async function(assert) {
       await authenticateSession();
       await visit('/');

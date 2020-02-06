@@ -1,8 +1,6 @@
-import classic from 'ember-classic-decorator';
 import Model, { attr, hasMany } from '@ember-data/model';
-import { get, computed } from '@ember/object';
+import { computed } from '@ember/object';
 
-@classic
 export default class User extends Model {
   @attr() active;
   @attr() admin;
@@ -36,10 +34,10 @@ export default class User extends Model {
   @hasMany('business') businesses;
   @hasMany('profileImage') profileImages;
 
-  @computed
+  @computed('isPublic', 'hasProfile')
   get profileStatus() {
-    let hasProfile = get(this, 'hasProfile');
-    if (hasProfile && get(this, 'isPublic')) {
+    let hasProfile = this.hasProfile;
+    if (hasProfile && this.isPublic) {
       return 'Public';
     } else if (hasProfile) {
       return 'Private';

@@ -1,7 +1,6 @@
-import classic from 'ember-classic-decorator';
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-@classic
 export default class LoginController extends Controller {
-  isLogin = true;
+  @tracked isLogin = true;
 }

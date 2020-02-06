@@ -1,10 +1,8 @@
-import classic from 'ember-classic-decorator';
 import Route from '@ember/routing/route';
-import { get, action } from '@ember/object';
+import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
-@classic
-export default class NewRoute extends Route.extend() {
+export default class AuthenticatedRegionScoopsNewRoute extends Route {
   model() {
     return this.store.createRecord('scoop');
   }
@@ -17,7 +15,7 @@ export default class NewRoute extends Route.extend() {
 
   @action
   save(model) {
-    get(this, 'saveModel').perform(model);
+    this.saveModel.perform(model);
   }
 
   @action

@@ -1,16 +1,18 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { get } from '@ember/object';
+import { get, action } from '@ember/object';
 
-export default Route.extend({
-  ellaSparse: service(),
+export default class AuthenticatedRegionBusinessesViewScoopsRoute extends Route {
+  @service ellaSparse;
 
-  queryParams: {
+  queryParams = {
    search: { refreshModel: true },
-  },
-  breadCrumb: Object.freeze({
+  };
+
+  breadCrumb = {
     title: 'Scoops'
-  }),
+  };
+
   model() {
     let business = this.modelFor('authenticated.region.businesses.view');
 
@@ -37,10 +39,10 @@ export default Route.extend({
         }
       });
     });
-  },
-  actions: {
-    save(model) {
-      model.save();
-    }
   }
-});
+
+  @action
+  save(model) {
+    model.save();
+  }
+}

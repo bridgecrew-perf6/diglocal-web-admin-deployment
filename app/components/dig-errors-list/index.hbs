@@ -1,0 +1,10 @@
+<div class="dig-errors bg-white font-medium">
+  <div class="bg-brand-error rounded leading-relaxed py-1 px-4 text-white text-sm">
+    Ooops!
+  </div>
+  <ul class="list-disc rounded border-brand-gray border-b border-l border-r rounded-t-none leading-relaxed text-sm py-2 px-4 pl-8 -mt-px mb-6">
+    {{yield (hash
+      error=(component "dig-errors-list/error-item")
+    )}}
+  </ul>
+</div>

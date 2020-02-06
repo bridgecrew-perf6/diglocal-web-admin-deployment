@@ -5,7 +5,7 @@ import { set, action } from '@ember/object';
 import { task, all } from 'ember-concurrency';
 
 @classic
-export default class PhotosController extends Controller {
+class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
   @service store;
   @service session;
 
@@ -55,3 +55,5 @@ export default class PhotosController extends Controller {
     this.selectedPhotos.clear();
   }
 }
+
+export default AuthenticatedRegionBusinessesViewPhotosController;

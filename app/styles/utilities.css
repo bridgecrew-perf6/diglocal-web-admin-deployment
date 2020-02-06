@@ -1,11 +1,3 @@
-.transition {
-  transition: all .1s ease-in!important;
-}
-
-.transition-fast {
-  transition: all .2s ease !important;
-}
-
 .translate-r-2px {
   transform: translateX(2px) !important;
 }
