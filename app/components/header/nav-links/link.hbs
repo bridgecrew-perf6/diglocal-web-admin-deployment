@@ -1,0 +1,11 @@
+<li>
+  <LinkTo
+    @route={{@route}}
+    @model={{@model}}
+    class={{if (media "isMobile") "nav-link--mobile" "nav-link"}}
+    data-test-id={{if (media "isMobile") "mobile-nav-link" "nav-link"}}
+    data-test-link-to={{@route}}
+  >
+    {{yield}}
+  </LinkTo>
+</li>

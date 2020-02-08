@@ -1,0 +1,7 @@
+{{#if regions.activeRegion}}
+  <Header::NavLinks::Link @route="authenticated.region.businesses" @model={{regions.activeRegion}}>Businesses</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.region.analytics" @model={{regions.activeRegion}}>Analytics</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.region.users" @model={{regions.activeRegion}}>Users</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.region.scoops" @model={{regions.activeRegion}}>Scoops</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.region.site-settings" @model={{regions.activeRegion}}>Region Settings</Header::NavLinks::Link>
+{{/if}}
