@@ -28,15 +28,18 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
     if (!currentUser) {
       // TODO
     }
+
     this.currentUser.user = currentUser;
     this.regionsService.regions = regions;
-    let lastActiveRegionId = this.activeRegionStorage.get('regionId');
-    let lastActiveRegion = regions.toArray().findBy('id', lastActiveRegionId);
-    if (lastActiveRegion) {
-      this.regionsService.activeRegion = lastActiveRegion;
-    } else {
-      this.regionsService.activeRegion = null;
+
+    if (regions.length === 1) {
+      this.regionsService.activeRegion = regions.firstObject;
+      return;
     }
+
+    let lastActiveRegionId = this.activeRegionStorage.get('regionId');
+    let foundActiveRegion = regions.toArray().findBy('id', lastActiveRegionId);
+    this.regionsService.activeRegion = foundActiveRegion ? foundActiveRegion : null;
   }
 }
 

@@ -7,7 +7,7 @@
   </dd.Trigger>
   <dd.Content class="shadow p-1 mt-2 border rounded-sm text-lg">
     <ul>
-      {{#each regions.regions as |region|}}
+      {{#each this.regionsService.regions as |region|}}
         <li class="py-2 px-4 w-full" data-test-id={{concat "select-region-" region.id}}>
           <CrunchyButton @onClick={{action "selectRegion" region dd}} @class="crunchy-button--link w-full">
             {{region.longName}}

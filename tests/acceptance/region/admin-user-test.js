@@ -11,11 +11,13 @@ module('Acceptance | Region | Admin User', function(hooks) {
   setupAdminUserTest(hooks);
 
   hooks.beforeEach(function() {
-    let regions = this.server.createList('region', 3);
-    this.server.createList('business', 2, { region: regions[0] });
-    this.server.createList('business', 3, { region: regions[1] });
-
-    this.regions = regions;
+    if (window.localStorage) {
+      window.localStorage.clear();
+    }
+    if (window.sessionStorage) {
+      window.sessionStorage.clear();
+    }
+    resetStorages();
   });
 
   hooks.afterEach(function() {
@@ -28,15 +30,10 @@ module('Acceptance | Region | Admin User', function(hooks) {
     resetStorages();
   });
 
-  module('No active region exists in storage', function() {
+  module('No active region exists in storage', function(hooks) {
     hooks.beforeEach(function() {
-      if (window.localStorage) {
-        window.localStorage.clear();
-      }
-      if (window.sessionStorage) {
-        window.sessionStorage.clear();
-      }
-      resetStorages();
+      let regions = this.server.createList('region', 3);
+      this.regions = regions;
     });
 
     test('As an admin user, if no region is selected, I am prompted to select one', async function(assert) {
@@ -72,6 +69,8 @@ module('Acceptance | Region | Admin User', function(hooks) {
 
   module('Active region exists in storage', function(hooks) {
     hooks.beforeEach(function() {
+      let regions = this.server.createList('region', 3);
+      this.regions = regions;
       this.activeRegion = this.regions[1];
 
       let mockStorage = StorageObject.extend();
@@ -139,6 +138,7 @@ module('Acceptance | Region | Admin User', function(hooks) {
 
   module('Active region exists in storage, but is not returned from server', function(hooks) {
     hooks.beforeEach(function() {
+      this.server.createList('region', 3);
       let mockStorage = StorageObject.extend();
 
       let regionId = 'BAD_ID';
@@ -166,6 +166,21 @@ module('Acceptance | Region | Admin User', function(hooks) {
       await visit('/region/BAD_ID/businesses');
 
       assert.equal(currentURL(), `/select-region`);
+    });
+  });
+
+  module('Server only returns a single region', function(hooks) {
+    hooks.beforeEach(function() {
+      this.singleRegion = this.server.create('region');
+    });
+
+    test('As an admin user, my active region is automatically set if the server only returns a single region', async function(assert) {
+      await authenticateSession();
+      await visit('/');
+
+      assert.equal(this.server.schema.regions.all().models.length, 1, 'Only one region exists in our Mirage database');
+      assert.equal(currentURL(), `/region/${this.singleRegion.id}/businesses`);
+      assert.dom(testId('active-region')).hasText(this.singleRegion.longName);
     });
   });
 

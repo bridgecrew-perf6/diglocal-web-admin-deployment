@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class CurrentUserService extends Service {
   @service session;
-  @service regions;
+  @service('regions') regionsService;
 
   @tracked user;
 }

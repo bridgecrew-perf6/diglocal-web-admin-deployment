@@ -54,8 +54,8 @@ module('Acceptance | Application Session', function(hooks) {
     let currentUserService = this.owner.lookup('service:current-user');
     assert.equal(currentUserService.user.id, this.currentUser.id);
 
-    await click(testId('current-user-dropdown'));
-    await click(`${testId('logout')} button`);
+    await click(testId('current-user-dd-trigger'));
+    await click(testId('logout'));
 
     assert.notOk(currentSession().isAuthenticated, 'Session is invalid');
     assert.notOk(currentUserService.user);

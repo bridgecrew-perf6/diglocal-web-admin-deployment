@@ -4,10 +4,10 @@ import { action } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 export default class HeaderSelectRegionComponent extends Component {
-  @service regions;
+  @service('regions') regionsService;
   @service router;
 
-  @alias('regions.activeRegion') activeRegion;
+  @alias('regionsService.activeRegion') activeRegion;
 
   @action
   selectRegion(region, dd) {
