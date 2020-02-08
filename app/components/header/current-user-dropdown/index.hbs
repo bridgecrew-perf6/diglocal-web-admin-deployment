@@ -1,7 +1,7 @@
 <BasicDropdown
   @horizontalPosition="right"
   as |dd|>
-  <dd.Trigger data-test-id="current-user-dropdown" class="flex items-center focus:outline-none mr-3">
+  <dd.Trigger data-test-id="current-user-dd-trigger" class="flex items-center focus:outline-none mr-3">
     <div
       class="w-8 h-8 rounded-full mr-2 bg-cover bg-center bg-no-repeat text-center overflow-hidden bg-white border border-white"
       style={{background-image currentUser.user.profileImages.firstObject.sizes.mobile}}>
@@ -21,8 +21,8 @@
     </div>
     <hr class="py-1">
     <ul>
-      <li class="py-2 px-4 w-full" data-test-id="logout">
-        <CrunchyButton @onClick={{action "logout" dd}} @class="crunchy-button--link w-full">
+      <li class="py-2 px-4 w-full">
+        <CrunchyButton @onClick={{action "logout" dd}} @class="crunchy-button--link w-full" @testId="logout">
           Logout
         </CrunchyButton>
       </li>

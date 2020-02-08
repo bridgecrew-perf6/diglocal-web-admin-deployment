@@ -7,7 +7,7 @@ import resetStorages from 'ember-local-storage/test-support/reset-storage';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
 import StorageObject from 'ember-local-storage/local/object';
 
-module('Acceptance | Admin User', function(hooks) {
+module('Acceptance | Region | Admin User', function(hooks) {
   setupAdminUserTest(hooks);
 
   hooks.beforeEach(function() {
