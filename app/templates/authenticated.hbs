@@ -1,3 +1,5 @@
-<main role="main" class="pt-28 w-full bg-brand-gray-light">
-  {{outlet}}
-</main>
+{{#if (and this.session.isAuthenticated this.currentUser.canViewContent)}}
+  <main role="main" class="pt-28 w-full bg-brand-gray-light">
+    {{outlet}}
+  </main>
+{{/if}}

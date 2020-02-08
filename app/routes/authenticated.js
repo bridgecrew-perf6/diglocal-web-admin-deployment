@@ -14,29 +14,34 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   @storageFor('active-region') activeRegionStorage;
 
   model() {
-    let currentUser = this.firebaseApp.auth().then(({currentUser}) =>
+    let user = this.firebaseApp.auth().then(({currentUser}) =>
       currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses' }).then(data => data.get('firstObject')) : resolve()
     );
     return hash({
-      currentUser,
+      user,
       regions: this.store.findAll('region')
     });
   }
 
-  afterModel(hash) {
-    let { currentUser, regions } = hash;
-    if (!currentUser) {
+  afterModel(hash, transition) {
+    let { user, regions } = hash;
+    if (!user) {
       // TODO
     }
 
-    this.currentUser.user = currentUser;
-    this.regionsService.regions = regions;
+    this.currentUser.user = user;
 
+    if (this.currentUser.userType && this.currentUser.isRestricted) {
+      let controller = this.controllerFor('application');
+      controller.showForbiddenAlert = true;
+      transition.abort();
+    }
+
+    this.regionsService.regions = regions;
     if (regions.length === 1) {
       this.regionsService.activeRegion = regions.firstObject;
       return;
     }
-
     let lastActiveRegionId = this.activeRegionStorage.get('regionId');
     let foundActiveRegion = regions.toArray().findBy('id', lastActiveRegionId);
     this.regionsService.activeRegion = foundActiveRegion ? foundActiveRegion : null;
