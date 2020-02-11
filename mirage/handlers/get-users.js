@@ -9,8 +9,14 @@ const filterUsers = function(users, request) {
   let firebaseId = request.queryParams['filter[firebaseId]'];
 
   if (firebaseId) {
+    filters.push(user => user.firebaseId === firebaseId);
+
+    /***
+    * BELOW CODE IS JUST FOR MIRAGE DEV ENVIRONMENT
+    * IT WILL CAUSE TEST FAILURES IF YOU LEAVE IT FOR TESTING
+    ***/
     /* uncomment below to login as an admin user */
-    filters.push(user => user.admin);
+    // filters.push(user => user.admin);
 
     /* uncomment below to login as a multi-region, multi-business owner */
     // filters.push(user => user.id === '2222');

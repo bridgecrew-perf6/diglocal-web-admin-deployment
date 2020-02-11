@@ -6,13 +6,13 @@ import { resolve } from 'rsvp';
 
 const firebaseAppStub = Service.extend({
   auth() {
-    return resolve({ currentUser: { uid: '999' }});
+    return resolve({ currentUser: { uid: '888' }});
   },
 });
 
 /*
 * Acceptance test setup that defines the current user
-* as an admin with full admin privileges.
+* as a restricted user with no businesses and no admin privileges.
 *
 * This does NOT authenticate the session automatically.
 * It simply sets the stub FirebaseApp service to return
@@ -27,8 +27,8 @@ export default function(hooks) {
   hooks.beforeEach(function() {
     setBreakpoint('large');
     this.owner.register('service:firebase-app', firebaseAppStub);
-    this.currentUser = this.server.create('user', 'adminUser', {
-      firebaseId: '999'
+    this.currentUser = this.server.create('user', {
+      firebaseId: '888'
     });
   });
 }
