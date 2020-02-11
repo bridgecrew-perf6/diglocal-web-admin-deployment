@@ -3,11 +3,11 @@ import { visit, click, currentURL } from '@ember/test-helpers';
 import { authenticateSession, invalidateSession, currentSession } from 'ember-simple-auth/test-support';
 import { testId } from 'diglocal-manage/tests/helpers';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
-import setupRegionStorage from 'diglocal-manage/tests/helpers/setup-region-storage';
+import setupActiveRegion from 'diglocal-manage/tests/helpers/setup-active-region';
 
 module('Acceptance | Application Session', function(hooks) {
   setupAdminUserTest(hooks);
-  setupRegionStorage(hooks);
+  setupActiveRegion(hooks);
 
   hooks.beforeEach(function() {
     let region = this.activeRegion;
@@ -54,8 +54,8 @@ module('Acceptance | Application Session', function(hooks) {
     let currentUserService = this.owner.lookup('service:current-user');
     assert.equal(currentUserService.user.id, this.currentUser.id);
 
-    await click(testId('current-user-dropdown'));
-    await click(`${testId('logout')} button`);
+    await click(testId('current-user-dd-trigger'));
+    await click(testId('logout'));
 
     assert.notOk(currentSession().isAuthenticated, 'Session is invalid');
     assert.notOk(currentUserService.user);
@@ -68,8 +68,8 @@ module('Acceptance | Application Session', function(hooks) {
     assert.equal(currentURL(), `/region/${this.region.id}/businesses`);
     assert.ok(currentSession().isAuthenticated, 'Session is valid');
 
-    await click(testId('current-user-dropdown'));
-    await click(`${testId('logout')} button`);
+    await click(testId('current-user-dd-trigger'));
+    await click(testId('logout'));
 
     /* NOTE:
      * In test environment, ember-simple-auth's sessionInvalidationSucceeded method does NOT redirect to login

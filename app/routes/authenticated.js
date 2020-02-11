@@ -2,7 +2,6 @@ import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Route from '@ember/routing/route';
-import { resolve, hash } from 'rsvp';
 import { storageFor } from 'ember-local-storage';
 
 @classic
@@ -14,30 +13,30 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   @storageFor('active-region') activeRegionStorage;
 
   model() {
-    let currentUser = this.firebaseApp.auth().then(({currentUser}) =>
-      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses' }).then(data => data.get('firstObject')) : resolve()
-    );
-    return hash({
-      currentUser,
-      regions: this.store.findAll('region')
-    });
+    // If the current user is not an admin, then we already have all of the regions loaded
+    // in the store already, included when we fetched the user record and their businesses and business regions
+    return this.currentUser.isAdmin ? this.store.findAll('region') : this.store.peekAll('region');
   }
 
-  afterModel(hash) {
-    let { currentUser, regions } = hash;
-    if (!currentUser) {
-      // TODO
+  afterModel(model) {
+    this.regionsService.regions = model;
+
+    if (this.currentUser.isSingleBusinessOwner) {
+      let business = this.currentUser.user.hasMany('businesses').value().firstObject;
+      let defaultRegion = business.belongsTo('region').value();
+      this.regionsService.activeRegion = defaultRegion;
+      return;
     }
-    this.currentUser.user = currentUser;
-    this.regionsService.regions = regions;
+
+    if (model.length === 1) {
+      this.regionsService.activeRegion = model.firstObject;
+      return;
+    }
     let lastActiveRegionId = this.activeRegionStorage.get('regionId');
-    let lastActiveRegion = regions.toArray().findBy('id', lastActiveRegionId);
-    if (lastActiveRegion) {
-      this.regionsService.activeRegion = lastActiveRegion;
-    } else {
-      this.regionsService.activeRegion = null;
-    }
+    let foundActiveRegion = model.toArray().findBy('id', lastActiveRegionId);
+    this.regionsService.activeRegion = foundActiveRegion ? foundActiveRegion : null;
   }
+
 }
 
 export default AuthenticatedRoute;

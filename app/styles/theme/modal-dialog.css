@@ -59,4 +59,5 @@
   top: 0;
   left: 0;
   z-index: 999; /* Important value! Without this, PowerSelect options within in a modal show up behind overlay */
+  padding: 1rem;
 }

@@ -24,7 +24,7 @@ export default class SocialForm extends Component {
   }
 
   rollbackModel() {
-    if (this.args.model && this.args.model.get('hasDirtyAttributes')) {
+    if (this.args.model && this.args.model.hasDirtyAttributes) {
       this.args.model.rollbackAttributes();
     }
   }

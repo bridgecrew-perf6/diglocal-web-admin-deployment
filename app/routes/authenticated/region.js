@@ -6,7 +6,7 @@ import { NotFoundError, ForbiddenError } from '@ember-data/adapter/error';
 
 export default class AuthenticatedRegionRoute extends Route {
   @storageFor('active-region') activeRegionStorage;
-  @service regions;
+  @service('regions') regionsService;
   @service store;
 
   breadCrumb = null;
@@ -17,7 +17,7 @@ export default class AuthenticatedRegionRoute extends Route {
 
   afterModel(model) {
     this.activeRegionStorage.set('regionId', model.id);
-    this.regions.activeRegion = model;
+    this.regionsService.activeRegion = model;
   }
 
   @action

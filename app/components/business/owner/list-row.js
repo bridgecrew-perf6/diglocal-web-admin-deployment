@@ -8,6 +8,6 @@ export default class ListRow extends Component {
   @action
   remove() {
     this.args.onRemove(this.args.model);
-    this.set('showRemoveModal', false);
+    this.showRemoveModal = false;
   }
 }
