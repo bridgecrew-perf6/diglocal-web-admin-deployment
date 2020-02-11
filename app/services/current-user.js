@@ -16,7 +16,7 @@ export default class CurrentUserService extends Service {
     return this.userType === 'multi_owner';
   }
 
-  get isBusinessOwner() {
+  get isSingleBusinessOwner() {
     return this.userType === 'single_owner';
   }
 

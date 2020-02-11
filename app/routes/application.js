@@ -12,7 +12,7 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
 
   async beforeModel() {
     let currentUser = await this.firebaseApp.auth().then(({currentUser}) =>
-      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses' }).then(data => data.get('firstObject')) : resolve()
+      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses,businesses.region' }).then(data => data.get('firstObject')) : resolve()
     );
 
     this.currentUser.user = currentUser;
@@ -30,7 +30,7 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
     const redirectTarget = cookies.read('ember_simple_auth-redirectTarget');
 
     let currentUser = await this.firebaseApp.auth().then(({currentUser}) =>
-      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses' }).then(data => data.get('firstObject')) : resolve()
+      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses,businesses.region' }).then(data => data.get('firstObject')) : resolve()
     );
 
     this.currentUser.user = currentUser;

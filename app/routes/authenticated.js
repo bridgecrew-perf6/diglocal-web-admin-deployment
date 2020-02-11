@@ -13,11 +13,21 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   @storageFor('active-region') activeRegionStorage;
 
   model() {
-    return this.store.findAll('region');
+    // If the current user is not an admin, then we already have all of the regions loaded
+    // in the store already, included when we fetched the user record and their businesses and business regions
+    return this.currentUser.isAdmin ? this.store.findAll('region') : this.store.peekAll('region');
   }
 
   afterModel(model) {
     this.regionsService.regions = model;
+
+    if (this.currentUser.isSingleBusinessOwner) {
+      let business = this.currentUser.user.hasMany('businesses').value().firstObject;
+      let defaultRegion = business.belongsTo('region').value();
+      this.regionsService.activeRegion = defaultRegion;
+      return;
+    }
+
     if (model.length === 1) {
       this.regionsService.activeRegion = model.firstObject;
       return;
@@ -26,6 +36,7 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
     let foundActiveRegion = model.toArray().findBy('id', lastActiveRegionId);
     this.regionsService.activeRegion = foundActiveRegion ? foundActiveRegion : null;
   }
+
 }
 
 export default AuthenticatedRoute;
