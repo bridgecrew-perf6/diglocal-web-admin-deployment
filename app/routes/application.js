@@ -10,6 +10,20 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
   @service currentUser;
   @service firebaseApp;
 
+  async beforeModel() {
+    let currentUser = await this.firebaseApp.auth().then(({currentUser}) =>
+      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses' }).then(data => data.get('firstObject')) : resolve()
+    );
+
+    this.currentUser.user = currentUser;
+
+    if (this.currentUser.userType && this.currentUser.isRestricted) {
+      let controller = this.controllerFor('application');
+      controller.showForbiddenAlert = true;
+      this.session.invalidate();
+    }
+  }
+
   async sessionAuthenticated() {
     const attemptedTransition = this.get('session.attemptedTransition');
     const cookies = getOwner(this).lookup('service:cookies');
