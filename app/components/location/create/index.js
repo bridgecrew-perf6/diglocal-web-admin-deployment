@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { set, action } from '@ember/object';
+import { action } from '@ember/object';
 
 export default class Create extends Component {
   @service store;
@@ -14,8 +14,21 @@ export default class Create extends Component {
 
   @action
   create() {
-    set(this, 'newRecord', this.store.createRecord('location', {
+    let location = this.store.createRecord('location', {
       business: this.args.business
-    }));
+    });
+
+    for (let i = 0; i < 7; i++) {
+      let operatingHour = this.store.createRecord('operating-hour', {
+        dayOfWeek: i,
+        location,
+        openTime: '09:00:00',
+        closeTime: '20:00:00',
+        closed: false
+      });
+      location.operatingHours.pushObject(operatingHour);
+    }
+
+    this.newRecord = location;
   }
 }
