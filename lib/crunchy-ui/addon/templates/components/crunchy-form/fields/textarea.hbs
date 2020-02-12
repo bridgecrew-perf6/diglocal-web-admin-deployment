@@ -19,6 +19,7 @@
       @disabled={{@disabled}}
       @focus-out={{action (mut didBlur) true}}
       aria-label={{@aria-label}}
+      @data-test-id={{concat @field "-field"}}
       @class={{concat "crunchy-form__textarea "
         @controlClass
       }}

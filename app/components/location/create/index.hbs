@@ -5,6 +5,7 @@
       @onClick={{action "create"}}
       @aria-label="Add a new location"
       @class="crunchy-button--primary"
+      @testId="add-location"
       @disabled={{this.hasNewRecord}}>
       <FaIcon @icon="plus" @size="sm" /> Add Location
     </CrunchyButton>

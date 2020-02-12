@@ -1,10 +1,11 @@
-<div class="border rounded p-4 bg-white mb-4">
+<div class="border rounded p-4 bg-white mb-4" data-test-id={{concat "location-detail-card" (if @model.isNew "-new")}}>
   <div class="flex mb-3 justify-between">
-    <h1 class="font-semibold text-lg"> {{if this.isReadonly "Location Details" "Edit Location"}} </h1>
+    <h1 class="font-semibold text-lg"> {{if this.isReadonly @model.title "Edit Location"}} </h1>
     {{#if this.isReadonly}}
       <CrunchyButton
         @onClick={{action (mut this.isEditing) (not this.isEditing)}}
         @class="crunchy-button--icon"
+        @testId={{concat "edit-location-" @model.id}}
         @aria-label="Edit location details">
         <FaIcon @icon="edit" @size="lg" />
       </CrunchyButton>
@@ -12,6 +13,7 @@
       <CrunchyButton
         @onClick={{action "cancel"}}
         @class="crunchy-button--icon"
+        @testId="close-form"
         @aria-label="Close form">
         <FaIcon @icon="times" />
       </CrunchyButton>
@@ -160,7 +162,7 @@
       <div class="flex justify-between mt-8">
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" />
         <div class="flex">
-          <form.submit @value="Submit" @class="mr-2"/>
+          <form.submit @value="Submit" @class="mr-2" @testId="save" />
           <form.cancel @value="Cancel" />
         </div>
       </div>
