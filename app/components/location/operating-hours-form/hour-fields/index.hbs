@@ -1,0 +1,44 @@
+{{#with @form as |form|}}
+    <div data-test-id={{concat "fields-for-day-" @model.dayOfWeek}} class="flex items-center text-sm mb-1">
+      <p class="w-32 font-bold vertical-align">{{@model.dayDisplayName}}</p>
+      <div class="flex w-56 space-between {{if @model.closed "text-gray-400"}}">
+        <div data-test-id="openTime" class="w-1/3 flex">
+          <EmberFlatpickr
+            @allowInput={{false}}
+            @altInput={{true}}
+            @altFormat="h:iK"
+            @appendDataInput={{true}}
+            @enableTime={{true}}
+            @noCalendar={{true}}
+            @date={{readonly @model.openTime}}
+            @dateFormat="H:i"
+            @onChange={{action "didUpdateTime" "openTime"}}
+            @placeholder="Open"
+            class="border border-brand-gray rounded px-2 py-1 max-w-full"
+          />
+        </div>
+        <div class="px-4 flex items-center justify-center"> - </div>
+        <div data-test-id="closeTime" class="w-1/3 flex">
+          <EmberFlatpickr
+            @allowInput={{false}}
+            @altInput={{true}}
+            @altFormat="h:iK"
+            @appendDataInput={{true}}
+            @enableTime={{true}}
+            @noCalendar={{true}}
+            @date={{readonly @model.closeTime}}
+            @dateFormat="H:i"
+            @onChange={{action "didUpdateTime" "closeTime"}}
+            @placeholder="Close"
+            class="p-1 border border-brand-gray rounded px-2 max-w-full"
+          />
+        </div>
+      </div>
+
+      <div class="">
+        <form.fields-for @model={{@model}} as |hoursForm|>
+          <hoursForm.checkbox @field="closed" @label="Closed" />
+        </form.fields-for>
+      </div>
+    </div>
+{{/with}}

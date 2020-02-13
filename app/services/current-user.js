@@ -1,9 +1,12 @@
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
+import { task } from 'ember-concurrency';
+import { resolve, reject } from 'rsvp';
 
 export default class CurrentUserService extends Service {
-  @service session;
+  @service store;
+  @service firebaseApp;
   @service('regions') regionsService;
 
   @tracked user;
@@ -42,4 +45,23 @@ export default class CurrentUserService extends Service {
     }
     return 'restricted';
   }
+
+  load() {
+    return this._load.perform();
+  }
+
+  @task(function*() {
+    let currentUser = yield this.firebaseApp.auth().then(({currentUser}) =>
+      currentUser ? this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses,businesses.region' }).then(data => data.get('firstObject')) : resolve()
+    );
+
+    this.user = currentUser;
+
+    if (this.userType && this.isRestricted) {
+      return reject();
+    }
+
+    return resolve(currentUser);
+  })
+  _load;
 }

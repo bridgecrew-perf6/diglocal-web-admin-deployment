@@ -18,7 +18,7 @@ export default Route.extend({
   breadCrumb: null,
 
   model(params) {
-    let regionId = this.paramsFor('authenticated.region').id;
+    let regionId = this.paramsFor('authenticated.region').region_id;
 
     let businesses = get(this, 'ellaSparse').array((range = {}, query = {}) => {
       let page = {

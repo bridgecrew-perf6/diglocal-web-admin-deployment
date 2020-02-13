@@ -1,5 +1,4 @@
 import Route from '@ember/routing/route';
-import { action } from '@ember/object';
 import RSVP from 'rsvp';
 
 export default class AuthenticatedRegionBusinessesViewLocationsRoute extends Route {
@@ -12,12 +11,7 @@ export default class AuthenticatedRegionBusinessesViewLocationsRoute extends Rou
 
     return RSVP.hash({
       locations: this.store.query('location', query),
-      business: this.store.find('business', business.id)
+      business
     });
-  }
-
-  @action
-  save(model) {
-    model.save();
   }
 }

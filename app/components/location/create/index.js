@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { set, action } from '@ember/object';
+import { action } from '@ember/object';
 
 export default class Create extends Component {
   @service store;
@@ -14,8 +14,10 @@ export default class Create extends Component {
 
   @action
   create() {
-    set(this, 'newRecord', this.store.createRecord('location', {
+    let location = this.store.createRecord('location', {
       business: this.args.business
-    }));
+    });
+
+    this.newRecord = location;
   }
 }

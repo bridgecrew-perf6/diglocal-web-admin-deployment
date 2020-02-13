@@ -25,5 +25,6 @@ export default class ApplicationController extends Controller {
   @action
   invalidate() {
     this.session.invalidate();
+    this.showForbiddenAlert = false;
   }
 }

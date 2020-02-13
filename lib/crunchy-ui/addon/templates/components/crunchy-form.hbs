@@ -13,22 +13,22 @@
     text-field=(component "crunchy-form/fields/text"
       model=model
       group=groupComponent
+      disabled=isReadonly
       form=this)
     text-area=(component "crunchy-form/fields/textarea"
       model=model
       group=groupComponent
-      form=this)
-    mobiledoc=(component "crunchy-form/fields/mobiledoc"
-      model=model
-      group=groupComponent
+      disabled=isReadonly
       form=this)
     checkbox=(component "crunchy-form/fields/checkbox"
       model=model
       group=groupComponent
+      disabled=isReadonly
       form=this)
     tag-input=(component "crunchy-form/fields/tag-input"
       model=model
       group=groupComponent
+      disabled=isReadonly
       form=this)
     submit=(component "crunchy-form/submit"
       task=submitTask)
@@ -36,8 +36,17 @@
       type="button"
       class="crunchy-button--cancel"
       task=cancelTask)
+    errors=(component "crunchy-form/errors"
+      model=model
+      form=this)
+    fields-for=(component "crunchy-form"
+      form=this
+      isChildForm=true
+      isReadonly=isReadonly
+      didSubmit=didSubmit)
     isSubmitting=isSubmitting
     didSubmit=didSubmit
+    isReadonly=isReadonly
   )}}
 
 {{/with}}

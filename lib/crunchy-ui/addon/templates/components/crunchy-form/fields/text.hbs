@@ -20,6 +20,7 @@
       @focus-out={{action (mut didBlur) true}}
       aria-label={{@aria-label}}
       @autocomplete={{@autocomplete}}
+      @data-test-id={{concat @field "-field"}}
       @class={{concat "crunchy-form__input "
         @controlClass
       }}

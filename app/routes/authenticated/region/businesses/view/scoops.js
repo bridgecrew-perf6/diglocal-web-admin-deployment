@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { get, action } from '@ember/object';
+import { get } from '@ember/object';
 
 export default class AuthenticatedRegionBusinessesViewScoopsRoute extends Route {
   @service ellaSparse;
@@ -39,10 +39,5 @@ export default class AuthenticatedRegionBusinessesViewScoopsRoute extends Route 
         }
       });
     });
-  }
-
-  @action
-  save(model) {
-    model.save();
   }
 }

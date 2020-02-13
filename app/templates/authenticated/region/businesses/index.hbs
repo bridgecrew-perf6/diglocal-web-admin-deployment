@@ -114,7 +114,7 @@
 
   {{#if (or this.didSearch.isRunning @model.businesses.loading)}}
     <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
-      <FaIcon @icon="spinner" @spin={{true}} @size="2x" />
+      <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
     </div>
   {{else if (eq @model.businesses.length 0)}}
     <p>No results found.</p>

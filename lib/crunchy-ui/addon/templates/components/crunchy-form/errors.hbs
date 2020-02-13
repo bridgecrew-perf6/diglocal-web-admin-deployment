@@ -1,0 +1,17 @@
+{{#if (and form.didSubmit
+  (or form.submitTask.last.isError (v-get model "isInvalid")))}}
+  <ul class="crunchy-form__errors">
+    {{#if form.submitTask.last.isError}}
+      {{#each form.submitTask.last.error.errors as |error|}}
+        <li class="crunchy-form__error-message">{{or error.detail error.message error.title}}</li>
+      {{/each}}
+    {{/if}}
+    {{#if (v-get model "isInvalid")}}
+      {{#each (v-get model "errors") as |error|}}
+        <li class="crunchy-form__error-message">{{error.message}}</li>
+      {{/each}}
+    {{/if}}
+  </ul>
+{{/if}}
+
+{{yield}}

@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { get, getProperties, set } from '@ember/object';
-import { alias } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import firebase from 'firebase/app';
@@ -70,17 +69,13 @@ export default Component.extend(Validations, {
     set(this, 'authenticating', false);
   }),
 
-  isFormValid: alias('validations.isValid'),
-
   actions: {
     submit() {
-      if (this.isFormValid)  {
-        let { username, password } = getProperties(this, 'username', 'password');
+      let { username, password } = getProperties(this, 'username', 'password');
 
-        this.isLogin ?
-          this.authenticateWithEmail.perform(username, password) :
-          this.signupWithEmail.perform(username, password);
-      }
+      this.isLogin ?
+        this.authenticateWithEmail.perform(username, password) :
+        this.signupWithEmail.perform(username, password);
     },
     switchActionType() {
       set(this, 'isLogin', !this.isLogin);

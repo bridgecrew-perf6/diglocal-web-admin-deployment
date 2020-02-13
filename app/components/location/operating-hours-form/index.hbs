@@ -1,0 +1,42 @@
+<div class="flex">
+  <label for="hours-of-operation" class="crunchy-form__group-label">
+    Hours of Operation
+  </label>
+
+  {{#unless (or @form.isReadonly this.isEditing)}}
+    <CrunchyButton
+      @onClick={{action "editHours"}}
+      @class="crunchy-button--icon mx-2 mb-2"
+      @testId="edit-hours"
+      @aria-label="Edit operating hours">
+      <FaIcon @icon="edit" />
+    </CrunchyButton>
+  {{/unless}}
+</div>
+
+{{#if (and
+  this.isEditing
+  (not @form.isReadonly)
+  @location.operatingHours.length)}}
+  <div class="max-w-md flex justify-center mb-2">
+    <CrunchyButton
+      @onClick={{action "deleteHours"}}
+      @class="crunchy-button--link mx-6 mb-2"
+      @testId="delete-hours"
+      @aria-label="Delete operating hours">
+      Delete Hours
+    </CrunchyButton>
+  </div>
+{{/if}}
+
+<fieldset name="hours-of-operation" class="mx-4 max-w-md">
+  {{#if (and (not @form.isReadonly) this.isEditing)}}
+    {{#each (reject-by "isDeleted" @location.operatingHours) as |dailyHours|}}
+      <Location::OperatingHoursForm::HourFields @model={{dailyHours}} @form={{@form}} />
+    {{else}}
+      <p class="mb-3 text-sm italic mx-2"> No hours found </p>
+    {{/each}}
+  {{else}}
+    <OperatingHours::TableView @operatingHours={{reject-by "isDeleted" @location.operatingHours}} />
+  {{/if}}
+</fieldset>
