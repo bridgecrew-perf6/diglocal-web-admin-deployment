@@ -3,6 +3,7 @@ import { not } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
+import { task, all } from 'ember-concurrency';
 
 export default class Form extends Component {
   @tracked isEditing = false;
@@ -27,15 +28,21 @@ export default class Form extends Component {
     if (this.args.model && this.args.model.hasDirtyAttributes) {
       this.args.model.rollbackAttributes();
     }
+    let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
+    operatingHours.invoke('rollbackAttributes');
   }
 
-  @action
-  onReady() {}
+  @task(function*() {
+    yield this.args.model.save();
+    let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
+    yield all(operatingHours.invoke('save'));
+    this.isEditing = false;
+  })
+  saveTask;
 
   @action
   save() {
-    this.args.model.save();
-    this.isEditing = false;
+    return this.saveTask.perform();
   }
 
   @action

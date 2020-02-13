@@ -32,17 +32,16 @@ module('Acceptance | View Business | Locations', function(hooks) {
       await fillIn(testId('address-field'), '123 Main Street');
       await fillIn(testId('city-field'), 'Asheville');
       await fillIn(testId('state-field'), 'NC');
+      await fillIn(testId('zip-field'), '28803');
       await fillIn(testId('phone-field'), '111-222-3333');
       await fillIn(testId('menuUrl-field'), 'https://www.menu.com');
-      await fillIn(testId('geocodedLat-field'), '35.5661521');
-      await fillIn(testId('geocodedLong-field'), '-82.5302039');
       await click(testId('save'));
 
       assert.dom(testId('location-detail-card')).exists({ count: 1 });
       assert.dom(testId('location-detail-card')).includesText('South Plaza');
       assert.dom(testId('address-field')).isDisabled();
       assert.dom(testId('location-detail-card-new')).doesNotExist();
-      
+
       assert.equal(this.server.schema.locations.all().models.length, 1);
     });
   });

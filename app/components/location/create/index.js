@@ -18,16 +18,16 @@ export default class Create extends Component {
       business: this.args.business
     });
 
-    for (let i = 0; i < 7; i++) {
-      let operatingHour = this.store.createRecord('operating-hour', {
-        dayOfWeek: i,
-        location,
-        openTime: '09:00:00',
-        closeTime: '20:00:00',
-        closed: false
-      });
-      location.operatingHours.pushObject(operatingHour);
-    }
+    // for (let i = 0; i < 7; i++) {
+    //   let operatingHour = this.store.createRecord('operatingHour', {
+    //     dayOfWeek: i,
+    //     location,
+    //     openTime: '09:00:00',
+    //     closeTime: '20:00:00',
+    //     closed: false
+    //   });
+    //   location.operatingHours.pushObject(operatingHour);
+    // }
 
     this.newRecord = location;
   }
