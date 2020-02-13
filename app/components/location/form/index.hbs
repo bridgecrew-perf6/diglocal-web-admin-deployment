@@ -24,6 +24,7 @@
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
+    data-test-id={{concat "location-form-" @model.id}}
     as |form|>
 
     {{#if this.isEditing}}
@@ -107,12 +108,12 @@
         </div>
       </div>
     {{/unless}}
-    
+
     <Location::OperatingHoursForm @location={{@model}} @form={{form}} />
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
-        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" />
+        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" @testId="delete" />
         <div class="flex">
           <form.submit @value="Submit" @class="mr-2" @testId="save" />
           <form.cancel @value="Cancel" />

@@ -9,12 +9,12 @@
     </modal.body>
     <modal.footer class="crunchy-confirm__modal-footer">
       {{#if this.showCancel}}
-        <CrunchyButton @class="crunchy-button--modal-cancel" @onClick={{action "cancel"}} @disabled={{this.isDisabled}}>
+        <CrunchyButton @class="crunchy-button--modal-cancel" @onClick={{action "cancel"}} @disabled={{this.isDisabled}} @testId="confirm-cancel">
           {{this.cancelText}}
         </CrunchyButton>
       {{/if}}
 
-      <CrunchyButton @class="crunchy-button--modal-confirm" @task={{this.confirmTask}} @disabled={{this.isDisabled}}>
+      <CrunchyButton @class="crunchy-button--modal-confirm" @task={{this.confirmTask}} @disabled={{this.isDisabled}} @testId="confirm-ok">
         {{this.confirmText}}
       </CrunchyButton>
     </modal.footer>
