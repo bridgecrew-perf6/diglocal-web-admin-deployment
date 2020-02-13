@@ -13,6 +13,16 @@ export default class HeaderSelectRegionComponent extends Component {
   selectRegion(region, dd) {
     dd.actions.close();
     this.activeRegion = region;
+
+    let indexRoutes = [
+      'authenticated.region.scoops.index',
+      'authenticated.region.site-settings.index',
+      'authenticated.region.site-settings.categories.index',
+      'authenticated.region.analytics.index'
+    ];
+    if (indexRoutes.includes(this.router.currentRouteName)) {
+      return this.router.transitionTo(this.router.currentRouteName, region.id);
+    }
     this.router.transitionTo('authenticated.region', region.id);
   }
 }

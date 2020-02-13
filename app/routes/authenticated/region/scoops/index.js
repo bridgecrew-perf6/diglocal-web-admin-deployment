@@ -16,6 +16,8 @@ export default class AuthenticatedRegionScoopsIndexRoute extends Route {
   };
 
   model(params) {
+    let regionId = this.paramsFor('authenticated.region').region_id;
+
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
       let page = {
         limit: get(range, 'length') || 10,
@@ -23,6 +25,8 @@ export default class AuthenticatedRegionScoopsIndexRoute extends Route {
       };
 
       let filter = removeEmpty(params);
+
+      filter.region = regionId;
 
       let sort = filter.sort;
       delete filter.sort;
