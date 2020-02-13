@@ -1,6 +1,7 @@
 <CrunchyMediaObject
   @style="horizontal"
   @class="min-h-48 overflow-hidden"
+  data-test-id="business-listing"
   as |card|>
   {{#if (media "isMediumUp")}}
     <card.image
@@ -11,7 +12,7 @@
     />
   {{/if}}
   <card.header class="flex justify-between">
-    <p data-test-id="business-list-row" class="font-bold text-xl mb-2">{{@model.name}}</p>
+    <p class="font-bold text-xl mb-2">{{@model.name}}</p>
     <LinkTo
       @route="authenticated.region.businesses.view"
       @models={{array this.regionsService.activeRegion.id @model.id}}
