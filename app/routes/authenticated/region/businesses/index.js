@@ -70,7 +70,7 @@ export default Route.extend({
 
   setupController(controller, hash) {
     let { categories } = hash;
-    super.setupController(...arguments);
+    this._super(...arguments);
     controller.set('categoryOptions', categories);
   },
 
