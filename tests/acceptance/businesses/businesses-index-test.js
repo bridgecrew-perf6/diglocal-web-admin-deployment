@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click } from '@ember/test-helpers';
+import { visit, currentURL, click, fillIn, focus, blur } from '@ember/test-helpers';
 import { testId } from 'diglocal-manage/tests/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
@@ -12,7 +12,8 @@ module('Acceptance | Businesses | Index', function(hooks) {
   hooks.beforeEach(function() {
     let region = this.activeRegion;
     let otherRegion = this.server.create('region');
-    this.server.createList('business', 5, { region });
+    this.server.create('business', { region, name: 'Crunchy Bananas' });
+    this.server.createList('business', 4, { region });
     this.server.createList('business', 3, { region: otherRegion });
 
     this.region = region;
@@ -42,4 +43,17 @@ module('Acceptance | Businesses | Index', function(hooks) {
     assert.dom(testId('business-listing')).exists({ count: 3 });
   });
 
+  test('I can search and see results updated', async function(assert) {
+    await authenticateSession();
+    await visit(this.url);
+
+    assert.equal(currentURL(), this.url);
+    assert.dom(testId('business-listing')).exists({ count: 5 });
+
+    await focus(testId('search'));
+    await fillIn(testId('search'), 'Crunchy Bananas');
+    await blur(testId('search'));
+
+    assert.dom(testId('business-listing')).exists({ count: 1 });
+  });
 });

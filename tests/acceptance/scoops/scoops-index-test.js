@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click } from '@ember/test-helpers';
+import { visit, currentURL, click, fillIn, focus, blur } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { testId } from 'diglocal-manage/tests/helpers';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
@@ -14,7 +14,10 @@ module('Acceptance | Scoops | Index', function(hooks) {
     let otherRegion = this.server.create('region');
     this.server.create('business', {
       region,
-      scoops: this.server.createList('scoop', 2)
+      scoops: [
+        this.server.create('scoop'),
+        this.server.create('scoop', { description: '80s Night' }),
+      ]
     });
 
     this.server.create('business', {
@@ -54,4 +57,17 @@ module('Acceptance | Scoops | Index', function(hooks) {
     assert.dom(testId('scoop-listing')).exists({ count: 3 });
   });
 
+  test('I can search and see results updated', async function(assert) {
+    await authenticateSession();
+    await visit(this.url);
+
+    assert.equal(currentURL(), this.url);
+    assert.dom(testId('scoop-listing')).exists({ count: 4 });
+
+    await focus(testId('search'));
+    await fillIn(testId('search'), '80s Night');
+    await blur(testId('search'));
+
+    assert.dom(testId('scoop-listing')).exists({ count: 1 });
+  });
 });
