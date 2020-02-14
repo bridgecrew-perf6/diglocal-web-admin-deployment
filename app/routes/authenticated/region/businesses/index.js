@@ -94,13 +94,6 @@ export default Route.extend({
     create() {
       let record = this.store.createRecord('business');
       this.transitionTo('authenticated.region.businesses.edit', record);
-    },
-    loading(transition) {
-      let controller = this.controllerFor('authenticated.region.businesses.index');
-      controller.set('isLoading', true);
-      transition.promise.finally(function() {
-        controller.set('isLoading', false);
-      });
     }
   }
 });
