@@ -38,15 +38,22 @@
         </dd.Content>
       </BasicDropdown>
       <BasicDropdown as |dd|>
-        <dd.Trigger class="ml-2 pb-1 px-2 inline-block">
+        <dd.Trigger class="ml-2 pb-1 px-2 inline-block" data-test-id="category-filter-dd-trigger">
           <FaIcon @icon="filter" @size="xs" /> Category <FaIcon @icon="angle-down" @size="xs" class="ml-1" />
         </dd.Trigger>
         <dd.Content class="shadow p-2 border">
           <form>
             <fieldset>
               {{#each this.categoryOptions as |category|}}
-                <div class="p-1">
-                  <input id={{category.id}} type="checkbox" name={{category.longName}} checked={{contains category.id this.categories}} onchange={{action "addFilter" category.id "categories"}} >
+                <div class="p-1" data-test-id="category-filter-option">
+                  <input
+                    id={{category.id}}
+                    type="checkbox"
+                    data-test-id={{concat "category-" category.id}}
+                    name={{category.longName}}
+                    checked={{contains category.id this.categories}}
+                    onchange={{action "addFilter" category.id "categories"}}
+                  >
                   <label for={{category.id}}>{{category.longName}}</label>
                 </div>
               {{/each}}
@@ -60,8 +67,8 @@
     </div>
   </div>
   {{#if (or this.collectedFilters.length this.featured)}}
-    <div class="flex pt-2">
-      <button {{action "clearAllFilters"}} type="button" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+    <div class="flex pt-2 px-2">
+      <button {{action "clearAllFilters"}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
         Clear Filters
       </button>
       {{#if this.featured}}

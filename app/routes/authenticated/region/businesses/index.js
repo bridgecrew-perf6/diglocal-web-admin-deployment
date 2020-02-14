@@ -53,7 +53,7 @@ export default Route.extend({
 
     return hash({
       businesses,
-      categories: this.store.findAll('category')
+      categories: this.store.query('category', { filter: { region: regionId }})
     });
   },
 

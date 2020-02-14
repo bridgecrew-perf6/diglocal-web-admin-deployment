@@ -23,9 +23,10 @@ const filterBusinesses = function(businesses, request) {
   }
 
   if (categories) {
-    categories.forEach(filterId => {
-      filters.push(business => business.categories.length && business.categoryIds.includes(filterId));
-    })
+    filters.push((business) => {
+      let categoryIds = business.categoryIds;
+      return categoryIds.filter(id => categories.includes(id)).length > 0;
+    });
   }
 
   if (featured) {
