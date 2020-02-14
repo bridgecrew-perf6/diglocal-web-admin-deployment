@@ -4,10 +4,15 @@ import { camelize } from '@ember/string';
 const filterCategories = function(categories, request) {
   let filters = [];
   let sort = request.queryParams['sort'];
+  let search =  request.queryParams['filter[search]'];
   let region = request.queryParams['filter[region]'];
 
   if (region) {
-    filters.push(category => category.region && category.region === region);
+    filters.push(category => category.region && category.region.id === region);
+  }
+
+  if (search) {
+    filters.push(category => category.longName && category.longName.match(search));
   }
 
   let results = filters

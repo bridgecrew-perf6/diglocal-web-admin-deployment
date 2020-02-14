@@ -16,7 +16,7 @@ Router.map(function() {
       this.route('analytics', function() {
         this.route('index', { path: '/' });
       });
-      this.route('site-settings', function() {
+      this.route('site-settings', { path: 'settings' }, function() {
         this.route('index', { path: '/' });
         this.route('categories', function() {
           this.route('index', { path: '/' });

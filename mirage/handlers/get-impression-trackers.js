@@ -1,40 +1,27 @@
 import { Collection } from 'ember-cli-mirage';
 import { camelize } from '@ember/string';
 
-const filterBusinesses = function(businesses, request) {
+const filterImpressionTrackers = function(impressionTrackers, request) {
   let filters = [];
   let sort = request.queryParams['sort'];
   let search =  request.queryParams['filter[search]'];
-  let roles = request.queryParams['filter[role]'];
-  let categories = request.queryParams['filter[categories]'];
-  let featured = request.queryParams['filter[featured]'];
+  let businessId = request.queryParams['filter[business]'];
   let region = request.queryParams['filter[region]'];
 
   if (region) {
-    filters.push(business => business.region && business.region.id === region);
+    filters.push(impression => impression.business && impression.business.region && impression.business.region.id === region);
   }
 
   if (search) {
-    filters.push(business => business.name && business.name.match(search));
+    filters.push(impression => impression.business && impression.business.name.match(search));
   }
 
-  if (roles) {
-    filters.push(business => business.role && roles.includes(business.role));
-  }
-
-  if (categories) {
-    filters.push((business) => {
-      let categoryIds = business.categoryIds;
-      return categoryIds.filter(id => categories.includes(id)).length > 0;
-    });
-  }
-
-  if (featured) {
-    filters.push(business => business.featured);
+  if (businessId) {
+    filters.push(impression => impression.business && impression.business.id === businessId);
   }
 
   let results = filters
-    .reduce(((results, filter) => results.filter(filter)), businesses);
+    .reduce(((results, filter) => results.filter(filter)), impressionTrackers);
 
   if (sort) {
     let isDescending = sort.startsWith('-');
@@ -48,15 +35,15 @@ const filterBusinesses = function(businesses, request) {
   return results;
 };
 
-export default function getBusinesses(schema, request) {
-  let businesses = schema.businesses.all().models;
+export default function getImpressionTrackers(schema, request) {
+  let impressionTrackers = schema.impressionTrackers.all().models;
 
   let offset = request.queryParams['page[offset]'];
   let limit = request.queryParams['page[limit]'];
 
   let results = new Collection(
-    'business',
-    filterBusinesses(businesses, request)
+    'impression-tracker',
+    filterImpressionTrackers(impressionTrackers, request)
   );
 
   let total = results.length;

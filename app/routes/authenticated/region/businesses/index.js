@@ -53,7 +53,7 @@ export default Route.extend({
 
     return hash({
       businesses,
-      categories: this.store.findAll('category')
+      categories: this.store.query('category', { filter: { region: regionId }})
     });
   },
 
@@ -69,12 +69,9 @@ export default Route.extend({
   },
 
   setupController(controller, hash) {
-    let { businesses, categories } = hash;
+    let { categories } = hash;
     this._super(...arguments);
-    controller.setProperties({
-      model: businesses,
-      categoryOptions: categories
-    })
+    controller.set('categoryOptions', categories);
   },
 
   resetController(controller, isExiting, transition) {
@@ -94,13 +91,6 @@ export default Route.extend({
     create() {
       let record = this.store.createRecord('business');
       this.transitionTo('authenticated.region.businesses.edit', record);
-    },
-    loading(transition) {
-      let controller = this.controllerFor('authenticated.region.businesses.index');
-      controller.set('isLoading', true);
-      transition.promise.finally(function() {
-        controller.set('isLoading', false);
-      });
     }
   }
 });

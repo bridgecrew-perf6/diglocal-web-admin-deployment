@@ -12,8 +12,8 @@
   },
   "scripts": {
     "build": "ember build",
-    "deploy:production": "firebase use dig-this && ember build -e production && firebase deploy --only hosting:dig-this && firebase deploy --only functions",
-    "deploy:staging": "firebase use dig-this && ember build -e staging && firebase deploy --only hosting:dig-this-staging && firebase deploy --only functions",
+    "deploy:production": "ember test && firebase use dig-this && ember build -e production && firebase deploy --only hosting:dig-this",
+    "deploy:staging": "ember test && firebase use dig-this && ember build -e staging && firebase deploy --only hosting:dig-this-staging",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",

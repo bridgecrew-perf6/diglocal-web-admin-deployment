@@ -1,0 +1,31 @@
+.analytics-table {
+  &__wrapper {
+    padding-top: 10.5rem;
+    @apply max-w-container mx-auto;
+  }
+
+  &__row {
+    @apply flex text-center text-xs font-medium h-12;
+
+    &--skeleton {
+      animation: skeleton-loading 1s infinite;
+    }
+  }
+
+  &__col-group {
+    @apply flex w-1/6 bg-white;
+    &:nth-child(even) {
+      @apply bg-gray-100;
+    }
+  }
+
+  &__cell {
+    @apply border-b border-gray-300 py-2 px-1 h-12 w-full;
+  }
+}
+
+@keyframes skeleton-loading {
+  0%   { opacity:1; }
+  50%  { opacity:0.5; }
+  100% { opacity:1; }
+}

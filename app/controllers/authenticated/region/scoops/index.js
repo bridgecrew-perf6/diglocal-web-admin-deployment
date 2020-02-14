@@ -1,6 +1,6 @@
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { oneWay } from '@ember/object/computed';
+import { oneWay, union } from '@ember/object/computed';
 import { set, setProperties } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
@@ -10,18 +10,25 @@ export default Controller.extend({
   sortMenuOptions: Object.freeze({
     created_at: 'Sort by creation date',
     paid_rank: 'Sort by paid rank',
-    event_date: 'Sort by event date'
+    event_date: 'Sort by event date',
+    default: 'Sort by default'
   }),
 
   isList: true,
 
   queryParams: [
     'search',
-    'sort'
+    'sort',
+    'categories'
   ],
 
+  init() {
+    this._super(...arguments);
+    this.set('categories', []);
+  },
+
   search: '',
-  sort: '-created_at',
+  sort: '-default',
 
   searchString: oneWay('search'),
 
@@ -29,6 +36,10 @@ export default Controller.extend({
     yield timeout(INPUT_DEBOUNCE);
     set(this, 'search', this.searchString);
   }).restartable(),
+
+  collectedFilters: union(
+    'categories'
+  ),
 
   actions: {
     toggleView() {
@@ -42,6 +53,22 @@ export default Controller.extend({
     },
     sortChanged(key) {
       set(this, 'sort', key);
+    },
+    addFilter(filter, arrayName, event) {
+      let { target: { checked } } = event;
+      if (checked) {
+        this.get(arrayName).addObject(filter);
+      } else {
+        this.get(arrayName).removeObject(filter);
+      }
+    },
+    removeFilter(filter, arrayName) {
+      this.get(arrayName).removeObject(filter);
+    },
+    clearAllFilters() {
+      this.setProperties({
+        categories: []
+      });
     }
   }
 });

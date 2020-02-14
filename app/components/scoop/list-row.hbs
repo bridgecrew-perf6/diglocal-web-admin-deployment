@@ -1,33 +1,38 @@
-<CrunchyMediaObject @style="horizontal" @class="min-h-48 overflow-hidden" as |card|>
+<CrunchyMediaObject @style="horizontal" @class="h-40 w-full overflow-hidden" data-test-id="scoop-listing" as |card|>
   {{#if (media "isMediumUp")}}
     <card.image
-      @height="190px"
-      @width="190px"
+      @height="160px"
+      @width="160px"
       @url={{@model.image.sizes.thumbx2}}
-      class="border-r"
+      class="border-r crunchy-media-object__image--cover"
     />
   {{/if}}
   <card.header class="flex justify-between">
-    <p class="font-bold text-xl mb-2">{{@model.description}}</p>
+    <div class="flex flex-col w-full mr-2">
+      <p class="font-bold text-brand-primary-accent inline-block tracking-wide text-sm" title="Event date">
+        {{#if @model.eventDate}}
+          {{if (is-same (now) @model.eventDate precision="days") "Today" (moment-format @model.eventDate "dddd, MMM Do YYYY" "YYYY-MM-DD")}}
+        {{/if}}
+      </p>
+    </div>
     <LinkTo
       @route="authenticated.region.scoops.view"
       @model={{@model.id}}
       @aria-label="View scoop details"
       class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+      data-test-id={{concat "view-scoop-" @model.id}}
     >
-      View Scoop
+      {{if (media "isMobile") "View" "View Scoop"}}
     </LinkTo>
   </card.header>
   <card.body>
-    <p class="mb-2 font-bold text-brand-primary text-sm inline-block tracking-wide" title="Event date">
-      <span class="mr-1">{{if @model.eventDate (moment-calendar @model.eventDate)}}</span>
-      <CrunchyChip
-        @tagName="li"
-        @label={{if (eq @model.isRecurring true) "Recurring" "One Time"}}
-      />
-    </p>
-    <p class="text-sm">{{truncate-text @model.fineText limit=225}}</p>
-    <ul class="absolute left-0 bottom-0 p-2">
+    <p class="font-bold text-sm sm:text-base lg:text-lg">{{@model.description}}</p>
+    <p class="text-sm font-medium">{{@model.business.name}}</p>
+    <p class="py-2 text-xs leading-tight lg:mr-6">{{truncate-text @model.fineText limit=(if (media "isMobile") "100" "200")}}</p>
+    <ul class="absolute left-0 bottom-0 p-1 pt-0 w-full bg-white">
+      {{#if @model.isRecurring}}
+        <CrunchyChip @tagName="li" @label="Recurring" @class="crunchy-chip--primary" />
+      {{/if}}
       {{#each @model.business.categories as |category|}}
         <CrunchyChip @tagName="li">
           {{category.longName}}

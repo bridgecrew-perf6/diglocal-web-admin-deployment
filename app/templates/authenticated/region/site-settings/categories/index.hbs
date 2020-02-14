@@ -11,7 +11,8 @@
         @focus-out={{perform this.didSearch}}
         @escape-press={{action "clearSearch"}}
         @placeholder="Search..."
-        aria-label="Search users"
+        aria-label="Search categories"
+        data-test-id="search"
         class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
     </div>
     <div class="flex w-1/2 items-center text-gray-600">
@@ -28,16 +29,18 @@
     @minColumnWidth="100%"
     @row="84" as |item index|
   >
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="long_name_{{index}}">
-      Long Name: {{item.longName}}
-      <LinkTo @tagName="button" @route="authenticated.region.site-settings.categories.view" @model={{item.id}} @aria-label="Edit category {{item.longName}}" class="text-gray-400 hover:text-gray-600 float-right">
-        <FaIcon @icon="edit" @size="lg" />
-      </LinkTo>
-    </label>
+    <div data-test-id="category-listing" class="border-b">
+      {{!-- TODO - componentize this and make it nice --}}
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="long_name_{{index}}">
+        Long Name: {{item.longName}}
+        <LinkTo @tagName="button" @route="authenticated.region.site-settings.categories.view" @model={{item.id}} @aria-label="Edit category {{item.longName}}" class="text-gray-400 hover:text-gray-600 float-right">
+          <FaIcon @icon="edit" @size="lg" />
+        </LinkTo>
+      </label>
 
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="meta_title">
-      Meta Title:  {{item.metaTitle}}
-    </label>
-    <hr>
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="meta_title">
+        Meta Title:  {{item.metaTitle}}
+      </label>
+    </div>
   </EllaTreadmill>
 </div>

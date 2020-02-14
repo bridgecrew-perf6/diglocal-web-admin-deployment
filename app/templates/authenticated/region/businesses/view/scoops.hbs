@@ -1,7 +1,35 @@
-<EllaTreadmill
-  @content={{this.model}}
-  @minColumnWidth="100%"
-  @row="250" as |item|
->
-  <Scoop::ListRow @model={{item}} />
-</EllaTreadmill>
+<div class="fixed z-10 w-full bg-white py-2">
+  <div class="container flex">
+    <div class="flex relative w-1/3">
+      <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
+        <FaIcon @icon="search" />
+      </div>
+      <Input
+        @type="search"
+        @value={{this.searchString}}
+        @key-up={{perform this.didSearch}}
+        @focus-out={{perform this.didSearch}}
+        @escape-press={{action "clearSearch"}}
+        @placeholder="Search..."
+        aria-label="Search scoops"
+        data-test-id="search"
+        class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
+    </div>
+    <div class="flex w-2/3 pl-3 justify-between items-center text-gray-600">
+      <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} />
+      <LinkTo @route="authenticated.region.scoops.new" @class="crunchy-button--primary">
+        Add Scoop
+      </LinkTo>
+    </div>
+  </div>
+</div>
+
+<div class="treadmill-content__table-body container pt-20">
+  <EllaTreadmill
+    @content={{@model}}
+    @minColumnWidth="100%"
+    @row="172" as |item|
+  >
+    <Scoop::ListRow @model={{item}} />
+  </EllaTreadmill>
+</div>
