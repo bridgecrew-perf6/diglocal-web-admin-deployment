@@ -1,8 +1,8 @@
-<div class="analytics-table__row">
+<div class="analytics-table__row" data-test-id="analytics-tr">
   <div class="analytics-table__col-group">
     <div class="analytics-table__cell text-left w-full">
-      <div class="font-bold truncate" title={{@model.business.name}}>{{@model.business.name}}</div>
-      <div>{{@model.formattedDate}}</div>
+      <div class="font-bold truncate" title={{@model.business.name}} data-test-id="analytics-tr-business">{{@model.business.name}}</div>
+      <div data-test-id="analytics-tr-date">{{@model.formattedDate}}</div>
     </div>
   </div>
   <div class="analytics-table__col-group">

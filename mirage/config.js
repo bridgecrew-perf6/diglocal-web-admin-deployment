@@ -4,6 +4,7 @@ import getLocations from './handlers/get-locations';
 import getUsers from './handlers/get-users';
 import getScoops from './handlers/get-scoops';
 import getCategories from './handlers/get-categories';
+import getImpressionTrackers from './handlers/get-impression-trackers';
 
 export default function() {
   this.namespace = '/api/v3';
@@ -27,7 +28,8 @@ export default function() {
   this.resource('business-images');
   this.resource('categories', { except: [ 'index' ] });
   this.get('/categories', getCategories);
-  this.resource('impression-trackers');
+  this.resource('impression-trackers', { except: [ 'index' ] });
+  this.get('/impression-trackers', getImpressionTrackers);
   this.resource('business-images');
   this.resource('locations', { except: [ 'index' ] });
   this.get('/locations', getLocations);
