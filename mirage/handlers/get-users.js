@@ -32,7 +32,16 @@ const filterUsers = function(users, request) {
   }
 
   if (search) {
-    filters.push(user => user.name && user.name.match(search));
+    filters.push((user) => {
+      let values = [
+        user.givenName,
+        user.surname,
+        user.publicName,
+        user.email,
+        user.user
+      ];
+      return values.any(val => val.match(search));
+    });
   }
 
   if (roles) {
