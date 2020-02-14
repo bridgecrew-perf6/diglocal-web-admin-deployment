@@ -21,7 +21,7 @@ export default Controller.extend({
   ],
 
   search: '',
-  sort: '-created_at',
+  sort: '-event_date',
 
   searchString: oneWay('search'),
 

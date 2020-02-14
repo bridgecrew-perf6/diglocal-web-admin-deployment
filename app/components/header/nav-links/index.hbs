@@ -2,6 +2,6 @@
   <Header::NavLinks::Link @route="authenticated.region.businesses" @model={{this.activeRegion}}>Businesses</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.analytics" @model={{this.activeRegion}}>Analytics</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.users" @model={{this.activeRegion}}>Users</Header::NavLinks::Link>
-  <Header::NavLinks::Link @route="authenticated.region.scoops" @model={{this.activeRegion}}>Scoops</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.region.scoops" @model={{this.activeRegion}} @query={{hash sort="-event_date"}}>Scoops</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.site-settings" @model={{this.activeRegion}}>Region Settings</Header::NavLinks::Link>
 {{/if}}

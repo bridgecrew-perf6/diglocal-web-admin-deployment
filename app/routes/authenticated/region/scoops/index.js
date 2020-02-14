@@ -50,7 +50,7 @@ export default class AuthenticatedRegionScoopsIndexRoute extends Route {
   resetController(controller, isExiting, transition) {
     if (isExiting && transition.targetName !== 'error') {
       controller.setProperties({
-        sort: '-created_at',
+        sort: '-event_date',
         search: '',
         searchString: ''
       });
