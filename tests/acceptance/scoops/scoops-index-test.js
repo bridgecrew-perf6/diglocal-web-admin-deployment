@@ -12,7 +12,7 @@ module('Acceptance | Scoops | Index', function(hooks) {
   hooks.beforeEach(function() {
     let region = this.activeRegion;
     let otherRegion = this.server.create('region');
-    this.server.create('business', {
+    let business = this.server.create('business', {
       region,
       scoops: [
         this.server.create('scoop'),
@@ -32,6 +32,7 @@ module('Acceptance | Scoops | Index', function(hooks) {
 
     this.region = region;
     this.otherRegion = otherRegion;
+    this.business = business;
     this.url = `/region/${this.region.id}/scoops`;
   });
 
@@ -69,5 +70,16 @@ module('Acceptance | Scoops | Index', function(hooks) {
     await blur(testId('search'));
 
     assert.dom(testId('scoop-listing')).exists({ count: 1 });
+  });
+
+  test('I can visit a scoop detail page from a scoop listing', async function(assert) {
+    let scoop = this.server.create('scoop', { business: this.business });
+    await authenticateSession();
+    await visit(this.url);
+
+    assert.equal(currentURL(), this.url);
+
+    await click(testId('view-scoop', scoop.id));
+    assert.equal(currentURL(), `/region/${this.region.id}/scoops/${scoop.id}`);
   });
 });

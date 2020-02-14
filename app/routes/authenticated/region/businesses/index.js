@@ -69,12 +69,9 @@ export default Route.extend({
   },
 
   setupController(controller, hash) {
-    let { businesses, categories } = hash;
-    this._super(...arguments);
-    controller.setProperties({
-      model: businesses,
-      categoryOptions: categories
-    })
+    let { categories } = hash;
+    super.setupController(...arguments);
+    controller.set('categoryOptions', categories);
   },
 
   resetController(controller, isExiting, transition) {

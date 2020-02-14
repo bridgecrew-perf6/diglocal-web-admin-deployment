@@ -64,9 +64,6 @@
         </ul>
       </div>
     {{/if}}
-    <LinkTo @route="authenticated.region.scoops.new" @class="bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold py-2 px-2 ml-2 rounded">
-      Add Scoop
-    </LinkTo>
   </div>
 </div>
 
@@ -85,11 +82,11 @@
     {{/if}}
   </EllaTreadmill>
 
-  {{#if (or this.didSearch.isRunning @model.loading)}}
+  {{#if (or this.didSearch.isRunning @model.scoops.loading)}}
     <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
       <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
     </div>
-  {{else if (eq @model.length 0)}}
+  {{else if (eq @model.scoops.length 0)}}
   <div class="border rounded bg-white m-4 p-6">
     <p> No scoops found. </p>
   </div>

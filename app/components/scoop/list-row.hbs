@@ -20,6 +20,7 @@
       @model={{@model.id}}
       @aria-label="View scoop details"
       class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+      data-test-id={{concat "view-scoop-" @model.id}}
     >
       {{if (media "isMobile") "View" "View Scoop"}}
     </LinkTo>
