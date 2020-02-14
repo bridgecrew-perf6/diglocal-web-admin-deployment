@@ -117,6 +117,8 @@
       <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
     </div>
   {{else if (eq @model.businesses.length 0)}}
-    <p>No results found.</p>
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No businesses found. </p>
+    </div>
   {{/if}}
 </div>

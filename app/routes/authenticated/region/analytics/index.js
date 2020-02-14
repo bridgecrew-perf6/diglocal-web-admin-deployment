@@ -16,19 +16,21 @@ export default Route.extend({
     title: 'Analytics'
   }),
   model(params) {
+    let regionId = this.paramsFor('authenticated.region').region_id;
+
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
-      // let { sort, filter } = getProperties(this, 'sort', 'filter');
       let page = {
         limit: get(range, 'length') || 10,
         offset: get(range, 'start') || 0
       };
 
       let filter = removeEmpty(params);
+      filter.region = regionId;
       filter.date_range = `${moment(params.dateRange[0]).format('YYYY-MM-DD')},${moment(params.dateRange[1]).format('YYYY-MM-DD')},${params.grouping}`;
       delete filter.grouping;
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
-      query = Object.assign({ filter, page /*, sort */ }, query);
+      query = Object.assign({ filter, page }, query);
       query.include = 'business';
 
       // Return a Promise that resolves with the array of fetched data
