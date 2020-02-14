@@ -58,6 +58,7 @@
   @apply rounded border bg-white;
 
   &--vertical {
+    @apply flex-col items-center;
   }
 
   &--horizontal {
@@ -81,6 +82,10 @@
     @apply bg-contain bg-center bg-no-repeat mx-auto;
     &--vertical {
       width: 100% !important;
+    }
+
+    &--cover > * {
+      @apply bg-cover;
     }
   }
 
