@@ -10,7 +10,8 @@ export default Controller.extend({
   sortMenuOptions: Object.freeze({
     created_at: 'Sort by creation date',
     paid_rank: 'Sort by paid rank',
-    event_date: 'Sort by event date'
+    event_date: 'Sort by event date',
+    default: 'Sort by default'
   }),
 
   isList: true,
@@ -27,7 +28,7 @@ export default Controller.extend({
   },
 
   search: '',
-  sort: '-event_date',
+  sort: '-default',
 
   searchString: oneWay('search'),
 

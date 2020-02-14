@@ -31,6 +31,11 @@ export default class AuthenticatedRegionScoopsIndexRoute extends Route {
       filter.region = regionId;
 
       let sort = filter.sort;
+
+      if (filter.sort.match('default')) {
+        sort = null;
+      }
+
       delete filter.sort;
 
       // Combine the pagination and filter parameters into one object
