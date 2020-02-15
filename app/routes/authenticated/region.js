@@ -8,6 +8,7 @@ export default class AuthenticatedRegionRoute extends Route {
   @storageFor('active-region') activeRegionStorage;
   @service('regions') regionsService;
   @service store;
+  @service moment;
 
   breadCrumb = null;
 

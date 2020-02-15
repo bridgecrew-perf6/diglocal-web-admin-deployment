@@ -31,7 +31,11 @@ Router.map(function() {
         this.route('view', { path: ':business_id' }, function() {
           this.route('locations');
           this.route('photos');
-          this.route('scoops');
+          this.route('scoops', function() {
+            this.route('index', { path: '/' });
+            this.route('view', { path: ':scoop_id' });
+            this.route('new');
+          });
           this.route('social');
           this.route('users');
         });

@@ -22,12 +22,11 @@
     @model={{@model}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
+    @isReadonly={{this.isReadonly}}
     as |form|>
 
-    <div class="flex flex-wrap justify-center mb-2">
-      <div
-        class="w-full md:w-1/3 h-64 rounded overflow-hidden bg-cover bg-no-repeat bg-center bg-gray-100"
-        style={{background-image @model.image.sizes.full}}>
+    <div class="flex flex-wrap md:flex-no-wrap mb-2">
+      <div class="h-64 w-full rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100" style={{background-image @model.image.sizes.full}}>
       </div>
     </div>
 
@@ -35,16 +34,84 @@
       @field="description"
       @label="Description"
       @aria-label="Description"
-      @disabled={{this.isReadonly}}
     />
 
     <form.text-area
       @field="fineText"
       @label="Additional Details"
       @aria-label="Additional Details"
-      @rows="3"
-      @disabled={{this.isReadonly}}
+      @rows="5"
     />
+
+    <div class="flex flex-wrap md:flex-no-wrap">
+      <div class="w-full md:w-1/3 md:pr-2">
+        <form.field @field="eventDate" @label="Event Date" class="w-full">
+          {{#if this.isReadonly}}
+            {{format-event-date @model.eventDate}}
+          {{else}}
+            <EmberFlatpickr
+              @allowInput={{false}}
+              @altInput={{true}}
+              @altFormat="F j, Y"
+              @clickOpens={{true}}
+              @appendDataInput={{true}}
+              @date={{readonly @model.eventDate}}
+              @dateFormat="Y-m-d"
+              @enableTime={{false}}
+              @mode="single"
+              @onChange={{action "didChangeEventDate"}}
+              @placeholder="Select a date"
+              class="w-full crunchy-form__input"
+            />
+          {{/if}}
+        </form.field>
+      </div>
+      <div class="w-full md:w-2/3">
+        <form.field @label="Event Time" class="w-full">
+          {{#if this.isReadonly}}
+            {{moment-format @model.eventStartTime "h:mma" timeZone=this.activeRegionTimeZone}} to {{moment-format @model.eventEndTime "h:mma" timeZone=this.activeRegionTimeZone}}
+            <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format @model.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+          {{else}}
+            <div class="flex flex-wrap items-center">
+              <div class="flex flex-wrap space-between items-center">
+                <div data-test-id="eventStartTime" class="flex flex-grow items-center">
+                  <EmberFlatpickr
+                    @allowInput={{false}}
+                    @altInput={{true}}
+                    @altFormat="h:iK"
+                    @appendDataInput={{true}}
+                    @enableTime={{true}}
+                    @noCalendar={{true}}
+                    @date={{moment-format @model.eventStartTime "HH:mm:ss" timeZone=this.activeRegionTimeZone}}
+                    @dateFormat="H:i:S"
+                    @onChange={{action "didUpdateTime" "eventStartTime"}}
+                    @placeholder="Start"
+                    class="crunchy-form__input"
+                  />
+                </div>
+                <div class="px-4 flex items-center justify-center"> to </div>
+                <div data-test-id="eventEndTime" class="flex flex-grow items-center">
+                  <EmberFlatpickr
+                    @allowInput={{false}}
+                    @altInput={{true}}
+                    @altFormat="h:iK"
+                    @appendDataInput={{true}}
+                    @enableTime={{true}}
+                    @noCalendar={{true}}
+                    @date={{moment-format @model.eventEndTime "HH:mm:ss" timeZone=this.activeRegionTimeZone}}
+                    @dateFormat="H:i:S"
+                    @onChange={{action "didUpdateTime" "eventEndTime"}}
+                    @placeholder="End"
+                    class="crunchy-form__input"
+                  />
+                </div>
+              </div>
+              <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format @model.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+            </div>
+          {{/if}}
+        </form.field>
+      </div>
+    </div>
 
     <form.text-field
       @field="ticketUrl"
