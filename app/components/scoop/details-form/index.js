@@ -70,16 +70,6 @@ export default class DetailsForm extends Component {
   }
 
   @action
-  onChangeEventDate(range, formatted) {
-    this.args.model.eventStart = formatted;
-  }
-
-  @action
-  onChangeEventTime(attr, range, formatted) {
-    this.args.model[attr] = formatted;
-  }
-
-  @action
   toggleEventFields(value) {
     this.showEventFields = value;
     if (!value) {

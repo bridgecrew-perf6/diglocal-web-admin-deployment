@@ -26,38 +26,39 @@
     as |form|>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-2">
-      <div class="h-64 w-full rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100" style={{background-image @model.image.sizes.full}}>
+      <div class="h-64 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100" style={{background-image @model.image.sizes.full}}>
+      </div>
+      <div class="w-full md:w-2/3 md:pl-4">
+        {{#if (is-active "authenticated.region.businesses.view")}}
+          <div class="crunchy-form__group flex items-center text-brand-primary">
+            {{svg-jar "location" class="brand-primary-svg" width="20px"}}
+            <span class="ml-1 text-lg font-bold">{{@model.business.name}}</span>
+          </div>
+        {{else}}
+          <form.field @field="name" @label="Business" class="mt-4">
+            <PowerSelect
+              @search={{perform this.searchBusinesses}}
+              @searchEnabled={{true}}
+              @loadingMessage="Searching businesses...."
+              @placeholder="Click to search"
+              @selected={{@model.business}}
+              @allowClear={{false}}
+              @disabled={{form.isReadonly}}
+              @onChange={{action (mut @model.business)}} as |business|
+              >
+                <span>{{business.name}}</span>
+            </PowerSelect>
+          </form.field>
+        {{/if}}
+
+        <form.text-field
+          @field="description"
+          @label="Description"
+          @aria-label="Description"
+          @placeholder="Add a headline for this scoop"
+        />
       </div>
     </div>
-
-    {{#if (is-active "authenticated.region.businesses.view")}}
-      <div class="crunchy-form__group flex items-center text-brand-primary">
-        {{svg-jar "location" class="brand-primary-svg" width="20px"}}
-        <span class="ml-1 text-lg font-bold">{{@model.business.name}}</span>
-      </div>
-    {{else}}
-      <form.field @field="name" @label="Business" class="mt-4">
-        <PowerSelect
-          @search={{perform this.searchBusinesses}}
-          @searchEnabled={{true}}
-          @loadingMessage="Searching businesses...."
-          @placeholder="Click to search"
-          @selected={{@model.business}}
-          @allowClear={{false}}
-          @disabled={{form.isReadonly}}
-          @onChange={{action (mut @model.business)}} as |business|
-          >
-            <span>{{business.name}}</span>
-        </PowerSelect>
-      </form.field>
-    {{/if}}
-
-    <form.text-field
-      @field="description"
-      @label="Description"
-      @aria-label="Description"
-      @placeholder="Add a headline for this scoop"
-    />
 
     <form.text-area
       @field="fineText"
@@ -99,16 +100,42 @@
       />
     {{/if}}
 
-    <form.text-field
-      @field="ticketUrl"
-      @label="Ticket Url"
-      @aria-label="Ticket Url"
-    />
+    {{#if this.isEditing}}
+      <form.text-field
+        @field="ticketUrl"
+        @label="Ticket Url"
+        @aria-label="Ticket Url"
+      />
+    {{else if @model.ticketUrl}}
+      <div class="crunchy-form__group text-brand-primary">
+        <a href={{@model.ticketUrl}} target="_blank" rel="noopener" title={{@model.ticketUrl}} class="flex items-center">
+          {{svg-jar "tickets" class="brand-primary-svg" width="20px"}}
+          <span class="ml-1 text-lg font-bold">Tickets</span>
+        </a>
+      </div>
+    {{/if}}
 
-    <form.checkbox
-      @field="active"
-      @label="Active?"
-    />
+    {{#if this.isEditing}}
+      <div class="flex justify-start items-center mt-8 crunchy-form__group">
+        <XToggle
+          @showLabels={{true}}
+          @size="small"
+          @value={{@model.active}}
+          @onToggle={{action (mut @model.active)}}
+          @disabled={{this.isReadonly}}
+          as |toggle|
+        >
+          <toggle.label @value={{@model.active}}>
+            <b class="pr-2">Is scoop active?</b>
+          </toggle.label>
+          <toggle.switch
+            @theme='light'
+            @onLabel='Yes'
+            @offLabel='No'
+          />
+        </XToggle>
+      </div>
+    {{/if}}
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
