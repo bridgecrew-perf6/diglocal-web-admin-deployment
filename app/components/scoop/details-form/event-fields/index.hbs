@@ -1,0 +1,83 @@
+{{#with @form as |form|}}
+  <div class="flex flex-wrap md:flex-no-wrap">
+    <div class="w-full md:w-1/3 md:pr-2">
+      <form.field @field="eventDate" @label="Event Date" class="w-full">
+        {{#if form.isReadonly}}
+          {{format-event-date @model.eventDate}}
+        {{else}}
+          <EmberFlatpickr
+            @allowInput={{false}}
+            @altInput={{true}}
+            @altFormat="F j, Y"
+            @clickOpens={{true}}
+            @appendDataInput={{true}}
+            @date={{readonly this.eventDate}}
+            @dateFormat="Y-m-d"
+            @enableTime={{false}}
+            @mode="single"
+            @onChange={{action "changeEventDate"}}
+            @placeholder="Select a date"
+            class="w-full crunchy-form__input"
+          />
+        {{/if}}
+      </form.field>
+    </div>
+
+    {{#if form.isReadonly}}
+      <div class="w-full md:w-2/3">
+        {{#if (or @model.eventStartTime @model.eventEndTime)}}
+          <form.field @label="Event Time" class="w-full">
+            {{#if @model.eventStartTime}}
+              {{moment-format @model.eventStartTime "h:mma"}}
+            {{/if}}
+            {{#if @model.eventEndTime}}
+              until {{moment-format @model.eventEndTime "h:mma"}}
+            {{/if}}
+            <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+          </form.field>
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{#unless form.isReadonly}}
+      <div class="w-full md:w-1/3 md:pr-2">
+        <form.field @label="Starts At" class="w-full">
+          <div data-test-id="eventStartTime" class="flex flex-grow items-center">
+            <EmberFlatpickr
+              @allowInput={{false}}
+              @altInput={{true}}
+              @altFormat="h:iK"
+              @appendDataInput={{true}}
+              @enableTime={{true}}
+              @noCalendar={{true}}
+              @date={{this.eventStartTime}}
+              @dateFormat="H:i:S"
+              @onChange={{action "changeEventTime" "start"}}
+              @placeholder="Start"
+              class="crunchy-form__input"
+            />
+          </div>
+        </form.field>
+      </div>
+      <div class="w-full md:w-1/3">
+        <form.field @label="Ends At" class="w-full">
+          <div data-test-id="eventEndTime" class="flex flex-grow items-center">
+            <EmberFlatpickr
+              @allowInput={{false}}
+              @altInput={{true}}
+              @altFormat="h:iK"
+              @appendDataInput={{true}}
+              @enableTime={{true}}
+              @noCalendar={{true}}
+              @date={{this.eventEndTime}}
+              @dateFormat="H:i:S"
+              @onChange={{action "changeEventTime" "end"}}
+              @placeholder="End"
+              class="crunchy-form__input"
+            />
+          </div>
+        </form.field>
+      </div>
+    {{/unless}}
+  </div>
+{{/with}}

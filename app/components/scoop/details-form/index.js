@@ -2,7 +2,7 @@ import { action } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { isPresent } from '@ember/utils';
+import { isPresent, isBlank } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
@@ -15,6 +15,7 @@ export default class DetailsForm extends Component {
   @service store;
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
+  @tracked showEventFields = true;
 
   @not('isEditing') isReadonly;
 
@@ -22,6 +23,9 @@ export default class DetailsForm extends Component {
     super(...arguments);
     if (isPresent(this.args.isEditing)) {
       this.isEditing = this.args.isEditing
+    }
+    if (isBlank(this.args.model.eventDate)) {
+      this.showEventFields = false;
     }
   }
 
@@ -36,10 +40,6 @@ export default class DetailsForm extends Component {
     this.showDestroyModal = false;
     this.isEditing = false;
     super.willDestroy(...arguments);
-  }
-
-  get activeRegionTimeZone() {
-    return this.regions.activeRegion.momentTz;
   }
 
   @(task(function* (search) {
@@ -70,12 +70,22 @@ export default class DetailsForm extends Component {
   }
 
   @action
-  didChangeEventDate(range, formatted) {
+  onChangeEventDate(range, formatted) {
     this.args.model.eventStart = formatted;
   }
 
   @action
-  didUpdateTime(attr, range, formatted) {
+  onChangeEventTime(attr, range, formatted) {
     this.args.model[attr] = formatted;
+  }
+
+  @action
+  toggleEventFields(value) {
+    this.showEventFields = value;
+    if (!value) {
+      this.args.model.eventDate = null;
+      this.args.model.eventStartTime = null;
+      this.args.model.eventEndTime = null;
+    }
   }
 }
