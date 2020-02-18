@@ -87,6 +87,7 @@
     "ember-router-helpers": "^0.2.0",
     "ember-simple-auth": "^2.1.1",
     "ember-source": "~3.16.0",
+    "ember-svg-jar": "^2.2.3",
     "ember-tag-input": "^1.2.2",
     "ember-test-selectors": "^3.0.0",
     "ember-truth-helpers": "^2.1.0",
