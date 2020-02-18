@@ -1,10 +1,13 @@
 import Route from '@ember/routing/route';
+import moment from 'moment';
 
 export default class AuthenticatedRegionBusinessesViewScoopsNewRoute extends Route {
   model() {
-    let business = this.modelFor('authenticated.region.businesses.view');
+    let businessId = this.paramsFor('authenticated.region.businesses.view').business_id;
+    let business = this.store.peekRecord('business', businessId);
     return this.store.createRecord('scoop', {
-      business
+      business,
+      eventDate: moment().format('YYYY-MM-DD'),
     });
   }
 }

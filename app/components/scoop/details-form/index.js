@@ -4,9 +4,15 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
 import { inject as service } from '@ember/service';
+import { task, timeout } from 'ember-concurrency';
+import removeEmpty from 'diglocal-manage/helpers/remove-empty';
+import ENV from 'diglocal-manage/config/environment';
+
+const INPUT_DEBOUNCE = ENV.environment !== 'test' ? 500 : 0;
 
 export default class DetailsForm extends Component {
   @service regions;
+  @service store;
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
 
@@ -35,6 +41,14 @@ export default class DetailsForm extends Component {
   get activeRegionTimeZone() {
     return this.regions.activeRegion.momentTz;
   }
+
+  @(task(function* (search) {
+    yield timeout(INPUT_DEBOUNCE);
+    let filter = Object.assign({}, { search });
+    filter = removeEmpty(filter);
+    return this.store.query('business', { filter });
+  }).restartable())
+  searchBusinesses;
 
   @action
   save() {

@@ -16,7 +16,4 @@
 
 .brand-primary-svg {
   fill: #017375;
-  svg, path {
-    fill: #017375 !important;
-  }
 }
