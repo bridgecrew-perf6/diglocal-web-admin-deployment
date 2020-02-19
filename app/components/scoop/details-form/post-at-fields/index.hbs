@@ -1,0 +1,60 @@
+{{#with @form as |form|}}
+  <form.field @field="isRecurring" @label="When should this scoop be posted?">
+    <RadioButton
+      @value={{false}}
+      @groupValue={{@model.isRecurring}}
+      @changed={{action (mut @model.isRecurring)}}
+    >
+      <span class="mr-2">Once</span>
+    </RadioButton>
+    <RadioButton
+      @value={{true}}
+      @groupValue={{@model.isRecurring}}
+      @changed={{action (mut @model.isRecurring)}}
+    >
+      <span class="mr-2">Weekly</span>
+    </RadioButton>
+  </form.field>
+
+  {{#if @model.isRecurring}}
+    <label for="daysOfWeek" class="crunchy-form__group-label">Post weekly on days:</label>
+    <fieldset name="daysOfWeek" class="crunchy-form__group">
+      <div class="flex flex-wrap">
+        {{#each this.daysOfWeekOptions as |day|}}
+          <label class="mr-3 py-1">
+            <Input
+              @type="checkbox"
+              @checked={{contains day.value this.selectedDays}}
+              @keyPress={{action "selectDay" day.value}}
+              @click={{action "selectDay" day.value}}
+              @touchStart={{action "selectDay" day.value}}
+              @aria-label={{concat "Post scoop every " day.label}}
+            />
+            <span class="">{{day.label}}</span>
+          </label>
+        {{/each}}
+      </div>
+    </fieldset>
+  {{else}}
+    <form.field @field="postAt" @label="Post at:" class="w-full">
+      {{#if form.isReadonly}}
+        {{moment-format @model.postAt}}
+      {{else}}
+        <EmberFlatpickr
+          @allowInput={{false}}
+          @clickOpens={{true}}
+          @appendDataInput={{true}}
+          @date={{moment-format this.postAtDate}}
+          @dateFormat="F j, Y at h:iK"
+          @enableTime={{true}}
+          @mode="single"
+          @onChange={{action "changePostAtDate"}}
+          @placeholder="Select a date"
+          class="w-full crunchy-form__input"
+        />
+      {{/if}}
+    </form.field>
+  {{/if}}
+
+
+{{/with}}

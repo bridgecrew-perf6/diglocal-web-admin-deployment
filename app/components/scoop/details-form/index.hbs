@@ -1,21 +1,29 @@
 <div class="border rounded p-4 bg-white mb-4">
   <div class="flex mb-3 justify-between">
-    <h1 class="font-semibold text-lg"> {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}} </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit scoop details">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" />
-      </CrunchyButton>
-    {{/if}}
+    <h1 class="font-semibold text-lg">
+      {{#if @model.isNew}}
+        Create New Scoop
+      {{else}}
+        {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}}
+      {{/if}}
+    </h1>
+    {{#unless @model.isNew}}
+      {{#if this.isReadonly}}
+        <CrunchyButton
+          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @class="crunchy-button--icon"
+          @aria-label="Edit scoop details">
+          <FaIcon @icon="edit" @size="lg" />
+        </CrunchyButton>
+      {{else}}
+        <CrunchyButton
+          @onClick={{action "cancel"}}
+          @class="crunchy-button--icon"
+          @aria-label="Close form">
+          <FaIcon @icon="times" />
+        </CrunchyButton>
+      {{/if}}
+    {{/unless}}
   </div>
 
   <CrunchyForm
@@ -26,13 +34,13 @@
     as |form|>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-2">
-      <div class="h-64 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100" style={{background-image @model.image.sizes.full}}>
-      </div>
-      <div class="w-full md:w-2/3 md:pl-4">
+      {{!-- <div class="h-64 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100" style={{background-image @model.image.sizes.full}}>
+      </div> --}}
+      <div class="w-full">
         {{#if (is-active "authenticated.region.businesses.view")}}
           <div class="crunchy-form__group flex items-center text-brand-primary">
-            {{svg-jar "location" class="brand-primary-svg" width="20px"}}
-            <span class="ml-1 text-lg font-bold">{{@model.business.name}}</span>
+            {{svg-jar "location" class="brand-primary-svg mr-2" width="20px"}}
+            <span class="text-lg font-bold">{{@model.business.name}}</span>
           </div>
         {{else}}
           <form.field @field="name" @label="Business" class="mt-4">
@@ -68,8 +76,30 @@
       @placeholder="Add some additional details"
     />
 
+    {{!-- {{#if this.isEditing}} --}}
+      <div class="flex justify-start items-center my-4 crunchy-form__group">
+        <XToggle
+          @showLabels={{true}}
+          @size="small"
+          @value={{@model.isDeal}}
+          @onToggle={{action (mut @model.isDeal)}}
+          @disabled={{this.isReadonly}}
+          as |toggle|
+        >
+          <toggle.label @value={{@model.isDeal}}>
+            <b class="pr-2">Is this a deal or special?</b>
+          </toggle.label>
+          <toggle.switch
+            @theme='light'
+            @onLabel='Yes'
+            @offLabel='No'
+          />
+        </XToggle>
+      </div>
+    {{!-- {{/if}} --}}
+
     {{#if this.isEditing}}
-      <div class="flex justify-start items-center mt-8 crunchy-form__group">
+      <div class="flex justify-start items-center my-4 crunchy-form__group">
         <XToggle
           @showLabels={{true}}
           @size="small"
@@ -109,13 +139,13 @@
     {{else if @model.ticketUrl}}
       <div class="crunchy-form__group text-brand-primary">
         <a href={{@model.ticketUrl}} target="_blank" rel="noopener" title={{@model.ticketUrl}} class="flex items-center">
-          {{svg-jar "tickets" class="brand-primary-svg" width="20px"}}
-          <span class="ml-1 text-lg font-bold">Tickets</span>
+          {{svg-jar "tickets" class="brand-primary-svg mr-2" width="20px"}}
+          <span class="text-lg font-bold">Find Tickets</span>
         </a>
       </div>
     {{/if}}
 
-    {{#if this.isEditing}}
+    {{!-- {{#if this.isEditing}} --}}
       <div class="flex justify-start items-center mt-8 crunchy-form__group">
         <XToggle
           @showLabels={{true}}
@@ -135,7 +165,13 @@
           />
         </XToggle>
       </div>
-    {{/if}}
+    {{!-- {{/if}} --}}
+
+    <Scoop::DetailsForm::PostAtFields
+      @form={{form}}
+      @model={{@model}}
+      @didUpdateDays={{action (mut @model.daysOfWeek)}}
+    />
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">

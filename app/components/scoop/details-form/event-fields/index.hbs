@@ -3,7 +3,7 @@
     <div class="w-full md:w-1/3 md:pr-2">
       <form.field @field="eventDate" @label="Date" class="w-full">
         {{#if form.isReadonly}}
-          {{format-event-date @model.eventDate}}
+          {{format-event-date this.eventDate}}
         {{else}}
           <EmberFlatpickr
             @allowInput={{false}}
@@ -25,13 +25,13 @@
 
     {{#if form.isReadonly}}
       <div class="w-full md:w-2/3">
-        {{#if (or @model.eventStartTime @model.eventEndTime)}}
+        {{#if (or this.eventStartTime this.eventEndTime)}}
           <form.field @label="Event Time" class="w-full">
-            {{#if @model.eventStartTime}}
-              {{moment-format @model.eventStartTime "h:mma" "HH:mm:ss"}}
+            {{#if this.eventStartTime}}
+              {{moment-format this.eventStartTime "h:mma" "HH:mm:ss"}}
             {{/if}}
-            {{#if @model.eventEndTime}}
-              until {{moment-format @model.eventEndTime "h:mma" "HH:mm:ss"}}
+            {{#if this.eventEndTime}}
+              until {{moment-format this.eventEndTime "h:mma" "HH:mm:ss"}}
             {{/if}}
             <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
           </form.field>
@@ -58,6 +58,7 @@
               @placeholder="Start"
               class="crunchy-form__input"
             />
+            <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
           </div>
         </form.field>
       </div>
@@ -79,6 +80,7 @@
               @placeholder="End"
               class="crunchy-form__input"
             />
+            <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
           </div>
         </form.field>
       </div>
