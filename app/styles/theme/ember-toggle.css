@@ -1,0 +1,7 @@
+.x-toggle-component label.off-label {
+  padding-right: 0;
+}
+
+.x-toggle-component label.on-label {
+  padding-left: 0;
+}

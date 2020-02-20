@@ -13,3 +13,7 @@
 .container {
   @apply max-w-container mx-auto px-2;
 }
+
+.brand-primary-svg {
+  fill: #017375;
+}

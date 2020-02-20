@@ -1,63 +1,166 @@
 <div class="border rounded p-4 bg-white mb-4">
   <div class="flex mb-3 justify-between">
-    <h1 class="font-semibold text-lg"> {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}} </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit scoop details">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" />
-      </CrunchyButton>
-    {{/if}}
+    <h1 class="font-semibold text-lg">
+      {{#if @model.isNew}}
+        Create New Scoop
+      {{else}}
+        {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}}
+      {{/if}}
+    </h1>
+    {{#unless @model.isNew}}
+      {{#if this.isReadonly}}
+        <CrunchyButton
+          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @class="crunchy-button--icon"
+          @aria-label="Edit scoop details">
+          <FaIcon @icon="edit" @size="lg" />
+        </CrunchyButton>
+      {{else}}
+        <CrunchyButton
+          @onClick={{action "cancel"}}
+          @class="crunchy-button--icon"
+          @aria-label="Close form">
+          <FaIcon @icon="times" @size="lg" />
+        </CrunchyButton>
+      {{/if}}
+    {{/unless}}
   </div>
 
   <CrunchyForm
     @model={{@model}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
+    @isReadonly={{this.isReadonly}}
     as |form|>
 
-    <div class="flex flex-wrap justify-center mb-2">
-      <div
-        class="w-full md:w-1/3 h-64 rounded overflow-hidden bg-cover bg-no-repeat bg-center bg-gray-100"
-        style={{background-image @model.image.sizes.full}}>
+    <div class="flex flex-wrap md:flex-no-wrap mb-4">
+      <div class="h-48 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100 relative" style={{background-image @model.image.sizes.full}}>
+        {{#if this.isEditing}}
+          <CrunchyButton
+            @onClick={{action (mut this.showUploadModal) true}}
+            @class="absolute top-0 right-0 crunchy-button--icon m-2"
+            @aria-label="Upload scoop image"
+          >
+            <FaIcon @icon="camera" />
+          </CrunchyButton>
+        {{/if}}
+      </div>
+      <div class="w-full md:w-2/3 md:pl-4">
+        <form.field @field="name" @label="Business">
+          <PowerSelect
+            @search={{perform this.searchBusinesses}}
+            @searchEnabled={{true}}
+            @loadingMessage="Searching businesses...."
+            @placeholder="Click to search"
+            @selected={{@model.business}}
+            @allowClear={{false}}
+            @disabled={{or form.isReadonly (is-active "authenticated.region.businesses.view")}}
+            @onChange={{action (mut @model.business)}} as |business|
+            >
+              <span>{{business.name}}</span>
+          </PowerSelect>
+        </form.field>
+
+        <form.text-field
+          @field="description"
+          @label="Description"
+          @aria-label="Description"
+          @placeholder="Add a headline for this scoop"
+        />
       </div>
     </div>
-
-    <form.text-field
-      @field="description"
-      @label="Description"
-      @aria-label="Description"
-      @disabled={{this.isReadonly}}
-    />
 
     <form.text-area
       @field="fineText"
       @label="Additional Details"
       @aria-label="Additional Details"
-      @rows="3"
-      @disabled={{this.isReadonly}}
+      @rows="5"
+      @placeholder="Add some additional details"
     />
+
+    <div class="flex justify-start items-center my-4 crunchy-form__group">
+      <XToggle
+        @showLabels={{true}}
+        @size="small"
+        @value={{@model.isDeal}}
+        @onToggle={{action (mut @model.isDeal)}}
+        @disabled={{form.isReadonly}}
+        as |toggle|
+      >
+        <toggle.label @value={{@model.isDeal}}>
+          <b class="pr-2">Is this a deal or special?</b>
+        </toggle.label>
+        <toggle.switch
+          @theme='light'
+          @onLabel='Yes'
+          @offLabel='No'
+        />
+      </XToggle>
+    </div>
+
+    {{#if this.isEditing}}
+      <div class="flex justify-start items-center my-4 crunchy-form__group">
+        <XToggle
+          @showLabels={{true}}
+          @size="small"
+          @value={{this.showEventFields}}
+          @onToggle={{action "toggleEventFields"}}
+          @disabled={{form.isReadonly}}
+          as |toggle|
+        >
+          <toggle.label @value={{this.showEventFields}}>
+            <b class="pr-2">Is this an event?</b>
+          </toggle.label>
+          <toggle.switch
+            @theme='light'
+            @onLabel='Yes'
+            @offLabel='No'
+          />
+        </XToggle>
+      </div>
+    {{/if}}
+
+    {{#if this.showEventFields}}
+      <Scoop::DetailsForm::EventFields
+        @form={{form}}
+        @model={{@model}}
+        @onChangeEventDate={{action (mut @model.eventDate)}}
+        @onChangeEventStart={{action (mut @model.eventStartTime)}}
+        @onChangeEventEnd={{action (mut @model.eventEndTime)}}
+      />
+    {{/if}}
 
     <form.text-field
       @field="ticketUrl"
       @label="Ticket Url"
       @aria-label="Ticket Url"
-      @disabled={{this.isReadonly}}
     />
 
-    <form.checkbox
-      @field="active"
-      @label="Active?"
-      @disabled={{this.active}}
+    <Scoop::DetailsForm::PostAtFields
+      @form={{form}}
+      @model={{@model}}
+      @didUpdateDays={{action (mut @model.daysOfWeek)}}
     />
+
+    <div class="flex justify-start items-center mt-8 crunchy-form__group">
+      <XToggle
+        @showLabels={{true}}
+        @size="small"
+        @value={{@model.active}}
+        @onToggle={{action (mut @model.active)}}
+        @disabled={{this.isReadonly}}
+        as |toggle|
+      >
+        <toggle.label @value={{@model.active}}>
+          <b class="pr-2">Is scoop active?</b>
+        </toggle.label>
+        <toggle.switch
+          @theme='light'
+          @onLabel='Yes'
+          @offLabel='No'
+        />
+      </XToggle>
+    </div>
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
@@ -80,3 +183,69 @@
   <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.description}}</span>?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>
+
+{{#if this.showUploadModal}}
+  <CrunchyModal
+    @clickOutsideToClose={{false}}
+    @translucentOverlay={{true}}
+    @onClose={{action "cancelUpload"}}
+    as |modal|>
+    <AttributeImageUploader
+      @model={{@model}}
+      @modelType="scoop"
+      @keyForImage="image"
+      @onAllFilesUploadComplete={{perform this.onUploadImageComplete}}
+      as |uploader|>
+      <modal.header>
+        Upload Image
+      </modal.header>
+      <modal.body>
+        <div class="h-48 rounded border border-brand-gray border-dashed my-6">
+            <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
+              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
+                {{#unless uploader.uploadTasks.length}}
+                  <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                    <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                    Click or drop file here
+                  </span>
+                {{/unless}}
+                <div class="flex flex-wrap justify-start">
+                  {{#each uploader.uploadTasks as |task|}}
+                    <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                      {{#if (not (eq task.status "pending"))}}
+                        <img src={{task.preview}} alt="File Upload Preview">
+                      {{/if}}
+                      <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
+                          <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                        {{else if (eq task.status "complete")}}
+                          <FaIcon @icon="check-circle" class="text-green-600" />
+                        {{else if (eq task.status "error")}}
+                          <FaIcon @icon="times-circle" class="text-brand-error" />
+                        {{/if}}
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              {{/x-file-input}}
+            </CrunchyDraggableDropzone>
+        </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <ul class="text-sm">
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
+            {{#if uploader.errorTasks.length}}
+              <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+            {{/if}}
+          {{/if}}
+          {{#if uploader.uploadImageTask.isRunning}}
+            <li>Uploading logo...</li>
+          {{/if}}
+        </ul>
+      </modal.footer>
+    </AttributeImageUploader>
+  </CrunchyModal>
+{{/if}}

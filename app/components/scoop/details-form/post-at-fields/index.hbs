@@ -1,0 +1,101 @@
+{{#with @form as |form|}}
+  <form.field @field="isRecurring" @label="When should this scoop be posted?">
+    <RadioButton
+      @value={{false}}
+      @groupValue={{@model.isRecurring}}
+      @changed={{action "changeRecurring"}}
+      @disabled={{form.isReadonly}}
+    >
+      <span class="mr-2">Once</span>
+    </RadioButton>
+    <RadioButton
+      @value={{true}}
+      @groupValue={{@model.isRecurring}}
+      @changed={{action "changeRecurring"}}
+      @disabled={{form.isReadonly}}
+    >
+      <span class="mr-2">Weekly</span>
+    </RadioButton>
+  </form.field>
+
+  {{#if @model.isRecurring}}
+    <label for="daysOfWeek" class="crunchy-form__group-label">Post weekly on days:</label>
+    <fieldset name="daysOfWeek" class="crunchy-form__group">
+      <div class="flex flex-wrap">
+        {{#each this.daysOfWeekOptions as |day|}}
+          <label class="mr-3 py-1">
+            <Input
+              @type="checkbox"
+              @checked={{contains day.value this.selectedDays}}
+              @keyPress={{action "selectDay" day.value}}
+              @click={{action "selectDay" day.value}}
+              @touchStart={{action "selectDay" day.value}}
+              @aria-label={{concat "Post scoop every " day.label}}
+              @disabled={{form.isReadonly}}
+            />
+            <span class={{if (contains day.value this.selectedDays) "font-semibold text-brand-primary"}}>{{day.label}}</span>
+          </label>
+        {{/each}}
+      </div>
+    </fieldset>
+
+    <div class="flex flex-wrap md:flex-no-wrap">
+      <div class="w-full md:w-1/3 md:pr-2">
+        <form.field @field="recurringDisplayFrom" @label="Start recurring posts:" class="w-full">
+          <EmberFlatpickr
+            @allowInput={{false}}
+            @altInput={{true}}
+            @altFormat="F j, Y"
+            @clickOpens={{true}}
+            @appendDataInput={{true}}
+            @date={{readonly this.displayFromDate}}
+            @dateFormat="Y-m-d"
+            @enableTime={{false}}
+            @mode="single"
+            @onChange={{action "changeDisplayFrom"}}
+            @placeholder="Select a date"
+            @disabled={{form.isReadonly}}
+            class="w-full crunchy-form__input"
+          />
+        </form.field>
+      </div>
+      <div class="W-full md:w-1/3 md:pl-2">
+        <form.field @field="recurringDisplayTo" @label="End recurring posts:" class="w-full">
+          <EmberFlatpickr
+            @allowInput={{false}}
+            @altInput={{true}}
+            @altFormat="F j, Y"
+            @clickOpens={{true}}
+            @appendDataInput={{true}}
+            @date={{readonly this.displayToDate}}
+            @dateFormat="Y-m-d"
+            @enableTime={{false}}
+            @mode="single"
+            @onChange={{action "changeDisplayTo"}}
+            @placeholder="Select a date"
+            @disabled={{form.isReadonly}}
+            class="w-full crunchy-form__input"
+          />
+        </form.field>
+      </div>
+    </div>
+  {{else}}
+    <form.field @field="postAt" @label={{if form.isReadonly "Post Date" "Post on:"}} class="w-full">
+      <EmberFlatpickr
+        @allowInput={{false}}
+        @altInput={{true}}
+        @altFormat="F j, Y"
+        @clickOpens={{true}}
+        @appendDataInput={{true}}
+        @date={{readonly this.postAtDate}}
+        @dateFormat="Y-m-d"
+        @enableTime={{false}}
+        @mode="single"
+        @onChange={{action "changePostAtDate"}}
+        @placeholder="Select a date"
+        @disabled={{form.isReadonly}}
+        class="w-full crunchy-form__input"
+      />
+    </form.field>
+  {{/if}}
+{{/with}}

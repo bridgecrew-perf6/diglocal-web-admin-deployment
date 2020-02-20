@@ -4,10 +4,31 @@
   }
 }
 
-.ember-basic-dropdown-trigger.ember-power-select-trigger {
-  @apply py-1;
+.ember-power-select-trigger {
+  @apply border border-gray-400 rounded py-3 px-4 bg-white;
+  line-height: 1.5;
+  min-height: 1.5rem;
+  color: inherit;
 }
 
-.ember-power-select-search-input {
-  @apply py-1;
+.ember-power-select-trigger[aria-disabled=true] {
+  @apply bg-gray-100 border-transparent;
+}
+
+.ember-power-select-selected-item,
+.ember-power-select-placeholder {
+  margin-left: 0;
+}
+
+.ember-power-select-multiple-option {
+  @apply border-transparent rounded-sm;
+  @apply bg-gray-200 text-gray-800;
+  padding: 0 .5rem;
+  display: inline-block;
+  line-height: 1.45;
+  float: left;
+  margin-right: .5rem;
+}
+.ember-power-select-multiple-remove-btn {
+ margin-right: .25rem;
 }

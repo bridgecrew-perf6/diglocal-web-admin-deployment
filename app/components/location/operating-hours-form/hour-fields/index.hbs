@@ -11,7 +11,7 @@
             @enableTime={{true}}
             @noCalendar={{true}}
             @date={{readonly @model.openTime}}
-            @dateFormat="H:i"
+            @dateFormat="H:i:S"
             @onChange={{action "didUpdateTime" "openTime"}}
             @placeholder="Open"
             class="border border-brand-gray rounded px-2 py-1 max-w-full"
@@ -27,7 +27,7 @@
             @enableTime={{true}}
             @noCalendar={{true}}
             @date={{readonly @model.closeTime}}
-            @dateFormat="H:i"
+            @dateFormat="H:i:S"
             @onChange={{action "didUpdateTime" "closeTime"}}
             @placeholder="Close"
             class="p-1 border border-brand-gray rounded px-2 max-w-full"

@@ -80,6 +80,6 @@ module('Acceptance | Scoops | Index', function(hooks) {
     assert.equal(currentURL(), this.url);
 
     await click(testId('view-scoop', scoop.id));
-    assert.equal(currentURL(), `/region/${this.region.id}/scoops/${scoop.id}`);
+    assert.equal(currentURL(), `/region/${this.region.id}/businesses/${scoop.business.id}/scoops/${scoop.id}`);
   });
 });

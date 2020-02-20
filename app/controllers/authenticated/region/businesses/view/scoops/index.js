@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 import config from 'diglocal-manage/config/environment';
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
-export default class AuthenticatedRegionBusinessesViewScoopsController extends Controller {
+export default class AuthenticatedRegionBusinessesViewScoopsIndexController extends Controller {
   queryParams = [
     'search',
     'sort'

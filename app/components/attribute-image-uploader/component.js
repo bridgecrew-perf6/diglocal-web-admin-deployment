@@ -26,13 +26,17 @@ export default Component.extend({
     set(this, 'uploadTasks', A());
   },
 
+  model: null,
+  modelType: '',
+  keyForImage: '',
+
   onUploadError() {},
   onUploadComplete() {},
   onAllFilesUploadComplete() {},
 
   uploadUrl: computed('model', function() {
-    let adapter = this.store.adapterFor('business');
-    let url = adapter.buildURL('business', this.model.id);
+    let adapter = this.store.adapterFor(this.modelType);
+    let url = adapter.buildURL(this.modelType, this.model.id);
     return url;
   }),
 
@@ -49,14 +53,17 @@ export default Component.extend({
       handler.bind(this);
       yield resizeImageToSpecificWidth(file, 128, handler);
       let fd = new FormData();
-      let business = this.context.model;
-      let data = business.serialize().data;
-      data.id = business.id;
+      let model = this.context.model;
+      let data = model.serialize().data;
+      if (!model.isNew) {
+        data.id = model.id;
+      }
+      let requestMethod = data.id ? 'PATCH' : 'POST';
       fd.append('data', JSON.stringify(data));
-      fd.append('attributes.logo', file);
+      fd.append(`attributes.${this.context.keyForImage}`, file);
       try {
         let request = fetch(this.context.uploadUrl, {
-          method: 'PATCH',
+          method: requestMethod,
           body: fd,
           headers: {
             'Authorization': `Bearer ${this.context.get('session.data.authenticated.credential.i')}`

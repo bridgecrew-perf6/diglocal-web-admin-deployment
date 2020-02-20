@@ -27,6 +27,10 @@ module.exports = function(environment) {
     // }
   };
 
+  ENV['moment'] = {
+    includeTimezone: 'all'
+  };
+
   ENV['firebase'] = {
     apiKey: "AIzaSyC9m3rFmih3ZR1S6FtE19JpCgdMxK6hDew",
     authDomain: "dig-this.firebaseapp.com",

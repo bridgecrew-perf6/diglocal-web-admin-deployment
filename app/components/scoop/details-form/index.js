@@ -2,11 +2,23 @@ import { action } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { isPresent } from '@ember/utils';
+import { isPresent, isBlank } from '@ember/utils';
+import { inject as service } from '@ember/service';
+import { task, timeout } from 'ember-concurrency';
+import removeEmpty from 'diglocal-manage/helpers/remove-empty';
+import ENV from 'diglocal-manage/config/environment';
+
+const INPUT_DEBOUNCE = ENV.environment !== 'test' ? 500 : 0;
 
 export default class DetailsForm extends Component {
+  @service regions;
+  @service store;
+  @service router;
+
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
+  @tracked showEventFields = true;
+  @tracked showUploadModal = false;
 
   @not('isEditing') isReadonly;
 
@@ -14,6 +26,9 @@ export default class DetailsForm extends Component {
     super(...arguments);
     if (isPresent(this.args.isEditing)) {
       this.isEditing = this.args.isEditing
+    }
+    if (isBlank(this.args.model.eventDate)) {
+      this.showEventFields = false;
     }
   }
 
@@ -29,6 +44,21 @@ export default class DetailsForm extends Component {
     this.isEditing = false;
     super.willDestroy(...arguments);
   }
+
+  @(task(function* (search) {
+    yield timeout(INPUT_DEBOUNCE);
+    let filter = Object.assign({}, { search });
+    filter = removeEmpty(filter);
+    return this.store.query('business', { filter });
+  }).restartable())
+  searchBusinesses;
+
+  @task(function*() {
+    yield this.args.model.reload();
+    this.showUploadModal = false;
+    this.router.transitionTo('authenticated.region.businesses.view.scoops.view', this.args.model.id);
+  })
+  onUploadImageComplete;
 
   @action
   save() {
@@ -47,5 +77,20 @@ export default class DetailsForm extends Component {
     this.args.model.deleteRecord();
     this.args.model.save();
     this.router.transitionTo('authenticated.region.businesses');
+  }
+
+  @action
+  toggleEventFields(value) {
+    this.showEventFields = value;
+    if (!value) {
+      this.args.model.eventDate = null;
+      this.args.model.eventStartTime = null;
+      this.args.model.eventEndTime = null;
+    }
+  }
+
+  @action
+  cancelUpload() {
+    this.showUploadModal = false;
   }
 }

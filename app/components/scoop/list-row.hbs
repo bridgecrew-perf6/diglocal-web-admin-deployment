@@ -10,14 +10,12 @@
   <card.header class="flex justify-between">
     <div class="flex flex-col w-full mr-2">
       <p class="font-bold text-brand-primary-accent inline-block tracking-wide text-sm" title="Event date">
-        {{#if @model.eventDate}}
-          {{if (is-same (now) @model.eventDate precision="days") "Today" (moment-format @model.eventDate "dddd, MMM Do YYYY" "YYYY-MM-DD")}}
-        {{/if}}
+        {{format-event-date @model.eventDate}}
       </p>
     </div>
     <LinkTo
-      @route="authenticated.region.scoops.view"
-      @model={{@model.id}}
+      @route="authenticated.region.businesses.view.scoops.view"
+      @models={{array @model.business.id @model.id}}
       @aria-label="View scoop details"
       class="font-bold text-brand-primary whitespace-no-wrap text-sm"
       data-test-id={{concat "view-scoop-" @model.id}}
