@@ -34,7 +34,16 @@
     as |form|>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-4">
-      <div class="h-48 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100" style={{background-image @model.image.sizes.full}}>
+      <div class="h-48 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100 relative" style={{background-image @model.image.sizes.full}}>
+        {{#if this.isEditing}}
+          <CrunchyButton
+            @onClick={{action (mut this.showUploadModal) true}}
+            @class="absolute top-0 right-0 crunchy-button--icon m-2"
+            @aria-label="Upload scoop image"
+          >
+            <FaIcon @icon="camera" />
+          </CrunchyButton>
+        {{/if}}
       </div>
       <div class="w-full md:w-2/3 md:pl-4">
         <form.field @field="name" @label="Business">
@@ -174,3 +183,69 @@
   <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.description}}</span>?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>
+
+{{#if this.showUploadModal}}
+  <CrunchyModal
+    @clickOutsideToClose={{false}}
+    @translucentOverlay={{true}}
+    @onClose={{action "cancelUpload"}}
+    as |modal|>
+    <AttributeImageUploader
+      @model={{@model}}
+      @modelType="scoop"
+      @keyForImage="image"
+      @onAllFilesUploadComplete={{perform this.onUploadImageComplete}}
+      as |uploader|>
+      <modal.header>
+        Upload Image
+      </modal.header>
+      <modal.body>
+        <div class="h-48 rounded border border-brand-gray border-dashed my-6">
+            <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
+              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
+                {{#unless uploader.uploadTasks.length}}
+                  <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                    <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                    Click or drop file here
+                  </span>
+                {{/unless}}
+                <div class="flex flex-wrap justify-start">
+                  {{#each uploader.uploadTasks as |task|}}
+                    <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                      {{#if (not (eq task.status "pending"))}}
+                        <img src={{task.preview}} alt="File Upload Preview">
+                      {{/if}}
+                      <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
+                          <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                        {{else if (eq task.status "complete")}}
+                          <FaIcon @icon="check-circle" class="text-green-600" />
+                        {{else if (eq task.status "error")}}
+                          <FaIcon @icon="times-circle" class="text-brand-error" />
+                        {{/if}}
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              {{/x-file-input}}
+            </CrunchyDraggableDropzone>
+        </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <ul class="text-sm">
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
+            {{#if uploader.errorTasks.length}}
+              <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+            {{/if}}
+          {{/if}}
+          {{#if uploader.uploadImageTask.isRunning}}
+            <li>Uploading logo...</li>
+          {{/if}}
+        </ul>
+      </modal.footer>
+    </AttributeImageUploader>
+  </CrunchyModal>
+{{/if}}

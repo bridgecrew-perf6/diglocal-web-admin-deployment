@@ -13,9 +13,12 @@ const INPUT_DEBOUNCE = ENV.environment !== 'test' ? 500 : 0;
 export default class DetailsForm extends Component {
   @service regions;
   @service store;
+  @service router;
+
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
   @tracked showEventFields = true;
+  @tracked showUploadModal = false;
 
   @not('isEditing') isReadonly;
 
@@ -50,6 +53,13 @@ export default class DetailsForm extends Component {
   }).restartable())
   searchBusinesses;
 
+  @task(function*() {
+    yield this.args.model.reload();
+    this.showUploadModal = false;
+    this.router.transitionTo('authenticated.region.businesses.view.scoops.view', this.args.model.id);
+  })
+  onUploadImageComplete;
+
   @action
   save() {
     this.args.model.save();
@@ -77,5 +87,10 @@ export default class DetailsForm extends Component {
       this.args.model.eventStartTime = null;
       this.args.model.eventEndTime = null;
     }
+  }
+
+  @action
+  cancelUpload() {
+    this.showUploadModal = false;
   }
 }

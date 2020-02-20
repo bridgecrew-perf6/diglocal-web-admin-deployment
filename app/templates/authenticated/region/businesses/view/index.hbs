@@ -17,8 +17,10 @@
     @translucentOverlay={{true}}
     @onClose={{action "cancelUpload"}}
     as |modal|>
-    <BusinessLogoUploader
+    <AttributeImageUploader
       @model={{@model}}
+      @modelType="business"
+      @keyForImage="logo"
       @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}}
       as |uploader|>
       <modal.header>
@@ -71,6 +73,6 @@
           {{/if}}
         </ul>
       </modal.footer>
-    </BusinessLogoUploader>
+    </AttributeImageUploader>
   </CrunchyModal>
 {{/if}}
