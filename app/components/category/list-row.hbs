@@ -1,0 +1,19 @@
+<div data-test-id="category-listing" class="rounded border bg-white p-4">
+  <div class="flex justify-between">
+    <div class="flex items-center">
+      <p class="font-bold text-base">{{@model.longName}}</p>
+      <CrunchyChip class="ml-2">
+        {{@model.shortName}}
+      </CrunchyChip>
+    </div>
+    <LinkTo
+      @route="authenticated.region.site-settings.categories.view"
+      @model={{@model.id}}
+      @aria-label="View category"
+      class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+      data-test-id={{concat "view-category-" @model.id}}
+    >
+      View Category
+    </LinkTo>
+  </div>
+</div>
