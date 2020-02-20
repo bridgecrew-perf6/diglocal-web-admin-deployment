@@ -5,8 +5,8 @@ export default class Scoop extends Trackable {
   @attr() active;
   @attr() description;
   @attr() eventDate;
-  @attr('hh-mm-ss') eventEndTime;
-  @attr('hh-mm-ss') eventStartTime;
+  @attr() eventEndTime;
+  @attr() eventStartTime;
   @attr() fineText;
   @attr() image;
   @attr() imageThumb;
@@ -14,7 +14,10 @@ export default class Scoop extends Trackable {
   @attr('boolean', { defaultValue: false }) isRecurring;
   @attr() daysOfWeek;
   @attr() paidRank;
-  @attr('date') postAt;
+  @attr() postAt;
+  @attr() postAtTime;
+  @attr() recurringDisplayFrom;
+  @attr() recurringDisplayTo;
   @attr() ticketUrl;
 
 

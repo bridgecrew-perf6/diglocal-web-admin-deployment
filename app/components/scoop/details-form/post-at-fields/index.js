@@ -1,10 +1,15 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-// import moment from 'moment';
+import moment from 'moment';
+
+const momentFormat = 'YYYY-MM-DDTHH:mm:ss.SSSSZ';
 
 export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
+  @service regions;
+
   daysOfWeekOptions = [
     { value: 0, label: 'Sunday' },
     { value: 1, label: 'Monday' },
@@ -17,6 +22,8 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
 
   @tracked selectedDays = [];
   @tracked postAtDate;
+  @tracked displayFromDate;
+  @tracked displayToDate;
 
   constructor() {
     super(...arguments);
@@ -27,7 +34,24 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
       this.postAtDate = this.args.model.postAt;
     } else {
       this.postAtDate = Date.now();
+      if (this.args.model.isNew) {
+        this.args.model.postAt = moment.tz(this.postAtDate, this.activeRegionTimeZone).format(momentFormat);
+      }
     }
+    if (isPresent(this.args.model.recurringDisplayFrom)) {
+      this.displayFromDate = this.args.model.recurringDisplayFrom;
+    } else {
+      this.displayFromDate = Date.now();
+    }
+    if (isPresent(this.args.model.recurringDisplayTo)) {
+      this.displayToDate = this.args.model.recurringDisplayTo;
+    } else {
+      this.displayToDate = Date.now();
+    }
+  }
+
+  get activeRegionTimeZone() {
+    return this.regions.activeRegion.momentTz;
   }
 
   @action
@@ -43,8 +67,35 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
   }
 
   @action
-  changePostAtDate([ date ]) {
-    this.postAtDate = date;
+  changePostAtDate(range, formatted) {
+    this.postAtDate = moment.tz(formatted, this.activeRegionTimeZone).format(momentFormat);
     this.args.model.postAt = this.postAtDate;
+  }
+
+  @action
+  changeDisplayTo(range, formatted) {
+    this.displayToDate = moment.tz(formatted, this.activeRegionTimeZone).format(momentFormat);
+    this.args.model.recurringDisplayTo = this.displayToDate;
+  }
+
+  @action
+  changeDisplayFrom(range, formatted) {
+    this.displayFromDate = moment.tz(formatted, this.activeRegionTimeZone).format(momentFormat);
+    this.args.model.recurringDisplayFrom = this.displayFromDate;
+  }
+
+  @action
+  changeRecurring(value) {
+    this.args.model.isRecurring = value;
+    if (value) {
+      this.args.model.recurringDisplayFrom = this.displayFromDate;
+      this.args.model.recurringDisplayTo = this.displayToDate;
+      this.args.model.postAt = null;
+    } else {
+      this.args.model.recurringDisplayFrom = null;
+      this.args.model.recurringDisplayTo = null;
+      this.args.didUpdateDays([]);
+      this.args.model.postAt = this.postAtDate;
+    }
   }
 }
