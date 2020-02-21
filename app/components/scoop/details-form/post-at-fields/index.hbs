@@ -6,7 +6,7 @@
       @changed={{action "changeRecurring"}}
       @disabled={{form.isReadonly}}
     >
-      <span class="mr-2">Once</span>
+      <span class="mr-2" data-test-id="post-scoop-once">Once</span>
     </RadioButton>
     <RadioButton
       @value={{true}}
@@ -14,7 +14,7 @@
       @changed={{action "changeRecurring"}}
       @disabled={{form.isReadonly}}
     >
-      <span class="mr-2">Weekly</span>
+      <span class="mr-2" data-test-id="post-scoop-weekly">Weekly</span>
     </RadioButton>
   </form.field>
 
@@ -32,6 +32,7 @@
               @touchStart={{action "selectDay" day.value}}
               @aria-label={{concat "Post scoop every " day.label}}
               @disabled={{form.isReadonly}}
+              data-test-id={{concat "post-on-" day.label}}
             />
             <span class={{if (contains day.value this.selectedDays) "font-semibold text-brand-primary"}}>{{day.label}}</span>
           </label>
@@ -41,7 +42,7 @@
 
     <div class="flex flex-wrap md:flex-no-wrap">
       <div class="w-full md:w-1/3 md:pr-2">
-        <form.field @field="recurringDisplayFrom" @label="Start recurring posts:" class="w-full">
+        <form.field @field="recurringDisplayFrom" @label="Start recurring posts:" data-test-id="recurring-display-from" class="w-full">
           <EmberFlatpickr
             @allowInput={{false}}
             @altInput={{true}}
@@ -60,7 +61,7 @@
         </form.field>
       </div>
       <div class="W-full md:w-1/3 md:pl-2">
-        <form.field @field="recurringDisplayTo" @label="End recurring posts:" class="w-full">
+        <form.field @field="recurringDisplayTo" @label="End recurring posts:" data-test-id="recurring-display-to" class="w-full">
           <EmberFlatpickr
             @allowInput={{false}}
             @altInput={{true}}
@@ -80,7 +81,7 @@
       </div>
     </div>
   {{else}}
-    <form.field @field="postAt" @label={{if form.isReadonly "Post Date" "Post on:"}} class="w-full">
+    <form.field @field="postAt" @label={{if @model.isNew "Post Date" "Post on:"}} data-test-id="post-at" class="w-full">
       <EmberFlatpickr
         @allowInput={{false}}
         @altInput={{true}}

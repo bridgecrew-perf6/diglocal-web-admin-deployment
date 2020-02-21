@@ -60,10 +60,18 @@ export default class DetailsForm extends Component {
   })
   onUploadImageComplete;
 
+  @task(function*() {
+    yield this.args.model.save();
+    this.isEditing = false;
+    if (this.args.afterSave) {
+      this.args.afterSave(this.args.model);
+    }
+  })
+  saveTask;
+
   @action
   save() {
-    this.args.model.save();
-    this.isEditing = false;
+    this.saveTask.perform();
   }
 
   @action

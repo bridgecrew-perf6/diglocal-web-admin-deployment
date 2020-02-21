@@ -44,8 +44,8 @@
     </div>
   </div>
 
+{{#if this.collectedFilters.length}}
   <div class="flex pt-2 px-2 justify-between">
-    {{#if this.collectedFilters.length}}
       <div class="flex items-center">
         <button {{action "clearAllFilters"}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
           Clear Filters
@@ -63,8 +63,8 @@
           {{/each}}
         </ul>
       </div>
-    {{/if}}
   </div>
+  {{/if}}
 </div>
 
 <div class="treadmill-content__table-body pt-32 px-2">

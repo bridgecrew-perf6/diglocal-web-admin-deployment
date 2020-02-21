@@ -1,4 +1,4 @@
-<div class="fixed z-10 w-full bg-white py-2">
+<div class="treadmill-content__fixed-header text-sm">
   <div class="container">
     <div class="flex h-10 justify-between">
       {{#if this.selectedPhotos.length}}
@@ -20,7 +20,7 @@
         <CrunchyButton
           @onClick={{action (mut this.showUploadModal) true}}
           @aria-label="Upload a new photo"
-          @class="crunchy-button--primary whitespace-no-wrap">
+          @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
           <FaIcon @icon="plus" @size="sm" class="mr-1" /> Add Photos
         </CrunchyButton>
       {{/if}}

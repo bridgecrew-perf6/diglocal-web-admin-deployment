@@ -8,6 +8,7 @@ import { task } from 'ember-concurrency';
 
 export default class DetailsForm extends Component {
   @service store;
+  @service regions;
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
 
@@ -29,7 +30,8 @@ export default class DetailsForm extends Component {
   }
 
   @task(function* () {
-    let categories = yield this.store.findAll('category');
+    let regionId = this.regions.activeRegion.id;
+    let categories = yield this.store.query('category', { region: regionId });
     this.categoryOptions = categories;
   })
   loadCategories;

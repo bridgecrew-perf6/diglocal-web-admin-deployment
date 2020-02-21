@@ -1,13 +1,13 @@
-<div class="flex items-center justify-start mb-3">
+<div class="flex items-center justify-start mb-3 text-sm">
   <div class="flex w-full justify-between items-end">
     <p class="mx-2">Manage locations for your business.</p>
     <CrunchyButton
       @onClick={{action "create"}}
       @aria-label="Add a new location"
-      @class="crunchy-button--primary"
+      @class="crunchy-button--primary crunchy-button--text-sm"
       @testId="add-location"
       @disabled={{this.hasNewRecord}}>
-      <FaIcon @icon="plus" @size="sm" /> Add Location
+      <FaIcon @icon="plus" @size="sm" class="mr-1" /> Add Location
     </CrunchyButton>
   </div>
 </div>

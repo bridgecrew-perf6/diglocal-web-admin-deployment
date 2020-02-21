@@ -57,4 +57,13 @@ module('Acceptance | Site Settings | Categories | Index', function(hooks) {
 
     assert.dom(testId('category-listing')).exists({ count: 1 });
   });
+
+  test('I can create a new category from the categories index', async function(assert) {
+    await authenticateSession();
+    await visit(this.url);
+    assert.equal(currentURL(), this.url);
+
+    await click(testId('add-new-category'));
+    assert.equal(currentURL(), `/region/${this.region.id}/settings/categories/new`);
+  });
 });

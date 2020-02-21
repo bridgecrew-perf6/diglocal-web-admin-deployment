@@ -1,3 +1,3 @@
-<div class="p-4">
-  <Category::DetailsForm @model={{this.model}} @isEditing={{true}} />
+<div class="container py-4">
+  <Category::DetailsForm @model={{this.model}} @isEditing={{true}} @afterSave={{action "afterSave"}} />
 </div>

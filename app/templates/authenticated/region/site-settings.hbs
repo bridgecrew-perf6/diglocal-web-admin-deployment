@@ -1,7 +1,8 @@
-<nav class="fixed z-10 w-full bg-white px-2 pt-2 pb-2 h-16 flex flex-wrap items-center">
+<nav class="fixed z-10 w-full bg-white px-2 pt-2 pb-2 h-20 flex flex-wrap items-center">
+  <CrunchyBreadcrumbs @class="w-full max-w-container mx-auto" />
   <ul class="tabs w-full max-w-container mx-auto">
     <li class="tabs__tab">
-      <LinkTo @route="authenticated.region.site-settings.index" @class="tabs__link">Global</LinkTo>
+      <LinkTo @route="authenticated.region.site-settings.index" @class="tabs__link">Settings</LinkTo>
     </li>
     <li class="tabs__tab">
       <LinkTo @route="authenticated.region.site-settings.categories" @class="tabs__link">Categories</LinkTo>
@@ -11,6 +12,6 @@
   </ul>
 </nav>
 
-<div class="pt-16 relative">
+<div class="pt-20 pb-24">
   {{outlet}}
 </div>

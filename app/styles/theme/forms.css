@@ -97,6 +97,10 @@ button:disabled, input:disabled, textarea:disabled {
     }
   }
 
+  &--text-sm {
+    @apply text-sm;
+  }
+
   &--link {
     @apply transition bg-transparent text-brand-primary border-brand-primary font-medium;
 
