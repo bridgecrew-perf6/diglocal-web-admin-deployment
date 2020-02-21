@@ -88,8 +88,8 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
   changeRecurring(value) {
     this.args.model.isRecurring = value;
     if (value) {
-      this.args.model.recurringDisplayFrom = this.displayFromDate;
-      this.args.model.recurringDisplayTo = this.displayToDate;
+      this.args.model.recurringDisplayFrom = moment.tz(this.displayFromDate, this.activeRegionTimeZone).format(momentFormat);
+      this.args.model.recurringDisplayTo = moment.tz(this.displayToDate, this.activeRegionTimeZone).format(momentFormat);
       this.args.model.postAt = null;
     } else {
       this.args.model.recurringDisplayFrom = null;

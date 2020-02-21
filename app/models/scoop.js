@@ -10,7 +10,7 @@ export default class Scoop extends Trackable {
   @attr() fineText;
   @attr() image;
   @attr() imageThumb;
-  @attr() isDeal;
+  @attr('boolean', { defaultValue: false }) isDeal;
   @attr('boolean', { defaultValue: false }) isRecurring;
   @attr() daysOfWeek;
   @attr() paidRank;

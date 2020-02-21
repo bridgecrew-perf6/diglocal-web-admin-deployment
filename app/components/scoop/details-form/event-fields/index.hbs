@@ -1,7 +1,7 @@
 {{#with @form as |form|}}
   <div class="flex flex-wrap md:flex-no-wrap">
     <div class="w-full md:w-1/3 md:pr-2">
-      <form.field @field="eventDate" @label="Date" class="w-full">
+      <form.field @field="eventDate" @label="Date" data-test-id="event-date" class="w-full">
         <EmberFlatpickr
           @allowInput={{false}}
           @altInput={{true}}
@@ -22,7 +22,7 @@
 
     <div class="w-full md:w-1/3 md:pr-2">
       <form.field @label="Starts At" class="w-full">
-        <div data-test-id="eventStartTime" class="flex flex-grow items-center">
+        <div data-test-id="eventStartTime" data-test-id="event-start-time" class="flex flex-grow items-center">
           <EmberFlatpickr
             @allowInput={{false}}
             @altInput={{true}}
@@ -45,7 +45,7 @@
     </div>
     <div class="w-full md:w-1/3">
       <form.field @label="Ends At" class="w-full">
-        <div data-test-id="eventEndTime" class="flex flex-grow items-center">
+        <div data-test-id="eventEndTime" data-test-id="event-end-time" class="flex flex-grow items-center">
           <EmberFlatpickr
             @allowInput={{false}}
             @altInput={{true}}
