@@ -63,7 +63,9 @@ export default class DetailsForm extends Component {
   @task(function*() {
     yield this.args.model.save();
     this.isEditing = false;
-    this.args.afterSave(this.args.model);
+    if (this.args.afterSave) {
+      this.args.afterSave(this.args.model);
+    }
   })
   saveTask;
 
