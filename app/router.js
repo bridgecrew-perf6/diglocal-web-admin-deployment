@@ -39,6 +39,7 @@ Router.map(function() {
           this.route('social');
           this.route('users');
         });
+        this.route('new');
       });
       this.route('users', function() {
         this.route('view', { path: ':user_id' });
@@ -53,10 +54,6 @@ Router.map(function() {
   });
 
   this.route('404', { path: '/*' });
-
-  if (config.environment === 'development') {
-    this.route('styleguide');
-  }
 });
 
 export default Router;

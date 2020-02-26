@@ -17,7 +17,7 @@ module('Acceptance | View Business | Scoops Index', function(hooks) {
     this.url = `/region/${this.region.id}/businesses/${this.business.id}/scoops`;
   });
 
-  module('View scoops', function(/*hooks*/) {
+  module('View all', function(/*hooks*/) {
     test('I see only scoops for the active business', async function(assert) {
       this.server.createList('scoop', 2, { business: this.business });
       await authenticateSession();

@@ -1,4 +1,4 @@
-<div class="border rounded p-4 bg-white mb-4">
+<div class="border rounded p-4 bg-white mb-4" data-test-id="scoop-details-form" data-test-editing="{{this.isEditing}}">
   <div class="flex mb-3 justify-between">
     <h1 class="font-semibold text-lg">
       {{#if @model.isNew}}
@@ -12,14 +12,18 @@
         <CrunchyButton
           @onClick={{action (mut this.isEditing) (not this.isEditing)}}
           @class="crunchy-button--icon"
-          @aria-label="Edit scoop details">
+          @aria-label="Edit scoop details"
+          @testId="edit-scoop"
+        >
           <FaIcon @icon="edit" @size="lg" />
         </CrunchyButton>
       {{else}}
         <CrunchyButton
           @onClick={{action "cancel"}}
           @class="crunchy-button--icon"
-          @aria-label="Close form">
+          @aria-label="Close form"
+          @testId="cancel-edit"
+        >
           <FaIcon @icon="times" @size="lg" />
         </CrunchyButton>
       {{/if}}
@@ -31,6 +35,7 @@
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
+    @debounceSubmit={{true}}
     as |form|>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-4">
@@ -171,8 +176,8 @@
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
-        <div class="flex">
-          <form.submit @value="Submit" @class="mr-2" @testId="save-scoop" />
+        <div class="flex flex-wrap">
+          <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
           <form.cancel @value="Cancel" />
         </div>
       </div>

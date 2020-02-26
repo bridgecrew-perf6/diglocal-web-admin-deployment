@@ -33,6 +33,10 @@ export default Route.extend({
 
       filter.region = regionId;
 
+      if (!filter.active) {
+        filter.active = [true,false];
+      }
+
       let sort = filter.sort;
       delete filter.sort;
 

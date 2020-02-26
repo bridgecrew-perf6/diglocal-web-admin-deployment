@@ -1,4 +1,4 @@
-<div class="treadmill-content__fixed-header">
+<div class="treadmill-content__fixed-header text-sm">
   <div class="flex h-10">
     <div class="flex relative w-1/3">
       <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
@@ -60,7 +60,6 @@
     @minColumnWidth="100%"
     @row="140" as |item|
   >
-    {{!-- TODO - Set linkable true and have nice UI for view --}}
-    <User::ListRow @model={{item}} @isLinkable={{false}} />
+    <User::ListRow @model={{item}} @isLinkable={{true}} />
   </EllaTreadmill>
 </div>

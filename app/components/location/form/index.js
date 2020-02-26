@@ -28,7 +28,7 @@ export default class Form extends Component {
     if (this.args.model && this.args.model.hasDirtyAttributes) {
       this.args.model.rollbackAttributes();
     }
-    let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
+    let operatingHours = (this.args.model && this.args.model.hasMany('operatingHours').value() || []).toArray();
     operatingHours.invoke('rollbackAttributes');
   }
 
@@ -37,6 +37,7 @@ export default class Form extends Component {
     let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
     yield all(operatingHours.invoke('save'));
     this.isEditing = false;
+    return this.args.model;
   })
   saveTask;
 

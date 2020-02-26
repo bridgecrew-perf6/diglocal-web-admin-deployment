@@ -1,11 +1,11 @@
-import { not } from '@ember/object/computed';
-import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { not } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
+import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
-export default class DetailsForm extends Component {
+class RegionDetailsForm extends Component {
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
 
@@ -33,6 +33,9 @@ export default class DetailsForm extends Component {
   @task(function*() {
     yield this.args.model.save();
     this.isEditing = false;
+    if (this.args.afterSave) {
+      return this.args.afterSave(this.args.model);
+    }
     return this.args.model;
   })
   saveTask;
@@ -47,11 +50,6 @@ export default class DetailsForm extends Component {
     this.rollbackModel();
     this.isEditing = false;
   }
-
-  @action
-  delete() {
-    this.model.deleteRecord();
-    this.model.save();
-    this.router.transitionTo('authenticated.region.users');
-  }
 }
+
+export default RegionDetailsForm;
