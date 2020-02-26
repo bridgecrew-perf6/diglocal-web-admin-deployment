@@ -39,6 +39,7 @@ Router.map(function() {
           this.route('social');
           this.route('users');
         });
+        this.route('new');
       });
       this.route('users', function() {
         this.route('view', { path: ':user_id' });

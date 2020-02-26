@@ -28,7 +28,7 @@ export default class Form extends Component {
     if (this.args.model && this.args.model.hasDirtyAttributes) {
       this.args.model.rollbackAttributes();
     }
-    let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
+    let operatingHours = (this.args.model && this.args.model.hasMany('operatingHours').value() || []).toArray();
     operatingHours.invoke('rollbackAttributes');
   }
 

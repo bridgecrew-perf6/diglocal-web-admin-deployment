@@ -52,17 +52,16 @@
       @aria-label="An insider tip or suggestion about the business"
     />
 
-    <form.checkbox
-      @field="featured"
-      @label="Featured?"
-    />
-
     <div class="w-full flex">
       <div class="mr-4 flex-grow">
         <form.field
           @label="Logo"
           @aria-label="Business logo">
-          <img class="h-10 w-auto" src={{@model.logo.url}} alt={{concat "Logo for " @model.name}}>
+          {{#if (and @model.logo @model.logo.url)}}
+            <img class="h-10 w-auto" src={{@model.logo.url}} alt={{concat "Logo for " @model.name}}>
+          {{else}}
+            <span class="text-sm text-gray-600 italic">None</span>
+          {{/if}}
         </form.field>
       </div>
       <div class="flex-grow">
@@ -91,11 +90,44 @@
             <CrunchyChip @tagName="li">
               {{category.longName}}
             </CrunchyChip>
+          {{else}}
+            <span class="text-sm text-gray-600 italic">None</span>
           {{/each}}
         </ul>
       {{/if}}
-
     </form.field>
+
+    <div class="flex justify-start items-center crunchy-form__group">
+      <XToggle
+        @showLabels={{true}}
+        @size="small"
+        @value={{@model.active}}
+        @onToggle={{action (mut @model.active)}}
+        @disabled={{this.isReadonly}}
+        as |toggle|
+      >
+        <toggle.label @value={{@model.active}}>
+          <b class="pr-2">Active</b>
+        </toggle.label>
+        <toggle.switch @theme='light' />
+      </XToggle>
+    </div>
+
+    <div class="flex justify-start items-center crunchy-form__group">
+      <XToggle
+        @showLabels={{true}}
+        @size="small"
+        @value={{@model.featured}}
+        @onToggle={{action (mut @model.featured)}}
+        @disabled={{this.isReadonly}}
+        as |toggle|
+      >
+        <toggle.label @value={{@model.featured}}>
+          <b class="pr-2">Featured</b>
+        </toggle.label>
+        <toggle.switch @theme='light' />
+      </XToggle>
+    </div>
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">

@@ -1,33 +1,29 @@
 import { inject as service } from '@ember/service';
-import { not } from '@ember/object/computed';
-import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { isPresent } from '@ember/utils';
 import { action } from '@ember/object';
-import { task } from 'ember-concurrency';
+import { task, all } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 
-export default class DetailsForm extends Component {
+export default class BusinessNewFormComponent extends Component {
   @service store;
   @service regions;
   @service router;
-  @tracked isEditing = false;
-  @tracked showDestroyModal = false;
 
-  @not('isEditing') isReadonly;
+  @tracked categoryOptions = [];
+
+  roleOptions = [
+    'temporary',
+    'premium',
+    '2types'
+  ];
 
   constructor() {
     super(...arguments);
-    this.categoryOptions = [];
     this.loadCategories.perform();
-    if (isPresent(this.args.isEditing)) {
-      this.isEditing = this.args.isEditing
-    }
   }
 
   willDestroy() {
     this.rollbackModel();
-    this.showDestroyModal = false;
-    this.isEditing = false;
   }
 
   @task(function* () {
@@ -38,14 +34,19 @@ export default class DetailsForm extends Component {
   loadCategories;
 
   rollbackModel() {
-    if (this.args.model && this.args.model.hasDirtyAttributes) {
+    if (this.args.model) {
+      let locations = (this.args.model.hasMany('locations').value() || []).toArray();
+      locations.invoke('rollbackAttributes');
       this.args.model.rollbackAttributes();
     }
   }
 
   @task(function*() {
-    yield this.args.model.save();
-    this.isEditing = false;
+    let model = this.args.model;
+    yield model.save();
+    //  TODO: This results in second location being created because API auto-creates location
+    let locations = model.locations.filterBy('hasDirtyAttributes');
+    yield all(locations.invoke('save'));
     if (this.args.afterSave) {
       return this.args.afterSave(this.args.model);
     }
@@ -61,13 +62,6 @@ export default class DetailsForm extends Component {
   @action
   cancel() {
     this.rollbackModel();
-    this.isEditing = false;
-  }
-
-  @action
-  delete() {
-    this.args.model.deleteRecord();
-    this.args.model.save();
-    this.router.transitionTo('authenticated.region.businesses');
+    this.router.transitionTo('authenticated.region.businesses.index');
   }
 }
