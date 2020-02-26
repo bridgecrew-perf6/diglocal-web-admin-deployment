@@ -53,10 +53,6 @@ Router.map(function() {
   });
 
   this.route('404', { path: '/*' });
-
-  if (config.environment === 'development') {
-    this.route('styleguide');
-  }
 });
 
 export default Router;
