@@ -1,11 +1,13 @@
+<div class="fixed w-full border-b"></div>
 <div class="container py-2 flex justify-end">
   <CrunchyButton
     @onClick={{action (mut this.showUploadModal) true}}
     @aria-label="Upload a new logo"
-    @class="crunchy-button--primary whitespace-no-wrap">
+    @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
     Upload Logo
   </CrunchyButton>
 </div>
+
 <div class="container">
   <Business::DetailsForm @model={{@model}} />
 </div>
