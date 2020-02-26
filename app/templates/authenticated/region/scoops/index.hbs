@@ -40,7 +40,16 @@
           </form>
         </dd.Content>
       </BasicDropdown>
-      <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} class="ml-2" />
+      <div class="flex flex-wrap items-center justify-end">
+        <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} class="ml-2" />
+        <LinkTo
+          @route="authenticated.region.scoops.new"
+          @class="crunchy-button--primary crunchy-button--text-sm ml-2"
+          data-test-id="add-new-scoop"
+        >
+          <FaIcon @icon="plus" @size="sm" class="mr-1" /> New Scoop
+        </LinkTo>
+      </div>
     </div>
   </div>
 
@@ -67,7 +76,7 @@
   {{/if}}
 </div>
 
-<div class="treadmill-content__table-body pt-32 px-2">
+<div class="treadmill-content__table-body pt-32 pb-24 container">
   <EllaTreadmill
     @content={{@model.scoops}}
     @minColumnWidth="100%"
