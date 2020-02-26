@@ -3,6 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 
 export default class DetailsForm extends Component {
   @tracked isEditing = false;
@@ -29,10 +30,16 @@ export default class DetailsForm extends Component {
     }
   }
 
+  @task(function*() {
+    yield this.args.model.save();
+    this.isEditing = false;
+    return this.args.model;
+  })
+  saveTask;
+
   @action
   save() {
-    this.args.model.save();
-    this.isEditing = false;
+    return this.saveTask.perform();
   }
 
   @action

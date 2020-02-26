@@ -22,46 +22,53 @@
     @model={{@model}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
+    @isReadonly={{this.isReadonly}}
+    @debounceSubmit={{true}}
     as |form|>
-
-    <form.text-field
-      @field="publicName"
-      @label="Public Name"
-      @aria-label="Public Name"
-      @disabled={{this.isReadonly}}
-    />
 
     <form.text-field
       @field="email"
       @label="Email (Login)"
       @aria-label="Email Login"
-      @disabled={{true}}
-    />
-
-    <form.checkbox
-      @field="active"
-      @label="Active"
-      @disabled={{this.isReadonly}}
-    />
-
-    <form.checkbox
-      @field="admin"
-      @label="Admin"
-      @disabled={{this.isReadonly}}
     />
 
     <form.text-field
       @field="user"
       @label="User Name"
       @aria-label="User Name"
-      @disabled={{true}}
+    />
+
+    <form.text-field
+      @field="publicName"
+      @label="Public Name"
+      @aria-label="Public Name"
+    />
+
+    <form.checkbox
+      @field="admin"
+      @label="Admin?"
+    />
+
+    <form.checkbox
+      @field="active"
+      @label="Active?"
+    />
+
+    <form.checkbox
+      @field="hasProfile"
+      @label="Has profile?"
+    />
+
+    <form.checkbox
+      @field="isPublic"
+      @label="Profile is public?"
     />
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete user" @class="crunchy-button--outline" />
-        <div>
-          <form.submit @value="Submit" @class="mr-2"/>
+        <div class="flex flex-wrap">
+          <form.submit @value="Submit" @class="mr-2 md:w-32" />
           <form.cancel @value="Cancel" />
         </div>
       </div>

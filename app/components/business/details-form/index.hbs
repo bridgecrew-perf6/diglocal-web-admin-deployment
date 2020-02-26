@@ -22,13 +22,14 @@
     @model={{@model}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
+    @debounceSubmit={{true}}
+    @isReadonly={{this.isReadonly}}
     as |form|>
 
     <form.text-field
       @field="name"
       @label="Name"
       @aria-label="Business Name"
-      @disabled={{this.isReadonly}}
     />
 
     <form.text-area
@@ -36,7 +37,6 @@
       @label="What You Need To Know"
       @aria-label="What you need to know about the business"
       @rows="3"
-      @disabled={{this.isReadonly}}
     />
 
     <form.text-area
@@ -44,20 +44,17 @@
       @label="What The Locals Say"
       @aria-label="What the locals say about the business"
       @rows="3"
-      @disabled={{this.isReadonly}}
     />
 
     <form.text-field
       @field="tip"
       @label="Local's Tip"
       @aria-label="An insider tip or suggestion about the business"
-      @disabled={{this.isReadonly}}
     />
 
     <form.checkbox
       @field="featured"
       @label="Featured?"
-      @disabled={{this.isReadonly}}
     />
 
     <div class="w-full flex">
@@ -73,7 +70,6 @@
           @field="website"
           @label="Website"
           @aria-label="Url for business website"
-          @disabled={{this.isReadonly}}
         />
       </div>
     </div>
@@ -104,8 +100,8 @@
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
-        <div class="flex">
-          <form.submit @value="Submit" @class="mr-2"/>
+        <div class="flex flex-wrap">
+          <form.submit @value="Submit" @class="mr-2 md:w-32" />
           <form.cancel @value="Cancel" />
         </div>
       </div>

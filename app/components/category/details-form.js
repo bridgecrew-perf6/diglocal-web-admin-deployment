@@ -34,14 +34,15 @@ class DetailsForm extends Component {
     yield this.args.model.save();
     this.isEditing = false;
     if (this.args.afterSave) {
-      this.args.afterSave(this.args.model);
+      return this.args.afterSave(this.args.model);
     }
+    return this.args.model;
   })
   saveTask;
 
   @action
   save() {
-    this.saveTask.perform();
+    return this.saveTask.perform();
   }
 
   @action

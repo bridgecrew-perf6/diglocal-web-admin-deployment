@@ -22,6 +22,8 @@
     @model={{@model}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
+    @isReadonly={{this.isReadonly}}
+    @debounceSubmit={{true}}
     as |form|>
 
     <div class="mb-6">
@@ -29,13 +31,11 @@
         @field="twitterUrl"
         @label="Twitter"
         @aria-label="Twitter url"
-        @disabled={{this.isReadonly}}
       />
 
       <form.checkbox
         @field="embedTwitterEnabled"
         @label="Display Twitter Feed"
-        @disabled={{this.isReadonly}}
       />
     </div>
 
@@ -44,13 +44,11 @@
         @field="instagramUrl"
         @label="Instagram"
         @aria-label="Instagram url"
-        @disabled={{this.isReadonly}}
       />
 
       <form.checkbox
         @field="embedInstagramEnabled"
         @label="Display Instagram Feed"
-        @disabled={{this.isReadonly}}
       />
     </div>
 
@@ -59,20 +57,18 @@
         @field="facebookUrl"
         @label="Facebook"
         @aria-label="Facebook url"
-        @disabled={{this.isReadonly}}
       />
 
       <form.checkbox
         @field="embedFacebookEnabled"
         @label="Display Facebook Feed"
-        @disabled={{this.isReadonly}}
       />
     </div>
 
     {{#if this.isEditing}}
       <div class="flex justify-end mt-8">
-        <div class="flex">
-          <form.submit @value="Submit" @class="mr-2"/>
+        <div class="flex flex-wrap">
+          <form.submit @value="Submit" @class="mr-2 md:w-32" testId="save-social" />
           <form.cancel @value="Cancel" />
         </div>
       </div>

@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { task } from 'ember-concurrency';
 
 export default class SocialForm extends Component {
   @service store;
@@ -29,10 +30,16 @@ export default class SocialForm extends Component {
     }
   }
 
+  @task(function*() {
+    yield this.args.model.save();
+    this.isEditing = false;
+    return this.args.model;
+  })
+  saveTask;
+
   @action
   save() {
-    this.args.model.save();
-    this.isEditing = false;
+    return this.saveTask.perform();
   }
 
   @action

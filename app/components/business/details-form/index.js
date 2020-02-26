@@ -42,10 +42,19 @@ export default class DetailsForm extends Component {
     }
   }
 
+  @task(function*() {
+    yield this.args.model.save();
+    this.isEditing = false;
+    if (this.args.afterSave) {
+      return this.args.afterSave(this.args.model);
+    }
+    return this.args.model;
+  })
+  saveTask;
+
   @action
   save() {
-    this.args.model.save();
-    this.isEditing = false;
+    return this.saveTask.perform();
   }
 
   @action

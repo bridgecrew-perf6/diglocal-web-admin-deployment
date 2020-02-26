@@ -35,6 +35,7 @@
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
+    @debounceSubmit={{true}}
     as |form|>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-4">
@@ -175,8 +176,8 @@
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
-        <div class="flex">
-          <form.submit @value="Submit" @class="mr-2" @testId="save-scoop" />
+        <div class="flex flex-wrap">
+          <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
           <form.cancel @value="Cancel" />
         </div>
       </div>

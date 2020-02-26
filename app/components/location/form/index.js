@@ -37,6 +37,7 @@ export default class Form extends Component {
     let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
     yield all(operatingHours.invoke('save'));
     this.isEditing = false;
+    return this.args.model;
   })
   saveTask;
 
