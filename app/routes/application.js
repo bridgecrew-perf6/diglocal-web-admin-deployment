@@ -9,8 +9,8 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
   @service currentUser;
   @service firebaseApp;
 
-  beforeModel() {
-    return this._loadCurrentUser();
+  async beforeModel() {
+    return await this._loadCurrentUser();
   }
 
   async sessionAuthenticated() {
@@ -31,8 +31,8 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
     }
   }
 
-  _loadCurrentUser() {
-    return this.currentUser.load().catch(() => {
+  async _loadCurrentUser() {
+    return await this.currentUser.load().catch(() => {
       let controller = this.controllerFor('application');
       controller.showForbiddenAlert = true;
       this.session.attemptedTransition = null;

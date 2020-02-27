@@ -73,7 +73,7 @@ export default Component.extend(Validations, {
     submit() {
       let { username, password } = getProperties(this, 'username', 'password');
 
-      this.isLogin ?
+      return this.isLogin ?
         this.authenticateWithEmail.perform(username, password) :
         this.signupWithEmail.perform(username, password);
     },
