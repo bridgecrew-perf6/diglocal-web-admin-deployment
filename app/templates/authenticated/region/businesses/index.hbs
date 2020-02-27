@@ -30,7 +30,7 @@
                 </div>
                 <div class="p-1">
                   <input id="archived-filter" type="checkbox" name="archived-filter" checked={{this.archived}} onchange={{action (mut this.archived) value="target.checked"}} >
-                  <label for="archived-filter">Archived</label>
+                  <label for="archived-filter">Inactive</label>
                 </div>
                 <div class="p-1">
                   <input id="featured-filter" type="checkbox" name="featured-filter" checked={{this.featured}} onchange={{action (mut this.featured) value="target.checked"}} >
@@ -107,7 +107,7 @@
       {{#if this.archived}}
         <CrunchyChip
           @tagName="li"
-          @label="Archived"
+          @label="Inactive"
           @allowClear={{true}}
           @onClear={{action (mut this.archived) false}}
         />

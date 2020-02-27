@@ -26,7 +26,7 @@
     <p class="text-sm">{{truncate-text @model.description limit=225}}</p>
     <ul class="absolute left-0 bottom-0 p-2">
       <CrunchyChip @tagName="li" @title="Listing status">
-        {{if @model.active "Active" "Archived"}}
+        {{if @model.active "Active" "Inactive"}}
       </CrunchyChip>
       <CrunchyChip @tagName="li">
         {{or @model.displayRole "None"}}
