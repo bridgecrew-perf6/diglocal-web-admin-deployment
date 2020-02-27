@@ -26,8 +26,10 @@ export default Route.extend({
 
       let filter = removeEmpty(params);
       filter.region = regionId;
+      filter.active = true;
       filter.date_range = `${moment(params.dateRange[0]).format('YYYY-MM-DD')},${moment(params.dateRange[1]).format('YYYY-MM-DD')},${params.grouping}`;
       delete filter.grouping;
+      delete filter.dateRange;
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
       query = Object.assign({ filter, page }, query);
