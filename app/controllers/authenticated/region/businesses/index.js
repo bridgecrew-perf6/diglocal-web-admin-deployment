@@ -15,13 +15,16 @@ const roleOptions = [
 export default Controller.extend({
   sortMenuOptions: Object.freeze({
     likes_count: 'Sort by likes',
-    name: 'Sort by name'
+    name: 'Sort by name',
+    created_at: 'Sort by created at'
   }),
 
   queryParams: [
     'search',
     'sort',
     'featured',
+    'active',
+    'archived',
     'categories',
     'roles'
   ],
@@ -35,9 +38,11 @@ export default Controller.extend({
     })
   },
 
-  sort: '',
+  sort: '-created_at',
   search: '',
   featured: false,
+  active: false,
+  archived: false,
 
   searchString: oneWay('search'),
 
@@ -72,6 +77,8 @@ export default Controller.extend({
     clearAllFilters() {
       this.setProperties({
         featured: false,
+        active: false,
+        archived: false,
         roles: [],
         categories: []
       });

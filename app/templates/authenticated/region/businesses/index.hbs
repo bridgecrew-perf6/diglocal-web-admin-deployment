@@ -25,8 +25,16 @@
             <form>
               <fieldset>
                 <div class="p-1">
-                  <input id="featured" type="checkbox" name="featured" checked={{this.featured}} onchange={{action (mut this.featured) value="target.checked"}} >
-                  <label for="admin">Featured</label>
+                  <input id="active-filter" type="checkbox" name="active-filter" checked={{this.active}} onchange={{action (mut this.active) value="target.checked"}} >
+                  <label for="active-filter">Active</label>
+                </div>
+                <div class="p-1">
+                  <input id="archived-filter" type="checkbox" name="archived-filter" checked={{this.archived}} onchange={{action (mut this.archived) value="target.checked"}} >
+                  <label for="archived-filter">Archived</label>
+                </div>
+                <div class="p-1">
+                  <input id="featured-filter" type="checkbox" name="featured-filter" checked={{this.featured}} onchange={{action (mut this.featured) value="target.checked"}} >
+                  <label for="featured-filter">Featured</label>
                 </div>
                 {{#each this.roleOptions as |option|}}
                   <div class="p-1">
@@ -75,7 +83,7 @@
       </div>
     </div>
   </div>
-  {{#if (or this.collectedFilters.length this.featured)}}
+  {{#if (or this.collectedFilters.length this.featured this.active this.archived)}}
     <div class="flex pt-2 px-2 items-center">
       <button {{action "clearAllFilters"}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
         Clear Filters
@@ -86,6 +94,22 @@
           @label="Featured"
           @allowClear={{true}}
           @onClear={{action (mut this.featured) false}}
+        />
+      {{/if}}
+      {{#if this.active}}
+        <CrunchyChip
+          @tagName="li"
+          @label="Active"
+          @allowClear={{true}}
+          @onClear={{action (mut this.active) false}}
+        />
+      {{/if}}
+      {{#if this.archived}}
+        <CrunchyChip
+          @tagName="li"
+          @label="Archived"
+          @allowClear={{true}}
+          @onClear={{action (mut this.archived) false}}
         />
       {{/if}}
       <ul aria-label="Applied filters">

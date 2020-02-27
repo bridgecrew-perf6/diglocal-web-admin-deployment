@@ -11,6 +11,8 @@ export default Route.extend({
    search: { refreshModel: true },
    sort: { refreshModel: true },
    featured: { refreshModel: true },
+   active: { refreshModel: true },
+   archived: { refreshModel: true },
    categories: { refreshModel: true },
    roles: { refreshModel: true },
   },
@@ -32,10 +34,6 @@ export default Route.extend({
       let filter = removeEmpty(params);
 
       filter.region = regionId;
-
-      if (!filter.active) {
-        filter.active = [true,false];
-      }
 
       let sort = filter.sort;
       delete filter.sort;
@@ -69,6 +67,14 @@ export default Route.extend({
     if (params.featured === false) {
       delete params.featured;
     }
+
+    if (params.active === params.archived) {
+      params.active = [true,false];
+    } else if (params.archived === true) {
+      params.active = false;
+    }
+    delete params.archived;
+
     return params;
   },
 
@@ -86,7 +92,9 @@ export default Route.extend({
         search: '',
         searchString: '',
         featured: false,
-        sort: ''
+        active: false,
+        archived: false,
+        sort: '-created_at'
       });
     }
   },
