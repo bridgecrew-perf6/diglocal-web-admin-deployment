@@ -1,10 +1,10 @@
 <div class="h-screen bg-transparent">
-  <div class="container mx-auto h-full flex justify-center items-center">
+  <div class="container mx-auto min-h-full flex justify-center items-center">
     {{#if (and this.session.isAuthenticated this.currentUser.canViewContent)}}
       <FaIcon @icon="spinner" @pulse={{true}} @size="2x" class="m-4" />
     {{else}}
       <div class="w-full max-w-md px-4">
-        <object type="image/svg+xml" data="/logos/dig_logo.svg" class="mb-8 mx-auto w-48">
+        <object type="image/svg+xml" data="/logos/dig_logo.svg" class="mb-8 mt-6 mx-auto w-48">
           DigLocal Logo
         </object>
         <h1 class="text-2xl font-bold mb-8 text-center">{{if this.isLogin "Login to DigLocal Admin" "Sign up for Diglocal Admin"}}</h1>
