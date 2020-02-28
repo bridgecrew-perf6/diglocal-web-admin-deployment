@@ -26,6 +26,7 @@ export default class AuthenticatedRegionBusinessesViewScoopsIndexRoute extends R
       let filter = removeEmpty(params);
 
       filter.business = businessId;
+      filter.active = [true,false];
 
       let sort = filter.sort;
       delete filter.sort;
