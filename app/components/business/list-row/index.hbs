@@ -29,7 +29,7 @@
         {{if @model.active "Active" "Inactive"}}
       </CrunchyChip>
       <CrunchyChip @tagName="li">
-        {{@model.displayRole}}
+        {{or @model.displayRole "None"}}
       </CrunchyChip>
       {{#if @model.featured}}
         <CrunchyChip @tagName="li" @title="Featured">

@@ -8,7 +8,7 @@
     />
   {{/if}}
   <card.header class="flex justify-between">
-    <div class="flex flex-col w-full mr-2">
+    <div class="flex w-full mr-2">
       <p class="font-bold text-brand-primary-accent inline-block tracking-wide text-sm" title="Event date">
         {{format-event-date @model.eventDate}}
       </p>
@@ -28,6 +28,7 @@
     <p class="text-sm font-medium">{{@model.business.name}}</p>
     <p class="py-2 text-xs leading-tight lg:mr-6">{{truncate-text @model.fineText limit=(if (media "isMobile") "100" "200")}}</p>
     <ul class="absolute left-0 bottom-0 p-1 pt-0 w-full bg-white">
+      <CrunchyChip @tagName="li" @label={{if @model.active "Active" "Inactive"}} @class={{if @model.active "crunchy-chip--accent" "crunchy-chip--accent-2"}} />
       {{#if @model.isRecurring}}
         <CrunchyChip @tagName="li" @label="Recurring" @class="crunchy-chip--primary" />
       {{/if}}

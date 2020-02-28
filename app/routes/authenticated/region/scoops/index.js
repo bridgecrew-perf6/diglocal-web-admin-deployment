@@ -29,6 +29,7 @@ export default class AuthenticatedRegionScoopsIndexRoute extends Route {
       let filter = removeEmpty(params);
 
       filter.region = regionId;
+      filter.active = [true,false];
 
       let sort = filter.sort;
 

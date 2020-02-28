@@ -4,6 +4,15 @@
   &--primary {
     @apply bg-brand-primary text-white;
   }
+  &--accent {
+    @apply bg-brand-primary-accent text-white;
+  }
+  &--accent-2 {
+    @apply bg-brand-secondary-accent text-white;
+  }
+  &--error {
+    @apply bg-brand-error text-white;
+  }
   &--outline {
     @apply bg-white border-brand-primary border text-brand-primary;
   }
