@@ -25,9 +25,12 @@
   <card.body>
     <p class="text-sm">{{truncate-text @model.description limit=225}}</p>
     <ul class="absolute left-0 bottom-0 p-2">
-      <CrunchyChip @tagName="li" @title="Listing status">
-        {{if @model.active "Active" "Inactive"}}
-      </CrunchyChip>
+      <CrunchyChip
+        @tagName="li"
+        @title="Listing status"
+        @label={{if @model.active "Active" "Inactive"}}
+        @class={{if @model.active "crunchy-chip--accent" "crunchy-chip--accent-2"}}
+      />
       <CrunchyChip @tagName="li">
         {{or @model.displayRole "None"}}
       </CrunchyChip>

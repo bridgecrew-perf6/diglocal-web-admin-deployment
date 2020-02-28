@@ -26,7 +26,8 @@ export default class User extends Model {
   @attr() timezone;
   @attr() bio;
   @attr() headline;
-
+  @attr() hasBusiness;
+  
   /*************************
   **  Relationships       **
   *************************/
