@@ -27,7 +27,8 @@ export default class User extends Model {
   @attr() bio;
   @attr() headline;
   @attr() hasBusiness;
-  
+  @attr() hasActiveBusiness;
+
   /*************************
   **  Relationships       **
   *************************/

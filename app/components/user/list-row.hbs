@@ -26,12 +26,19 @@
           @label={{capitalize @model.role}}
           @title={{concat (capitalize @model.role) " Role"}}
         />
-        {{#if @model.hasBusiness}}
+        {{#if @model.hasActiveBusiness}}
           <CrunchyChip
             @tagName="li"
-            @label="Business Owner"
+            @label="Active Business Owner"
             @title="User is associated with one or more businesses"
             @class="crunchy-chip--primary"
+          />
+        {{else if @model.hasBusiness}}
+          <CrunchyChip
+            @tagName="li"
+            @label="Inactive Business Owner"
+            @title="User is associated with one or more inactive businesses"
+            @class="crunchy-chip--accent-2"
           />
         {{/if}}
         <CrunchyChip

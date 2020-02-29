@@ -1,3 +1,21 @@
-<div class="container py-4">
+<div class="treadmill-content__fixed-header text-sm">
+  <div class="flex items-center h-10">
+    <CrunchyBreadcrumbs />
+  </div>
+</div>
+
+<div class="treadmill-content__table-body pt-20 pb-24 container">
   <User::DetailsForm @model={{@model}} />
+  <div class="dig-card">
+    <h2 class="dig-section-title">Associated Businesses</h2>
+    {{#each @model.businesses as |business|}}
+      <div class="mb-4">
+        <Business::ListRow @model={{business}} @isNarrow={{true}} />
+      </div>
+    {{else if (not @model.hasBusiness)}}
+      <div class="border rounded bg-white m-4 p-6">
+        <p> @model.email is not associated with any businesses. </p>
+      </div>
+    {{/each}}
+  </div>
 </div>
