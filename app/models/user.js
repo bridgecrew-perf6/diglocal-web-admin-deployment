@@ -33,7 +33,7 @@ export default class User extends Model {
   **  Relationships       **
   *************************/
 
-  @hasMany('business') businesses;
+  @hasMany('business', { async: false }) businesses;
   @hasMany('profileImage') profileImages;
 
   @computed('isPublic', 'hasProfile')
