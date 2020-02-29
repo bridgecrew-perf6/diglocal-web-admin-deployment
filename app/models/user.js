@@ -26,12 +26,14 @@ export default class User extends Model {
   @attr() timezone;
   @attr() bio;
   @attr() headline;
+  @attr() hasBusiness;
+  @attr() hasActiveBusiness;
 
   /*************************
   **  Relationships       **
   *************************/
 
-  @hasMany('business') businesses;
+  @hasMany('business', { async: false }) businesses;
   @hasMany('profileImage') profileImages;
 
   @computed('isPublic', 'hasProfile')

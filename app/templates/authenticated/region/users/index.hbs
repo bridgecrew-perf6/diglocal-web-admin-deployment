@@ -56,10 +56,26 @@
 </div>
 <div class="treadmill-content__table-body pt-32">
   <EllaTreadmill
-    @content={{this.model}}
+    @content={{@model}}
     @minColumnWidth="100%"
     @row="140" as |item|
   >
-    <User::ListRow @model={{item}} @isLinkable={{true}} />
+    {{#if item.is_loading}}
+      <div class="flex items-center justify-center">
+        <FaIcon @icon="spinner" @pulse={{true}} class="text-gray-500" />
+      </div>
+    {{else}}
+      <User::ListRow @model={{item}} @isLinkable={{true}} />
+    {{/if}}
   </EllaTreadmill>
+
+  {{#if (or this.didSearch.isRunning @model.loading)}}
+    <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
+      <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
+    </div>
+  {{else if (eq @model.length 0)}}
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No users found. </p>
+    </div>
+  {{/if}}
 </div>

@@ -6,7 +6,7 @@
       @aria-label="Add a new location"
       @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap"
       @disabled={{this.showAddUserModal}}>
-      <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add User
+      <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Member
     </CrunchyButton>
   </div>
 </div>
@@ -16,8 +16,24 @@
     @minColumnWidth="100%"
     @row="140" as |item|
   >
-    <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
+    {{#if item.is_loading}}
+      <div class="flex items-center justify-center">
+        <FaIcon @icon="spinner" @pulse={{true}} class="text-gray-500" />
+      </div>
+    {{else}}
+      <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
+    {{/if}}
   </EllaTreadmill>
+
+  {{#if @model.users.loading}}
+    <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
+      <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
+    </div>
+  {{else if (eq @model.users.length 0)}}
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No members found. </p>
+    </div>
+  {{/if}}
 </div>
 
 {{#if this.showAddUserModal}}
@@ -54,7 +70,7 @@
       </modal.body>
       <modal.footer class="flex justify-end">
         <form.cancel @value="Cancel" />
-        <form.submit @class="ml-2">Add User</form.submit>
+        <form.submit @class="ml-2">Add Member</form.submit>
       </modal.footer>
     </CrunchyForm>
   </CrunchyModal>

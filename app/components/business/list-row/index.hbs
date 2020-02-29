@@ -1,12 +1,12 @@
 <CrunchyMediaObject
   @style="horizontal"
-  @class="min-h-48 overflow-hidden"
+  @class="{{if @isNarrow "min-h-24" "min-h-48"}} overflow-hidden"
   data-test-id="business-listing"
   as |card|>
   {{#if (media "isMediumUp")}}
     <card.image
-      @height="190px"
-      @width="190px"
+      @height={{if @isNarrow "96px" "190px"}}
+      @width={{if @isNarrow "96px" "190px"}}
       @url={{@model.logo.sizes.smallx2}}
       class="border-r"
     />
@@ -23,11 +23,16 @@
     </LinkTo>
   </card.header>
   <card.body>
-    <p class="text-sm">{{truncate-text @model.description limit=225}}</p>
+    {{#unless @isNarrow}}
+      <p class="text-sm">{{truncate-text @model.description limit=225}}</p>
+    {{/unless}}
     <ul class="absolute left-0 bottom-0 p-2">
-      <CrunchyChip @tagName="li" @title="Listing status">
-        {{if @model.active "Active" "Inactive"}}
-      </CrunchyChip>
+      <CrunchyChip
+        @tagName="li"
+        @title="Listing status"
+        @label={{if @model.active "Active" "Inactive"}}
+        @class={{if @model.active "crunchy-chip--accent" "crunchy-chip--accent-2"}}
+      />
       <CrunchyChip @tagName="li">
         {{or @model.displayRole "None"}}
       </CrunchyChip>
@@ -41,27 +46,29 @@
           {{category.longName}}
         </CrunchyChip>
       {{/each}}
-      <CrunchyChip @tagName="li" @title={{concat @model.likesCount " likes"}}>
-        <FaIcon @icon="heart" />&nbsp;{{@model.likesCount}}
-      </CrunchyChip>
-      <CrunchyChip @tagName="li" @title={{concat @model.numberOfLocations " locations"}}>
-        <FaIcon @icon="building" />&nbsp;{{@model.numberOfLocations}}
-      </CrunchyChip>
-      {{#if @model.twitterUrl}}
-        <CrunchyChip @tagName="li" @title={{@model.twitterUrl}}>
-          <FaIcon @icon="twitter" @prefix="fab" />
+      {{#unless @isNarrow}}
+        <CrunchyChip @tagName="li" @title={{concat @model.likesCount " likes"}}>
+          <FaIcon @icon="heart" />&nbsp;{{@model.likesCount}}
         </CrunchyChip>
-      {{/if}}
-      {{#if @model.facebookUrl}}
-        <CrunchyChip @tagName="li" @title={{@model.facebookUrl}}>
-          <FaIcon @icon="facebook" @prefix="fab" />
+        <CrunchyChip @tagName="li" @title={{concat @model.numberOfLocations " locations"}}>
+          <FaIcon @icon="building" />&nbsp;{{@model.numberOfLocations}}
         </CrunchyChip>
-      {{/if}}
-      {{#if @model.instagramUrl}}
-        <CrunchyChip @tagName="li" @title={{@model.instagramUrl}}>
-          <FaIcon @icon="instagram" @prefix="fab" />
-        </CrunchyChip>
-      {{/if}}
+        {{#if @model.twitterUrl}}
+          <CrunchyChip @tagName="li" @title={{@model.twitterUrl}}>
+            <FaIcon @icon="twitter" @prefix="fab" />
+          </CrunchyChip>
+        {{/if}}
+        {{#if @model.facebookUrl}}
+          <CrunchyChip @tagName="li" @title={{@model.facebookUrl}}>
+            <FaIcon @icon="facebook" @prefix="fab" />
+          </CrunchyChip>
+        {{/if}}
+        {{#if @model.instagramUrl}}
+          <CrunchyChip @tagName="li" @title={{@model.instagramUrl}}>
+            <FaIcon @icon="instagram" @prefix="fab" />
+          </CrunchyChip>
+        {{/if}}
+      {{/unless}}
     </ul>
   </card.body>
 </CrunchyMediaObject>

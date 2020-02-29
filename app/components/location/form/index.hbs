@@ -1,6 +1,6 @@
-<div class="border rounded p-4 bg-white mb-4" data-test-id={{concat "location-detail-card" (if @model.isNew "-new")}}>
+<div class="dig-card" data-test-id={{concat "location-detail-card" (if @model.isNew "-new")}}>
   <div class="flex mb-3 justify-between">
-    <h1 class="font-semibold text-lg"> {{if this.isReadonly @model.title "Edit Location"}} </h1>
+    <h1 class="dig-section-title"> {{if this.isReadonly @model.title "Edit Location"}} </h1>
     {{#if this.isReadonly}}
       <CrunchyButton
         @onClick={{action (mut this.isEditing) (not this.isEditing)}}
@@ -15,7 +15,7 @@
         @class="crunchy-button--icon"
         @testId="close-form"
         @aria-label="Close form">
-        <FaIcon @icon="times" />
+        <FaIcon @icon="times" @size="lg" />
       </CrunchyButton>
     {{/if}}
   </div>

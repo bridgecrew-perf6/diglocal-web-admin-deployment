@@ -1,6 +1,6 @@
-<div class="border rounded p-4 bg-white mb-4">
+<div class="dig-card">
   <div class="flex mb-6 justify-between">
-    <h1 class="font-semibold text-lg"> {{if this.isReadonly "Social Media" "Edit Social Media"}} </h1>
+    <h1 class="dig-section-title"> {{if this.isReadonly "Social Media" "Edit Social Media"}} </h1>
     {{#if this.isReadonly}}
       <CrunchyButton
         @onClick={{action (mut this.isEditing) (not this.isEditing)}}
@@ -13,7 +13,7 @@
         @onClick={{action "cancel"}}
         @class="crunchy-button--icon"
         @aria-label="Close form">
-        <FaIcon @icon="times" />
+        <FaIcon @icon="times" @size="lg" />
       </CrunchyButton>
     {{/if}}
   </div>
@@ -26,44 +26,23 @@
     @debounceSubmit={{true}}
     as |form|>
 
-    <div class="mb-6">
-      <form.text-field
-        @field="twitterUrl"
-        @label="Twitter"
-        @aria-label="Twitter url"
-      />
+    <form.text-field
+      @field="twitterUrl"
+      @label="Twitter"
+      @aria-label="Twitter url"
+    />
 
-      <form.checkbox
-        @field="embedTwitterEnabled"
-        @label="Display Twitter Feed"
-      />
-    </div>
+    <form.text-field
+      @field="instagramUrl"
+      @label="Instagram"
+      @aria-label="Instagram url"
+    />
 
-    <div class="mb-6">
-      <form.text-field
-        @field="instagramUrl"
-        @label="Instagram"
-        @aria-label="Instagram url"
-      />
-
-      <form.checkbox
-        @field="embedInstagramEnabled"
-        @label="Display Instagram Feed"
-      />
-    </div>
-
-    <div class="mb-6">
-      <form.text-field
-        @field="facebookUrl"
-        @label="Facebook"
-        @aria-label="Facebook url"
-      />
-
-      <form.checkbox
-        @field="embedFacebookEnabled"
-        @label="Display Facebook Feed"
-      />
-    </div>
+    <form.text-field
+      @field="facebookUrl"
+      @label="Facebook"
+      @aria-label="Facebook url"
+    />
 
     {{#if this.isEditing}}
       <div class="flex justify-end mt-8">
