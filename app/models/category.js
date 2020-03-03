@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import * as yup from 'yup';
 
 export default class Category extends Model {
   @attr() shortName;
@@ -14,4 +15,12 @@ export default class Category extends Model {
   *************************/
 
   @belongsTo('region') region;
+
+  /*************************
+  **  Validation Schema   **
+  *************************/
+  validationSchema = yup.object().shape({
+    longName: yup.string().required().trim().label('Long Name'),
+    shortName: yup.string().required().trim().label('Short Name')
+  });
 }
