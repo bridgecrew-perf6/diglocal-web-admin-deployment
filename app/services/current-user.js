@@ -35,6 +35,7 @@ export default class CurrentUserService extends Service {
     if (!this.user) {
       return null;
     }
+
     if (this.user && this.user.admin) {
       return 'admin';
     }

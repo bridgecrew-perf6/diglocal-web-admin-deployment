@@ -67,6 +67,8 @@
       @rows="3"
     />
 
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
+
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Category" @class="crunchy-button--outline" />

@@ -61,14 +61,21 @@ export default class DetailsForm extends Component {
   onUploadImageComplete;
 
   @task(function*() {
-    yield this.args.model.save();
+    let created = yield this.args.model.save();
     this.isEditing = false;
     if (this.args.afterSave) {
-      return this.args.afterSave(this.args.model);
+      return this.args.afterSave(created);
     }
-    return this.args.model;
+    return created;
   })
   saveTask;
+
+  @task(function*() {
+    yield this.args.model.deleteRecord();
+    yield this.args.model.save();
+    this.router.transitionTo('authenticated.region.businesses.view.scoops.index');
+  })
+  deleteTask;
 
   @action
   save() {
@@ -83,9 +90,7 @@ export default class DetailsForm extends Component {
 
   @action
   delete() {
-    this.args.model.deleteRecord();
-    this.args.model.save();
-    this.router.transitionTo('authenticated.region.businesses.view.scoops.index');
+    return this.deleteTask.perform();
   }
 
   @action
