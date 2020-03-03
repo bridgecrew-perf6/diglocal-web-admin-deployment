@@ -26,15 +26,20 @@ export default DS.JSONAPIAdapter.extend({
     let responseObject = this._super(...arguments);
 
     if (responseObject && responseObject.isAdapterError) {
-      let payloadObj = JSON.parse(payload);
-      if (isArray(payloadObj.errors)) {
-        responseObject.errors = payloadObj.errors;
-      }
-      responseObject.httpErrorResponse = {
+      let httpErrorResponse = {
         status,
-        headers,
-        payload: payloadObj
+        headers
       };
+      try {
+        let payloadObj = JSON.parse(payload);
+        httpErrorResponse.payload = payloadObj;
+        if (isArray(payloadObj.errors)) {
+          responseObject.errors = payloadObj.errors;
+        }
+      } catch(e) {
+        httpErrorResponse.payload = payload;
+      }
+      responseObject.httpErrorResponse = httpErrorResponse;
     }
 
     return responseObject;

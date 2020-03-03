@@ -22,7 +22,7 @@
   }
 
   &__errors {
-    @apply py-2 px-4 rounded bg-red-100;
+    @apply py-2 px-4 rounded bg-red-100 mt-2;
   }
 
   &__error-list-heading {

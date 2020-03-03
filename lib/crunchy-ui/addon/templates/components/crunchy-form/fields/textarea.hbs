@@ -1,7 +1,6 @@
 {{#component group
   field=field
   model=model
-  didBlur=didBlur
   as |group|}}
 
   {{#if @label}}
@@ -17,7 +16,7 @@
       @rows={{@rows}}
       @placeholder={{@placeholder}}
       @disabled={{@disabled}}
-      @focus-out={{action (mut didBlur) true}}
+      @focus-out={{action group.validateField @field}}
       aria-label={{@aria-label}}
       @data-test-id={{concat @field "-field"}}
       @class={{concat "crunchy-form__textarea "
@@ -27,6 +26,6 @@
   </group.control>
 
   {{#if group.hasError}}
-    <group.errors />
+    <group.errors class={{@errorClass}} />
   {{/if}}
 {{/component}}

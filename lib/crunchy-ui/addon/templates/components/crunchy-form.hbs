@@ -3,8 +3,8 @@
   model=model
   didSubmit=didSubmit
   isSubmitting=isSubmitting
-  validateField=validateField
   formErrors=formErrors
+  validateField=(action "validateField")
   ) as |groupComponent|}}
 
   {{yield (hash
@@ -51,7 +51,7 @@
     isSubmitting=isSubmitting
     didSubmit=didSubmit
     isReadonly=isReadonly
-    validateField=validateField
+    validateField=(action "validateField")
     formErrors=formErrors
     formMessages=formMessages
   )}}

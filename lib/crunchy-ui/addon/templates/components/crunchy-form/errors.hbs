@@ -8,9 +8,13 @@
     {{/if}}
     <ul class="crunchy-form__error-list">
       {{#if form.submitTask.last.isError}}
-        {{#each form.submitTask.last.error.errors as |error|}}
-          <li class="crunchy-form__error-message">{{or error.detail error.message error.title}}</li>
-        {{/each}}
+        {{#if (eq form.submitTask.last.error.httpErrorResponse.status 500)}}
+          <li class="crunchy-form__error-message">An unknown server error occurred.</li>
+        {{else}}
+          {{#each form.submitTask.last.error.errors as |error|}}
+            <li class="crunchy-form__error-message">{{or error.detail error.message error.title}}</li>
+          {{/each}}
+        {{/if}}
       {{/if}}
       {{#if formMessages.length}}
         {{#each formMessages as |error|}}
