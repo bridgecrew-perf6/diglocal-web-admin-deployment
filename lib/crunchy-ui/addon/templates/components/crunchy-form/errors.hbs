@@ -1,5 +1,5 @@
 {{#if (and form.didSubmit
-  (or form.submitTask.last.isError (v-get model "isInvalid")))}}
+  (or form.submitTask.last.isError formMessages.length))}}
   <div class="crunchy-form__errors">
     {{#if errorHeading}}
       <p class="crunchy-form__error-list-heading">
@@ -12,9 +12,9 @@
           <li class="crunchy-form__error-message">{{or error.detail error.message error.title}}</li>
         {{/each}}
       {{/if}}
-      {{#if (v-get model "isInvalid")}}
-        {{#each (v-get model "errors") as |error|}}
-          <li class="crunchy-form__error-message">{{error.message}}</li>
+      {{#if formMessages.length}}
+        {{#each formMessages as |error|}}
+          <li class="crunchy-form__error-message">{{error}}</li>
         {{/each}}
       {{/if}}
     </ul>

@@ -3,6 +3,8 @@
   model=model
   didSubmit=didSubmit
   isSubmitting=isSubmitting
+  validateField=validateField
+  formErrors=formErrors
   ) as |groupComponent|}}
 
   {{yield (hash
@@ -38,7 +40,9 @@
       task=cancelTask)
     errors=(component "crunchy-form/errors"
       model=model
-      form=this)
+      form=this
+      formErrors=formErrors
+      formMessages=formMessages)
     fields-for=(component "crunchy-form"
       form=this
       isChildForm=true
@@ -47,6 +51,9 @@
     isSubmitting=isSubmitting
     didSubmit=didSubmit
     isReadonly=isReadonly
+    validateField=validateField
+    formErrors=formErrors
+    formMessages=formMessages
   )}}
 
 {{/with}}
