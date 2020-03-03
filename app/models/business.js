@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import { attr, hasMany, belongsTo } from '@ember-data/model';
 import Trackable from './trackable';
+import * as yup from 'yup';
 
 export default class Business extends Trackable {
   @attr() description2;
@@ -56,4 +57,17 @@ export default class Business extends Trackable {
     }
     return display;
   }
+
+  /*************************
+  **  Validation Schema   **
+  *************************/
+  validationSchema = yup.object().shape({
+    name: yup.string().required().max(255).label('Name'),
+    description: yup.string().nullable().max(255).label('What You Need To Know'),
+    description2: yup.string().nullable().max(255).label('What The Locals Say'),
+    facebookUrl: yup.string().nullable().url("Facebook link must be a valid URL, starting with 'https://' or 'http://'").label('Facebook URL'),
+    twitterUrl: yup.string().nullable().url("Twitter link must be a valid URL, starting with 'https://' or 'http://'").label('Twitter URL'),
+    instagramUrl: yup.string().nullable().url("Instagram link must be a valid URL, starting with 'https://' or 'http://'").label('Instagram URL'),
+    website: yup.string().nullable().url("Website must be a valid URL, starting with 'https://' or 'http://'").label('Website URL'),
+  });
 }

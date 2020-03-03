@@ -20,7 +20,7 @@ export default class Category extends Model {
   **  Validation Schema   **
   *************************/
   validationSchema = yup.object().shape({
-    longName: yup.string().required().trim().label('Long Name'),
-    shortName: yup.string().required().trim().label('Short Name')
+    longName: yup.string().required().label('Long Name'),
+    shortName: yup.string().required().label('Short Name')
   });
 }

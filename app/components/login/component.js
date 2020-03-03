@@ -8,8 +8,8 @@ import { capitalize } from '@ember/string';
 import * as yup from 'yup';
 
 const loginSchema = yup.object().shape({
-  username: yup.string().required().trim().label('Email'),
-  password: yup.string().required().trim().label('Password')
+  username: yup.string().required().label('Email'),
+  password: yup.string().required().label('Password')
 });
 
 const Validations = buildValidations({
