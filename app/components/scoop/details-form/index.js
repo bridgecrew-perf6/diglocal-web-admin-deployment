@@ -8,7 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 import ENV from 'diglocal-manage/config/environment';
 
-const INPUT_DEBOUNCE = ENV.environment !== 'test' ? 500 : 0;
+const INPUT_DEBOUNCE = ENV.environment !== 'test' ? 250 : 0;
 
 export default class DetailsForm extends Component {
   @service regions;
