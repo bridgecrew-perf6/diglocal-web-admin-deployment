@@ -5,6 +5,12 @@ import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import firebase from 'firebase/app';
 import { capitalize } from '@ember/string';
+import * as yup from 'yup';
+
+const loginSchema = yup.object().shape({
+  username: yup.string().required().label('Email'),
+  password: yup.string().required().label('Password')
+});
 
 const Validations = buildValidations({
   'username': validator('presence', {
@@ -21,6 +27,8 @@ export default Component.extend(Validations, {
   session: service('session'),
   firebaseApp: service(),
   store: service(),
+
+  loginSchema,
 
   isLogin: true,
   authenticating: false,

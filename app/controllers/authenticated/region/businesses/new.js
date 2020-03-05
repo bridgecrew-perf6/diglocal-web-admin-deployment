@@ -7,6 +7,6 @@ export default class AuthenticatedRegionBusinessesNewController extends Controll
 
   @action
   afterSave(model) {
-    this.router.transitionTo('authenticated.region.businesses.view', model.id);
+    this.router.transitionTo('authenticated.region.businesses.view', model);
   }
 }

@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
-export default class AuthenticatedRegionSiteSettingsCategoriesNewRoute extends Route {
+export default class AuthenticatedRegionSiteSettingsCategoriesIndexRoute extends Route {
   @service ellaSparse;
 
   queryParams = {

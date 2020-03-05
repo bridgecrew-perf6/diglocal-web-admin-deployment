@@ -20,6 +20,7 @@
 
   <CrunchyForm
     @model={{@model}}
+    @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
@@ -43,6 +44,8 @@
       @label="Facebook"
       @aria-label="Facebook url"
     />
+
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     {{#if this.isEditing}}
       <div class="flex justify-end mt-8">

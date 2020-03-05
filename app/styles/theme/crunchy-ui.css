@@ -33,8 +33,8 @@
       @apply ml-2;
     }
   }
-  &__modal-errors {
-    @apply mt-1;
+  &__errors {
+    @apply mt-1 px-8 text-brand-error text-sm;
   }
 }
 

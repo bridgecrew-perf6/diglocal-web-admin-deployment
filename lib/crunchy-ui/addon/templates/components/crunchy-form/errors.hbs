@@ -1,17 +1,28 @@
 {{#if (and form.didSubmit
-  (or form.submitTask.last.isError (v-get model "isInvalid")))}}
-  <ul class="crunchy-form__errors">
-    {{#if form.submitTask.last.isError}}
-      {{#each form.submitTask.last.error.errors as |error|}}
-        <li class="crunchy-form__error-message">{{or error.detail error.message error.title}}</li>
-      {{/each}}
+  (or form.submitTask.last.isError formMessages.length))}}
+  <div class="crunchy-form__errors">
+    {{#if errorHeading}}
+      <p class="crunchy-form__error-list-heading">
+        {{errorHeading}}
+      </p>
     {{/if}}
-    {{#if (v-get model "isInvalid")}}
-      {{#each (v-get model "errors") as |error|}}
-        <li class="crunchy-form__error-message">{{error.message}}</li>
-      {{/each}}
-    {{/if}}
-  </ul>
+    <ul class="crunchy-form__error-list">
+      {{#if form.submitTask.last.isError}}
+        {{#if (eq form.submitTask.last.error.httpErrorResponse.status 500)}}
+          <li class="crunchy-form__error-message">An unknown server error occurred.</li>
+        {{else}}
+          {{#each form.submitTask.last.error.errors as |error|}}
+            <li class="crunchy-form__error-message">{{or error.detail error.message error.title}}</li>
+          {{/each}}
+        {{/if}}
+      {{/if}}
+      {{#if formMessages.length}}
+        {{#each formMessages as |error|}}
+          <li class="crunchy-form__error-message">{{error}}</li>
+        {{/each}}
+      {{/if}}
+    </ul>
+  </div>
 {{/if}}
 
 {{yield}}

@@ -4,8 +4,11 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 class DetailsForm extends Component {
+  @service router;
+
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
 
@@ -40,6 +43,13 @@ class DetailsForm extends Component {
   })
   saveTask;
 
+  @task(function*() {
+    yield this.args.model.deleteRecord();
+    yield this.args.model.save();
+    this.router.transitionTo('authenticated.region.site-settings.categories.index');
+  })
+  deleteTask;
+
   @action
   save() {
     return this.saveTask.perform();
@@ -53,9 +63,7 @@ class DetailsForm extends Component {
 
   @action
   delete() {
-    this.args.model.deleteRecord();
-    this.args.model.save();
-    this.router.transitionTo('authenticated.region.site-settings.categories');
+    return this.deleteTask.perform();
   }
 }
 

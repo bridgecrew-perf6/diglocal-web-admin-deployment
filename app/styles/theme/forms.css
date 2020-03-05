@@ -21,6 +21,18 @@
     @apply text-brand-error text-xs font-medium;
   }
 
+  &__errors {
+    @apply py-2 px-4 rounded bg-red-100 mt-2;
+  }
+
+  &__error-list-heading {
+    @apply font-medium mb-2 text-sm;
+  }
+
+  &__error-message {
+    @apply text-brand-error font-medium mb-1;
+  }
+
   &__input, &__textarea {
     @apply border border-gray-400 rounded py-3 px-4 block w-full leading-normal;
     &:focus, &:active {

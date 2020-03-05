@@ -37,6 +37,13 @@ export default class DetailsForm extends Component {
   })
   saveTask;
 
+  @task(function*() {
+    yield this.args.model.deleteRecord();
+    yield this.args.model.save();
+    this.router.transitionTo('authenticated.region.users.index');
+  })
+  deleteTask;
+
   @action
   save() {
     return this.saveTask.perform();
@@ -50,8 +57,6 @@ export default class DetailsForm extends Component {
 
   @action
   delete() {
-    this.model.deleteRecord();
-    this.model.save();
-    this.router.transitionTo('authenticated.region.users');
+    return this.deleteTask.perform();
   }
 }

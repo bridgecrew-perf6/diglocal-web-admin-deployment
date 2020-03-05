@@ -1,6 +1,6 @@
 {{#component group
+  field=field
   model=model
-  didBlur=didBlur
   as |group|}}
 
   {{#if @label}}
@@ -15,6 +15,7 @@
       @tags={{@tags}}
       @readOnly={{@disabled}}
       @addTag={{action "addTag"}}
+      @onKeyUp={{action group.validateField @field}}
       @removeTagAtIndex={{action "removeTagAtIndex"}}
       as |tag|>
       {{tag}}

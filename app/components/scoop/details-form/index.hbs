@@ -32,6 +32,7 @@
 
   <CrunchyForm
     @model={{@model}}
+    @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
@@ -55,7 +56,7 @@
         {{/if}}
       </div>
       <div class="w-full md:w-2/3 md:pl-4">
-        <form.field @field="name" @label="Business">
+        <form.field @field="business" @label="Business">
           <PowerSelect
             @search={{perform this.searchBusinesses}}
             @searchEnabled={{true}}
@@ -172,6 +173,8 @@
         />
       </XToggle>
     </div>
+
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">

@@ -22,6 +22,7 @@
 
   <CrunchyForm
     @model={{@model}}
+    @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
@@ -46,6 +47,40 @@
       @aria-label="Time zone"
       @disabled={{true}}
     />
+
+    <fieldset name="Default Location Details" class="border p-4 rounded">
+      <label for="Default Location Details" class="mb-2 font-semibold text-lg block text-brand-primary">
+        Default Location
+      </label>
+      <p class="mb-2 text-sm">Edit the default values for newly created business locations.<br>If a business has no location address specified, these values will be used for the location display, mapping, etc.</p>
+      <div class="w-full flex">
+        <div class="mr-4 flex-grow">
+          <form.text-field
+            @field="defaultCity"
+            @label="City"
+            @autocomplete="address-level2"
+          />
+        </div>
+
+        <div class="mr-4 w-48 flex-shrink">
+          <form.text-field
+            @field="defaultState"
+            @label="State"
+            @autocomplete="address-level1"
+          />
+        </div>
+
+        <div class="w-32 flex-shrink">
+          <form.text-field
+            @field="defaultZip"
+            @label="Postal Code"
+            @autocomplete="postal-code"
+          />
+        </div>
+      </div>
+    </fieldset>
+
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     {{#if this.isEditing}}
       <div class="flex justify-end mt-8">

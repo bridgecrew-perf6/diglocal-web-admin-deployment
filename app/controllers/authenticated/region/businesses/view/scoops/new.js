@@ -7,6 +7,6 @@ export default class AuthenticatedRegionBusinessesViewScoopsNewController extend
 
   @action
   afterSave(model) {
-    this.router.transitionTo('authenticated.region.businesses.view.scoops.view', model.id);
+    this.router.transitionTo('authenticated.region.businesses.view.scoops.view', model);
   }
 }

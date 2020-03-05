@@ -3,6 +3,7 @@
 
   <CrunchyForm
     @model={{@model}}
+    @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @debounceSubmit={{true}}
@@ -27,12 +28,6 @@
       @label="What The Locals Say"
       @aria-label="What the locals say about the business"
       @rows="3"
-    />
-
-    <form.text-field
-      @field="tip"
-      @label="Local's Tip"
-      @aria-label="An insider tip or suggestion about the business"
     />
 
     <Ui::CollapsibleSection @title="Categories" @open={{false}}>
@@ -96,7 +91,7 @@
       </div>
     </Ui::CollapsibleSection>
 
-    <Ui::CollapsibleSection @title="Locations" @open={{false}}>
+    {{!-- <Ui::CollapsibleSection @title="Locations" @open={{false}}>
       {{#each @model.locations as |location|}}
         <form.fields-for @model={{location}} as |locForm|>
           <locForm.text-field
@@ -160,7 +155,7 @@
           </div>
         </form.fields-for>
       {{/each}}
-    </Ui::CollapsibleSection>
+    </Ui::CollapsibleSection> --}}
 
     <Ui::CollapsibleSection @title="Website & Social Media" @open={{false}}>
       <form.text-field
@@ -188,6 +183,7 @@
       />
     </Ui::CollapsibleSection>
 
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     <div class="flex justify-end mt-8">
       <form.submit @value="Create" @class="mr-2 md:w-32" />

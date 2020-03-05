@@ -28,6 +28,6 @@ export default class AuthenticatedRegionSiteSettingsCategoriesNewRoute extends R
   @action
   cancel(model) {
     model.deleteRecord();
-    this.transitionTo('authenticated.region.site-settings.categories');
+    this.transitionTo('authenticated.region.site-settings.categories.index');
   }
 }

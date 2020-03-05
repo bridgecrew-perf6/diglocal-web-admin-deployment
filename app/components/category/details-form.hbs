@@ -28,6 +28,7 @@
 
   <CrunchyForm
     @model={{@model}}
+    @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
@@ -66,6 +67,8 @@
       @aria-label="Meta H1"
       @rows="3"
     />
+
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     {{#if this.isEditing}}
       <div class="flex justify-between mt-8">

@@ -12,12 +12,12 @@ export default class DetailsForm extends Component {
   @service router;
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
+  @tracked categoryOptions = [];
 
   @not('isEditing') isReadonly;
 
   constructor() {
     super(...arguments);
-    this.categoryOptions = [];
     this.loadCategories.perform();
     if (isPresent(this.args.isEditing)) {
       this.isEditing = this.args.isEditing
@@ -53,6 +53,13 @@ export default class DetailsForm extends Component {
   })
   saveTask;
 
+  @task(function*() {
+    yield this.args.model.deleteRecord();
+    yield this.args.model.save();
+    this.router.transitionTo('authenticated.region.businesses.index');
+  })
+  deleteTask;
+
   @action
   save() {
     return this.saveTask.perform();
@@ -66,8 +73,6 @@ export default class DetailsForm extends Component {
 
   @action
   delete() {
-    this.args.model.deleteRecord();
-    this.args.model.save();
-    this.router.transitionTo('authenticated.region.businesses');
+    return this.deleteTask.perform();
   }
 }
