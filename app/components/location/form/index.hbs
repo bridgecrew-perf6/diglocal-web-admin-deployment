@@ -20,7 +20,9 @@
     {{/if}}
   </div>
 
-  <CrunchyForm @model={{@model}}
+  <CrunchyForm
+    @model={{@model}}
+    @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}

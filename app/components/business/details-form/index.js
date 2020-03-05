@@ -12,12 +12,12 @@ export default class DetailsForm extends Component {
   @service router;
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
+  @tracked categoryOptions = [];
 
   @not('isEditing') isReadonly;
 
   constructor() {
     super(...arguments);
-    this.categoryOptions = [];
     this.loadCategories.perform();
     if (isPresent(this.args.isEditing)) {
       this.isEditing = this.args.isEditing

@@ -1,7 +1,11 @@
 <div class="fixed w-full border-b"></div>
 <div class="container py-4">
-  <Location::Create @business={{this.model.business}} class="mb-4" />
-  {{#each this.model.locations as |item|}}
+  <Location::Create @business={{@model.business}} class="mb-4" />
+  {{#each @model.locations as |item|}}
     <Location::Form @model={{item}} @class="border border-gray-300 rounded" />
+  {{else}}
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No locations. </p>
+    </div>
   {{/each}}
 </div>

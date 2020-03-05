@@ -25,6 +25,15 @@ export default DS.JSONAPIAdapter.extend({
   handleResponse(status, headers, payload) {
     let responseObject = this._super(...arguments);
 
+    if (status === 403) {
+      /*
+      * TODO - after long idle, occasionally the server seems to get out of sync with our authenticated firebase user
+      * and sends a 403 response. The 403 is not returned again if you refresh the page, therefore loading
+      * the firebase user again, etc.
+      * Need to determine strategy for handling this scenario.
+      */
+    }
+
     if (responseObject && responseObject.isAdapterError) {
       let httpErrorResponse = {
         status,

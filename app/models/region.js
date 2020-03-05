@@ -4,6 +4,9 @@ export default class Region extends Model {
   @attr() name;
   @attr() longName;
   @attr() timeZone;
+  @attr() defaultCity;
+  @attr() defaultState;
+  @attr() defaultZip;
 
   /*************************
   **  Relationships       **
