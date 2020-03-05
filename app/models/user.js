@@ -1,5 +1,6 @@
 import Model, { attr, hasMany } from '@ember-data/model';
 import { computed } from '@ember/object';
+import * as yup from 'yup';
 
 export default class User extends Model {
   @attr() active;
@@ -52,4 +53,12 @@ export default class User extends Model {
   get headerDisplayName() {
     return this.publicName || this.givenName || this.user;
   }
+
+  /*************************
+  **  Validation Schema   **
+  *************************/
+  validationSchema = yup.object().shape({
+    email: yup.string().required().email().label('Email'),
+    user: yup.string().required().label('User Name')
+  });
 }
