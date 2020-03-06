@@ -1,0 +1,76 @@
+<CrunchyForm
+  @model={{@model}}
+  @formSchema={{@model.validationSchema}}
+  @onSubmit={{@save}}
+  @onCancel={{@cancel}}
+  @debounceSubmit={{true}}
+  @isReadonly={{this.isReadonly}}
+  as |form|>
+
+  <form.text-field
+    @field="name"
+    @label="Name"
+    @aria-label="Business Name"
+  />
+
+  <form.field @field="categories" @label="Categories">
+    <PowerSelectMultiple
+      @searchEnabled={{true}}
+      @searchField="longName"
+      @options={{this.categoryOptions}}
+      @selected={{@model.categories}}
+      @placeholder="Select category tags..."
+      @onChange={{action (mut @model.categories)}} as |category|>
+      {{category.longName}}
+    </PowerSelectMultiple>
+  </form.field>
+
+  <form.field @field="role" @label="Listing Type">
+    <PowerSelect
+      @placeholder="Select a listing type for this business"
+      @options={{this.roleOptions}}
+      @selected={{@model.role}}
+      @allowClear={{false}}
+      @disabled={{form.isReadonly}}
+      @onChange={{action (mut @model.role)}} as |role|
+      >
+        <span data-test-id="selected-role">{{role-display-name role}}</span>
+    </PowerSelect>
+  </form.field>
+
+  <div class="flex justify-start items-center mt-8 crunchy-form__group">
+    <XToggle
+      @showLabels={{true}}
+      @size="small"
+      @value={{@model.active}}
+      @onToggle={{action (mut @model.active)}}
+      @disabled={{this.isReadonly}}
+      as |toggle|
+    >
+      <toggle.label @value={{@model.active}}>
+        <b class="pr-2">Activate listing now?</b>
+      </toggle.label>
+      <toggle.switch @theme='light' />
+    </XToggle>
+  </div>
+
+  <div class="flex justify-start items-center mt-8 crunchy-form__group">
+    <XToggle
+      @showLabels={{true}}
+      @size="small"
+      @value={{@model.featured}}
+      @onToggle={{action (mut @model.featured)}}
+      @disabled={{this.isReadonly}}
+      as |toggle|
+    >
+      <toggle.label @value={{@model.active}}>
+        <b class="pr-2">Featured?</b>
+      </toggle.label>
+      <toggle.switch @theme='light' />
+    </XToggle>
+  </div>
+
+  <div class="flex justify-end mt-8">
+    <form.submit @value="Next" @class="mr-2 md:w-32" />
+  </div>
+</CrunchyForm>

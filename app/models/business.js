@@ -69,7 +69,7 @@ export default class Business extends Trackable {
     twitterUrl: yup.string().nullable().url("Twitter link must be a valid URL, starting with 'https://' or 'http://'").label('Twitter URL'),
     instagramUrl: yup.string().nullable().url("Instagram link must be a valid URL, starting with 'https://' or 'http://'").label('Instagram URL'),
     website: yup.string().nullable().url("Website must be a valid URL, starting with 'https://' or 'http://'").label('Website URL'),
-    role: yup.string().nullable(),
+    role: yup.string().required().label("Account Type"),
     categories: yup.mixed()
       .when('role', {
         is: '2types',

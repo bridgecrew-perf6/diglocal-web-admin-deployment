@@ -96,6 +96,7 @@ export default Component.extend({
       this.onUploadComplete(taskInstance.value);
       if (this.uploadImageTask.numQueued === 0) {
         this.onAllFilesUploadComplete();
+        this.resetUploader();
       }
     }
   }),
@@ -104,12 +105,16 @@ export default Component.extend({
     this.onUploadError(error);
   }),
 
-  willDestroyElement() {
+  resetUploader() {
     this.uploadTasks.clear();
     this.setProperties({
       totalFiles: 0,
       totalFilesUploaded: 0,
     });
+  },
+
+  willDestroyElement() {
+    this.resetUploader();
     this._super(...arguments);
   },
 

@@ -23,7 +23,13 @@ export default function() {
     https://www.ember-cli-mirage.com/docs/route-handlers/shorthands
   */
 
-  this.resource('businesses', { except: [ 'index' ] });
+  this.resource('businesses', { except: [ 'index', 'create' ] });
+  this.post('/businesses', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let business = schema.businesses.create(attrs);
+    schema.locations.create({ business: business, city: 'Testville', state: 'NC', zip: '27608'});
+    return business;
+  });
   this.get('businesses', getBusinesses);
   this.resource('business-images');
   this.resource('categories', { except: [ 'index' ] });

@@ -1,42 +1,24 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { task, all } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { task, all } from 'ember-concurrency';
 
 export default class BusinessNewFormComponent extends Component {
   @service store;
   @service regions;
   @service router;
 
-  @tracked categoryOptions = [];
-
-  roleOptions = [
-    'temporary',
-    'premium',
-    '2types'
-  ];
-
-  constructor() {
-    super(...arguments);
-    this.loadCategories.perform();
-  }
+  @tracked showPartOne = true;
+  @tracked showPartTwo = false;
+  @tracked showPartThree = false;
 
   willDestroy() {
     this.rollbackModel();
   }
 
-  @task(function* () {
-    let regionId = this.regions.activeRegion.id;
-    let categories = yield this.store.query('category', { region: regionId });
-    this.categoryOptions = categories;
-  })
-  loadCategories;
-
   rollbackModel() {
-    if (this.args.model) {
-      let locations = (this.args.model.hasMany('locations').value() || []).toArray();
-      locations.invoke('rollbackAttributes');
+    if (this.args.model && typeof this.args.model.rollbackAttributes === 'function') {
       this.args.model.rollbackAttributes();
     }
   }
@@ -44,19 +26,56 @@ export default class BusinessNewFormComponent extends Component {
   @task(function*() {
     let model = this.args.model;
     yield model.save();
-    //  TODO: This results in second location being created because API auto-creates location
     let locations = model.locations.filterBy('hasDirtyAttributes');
     yield all(locations.invoke('save'));
-    if (this.args.afterSave) {
-      return this.args.afterSave(this.args.model);
-    }
+    // if (this.args.afterSave) {
+    //   return this.args.afterSave(this.args.model);
+    // }
     return this.args.model;
   })
   saveTask;
 
+  @task(function*(next) {
+    let saved = yield this.saveTask.perform();
+    if (next === 2) {
+      yield this.args.model.hasMany('locations').reload();
+      this.showPartOne = false;
+      this.showPartTwo = true;
+    }
+    if (next === 3) {
+      this.showPartTwo = false;
+      this.showPartThree = true;
+    }
+    return saved;
+  })
+  saveAndNext;
+
+  @task(function*() {
+    yield this.saveTask.perform();
+    if (this.args.afterSave) {
+      return yield this.args.afterSave(this.args.model);
+    }
+  })
+  saveAndComplete;
+
   @action
   save() {
     return this.saveTask.perform();
+  }
+
+  @action
+  savePartOne() {
+    return this.saveAndNext.perform(2);
+  }
+
+  @action
+  savePartTwo() {
+    return this.saveAndNext.perform(3);
+  }
+
+  @action
+  complete() {
+    return this.saveAndComplete.perform();
   }
 
   @action
