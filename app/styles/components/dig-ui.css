@@ -5,3 +5,93 @@
 .dig-section-title {
   @apply font-bold text-2xl text-brand-primary;
 }
+
+.new-business-form {
+  min-height: 600px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.stepped-progress-bar {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+  background: white;
+}
+.stepped-progress-bar li {
+  @apply relative text-brand-primary-accent text-center uppercase text-xs leading-normal border-b border-b-2 border-brand-gray font-semibold;
+  flex: 2;
+  padding: 0 0 14px 0;
+  white-space: nowrap;
+  overflow: visible;
+  min-width: 0;
+}
+.stepped-progress-bar li:first-child,
+.stepped-progress-bar li:last-child {
+  flex: 1;
+}
+.stepped-progress-bar li:first-child {
+  text-align: left;
+}
+.stepped-progress-bar li:last-child {
+  text-align: right;
+}
+.stepped-progress-bar li:before {
+  @apply bg-brand-gray;
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid white;
+  position: absolute;
+  left: calc(50% - 5px);
+  bottom: -6px;
+  z-index: 3;
+  transition: all .2s ease-in-out;
+}
+.stepped-progress-bar li:first-child:before {
+  left: 0;
+}
+.stepped-progress-bar li:last-child:before {
+  right: 0;
+  left: auto;
+}
+.stepped-progress-bar span {
+  transition: color .3s ease-in-out;
+}
+.stepped-progress-bar li:not(.is-active) span {
+  @apply text-brand-gray;
+}
+.stepped-progress-bar .is-complete:not(:first-child):after,
+.stepped-progress-bar .is-active:not(:first-child):after {
+  content: "";
+  bottom: -2px;
+  left: -50%;
+  z-index: 2;
+  @apply border-b border-b-2 border-brand-primary-accent absolute w-full block;
+}
+.stepped-progress-bar li:last-child span {
+  @apply inline-block absolute;
+  width: 200%;
+  left: -100%;
+}
+
+.stepped-progress-bar .is-complete:last-child:after,
+.stepped-progress-bar .is-active:last-child:after {
+  width: 200%;
+  left: -100%;
+}
+
+.stepped-progress-bar .is-complete:before {
+  @apply bg-brand-primary-accent;
+}
+
+.stepped-progress-bar .is-active:before {
+  @apply bg-white border-brand-primary-accent;
+  transform: scale(1.4);
+}

@@ -7,7 +7,8 @@ export default class AuthenticatedRegionBusinessesNewRoute extends Route {
   model() {
     let activeRegion = this.regions.activeRegion;
     let business = this.store.createRecord('business', {
-      region: activeRegion
+      region: activeRegion,
+      role: 'temporary'
     });
     return business;
   }

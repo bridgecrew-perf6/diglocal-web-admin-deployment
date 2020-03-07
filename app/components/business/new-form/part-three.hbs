@@ -1,0 +1,115 @@
+<h1 class="dig-section-title mb-4">Additional Profile Details</h1>
+
+<CrunchyForm
+  @model={{@model}}
+  @formSchema={{@model.validationSchema}}
+  @onSubmit={{@save}}
+  @onCancel={{@cancel}}
+  @debounceSubmit={{true}}
+  @isReadonly={{this.isReadonly}}
+  as |form|>
+
+  <Ui::CollapsibleSection @title="Logo" @open={{true}} @disabled={{true}}>
+    <AttributeImageUploader
+      @model={{@model}}
+      @modelType="business"
+      @keyForImage="logo"
+      @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}}
+      as |uploader|>
+        <div style={{background-image @model.logo.url}} class="h-48 rounded border border-brand-gray border-dashed my-6 overflow-hidden bg-contain bg-no-repeat bg-center">
+            <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
+              {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles}}
+                {{#unless uploader.uploadTasks.length}}
+                  <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                    <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                    Click or drop file here
+                  </span>
+                {{/unless}}
+                <div class="flex flex-wrap justify-start">
+                  {{#each uploader.uploadTasks as |task|}}
+                    <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                      {{#if (not (eq task.status "pending"))}}
+                        <img src={{task.preview}} alt="File Upload Preview">
+                      {{/if}}
+                      <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
+                          <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                        {{else if (eq task.status "complete")}}
+                          <FaIcon @icon="check-circle" class="text-green-600" />
+                        {{else if (eq task.status "error")}}
+                          <FaIcon @icon="times-circle" class="text-brand-error" />
+                        {{/if}}
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              {{/x-file-input}}
+            </CrunchyDraggableDropzone>
+        </div>
+        <ul class="text-sm">
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
+            {{#if uploader.errorTasks.length}}
+              <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+            {{/if}}
+          {{/if}}
+          {{#if uploader.uploadImageTask.isRunning}}
+            <li>Uploading logo...</li>
+          {{/if}}
+        </ul>
+    </AttributeImageUploader>
+  </Ui::CollapsibleSection>
+
+  <Ui::CollapsibleSection @title="Business Details" @open={{false}}>
+    <form.text-area
+      @field="description"
+      @label="What You Need To Know"
+      @aria-label="What you need to know about the business"
+      @rows="3"
+    />
+
+    <form.text-area
+      @field="description2"
+      @label="What The Locals Say"
+      @aria-label="What the locals say about the business"
+      @rows="2"
+    />
+
+    <form.text-field
+      @field="tip"
+      @label="Local's Tip"
+      @aria-label="An insider tip or suggestion about the business"
+    />
+  </Ui::CollapsibleSection>
+
+  <Ui::CollapsibleSection @title="Website & Social Media Links" @open={{false}}>
+    <form.text-field
+      @field="website"
+      @label="Website"
+      @aria-label="Url for business website"
+    />
+
+    <form.text-field
+      @field="twitterUrl"
+      @label="Twitter"
+      @aria-label="Twitter url"
+    />
+
+    <form.text-field
+      @field="instagramUrl"
+      @label="Instagram"
+      @aria-label="Instagram url"
+    />
+
+    <form.text-field
+      @field="facebookUrl"
+      @label="Facebook"
+      @aria-label="Facebook url"
+    />
+  </Ui::CollapsibleSection>
+  <div class="flex justify-end mt-8">
+    <form.submit @value="Finish" @class="mr-2 md:w-32" />
+  </div>
+</CrunchyForm>

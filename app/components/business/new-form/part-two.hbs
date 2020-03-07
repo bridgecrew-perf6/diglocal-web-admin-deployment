@@ -1,0 +1,100 @@
+<h1 class="dig-section-title mb-4">Edit Locations</h1>
+
+<CrunchyForm
+  @model={{@model}}
+  @formSchema={{@model.validationSchema}}
+  @onSubmit={{@save}}
+  @onCancel={{@cancel}}
+  @debounceSubmit={{true}}
+  @isReadonly={{this.isReadonly}}
+  as |form|>
+
+  {{#each @model.locations as |location index|}}
+    <Ui::CollapsibleSection @title={{concat "Location " (add index 1)}} @open={{true}}>
+      <div class="pb-4">
+        {{#if (and location.isNew (gte index 1))}}
+          <CrunchyButton
+            @onClick={{action "remove" location}}
+            @class="crunchy-button--link text-sm font-medium float-right"
+            @testId="remove-location"
+          >
+            Remove
+          </CrunchyButton>
+        {{/if}}
+        <form.fields-for @model={{location}} as |locForm|>
+          <locForm.text-field
+            @field="title"
+            @label="Name"
+          />
+          <locForm.text-field
+            @field="address"
+            @label="Address"
+            @autocomplete="street-address"
+            @aria-label="Address"
+          />
+
+          <div class="w-full flex flex-wrap md:flex-no-wrap">
+            <div class="mr-4 flex-grow">
+              <locForm.text-field
+                @field="city"
+                @label="City"
+                @autocomplete="address-level2"
+                @aria-label="City"
+              />
+            </div>
+
+            <div class="mr-4 w-48 flex-shrink">
+              <locForm.text-field
+                @field="state"
+                @label="State"
+                @autocomplete="address-level1"
+                @aria-label="State"
+              />
+            </div>
+
+            <div class="w-32 flex-shrink">
+              <locForm.text-field
+                @field="zip"
+                @label="Postal Code"
+                @autocomplete="postal-code"
+                @aria-label="Postal Code"
+              />
+            </div>
+          </div>
+
+          <div class="w-full flex flex-wrap md:flex-no-wrap">
+            <div class="mr-4 flew-grow">
+              <locForm.text-field
+                @field="phone"
+                @label="Telephone"
+                @autocomplete="tel"
+                @aria-label="Telephone"
+              />
+            </div>
+            <div class="flex-grow">
+              <locForm.text-field
+                @field="menuUrl"
+                @label="Menu Url"
+                @autocomplete="url"
+                @aria-label="Menu Url"
+              />
+            </div>
+          </div>
+        </form.fields-for>
+      </div>
+    </Ui::CollapsibleSection>
+  {{/each}}
+  <div class="flex items-center justify-center my-6">
+    <CrunchyButton
+      @onClick={{action "addLocation"}}
+      @aria-label="Add a new location"
+      @class="crunchy-button--outline crunchy-button--text-sm"
+      @testId="add-location"
+    >
+      <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Location
+    </CrunchyButton>
+  </div>
+  <div class="flex justify-end mt-8">
+    <form.submit @value="Next" @class="w-32" />
+  </div>
+</CrunchyForm>
