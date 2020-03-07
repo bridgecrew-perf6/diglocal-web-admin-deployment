@@ -1,0 +1,7 @@
+<li class={{concat
+  "step "
+  (if @isActive "is-active ")
+  (if @isComplete "is-complete ")
+}}>
+  <span class="label">{{yield}}</span>
+</li>

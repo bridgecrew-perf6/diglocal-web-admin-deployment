@@ -1,3 +1,5 @@
+<h1 class="dig-section-title mb-4">Edit Locations</h1>
+
 <CrunchyForm
   @model={{@model}}
   @formSchema={{@model.validationSchema}}
@@ -9,7 +11,7 @@
 
   {{#each @model.locations as |location index|}}
     <Ui::CollapsibleSection @title={{concat "Location " (add index 1)}} @open={{true}}>
-      <div class="pb-6">
+      <div class="pb-4">
         {{#if (and location.isNew (gte index 1))}}
           <CrunchyButton
             @onClick={{action "remove" location}}

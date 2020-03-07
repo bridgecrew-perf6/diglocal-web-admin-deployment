@@ -1,3 +1,5 @@
+<h1 class="dig-section-title mb-4">Add New Business</h1>
+
 <CrunchyForm
   @model={{@model}}
   @formSchema={{@model.validationSchema}}
@@ -38,7 +40,7 @@
     </PowerSelect>
   </form.field>
 
-  <div class="flex justify-start items-center mt-8 crunchy-form__group">
+  <div class="flex flex-col items-start mt-8 crunchy-form__group">
     <XToggle
       @showLabels={{true}}
       @size="small"
@@ -52,9 +54,10 @@
       </toggle.label>
       <toggle.switch @theme='light' />
     </XToggle>
+    <p class="text-gray-600 text-sm">Only active businesses are visible to users.</p>
   </div>
 
-  <div class="flex justify-start items-center mt-8 crunchy-form__group">
+  <div class="flex flex-col items-start mt-8 crunchy-form__group">
     <XToggle
       @showLabels={{true}}
       @size="small"
@@ -68,6 +71,7 @@
       </toggle.label>
       <toggle.switch @theme='light' />
     </XToggle>
+    <p class="text-gray-600 text-sm">Featured businesses will appear within Dig Deeper content.</p>
   </div>
 
   <div class="flex justify-end mt-8">

@@ -1,5 +1,11 @@
-<div class="dig-card">
-  <h1 class="dig-section-title mb-4">Create New Business</h1>
+<div class="dig-card max-w-4xl mx-auto">
+  <div class="mb-10 mx-2">
+    <Ui::SteppedProgressBar as |bar|>
+      <bar.step @isActive={{this.showPartOne}} @isComplete={{this.partOneComplete}}>Account Setup</bar.step>
+      <bar.step @isActive={{this.showPartTwo}} @isComplete={{this.partTwoComplete}}>Locations</bar.step>
+      <bar.step @isActive={{this.showPartThree}}>Profile</bar.step>
+    </Ui::SteppedProgressBar>
+  </div>
   {{#if this.showPartOne}}
     <Business::NewForm::PartOne @model={{@model}} @save={{action "savePartOne"}} @cancel={{action "cancel"}} />
   {{/if}}

@@ -13,6 +13,14 @@ export default class BusinessNewFormComponent extends Component {
   @tracked showPartTwo = false;
   @tracked showPartThree = false;
 
+  get partOneComplete() {
+    return this.showPartTwo || this.showPartThree;
+  }
+
+  get partTwoComplete() {
+    return this.showPartThree;
+  }
+
   willDestroy() {
     this.rollbackModel();
   }
