@@ -12,13 +12,18 @@ export default class BusinessNewFormComponent extends Component {
   @tracked showPartOne = true;
   @tracked showPartTwo = false;
   @tracked showPartThree = false;
+  @tracked showPartFour = false;
 
   get partOneComplete() {
-    return this.showPartTwo || this.showPartThree;
+    return this.showPartTwo || this.showPartThree || this.showPartFour;
   }
 
   get partTwoComplete() {
-    return this.showPartThree;
+    return this.showPartThree || this.showPartFour;
+  }
+
+  get partThreeComplete() {
+    return this.showPartFour;
   }
 
   willDestroy() {
@@ -54,6 +59,10 @@ export default class BusinessNewFormComponent extends Component {
       this.showPartTwo = false;
       this.showPartThree = true;
     }
+    if (next === 4) {
+      this.showPartThree = false;
+      this.showPartFour = true;
+    }
     return saved;
   })
   saveAndNext;
@@ -79,6 +88,11 @@ export default class BusinessNewFormComponent extends Component {
   @action
   savePartTwo() {
     return this.saveAndNext.perform(3);
+  }
+
+  @action
+  savePartThree() {
+    return this.saveAndNext.perform(4);
   }
 
   @action

@@ -44,23 +44,6 @@
     <XToggle
       @showLabels={{true}}
       @size="small"
-      @value={{@model.active}}
-      @onToggle={{action (mut @model.active)}}
-      @disabled={{this.isReadonly}}
-      as |toggle|
-    >
-      <toggle.label @value={{@model.active}}>
-        <b class="pr-2">Activate listing now?</b>
-      </toggle.label>
-      <toggle.switch @theme='light' />
-    </XToggle>
-    <p class="text-gray-600 text-sm">Only active businesses are visible to users.</p>
-  </div>
-
-  <div class="flex flex-col items-start mt-8 crunchy-form__group">
-    <XToggle
-      @showLabels={{true}}
-      @size="small"
       @value={{@model.featured}}
       @onToggle={{action (mut @model.featured)}}
       @disabled={{this.isReadonly}}

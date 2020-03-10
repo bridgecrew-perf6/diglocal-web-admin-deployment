@@ -3,7 +3,8 @@
     <Ui::SteppedProgressBar as |bar|>
       <bar.step @isActive={{this.showPartOne}} @isComplete={{this.partOneComplete}}>Account Setup</bar.step>
       <bar.step @isActive={{this.showPartTwo}} @isComplete={{this.partTwoComplete}}>Locations</bar.step>
-      <bar.step @isActive={{this.showPartThree}}>Profile</bar.step>
+      <bar.step @isActive={{this.showPartThree}} @isComplete={{this.partThreeComplete}}>Profile</bar.step>
+      <bar.step @isActive={{this.showPartFour}} @isComplete={{this.partFourComplete}}>Activate</bar.step>
     </Ui::SteppedProgressBar>
   </div>
   {{#if this.showPartOne}}
@@ -15,6 +16,10 @@
   {{/if}}
 
   {{#if this.showPartThree}}
-    <Business::NewForm::PartThree @model={{@model}} @save={{action "complete"}} @cancel={{action "cancel"}} />
+    <Business::NewForm::PartThree @model={{@model}} @save={{action "savePartThree"}} @cancel={{action "cancel"}} />
+  {{/if}}
+
+  {{#if this.showPartFour}}
+    <Business::NewForm::PartFour @model={{@model}} @save={{action "complete"}} @cancel={{action "cancel"}} />
   {{/if}}
 </div>

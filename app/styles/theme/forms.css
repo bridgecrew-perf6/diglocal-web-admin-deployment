@@ -42,6 +42,14 @@
       @apply bg-gray-100 border-transparent;
     }
   }
+
+  &__checkbox {
+    @apply form-checkbox;
+  }
+
+  &__radio {
+    @apply form-radio;
+  }
 }
 
 button:disabled, input:disabled, textarea:disabled {
