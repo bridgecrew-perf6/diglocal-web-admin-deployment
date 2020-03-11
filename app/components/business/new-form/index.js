@@ -13,9 +13,10 @@ export default class BusinessNewFormComponent extends Component {
   @tracked showPartTwo = false;
   @tracked showPartThree = false;
   @tracked showPartFour = false;
+  @tracked showPartFive = false;
 
   get partOneComplete() {
-    return this.showPartTwo || this.showPartThree || this.showPartFour;
+    return this.showPartTwo || this.showPartThree || this.showPartFour || this.showPartFive;
   }
 
   get partTwoComplete() {
@@ -23,17 +24,15 @@ export default class BusinessNewFormComponent extends Component {
   }
 
   get partThreeComplete() {
-    return this.showPartFour;
+    return this.showPartFour || this.showPartFive;
+  }
+
+  get partFourComplete() {
+    return this.showPartFive;
   }
 
   willDestroy() {
-    this.rollbackModel();
-  }
-
-  rollbackModel() {
-    if (this.args.model && typeof this.args.model.rollbackAttributes === 'function') {
-      this.args.model.rollbackAttributes();
-    }
+    return this.args.rollbackModel();
   }
 
   @task(function*() {
@@ -41,10 +40,7 @@ export default class BusinessNewFormComponent extends Component {
     yield model.save();
     let locations = model.locations.filterBy('hasDirtyAttributes');
     yield all(locations.invoke('save'));
-    // if (this.args.afterSave) {
-    //   return this.args.afterSave(this.args.model);
-    // }
-    return this.args.model;
+    return model;
   })
   saveTask;
 
@@ -63,6 +59,10 @@ export default class BusinessNewFormComponent extends Component {
       this.showPartThree = false;
       this.showPartFour = true;
     }
+    if (next === 5) {
+      this.showPartFour = false;
+      this.showPartFive = true;
+    }
     return saved;
   })
   saveAndNext;
@@ -76,33 +76,12 @@ export default class BusinessNewFormComponent extends Component {
   saveAndComplete;
 
   @action
-  save() {
-    return this.saveTask.perform();
-  }
-
-  @action
-  savePartOne() {
-    return this.saveAndNext.perform(2);
-  }
-
-  @action
-  savePartTwo() {
-    return this.saveAndNext.perform(3);
-  }
-
-  @action
-  savePartThree() {
-    return this.saveAndNext.perform(4);
-  }
-
-  @action
   complete() {
     return this.saveAndComplete.perform();
   }
 
   @action
   cancel() {
-    this.rollbackModel();
-    this.router.transitionTo('authenticated.region.businesses.index');
+    this.args.rollbackModel();
   }
 }

@@ -67,6 +67,9 @@
 .stepped-progress-bar li:not(.is-active) span {
   @apply text-brand-gray;
 }
+.stepped-progress-bar li.is-complete span {
+  @apply text-brand-primary-accent;
+}
 .stepped-progress-bar .is-complete:not(:first-child):after,
 .stepped-progress-bar .is-active:not(:first-child):after {
   content: "";

@@ -6,9 +6,9 @@ import { isPresent, isBlank } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
-import ENV from 'diglocal-manage/config/environment';
+import config from 'diglocal-manage/config/environment';
 
-const INPUT_DEBOUNCE = ENV.environment !== 'test' ? 250 : 0;
+const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default class DetailsForm extends Component {
   @service regions;

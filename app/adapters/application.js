@@ -2,10 +2,10 @@ import DS from 'ember-data';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isArray } from '@ember/array';
-import ENV from 'diglocal-manage/config/environment';
+import config from 'diglocal-manage/config/environment';
 
 export default DS.JSONAPIAdapter.extend({
-  host: ENV.apiHost,
+  host: config.apiHost,
 
   namespace: 'api/v3',
 

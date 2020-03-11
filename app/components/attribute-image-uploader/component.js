@@ -6,9 +6,9 @@ import { inject as service } from '@ember/service';
 import { task, all, timeout } from 'ember-concurrency';
 import { on } from '@ember/object/evented';
 import fetch from 'fetch';
-import ENV from 'diglocal-manage/config/environment';
+import config from 'diglocal-manage/config/environment';
 
-const UPLOAD_DEBOUNCE = ENV.environment !== 'test' ? 500 : 0;
+const UPLOAD_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
 
 export default Component.extend({
   session: service(),

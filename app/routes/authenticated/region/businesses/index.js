@@ -97,12 +97,5 @@ export default Route.extend({
         sort: '-created_at'
       });
     }
-  },
-
-  actions: {
-    create() {
-      let record = this.store.createRecord('business');
-      this.transitionTo('authenticated.region.businesses.edit', record);
-    }
   }
 });

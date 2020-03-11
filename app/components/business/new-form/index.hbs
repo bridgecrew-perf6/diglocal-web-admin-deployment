@@ -4,22 +4,27 @@
       <bar.step @isActive={{this.showPartOne}} @isComplete={{this.partOneComplete}}>Account Setup</bar.step>
       <bar.step @isActive={{this.showPartTwo}} @isComplete={{this.partTwoComplete}}>Locations</bar.step>
       <bar.step @isActive={{this.showPartThree}} @isComplete={{this.partThreeComplete}}>Profile</bar.step>
-      <bar.step @isActive={{this.showPartFour}} @isComplete={{this.partFourComplete}}>Activate</bar.step>
+      <bar.step @isActive={{this.showPartFour}} @isComplete={{this.partFourComplete}}>Members</bar.step>
+      <bar.step @isActive={{this.showPartFive}}>Activate</bar.step>
     </Ui::SteppedProgressBar>
   </div>
   {{#if this.showPartOne}}
-    <Business::NewForm::PartOne @model={{@model}} @save={{action "savePartOne"}} @cancel={{action "cancel"}} />
+    <Business::NewForm::InitialSetup @model={{@model}} @save={{perform saveAndNext 2}} @cancel={{action "cancel"}} />
   {{/if}}
 
   {{#if this.showPartTwo}}
-    <Business::NewForm::PartTwo @model={{@model}} @save={{action "savePartTwo"}} @cancel={{action "cancel"}} />
+    <Business::NewForm::Locations @model={{@model}} @save={{perform saveAndNext 3}} @cancel={{action "cancel"}} />
   {{/if}}
 
   {{#if this.showPartThree}}
-    <Business::NewForm::PartThree @model={{@model}} @save={{action "savePartThree"}} @cancel={{action "cancel"}} />
+    <Business::NewForm::Profile @model={{@model}} @save={{perform saveAndNext 4}} @cancel={{action "cancel"}} />
   {{/if}}
 
   {{#if this.showPartFour}}
-    <Business::NewForm::PartFour @model={{@model}} @save={{action "complete"}} @cancel={{action "cancel"}} />
+    <Business::NewForm::Users @model={{@model}} @save={{perform saveAndNext 5}} @cancel={{action "cancel"}} />
+  {{/if}}
+
+  {{#if this.showPartFive}}
+    <Business::NewForm::Finish @model={{@model}} @save={{action "complete"}} @cancel={{action "cancel"}} />
   {{/if}}
 </div>

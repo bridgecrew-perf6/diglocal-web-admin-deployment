@@ -9,4 +9,10 @@ export default class AuthenticatedRegionBusinessesNewController extends Controll
   afterSave(model) {
     this.router.transitionTo('authenticated.region.businesses.view', model);
   }
+
+  @action
+  rollbackModel() {
+    this.model.locations.invoke('rollbackAttributes');
+    this.model.rollbackAttributes();
+  }
 }

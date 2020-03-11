@@ -1,0 +1,37 @@
+<h1 class="dig-section-title mb-4">Add Users</h1>
+
+<CrunchyForm
+  @model={{@model}}
+  @formSchema={{@model.validationSchema}}
+  @onSubmit={{@save}}
+  @onCancel={{@cancel}}
+  @debounceSubmit={{true}}
+  @isReadonly={{this.isReadonly}}
+  as |form|>
+      <p class="mb-4">Added users will have member privileges for this business, including the ability to create, edit, and delete content.</p>
+      <form.field @label="Select user" class="mt-4">
+        <PowerSelect
+          @search={{perform this.searchUsers}}
+          @searchEnabled={{true}}
+          @loadingMessage="Searching users...."
+          @placeholder="Click to search"
+          @selected={{this.userToAdd}}
+          @allowClear={{true}}
+          @onChange={{action (mut this.userToAdd)}} as |user|
+          >
+            <span class="ml-1">{{user.email}}</span>
+            {{#if (not (eq user.id this.userToAdd.id))}}<span class="text-sm text-gray-600">@{{user.user}}</span>{{/if}}
+        </PowerSelect>
+      </form.field>
+      <CrunchyButton @onClick={{action "addUser"}} @value="Add Member" @class="crunchy-button--outline crunchy-button--text-sm" />
+      <div class="my-4">
+        {{#each @model.users as |user|}}
+          <div class="mb-2">
+            <Business::Owner::ListRow @model={{user}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
+          </div>
+        {{/each}}
+      </div>
+  <div class="flex justify-end mt-8">
+    <form.submit @value="Next" @class="mr-2 md:w-32" />
+  </div>
+</CrunchyForm>
