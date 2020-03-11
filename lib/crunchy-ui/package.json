@@ -7,9 +7,8 @@
     "ember-cli-babel": "*",
     "ember-cli-htmlbars": "*",
     "ember-concurrency": "^1.0.0",
-    "ember-cp-validations": "^4.0.0-beta.9",
     "ember-crumbly": "^3.0.1",
-    "ember-mobiledoc-editor": "^0.5.15",
+    "ember-mobiledoc-editor": "github:crunchybananas/ember-mobiledoc-editor#fix-hash-override",
     "ember-modal-dialog": "^3.0.0-beta.4",
     "ember-power-select": "^3.0.4",
     "ember-tag-input": "^1.2.2"

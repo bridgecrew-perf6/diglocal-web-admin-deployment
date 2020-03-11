@@ -2246,7 +2246,7 @@ ember-cli-babel@*:
     ensure-posix-path "^1.0.2"
     semver "^5.5.0"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.2:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.1, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -2278,33 +2278,6 @@ ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.10.0, ember-c
     "@babel/polyfill" "^7.7.0"
     "@babel/preset-env" "^7.7.0"
     "@babel/runtime" "^7.7.0"
-    amd-name-resolver "^1.2.1"
-    babel-plugin-debug-macros "^0.3.0"
-    babel-plugin-ember-modules-api-polyfill "^2.12.0"
-    babel-plugin-module-resolver "^3.1.1"
-    broccoli-babel-transpiler "^7.3.0"
-    broccoli-debug "^0.6.4"
-    broccoli-funnel "^2.0.1"
-    broccoli-source "^1.1.0"
-    clone "^2.1.2"
-    ember-cli-babel-plugin-helpers "^1.1.0"
-    ember-cli-version-checker "^2.1.2"
-    ensure-posix-path "^1.0.2"
-    semver "^5.5.0"
-
-ember-cli-babel@^7.1.2:
-  version "7.12.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.12.0.tgz#064997d199384be8c88d251f30ef67953d3bddc5"
-  integrity sha512-+EGQsbPvh19nNXHCm6rVBx2CdlxQlzxMyhey5hsGViDPriDI4PFYXYaFWdGizDrmZoDcG/Ywpeph3hl0NxGQTg==
-  dependencies:
-    "@babel/core" "^7.0.0"
-    "@babel/plugin-proposal-class-properties" "^7.3.4"
-    "@babel/plugin-proposal-decorators" "^7.3.0"
-    "@babel/plugin-transform-modules-amd" "^7.0.0"
-    "@babel/plugin-transform-runtime" "^7.2.0"
-    "@babel/polyfill" "^7.0.0"
-    "@babel/preset-env" "^7.0.0"
-    "@babel/runtime" "^7.2.0"
     amd-name-resolver "^1.2.1"
     babel-plugin-debug-macros "^0.3.0"
     babel-plugin-ember-modules-api-polyfill "^2.12.0"
@@ -2394,15 +2367,6 @@ ember-copy@^1.0.0:
   dependencies:
     ember-cli-babel "^6.6.0"
 
-ember-cp-validations@^4.0.0-beta.9:
-  version "4.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-4.0.0-beta.9.tgz#372a2d772457a92949ebd80aad703e839d7c17fc"
-  integrity sha512-TfUBOkQFzhLvphtFauuTu0ogdY/JRXCtR4yF5++TS3cHPe/SJKwykGzKjjpu+mvO57NacNC8rh8GCanzzHQVxg==
-  dependencies:
-    ember-cli-babel "^7.1.2"
-    ember-require-module "^0.3.0"
-    ember-validators "^2.0.0"
-
 ember-crumbly@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/ember-crumbly/-/ember-crumbly-3.0.1.tgz#553e4fbc109abbde38288c68546d38ffc1c808a6"
@@ -2443,10 +2407,9 @@ ember-maybe-in-element@^0.4.0:
   dependencies:
     ember-cli-babel "^7.1.0"
 
-ember-mobiledoc-editor@^0.5.15:
+"ember-mobiledoc-editor@github:crunchybananas/ember-mobiledoc-editor#fix-hash-override":
   version "0.5.15"
-  resolved "https://registry.yarnpkg.com/ember-mobiledoc-editor/-/ember-mobiledoc-editor-0.5.15.tgz#eeb7943741763648a836e7bbfe8c760b498f23a8"
-  integrity sha512-3UzgKJ6DFzRlXob0ahu5OpnP1yrbedvEXSAgXRTrHLCiWmI0YxzTXpzTl0NjELuHbF7HiTU0M8LLu9x+FoJ8eg==
+  resolved "https://codeload.github.com/crunchybananas/ember-mobiledoc-editor/tar.gz/c6342f5ed0e4dc2432694df460c0784792102b50"
   dependencies:
     broccoli-funnel "^1.1.0"
     broccoli-merge-trees "^2.0.0"
@@ -2454,7 +2417,7 @@ ember-mobiledoc-editor@^0.5.15:
     ember-cli-htmlbars "^2.0.3"
     ember-wormhole "^0.5.1"
     mobiledoc-dom-renderer "^0.6.5"
-    mobiledoc-kit "^0.11.1"
+    mobiledoc-kit "^0.11.2"
 
 ember-modal-dialog@^3.0.0-beta.4:
   version "3.0.0-beta.4"
@@ -2489,13 +2452,6 @@ ember-power-select@^3.0.4:
     ember-text-measurer "^0.5.0"
     ember-truth-helpers "^2.1.0"
 
-ember-require-module@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/ember-require-module/-/ember-require-module-0.3.0.tgz#65aff7908b5b846467e4526594d33cfe0c23456b"
-  integrity sha512-rYN4YoWbR9VlJISSmx0ZcYZOgMcXZLGR7kdvp3zDerjIvYmHm/3p+K56fEAYmJILA6W4F+cBe41Tq2HuQAZizA==
-  dependencies:
-    ember-cli-babel "^6.9.2"
-
 ember-rfc176-data@^0.3.12:
   version "0.3.12"
   resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.12.tgz#90d82878e69e2ac9a5438e8ce14d12c6031c5bd2"
@@ -2522,14 +2478,6 @@ ember-truth-helpers@2.1.0, ember-truth-helpers@^2.1.0:
   integrity sha512-BQlU8aTNl1XHKTYZ243r66yqtR9JU7XKWQcmMA+vkqfkE/c9WWQ9hQZM8YABihCmbyxzzZsngvldokmeX5GhAw==
   dependencies:
     ember-cli-babel "^6.6.0"
-
-ember-validators@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-validators/-/ember-validators-2.0.0.tgz#4100e17feb9c3a6cf4072732010697bbd674f8cb"
-  integrity sha512-OhXGN2UbFQY+lhkWOdW347NZsIWGj/fpTJbOfNxjyMQW/c3fvPEIvrhlvWf1JwHGKQTJDHpMQJgA/Luq39GDgQ==
-  dependencies:
-    ember-cli-babel "^6.9.2"
-    ember-require-module "^0.3.0"
 
 ember-wormhole@^0.5.1, ember-wormhole@^0.5.5:
   version "0.5.5"
@@ -2897,7 +2845,7 @@ mobiledoc-dom-renderer@^0.6.5:
   resolved "https://registry.yarnpkg.com/mobiledoc-dom-renderer/-/mobiledoc-dom-renderer-0.6.6.tgz#4161e7b74dbf82b15c637385ecc3135bc663d149"
   integrity sha512-zROTcb/LJyH9udDO1d3zludyP4cOaBdb6HtueP6yXWOxKy6hxr/mM6tgJTVOfYTRMThNytctOAuDG703dMMbdg==
 
-mobiledoc-kit@^0.11.1:
+mobiledoc-kit@^0.11.2:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/mobiledoc-kit/-/mobiledoc-kit-0.11.2.tgz#969a8eb795ba1ae39ebc1c47f1dce53b053b210a"
   integrity sha512-rD+ZB4cmlIlX1hWjtIO2+DchYGB7JOw4fqClhfUNXu7kNIJLaF2R4Z8dGehhy3bLr8+/2DwLTWGawbDhCs/oLA==
