@@ -108,7 +108,7 @@
     "yup": "^0.28.1"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": "10.*"
   },
   "ember": {
     "edition": "octane"
