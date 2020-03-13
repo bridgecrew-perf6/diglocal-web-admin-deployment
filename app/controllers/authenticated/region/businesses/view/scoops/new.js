@@ -9,4 +9,9 @@ export default class AuthenticatedRegionBusinessesViewScoopsNewController extend
   afterSave(model) {
     this.router.transitionTo('authenticated.region.businesses.view.scoops.view', model);
   }
+
+  @action
+  rollbackModel() {
+    this.model.rollbackAttributes();
+  }
 }

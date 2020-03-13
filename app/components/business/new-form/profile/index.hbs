@@ -20,7 +20,7 @@
             <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
               {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles}}
                 {{#unless uploader.uploadTasks.length}}
-                  <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                  <span class="my-2 text-black p-4 text-sm mx-2 font-semibold flex flex-col items-center opacity-50 bg-white rounded">
                     <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
                     Click or drop file here
                   </span>
@@ -28,9 +28,7 @@
                 <div class="flex flex-wrap justify-start">
                   {{#each uploader.uploadTasks as |task|}}
                     <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
-                      {{#if (not (eq task.status "pending"))}}
-                        <img src={{task.preview}} alt="File Upload Preview">
-                      {{/if}}
+                      <img src={{task.preview}} alt="File Upload Preview">
                       <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
                         {{#if (or task.isRunning (eq task.status "pending"))}}
                           <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />

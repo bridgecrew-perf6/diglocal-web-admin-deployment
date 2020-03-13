@@ -12,7 +12,8 @@ export default class ScoopNewFormInitialSetupComponent extends Component {
 
   @(task(function* (search) {
     yield timeout(INPUT_DEBOUNCE);
-    let filter = Object.assign({}, { search });
+    let regionId = this.regions.activeRegion.id;
+    let filter = Object.assign({}, { search, region: regionId });
     filter = removeEmpty(filter);
     return this.store.query('business', { filter });
   }).restartable())
