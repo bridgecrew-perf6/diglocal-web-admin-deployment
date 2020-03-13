@@ -4,7 +4,7 @@ import { authenticateSession } from 'ember-simple-auth/test-support';
 import { testId } from 'diglocal-manage/tests/helpers';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
 import setupActiveRegion from 'diglocal-manage/tests/helpers/setup-active-region';
-import { isFlatpickrOpen, setFlatpickrDate, closeFlatpickrDate } from 'ember-flatpickr/test-support/helpers';
+import { setFlatpickrDate, closeFlatpickrDate } from 'ember-flatpickr/test-support/helpers';
 import moment from 'moment';
 
 module('Acceptance | View Business | Scoops | New', function(hooks) {
@@ -23,20 +23,31 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
   const fillOutRecurringDealScoop = async function() {
     await fillIn(testId('description-field'), '2-for-1 drinks');
     await fillIn(testId('fineText-field'), 'Celebrate the end of the week with 2-for-1 drinks');
+
+    await click(testId('next'));
+
     await click(`${testId('isDeal-toggle')} .x-toggle`);
+
+    await click(testId('next'));
+    await click(testId('next'));
+
     await click(testId('post-scoop-weekly'));
     await click(testId('post-on-Thursday'));
     await click(testId('post-on-Friday'));
     await click(`${testId('recurring-display-to')} input[type="text"]`);
     await setFlatpickrDate(`${testId('recurring-display-to')} input`, '2050-10-23', true);
     await closeFlatpickrDate(`${testId('recurring-display-to')} input`);
+
+    await click(testId('next'));
   };
 
-  const fillOutOneTimeScoop = async function() {
+  const fillOutOneTimeScoop = async function(context) {
     await fillIn(testId('description-field'), 'Spring festival');
     await fillIn(testId('fineText-field'), 'Annual spring festival and parade');
-    await click(`${testId('isEvent-toggle')} .x-toggle`);
 
+    await click(testId('next'));
+
+    await click(`${testId('isEvent-toggle')} .x-toggle`);
     await click(`${testId('event-date')} input[type="text"]`);
     await setFlatpickrDate(`${testId('event-date')} input`, '2021-04-18', true);
     await closeFlatpickrDate(`${testId('event-date')} input`);
@@ -48,6 +59,10 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
     await click(`${testId('event-end-time')} input[type="text"]`);
     await setFlatpickrDate(`${testId('event-end-time')} input`, '18:00', true);
     await closeFlatpickrDate(`${testId('event-end-time')} input`);
+
+    await click(testId('next'));
+    await click(testId('next'));
+    await click(testId('next'));
 
     // await click(testId('post-scoop-once'));
 
@@ -64,8 +79,7 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
       assert.equal(currentURL(), `/region/${this.region.id}/businesses/${this.business.id}/scoops/new`);
       assert.dom(testId('selected-business-name')).hasText(this.business.name, 'Business is pre-selected for new scoop');
       await fillOutRecurringDealScoop();
-      assert.notOk(isFlatpickrOpen(0), '');
-      await click(testId('save-scoop'));
+      await click(testId('finish'));
 
       let created = this.server.schema.scoops.first();
       assert.equal(created.businessId, this.business.id, 'Scoop is created with relationship to business');
@@ -91,9 +105,10 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
       assert.equal(currentURL(), `/region/${this.region.id}/businesses/${this.business.id}/scoops/new`);
       assert.dom(testId('selected-business-name')).hasText(this.business.name, 'Business is pre-selected for new scoop');
       await fillOutOneTimeScoop();
-      await click(testId('save-scoop'));
+      await click(testId('finish'));
 
       let created = this.server.schema.scoops.first();
+      console.log(created);
       assert.equal(created.businessId, this.business.id, 'Scoop is created with relationship to business');
       assert.ok(created.description, 'Scoop has description');
       assert.ok(created.fineText, 'Scoop has fineText');

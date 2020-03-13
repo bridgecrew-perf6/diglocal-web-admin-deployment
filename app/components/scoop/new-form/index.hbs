@@ -39,10 +39,10 @@
       <div class="mt-8 flex  {{if (eq section 0) "justify-end" "justify-between"}}">
         <div class="w-full">
           {{#if (gt section 0)}}
-            <CrunchyButton @onClick={{this.goBack}} @value="Previous" @class="crunchy-button--outline sm:w-48" />
+            <CrunchyButton @onClick={{this.goBack}} @value="Previous" @class="crunchy-button--outline sm:w-48" @testId="previous" />
           {{/if}}
         </div>
-        <form.submit @value={{if (lt section 4) "Next" "Finish"}} @class="w-48" />
+        <form.submit @value={{if (lt section 4) "Next" "Finish"}} @class="w-48" @testId={{if (lt section 4) "next" "finish"}} />
       </div>
     </CrunchyForm>
   </div>

@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 
 export default class ScoopNewFormDetailsComponent extends Component {
-  @tracked showEventFields = true;
+  @tracked showEventFields = false;
 
   @action
   toggleEventFields(value) {

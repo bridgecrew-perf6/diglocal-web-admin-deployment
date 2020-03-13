@@ -81,7 +81,7 @@
       </div>
     </div>
   {{else}}
-    <form.field @field="postAt" @label={{if @model.isNew "Post Date" "Post on:"}} data-test-id="post-at" class="w-full">
+    <form.field @field="postAt" @label={{if @isNewForm "Post Date" "Post on:"}} data-test-id="post-at" class="w-full">
       <EmberFlatpickr
         @allowInput={{false}}
         @altInput={{true}}

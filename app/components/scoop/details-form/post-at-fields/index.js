@@ -34,7 +34,7 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
       this.postAtDate = this.args.model.postAt;
     } else {
       this.postAtDate = Date.now();
-      if (this.args.model.isNew) {
+      if (this.args.isNewForm) {
         this.args.model.postAt = moment.tz(this.postAtDate, this.activeRegionTimeZone).format(momentFormat);
       }
     }
