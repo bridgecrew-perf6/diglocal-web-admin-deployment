@@ -10,29 +10,7 @@ export default class ScoopNewFormComponent extends Component {
   @service router;
 
   @tracked sectionIndex = 0;
-  maxIndex = 4;
-
-  // @tracked showPartOne = true;
-  // @tracked showPartTwo = false;
-  // @tracked showPartThree = false;
-  // @tracked showPartFour = false;
-  // @tracked showPartFive = false;
-
-  // get partOneComplete() {
-  //   return this.showPartTwo || this.showPartThree || this.showPartFour || this.showPartFive;
-  // }
-  //
-  // get partTwoComplete() {
-  //   return this.showPartThree || this.showPartFour;
-  // }
-  //
-  // get partThreeComplete() {
-  //   return this.showPartFour || this.showPartFive;
-  // }
-  //
-  // get partFourComplete() {
-  //   return this.showPartFive;
-  // }
+  maxIndex = 3;
 
   willDestroy() {
     return this.args.rollbackModel();
@@ -59,19 +37,6 @@ export default class ScoopNewFormComponent extends Component {
   goBack() {
     this.sectionIndex -= 1;
   }
-
-  // @task(function*() {
-  //   yield this.saveTask.perform();
-  //   if (this.args.afterSave) {
-  //     return yield this.args.afterSave(this.args.model);
-  //   }
-  // })
-  // saveAndComplete;
-
-  // @action
-  // complete() {
-  //   return this.saveAndComplete.perform();
-  // }
 
   @action
   cancel() {

@@ -1,6 +1,7 @@
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
+import { task } from 'ember-concurrency';
 
 export default class ScoopNewFormDetailsComponent extends Component {
   @tracked showEventFields = false;
@@ -14,4 +15,9 @@ export default class ScoopNewFormDetailsComponent extends Component {
       this.args.model.eventEndTime = null;
     }
   }
+
+  @task(function*() {
+    return yield this.args.model.reload();
+  })
+  onAllFilesUploadComplete;
 }

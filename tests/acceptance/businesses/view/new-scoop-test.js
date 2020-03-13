@@ -29,7 +29,6 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
     await click(`${testId('isDeal-toggle')} .x-toggle`);
 
     await click(testId('next'));
-    await click(testId('next'));
 
     await click(testId('post-scoop-weekly'));
     await click(testId('post-on-Thursday'));
@@ -41,7 +40,7 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
     await click(testId('next'));
   };
 
-  const fillOutOneTimeScoop = async function(context) {
+  const fillOutOneTimeScoop = async function() {
     await fillIn(testId('description-field'), 'Spring festival');
     await fillIn(testId('fineText-field'), 'Annual spring festival and parade');
 
@@ -60,7 +59,6 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
     await setFlatpickrDate(`${testId('event-end-time')} input`, '18:00', true);
     await closeFlatpickrDate(`${testId('event-end-time')} input`);
 
-    await click(testId('next'));
     await click(testId('next'));
     await click(testId('next'));
 
@@ -108,7 +106,6 @@ module('Acceptance | View Business | Scoops | New', function(hooks) {
       await click(testId('finish'));
 
       let created = this.server.schema.scoops.first();
-      console.log(created);
       assert.equal(created.businessId, this.business.id, 'Scoop is created with relationship to business');
       assert.ok(created.description, 'Scoop has description');
       assert.ok(created.fineText, 'Scoop has fineText');
