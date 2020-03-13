@@ -1,0 +1,10 @@
+<h1 class="dig-section-title mb-4">When should this scoop be posted?</h1>
+
+{{#with @form as |form|}}
+  <Scoop::DetailsForm::PostAtFields
+    @form={{form}}
+    @model={{@model}}
+    @didUpdateDays={{action (mut @model.daysOfWeek)}}
+    @hideRecurringLabel={{true}}
+  />
+{{/with}}

@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
-export default class BusinessNewFormPartOneComponent extends Component {
+export default class BusinessNewFormInitialSetupComponent extends Component {
   @service store;
   @service regions;
 

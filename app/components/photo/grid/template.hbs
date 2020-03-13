@@ -1,5 +1,5 @@
 <DragSortList
-  @items={{sort-by "position" this.model}}
+  @items={{sort-by "position" @model}}
   @isHorizontal={{true}}
   @dragEndAction={{action "dragEnd"}} as |item|>
   <div
@@ -24,7 +24,7 @@
   </div>
 </DragSortList>
 
-{{#if (or (not this.model) (eq this.model.length 0))}}
+{{#if (or (not @model) (eq @model.length 0))}}
   <div class="border rounded bg-white m-4 p-6">
     <p> No photos found. </p>
   </div>

@@ -1,0 +1,49 @@
+{{#let this.sectionIndex as |section|}}
+  <div class="dig-card max-w-4xl mx-auto">
+    <div class="mb-10 mx-2">
+      <Ui::SteppedProgressBar as |bar|>
+        <bar.step @isActive={{eq section 0}} @isComplete={{gt section 0}}>Create</bar.step>
+        <bar.step @isActive={{eq section 1}} @isComplete={{gt section 1}}>Details</bar.step>
+        <bar.step @isActive={{eq section 2}} @isComplete={{gt section 2}}>Add Image</bar.step>
+        <bar.step @isActive={{eq section 3}} @isComplete={{gt section 3}}>Schedule</bar.step>
+        <bar.step @isActive={{eq section 4}} @isComplete={{gt section 4}}>Review</bar.step>
+      </Ui::SteppedProgressBar>
+    </div>
+
+    <CrunchyForm
+      @model={{@model}}
+      @formSchema={{@model.validationSchema}}
+      @onSubmit={{perform this.saveAndNext}}
+      @onCancel={{this.cancel}}
+      @debounceSubmit={{false}}
+      as |form|>
+      {{#if (eq section 0)}}
+        <Scoop::NewForm::InitialSetup @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 1)}}
+        <Scoop::NewForm::Details @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 2)}}
+        <Scoop::NewForm::Images @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 3)}}
+        <Scoop::NewForm::Schedule @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 4)}}
+        <Scoop::NewForm::Finish @form={{form}} @model={{@model}} />
+      {{/if}}
+      <div class="mt-8 flex  {{if (eq section 0) "justify-end" "justify-between"}}">
+        <div class="w-full">
+          {{#if (gt section 0)}}
+            <CrunchyButton @onClick={{this.goBack}} @value="Previous" @class="crunchy-button--outline sm:w-48" />
+          {{/if}}
+        </div>
+        <form.submit @value={{if (lt section 4) "Next" "Finish"}} @class="w-48" />
+      </div>
+    </CrunchyForm>
+  </div>
+{{/let}}

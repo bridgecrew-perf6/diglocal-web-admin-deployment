@@ -1,5 +1,5 @@
 {{#with @form as |form|}}
-  <form.field @field="isRecurring" @label="When should this scoop be posted?">
+  <form.field @field="isRecurring" @label="Post schedule" aria-label="Is this a recurring scoop?">
     <RadioButton
       @value={{false}}
       @groupValue={{@model.isRecurring}}

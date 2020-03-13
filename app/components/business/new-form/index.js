@@ -20,7 +20,7 @@ export default class BusinessNewFormComponent extends Component {
   }
 
   get partTwoComplete() {
-    return this.showPartThree || this.showPartFour;
+    return this.showPartThree || this.showPartFour || this.showPartFive;
   }
 
   get partThreeComplete() {
