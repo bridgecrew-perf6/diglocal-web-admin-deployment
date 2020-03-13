@@ -1,0 +1,31 @@
+<h1 class="dig-section-title mb-4">Create a new scoop</h1>
+
+{{#with @form as |form|}}
+  <form.field @field="business" @label="What business does this scoop belong to?">
+    <PowerSelect
+      @search={{perform this.searchBusinesses}}
+      @searchEnabled={{true}}
+      @loadingMessage="Searching businesses...."
+      @placeholder="Click to search"
+      @selected={{@model.business}}
+      @allowClear={{false}}
+      @disabled={{or form.isReadonly (is-active "authenticated.region.businesses.view")}}
+      @onChange={{action (mut @model.business)}} as |business|
+      >
+        <span data-test-id="selected-business-name">{{business.name}}</span>
+    </PowerSelect>
+  </form.field>
+
+  <form.text-field
+    @field="description"
+    @label="Title"
+    @placeholder="Give a headline for this scoop"
+  />
+
+  <form.text-area
+    @field="fineText"
+    @label="Additional Details"
+    @rows="5"
+    @placeholder="Add more in-depth details here"
+  />
+{{/with}}

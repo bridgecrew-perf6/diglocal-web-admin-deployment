@@ -1,5 +1,5 @@
 {{#with @form as |form|}}
-  <form.field @field="isRecurring" @label="When should this scoop be posted?">
+  <form.field @field="isRecurring" @label="Post schedule" aria-label="Is this a recurring scoop?">
     <RadioButton
       @value={{false}}
       @groupValue={{@model.isRecurring}}
@@ -81,7 +81,7 @@
       </div>
     </div>
   {{else}}
-    <form.field @field="postAt" @label={{if @model.isNew "Post Date" "Post on:"}} data-test-id="post-at" class="w-full">
+    <form.field @field="postAt" @label={{if @isNewForm "Post Date" "Post on:"}} data-test-id="post-at" class="w-full">
       <EmberFlatpickr
         @allowInput={{false}}
         @altInput={{true}}

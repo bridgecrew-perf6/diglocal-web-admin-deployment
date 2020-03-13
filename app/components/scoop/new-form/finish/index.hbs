@@ -1,0 +1,28 @@
+<h1 class="dig-section-title mb-4">Success!</h1>
+
+{{#with @form as |form|}}
+  <div class="">
+    <p class="mb-8 text-xl">
+      Your scoop has been created and saved.
+    </p>
+
+    <div class="flex flex-col items-start mb-8">
+      <XToggle
+        @showLabels={{true}}
+        @size="small"
+        @value={{@model.active}}
+        @onToggle={{action (mut @model.active)}}
+        @disabled={{this.isReadonly}}
+        as |toggle|
+      >
+        <toggle.label @value={{@model.active}}>
+          <b class="pr-2 text-lg">Activate scoop now?</b>
+        </toggle.label>
+        <toggle.switch @theme='light' />
+      </XToggle>
+      <p class="text-gray-600 text-sm">You can change this later at anytime.</p>
+    </div>
+
+    <p class="mb-2"><span class="font-semibold">Only active scoops are visible to users.</span> Your scheduled post date will not take effect until the scoop is activated.</p>
+  </div>
+{{/with}}

@@ -1,12 +1,9 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 
-export default class BusinessNewFormPartThreeComponent extends Component {
-  @tracked uploadCompleted = false;
-
+export default class BusinessNewFormProfileComponent extends Component {
   @task(function*() {
-    yield this.args.model.reload();
+    return yield this.args.model.reload();
   })
   onAllFilesUploadComplete;
 }

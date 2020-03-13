@@ -1,22 +1,74 @@
-<h1 class="dig-section-title mb-4">Additional Profile Details</h1>
+<h1 class="dig-section-title mb-4">What type of scoop is this?</h1>
 
-<CrunchyForm
-  @model={{@model}}
-  @formSchema={{@model.validationSchema}}
-  @onSubmit={{@save}}
-  @onCancel={{@cancel}}
-  @debounceSubmit={{true}}
-  @isReadonly={{this.isReadonly}}
-  as |form|>
+{{#with @form as |form|}}
+  <div class="flex justify-start items-center my-4 crunchy-form__group">
+    <XToggle
+      @showLabels={{true}}
+      @size="small"
+      @value={{@model.isDeal}}
+      @onToggle={{action (mut @model.isDeal)}}
+      @disabled={{form.isReadonly}}
+      data-test-id="isDeal-toggle"
+      as |toggle|
+    >
+      <toggle.label @value={{@model.isDeal}}>
+        <b class="pr-2">Is this a deal or special?</b>
+      </toggle.label>
+      <toggle.switch
+        @theme='light'
+        @onLabel='Yes'
+        @offLabel='No'
+      />
+    </XToggle>
+  </div>
 
-  <Ui::CollapsibleSection @title="Logo" @open={{true}} @disabled={{true}}>
+  <div class="flex justify-start items-center my-4 crunchy-form__group">
+    <XToggle
+      @showLabels={{true}}
+      @size="small"
+      @value={{this.showEventFields}}
+      @onToggle={{action "toggleEventFields"}}
+      @disabled={{form.isReadonly}}
+      data-test-id="isEvent-toggle"
+      as |toggle|
+    >
+      <toggle.label @value={{this.showEventFields}}>
+        <b class="pr-2">Is this an event?</b>
+      </toggle.label>
+      <toggle.switch
+        @theme='light'
+        @onLabel='Yes'
+        @offLabel='No'
+      />
+    </XToggle>
+  </div>
+
+  {{#if this.showEventFields}}
+    <Scoop::DetailsForm::EventFields
+      @form={{form}}
+      @model={{@model}}
+      @onChangeEventDate={{action (mut @model.eventDate)}}
+      @onChangeEventStart={{action (mut @model.eventStartTime)}}
+      @onChangeEventEnd={{action (mut @model.eventEndTime)}}
+    />
+
+    <form.text-field
+      @field="ticketUrl"
+      @label="Ticket Url"
+      @aria-label="Ticket Url"
+    />
+  {{/if}}
+
+  <div class="mt-10">
+    <h1 class="dig-section-title mb-4">Add an image</h1>
+
     <AttributeImageUploader
       @model={{@model}}
-      @modelType="business"
-      @keyForImage="logo"
+      @modelType="scoop"
+      @keyForImage="image"
       @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}}
       as |uploader|>
-        <div style={{background-image @model.logo.url}} class="h-48 rounded border border-brand-gray border-dashed my-6 overflow-hidden bg-contain bg-no-repeat bg-center">
+        <div style={{background-image @model.image.sizes.full}} class="h-48 rounded border border-brand-gray border-dashed my-6 overflow-hidden bg-contain bg-no-repeat bg-center">
             <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
               {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles}}
                 {{#unless uploader.uploadTasks.length}}
@@ -54,60 +106,9 @@
             {{/if}}
           {{/if}}
           {{#if uploader.uploadImageTask.isRunning}}
-            <li>Uploading logo...</li>
+            <li>Uploading image...</li>
           {{/if}}
         </ul>
     </AttributeImageUploader>
-  </Ui::CollapsibleSection>
-
-  <Ui::CollapsibleSection @title="Business Details" @open={{false}}>
-    <form.text-area
-      @field="description"
-      @label="What You Need To Know"
-      @aria-label="What you need to know about the business"
-      @rows="3"
-    />
-
-    <form.text-area
-      @field="description2"
-      @label="What The Locals Say"
-      @aria-label="What the locals say about the business"
-      @rows="2"
-    />
-
-    <form.text-field
-      @field="tip"
-      @label="Local's Tip"
-      @aria-label="An insider tip or suggestion about the business"
-    />
-  </Ui::CollapsibleSection>
-
-  <Ui::CollapsibleSection @title="Website & Social Media Links" @open={{false}}>
-    <form.text-field
-      @field="website"
-      @label="Website"
-      @aria-label="Url for business website"
-    />
-
-    <form.text-field
-      @field="twitterUrl"
-      @label="Twitter"
-      @aria-label="Twitter url"
-    />
-
-    <form.text-field
-      @field="instagramUrl"
-      @label="Instagram"
-      @aria-label="Instagram url"
-    />
-
-    <form.text-field
-      @field="facebookUrl"
-      @label="Facebook"
-      @aria-label="Facebook url"
-    />
-  </Ui::CollapsibleSection>
-  <div class="flex justify-end mt-8">
-    <form.submit @value="Next" @class="mr-2 md:w-32" />
   </div>
-</CrunchyForm>
+{{/with}}

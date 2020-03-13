@@ -8,7 +8,7 @@ import { on } from '@ember/object/evented';
 import fetch from 'fetch';
 import config from 'diglocal-manage/config/environment';
 
-const UPLOAD_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
+const UPLOAD_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default Component.extend({
   session: service(),
@@ -90,12 +90,12 @@ export default Component.extend({
     }
   }).enqueue().maxConcurrency(1).evented(),
 
-  onUploadSucceeded: on('uploadImageTask:succeeded', function (taskInstance) {
+  onUploadSucceeded: on('uploadImageTask:succeeded', async function (taskInstance) {
     if (taskInstance.status === 'complete') {
       this.incrementProperty('totalFilesUploaded');
-      this.onUploadComplete(taskInstance.value);
+      await this.onUploadComplete(taskInstance.value);
       if (this.uploadImageTask.numQueued === 0) {
-        this.onAllFilesUploadComplete();
+        await this.onAllFilesUploadComplete();
         this.resetUploader();
       }
     }
