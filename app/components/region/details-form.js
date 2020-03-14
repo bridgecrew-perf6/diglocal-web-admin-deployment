@@ -4,30 +4,33 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
 import { task } from 'ember-concurrency';
+import TZ_MAPPING from 'diglocal-manage/data/time-zone-mapping';
 
 class RegionDetailsForm extends Component {
   @tracked isEditing = false;
+  @tracked canToggleEdit = true;
   @tracked showDestroyModal = false;
 
   @not('isEditing') isReadonly;
 
+  get zoneOptions() {
+    return Object.entries(TZ_MAPPING);
+  }
+
   constructor() {
     super(...arguments);
     if (isPresent(this.args.isEditing)) {
-      this.isEditing = this.args.isEditing
+      this.isEditing = this.args.isEditing;
+    }
+    if (isPresent(this.args.canToggleEdit)) {
+      this.canToggleEdit = this.args.canToggleEdit;
     }
   }
 
   willDestroy() {
-    this.rollbackModel();
     this.showDestroyModal = false;
     this.isEditing = false;
-  }
-
-  rollbackModel() {
-    if (this.args.model && this.args.model.hasDirtyAttributes) {
-      this.args.model.rollbackAttributes();
-    }
+    this.args.rollbackModel();
   }
 
   @task(function*() {
@@ -41,14 +44,22 @@ class RegionDetailsForm extends Component {
   saveTask;
 
   @action
+  didChangeZone(event) {
+    event.stopPropagation();
+    this.args.model.timeZone = event.target.value;
+  }
+
+  @action
   save() {
     return this.saveTask.perform();
   }
 
   @action
   cancel() {
-    this.rollbackModel();
-    this.isEditing = false;
+    this.args.rollbackModel();
+    if (this.canToggleEdit) {
+      this.isEditing = false;
+    }
   }
 }
 

@@ -1,22 +1,28 @@
 <div class="dig-card">
   <div class="flex mb-3 justify-between">
     <h1 class="dig-section-title">
-      {{if this.isReadonly @model.longName "Edit Region"}}
+      {{#if @model.isNew}}
+        Create New Region
+      {{else}}
+        {{if this.isReadonly @model.longName "Edit Region"}}
+      {{/if}}
     </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit region details">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" @size="lg" />
-      </CrunchyButton>
+    {{#if this.canToggleEdit}}
+      {{#if this.isReadonly}}
+        <CrunchyButton
+          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @class="crunchy-button--icon"
+          @aria-label="Edit region details">
+          <FaIcon @icon="edit" @size="lg" />
+        </CrunchyButton>
+      {{else}}
+        <CrunchyButton
+          @onClick={{action "cancel"}}
+          @class="crunchy-button--icon"
+          @aria-label="Close form">
+          <FaIcon @icon="times" @size="lg" />
+        </CrunchyButton>
+      {{/if}}
     {{/if}}
   </div>
 
@@ -31,22 +37,28 @@
 
     <form.text-field
       @field="name"
-      @label="Name"
-      @aria-label="Short name"
+      @label="Short Name"
+      @placeholder="e.g. Asheville"
     />
 
     <form.text-field
       @field="longName"
       @label="Long Name"
-      @aria-label="Long Name"
+      @placeholder="e.g. Asheville, NC"
     />
 
-    <form.text-field
+    <form.field
       @field="timeZone"
       @label="Time Zone"
-      @aria-label="Time zone"
-      @disabled={{true}}
-    />
+    >
+      <select {{on "change" this.didChangeZone}} disabled={{form.isReadonly}} class="form-select border-gray-400 py-3 disabled:bg-gray-100 disabled:border-transparent">
+        {{#each this.zoneOptions as |zone|}}
+          <option value={{zone.[0]}} selected={{eq zone.[0] @model.timeZone}}>
+            {{zone.[0]}} - {{zone.[1]}}
+          </option>
+        {{/each}}
+      </select>
+    </form.field>
 
     <fieldset name="Default Location Details" class="border p-4 rounded">
       <label for="Default Location Details" class="mb-2 font-semibold text-lg block text-brand-primary">
@@ -86,7 +98,9 @@
       <div class="flex justify-end mt-8">
         <div class="flex flex-wrap">
           <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-region" />
-          <form.cancel @value="Cancel" />
+          {{#unless @model.isNew}}
+            <form.cancel @value="Cancel" />
+          {{/unless}}
         </div>
       </div>
     {{/if}}

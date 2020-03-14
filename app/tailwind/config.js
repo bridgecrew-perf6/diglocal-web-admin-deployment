@@ -78,6 +78,8 @@ module.exports = {
   },
   variants: {
     textColor: ['responsive', 'hover', 'focus', 'group-hover' ],
+    borderColor: ['responsive', 'hover', 'focus', 'disabled'],
+    backgroundColor: ['responsive', 'hover', 'focus', 'disabled']
   },
   plugins: [
     require('@tailwindcss/custom-forms')

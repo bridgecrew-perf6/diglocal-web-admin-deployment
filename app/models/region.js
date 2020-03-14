@@ -1,4 +1,5 @@
 import Model, { attr, hasMany } from '@ember-data/model';
+import TZ_MAPPING from 'diglocal-manage/data/time-zone-mapping';
 import * as yup from 'yup';
 
 export default class Region extends Model {
@@ -20,14 +21,7 @@ export default class Region extends Model {
   ** Computed Properties  **
   *************************/
   get momentTz() {
-    switch(this.timeZone) {
-      case 'Eastern Time (US & Canada)':
-        return 'America/New_York';
-      case 'Pacific Time (US & Canada)':
-        return 'America/Los_Angeles';
-      default:
-        return null;
-    }
+    return this.timeZone && TZ_MAPPING.hasOwnProperty(this.timeZone) ? TZ_MAPPING[this.timeZone] : null;
   }
   /*************************
   **  Validation Schema   **
