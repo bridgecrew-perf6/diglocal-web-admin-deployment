@@ -9,6 +9,7 @@ export default class Region extends Model {
   @attr() defaultCity;
   @attr() defaultState;
   @attr() defaultZip;
+  @attr('boolean') active;
 
   /*************************
   **  Relationships       **
