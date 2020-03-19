@@ -51,6 +51,7 @@ Router.map(function() {
     });
 
     this.route('select-region');
+    this.route('new-region');
   });
 
   this.route('404', { path: '/*' });

@@ -15,7 +15,7 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   model() {
     // If the current user is not an admin, then we already have all of the regions loaded
     // in the store already, included when we fetched the user record and their businesses and business regions
-    return this.currentUser.isAdmin ? this.store.findAll('region') : this.store.peekAll('region');
+    return this.currentUser.isAdmin ? this.store.query('region', { filter: { active: [true,false] }}) : this.store.peekAll('region');
   }
 
   afterModel(model) {

@@ -5,6 +5,7 @@ import { alias } from '@ember/object/computed';
 
 export default class HeaderSelectRegionComponent extends Component {
   @service('regions') regionsService;
+  @service currentUser;
   @service router;
 
   @alias('regionsService.activeRegion') activeRegion;

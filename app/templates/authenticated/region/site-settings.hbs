@@ -1,17 +1,26 @@
 <nav class="fixed z-10 w-full bg-white px-2 pt-2 pb-2 h-20 flex flex-wrap items-center">
   <CrunchyBreadcrumbs @class="w-full max-w-container mx-auto" />
-  <ul class="tabs w-full max-w-container mx-auto">
-    <li class="tabs__tab">
-      <LinkTo @route="authenticated.region.site-settings.index" @class="tabs__link">Settings</LinkTo>
-    </li>
-    <li class="tabs__tab">
-      <LinkTo @route="authenticated.region.site-settings.categories.index" @class="tabs__link">Categories</LinkTo>
-    </li>
-    <li class="tabs__spacer w-full" aria-hidden="true">
-    </li>
-  </ul>
+  <div class="container flex justify-between">
+    <ul class="tabs">
+      <li class="tabs__tab">
+        <LinkTo @route="authenticated.region.site-settings.index" @class="tabs__link">Settings</LinkTo>
+      </li>
+      <li class="tabs__tab">
+        <LinkTo @route="authenticated.region.site-settings.categories.index" @class="tabs__link">Categories</LinkTo>
+      </li>
+      <li class="tabs__spacer w-full" aria-hidden="true">
+      </li>
+    </ul>
+    <LinkTo
+      @route="authenticated.new-region"
+      @class="crunchy-button--outline crunchy-button--text-sm"
+      data-test-id="add-new-region"
+    >
+      <FaIcon @icon="plus" @size="xs" class="mr-1" /> New Region
+    </LinkTo>
+  </div>
 </nav>
 
-<div class="pt-20 pb-24">
+<div class="pt-20 pb-8">
   {{outlet}}
 </div>
