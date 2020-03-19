@@ -52,9 +52,20 @@ Router.map(function() {
 
     this.route('select-region');
     this.route('new-region');
+    this.route('manage', function() {
+      this.route('business', function() {
+        this.route('scoops');
+        this.route('users');
+        this.route('photos');
+        this.route('locations');
+      });
+      this.route('select-business');
+    });
   });
 
   this.route('404', { path: '/*' });
+
+  this.route('manage', function() {});
 });
 
 export default Router;
