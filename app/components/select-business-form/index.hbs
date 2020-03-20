@@ -20,7 +20,7 @@
       @onChange={{action (mut this.selected)}} as |business|
       >
         <div class="flex flex-col">
-          <span>{{business.name}}</span>
+          <span class="leading-tight">{{business.name}}</span>
           <span class="text-xs text-gray-600">{{business.region.longName}}</span>
         </div>
     </PowerSelect>
