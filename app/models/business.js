@@ -22,6 +22,7 @@ export default class Business extends Trackable {
   @attr() website;
   @attr() role;
   @attr('boolean', { defaultValue: false }) active;
+  @attr() deliveryOptions;
 
   /*************************
   **  Relationships       **
