@@ -1,0 +1,29 @@
+<CrunchyForm
+  @model={{this}}
+  @onSubmit={{perform submit}}
+  data-test-id="select-business-form"
+  as |form|>
+  <p class="text-2xl text-brand-primary font-medium mb-2">Hi there!</p>
+  <p class="text-xl mb-4 font-medium">
+    Please select a business to continue.
+  </p>
+  <p class="italic text-gray-600 text-sm mb-4">
+    (You can always switch later)
+  </p>
+  <form.field @field="selected" @aria-label="Active Business" class="mt-4" data-test-id="select-active-business">
+    <PowerSelect
+      @options={{this.currentUser.user.businesses}}
+      @searchEnabled={{false}}
+      @placeholder="Select business"
+      @selected={{this.selected}}
+      @allowClear={{false}}
+      @onChange={{action (mut this.selected)}} as |business|
+      >
+        <div class="flex flex-col">
+          <span>{{business.name}}</span>
+          <span class="text-xs text-gray-600">{{business.region.longName}}</span>
+        </div>
+    </PowerSelect>
+  </form.field>
+  <form.submit @value="Submit" @class="w-full mt-4" @testId="submit-business" />
+</CrunchyForm>

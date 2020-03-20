@@ -10,8 +10,10 @@
        </LinkTo>
       </div>
       <div class="header-nav-right">
-        {{#if this.regionsService.activeRegion}}
+        {{#if (and this.currentUser.isAdmin this.regionsService.activeRegion)}}
           <Header::SelectRegion />
+        {{else if this.regionsService.activeBusiness}}
+          <Header::SelectBusiness />
         {{/if}}
 
         <Header::CurrentUserDropdown />

@@ -5,11 +5,10 @@ import { action } from '@ember/object';
 import { NotFoundError, ForbiddenError } from '@ember-data/adapter/error';
 
 export default class AuthenticatedRegionRoute extends Route {
-  @storageFor('active-region') activeRegionStorage;
+  @storageFor('active-settings') activeSettingsStorage;
   @service('regions') regionsService;
   @service store;
-  @service moment;
-
+  
   breadCrumb = null;
 
   model(params) {
@@ -17,7 +16,7 @@ export default class AuthenticatedRegionRoute extends Route {
   }
 
   afterModel(model) {
-    this.activeRegionStorage.set('regionId', model.id);
+    this.activeSettingsStorage.set('regionId', model.id);
     this.regionsService.activeRegion = model;
   }
 

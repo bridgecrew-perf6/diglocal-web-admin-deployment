@@ -10,7 +10,7 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   @service firebaseApp;
   @service('regions') regionsService;
   @service currentUser;
-  @storageFor('active-region') activeRegionStorage;
+  @storageFor('active-settings') activeSettingsStorage;
 
   model() {
     // If the current user is not an admin, then we already have all of the regions loaded
@@ -21,18 +21,30 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
   afterModel(model) {
     this.regionsService.regions = model;
 
+    if (this.currentUser.isAdmin) {
+      this.regionsService.activeBusiness = null;
+    }
+
     if (this.currentUser.isSingleBusinessOwner) {
       let business = this.currentUser.user.hasMany('businesses').value().firstObject;
       let defaultRegion = business.belongsTo('region').value();
       this.regionsService.activeRegion = defaultRegion;
+      this.regionsService.activeBusiness = business;
       return;
+    }
+
+    if (this.currentUser.isMultiOwner) {
+      let lastActiveBusinessId = this.activeSettingsStorage.get('businessId');
+      let foundActiveBusiness = this.currentUser.user.hasMany('businesses').value().toArray().findBy('id', lastActiveBusinessId);
+      this.regionsService.activeBusiness = foundActiveBusiness ? foundActiveBusiness.belongsTo('region').value() : null;
     }
 
     if (model.length === 1) {
       this.regionsService.activeRegion = model.firstObject;
       return;
     }
-    let lastActiveRegionId = this.activeRegionStorage.get('regionId');
+
+    let lastActiveRegionId = this.activeSettingsStorage.get('regionId');
     let foundActiveRegion = model.toArray().findBy('id', lastActiveRegionId);
     this.regionsService.activeRegion = foundActiveRegion ? foundActiveRegion : null;
   }

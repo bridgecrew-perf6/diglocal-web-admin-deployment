@@ -1,0 +1,19 @@
+<BasicDropdown
+  @horizontalPosition="right"
+  as |dd|>
+  <dd.Trigger class="flex items-center focus:outline-none mr-3" data-test-id="select-region-dd-trigger">
+    <span class="mr-1" data-test-id="active-region">{{this.regionsService.activeBusiness.name}}</span>
+    <FaIcon @icon="angle-down" @size="xs" />
+  </dd.Trigger>
+  <dd.Content class="shadow p-1 mt-2 border rounded-sm">
+    <ul>
+      {{#each this.currentUser.user.businesses as |business|}}
+        <li class="py-2 px-4 flex w-full" data-test-id={{concat "select-business-" business.id}}>
+          <CrunchyButton @onClick={{action "selectBusiness" business dd}} @class="crunchy-button--link w-full">
+            <span class={{if (eq business.id regionsService.activeBusiness.id) "font-bold"}}>{{business.name}}</span>
+          </CrunchyButton>
+        </li>
+      {{/each}}
+    </ul>
+  </dd.Content>
+</BasicDropdown>
