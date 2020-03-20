@@ -15,10 +15,10 @@
           </CrunchyButton>
           {{#if this.currentUser.isAdmin}}
             <div
-              class="ml-2 h-5 {{if region.active "text-brand-primary-accent" "text-gray-600"}}"
+              class="ml-2 h-5 leading-tight text-xs {{if region.active "text-brand-primary-accent" "text-gray-600"}}"
               title={{if region.active "Region is public and visible to users" "Region is not visible to users"}}
             >
-              <FaIcon @icon={{if region.active "eye" "eye-slash"}} />
+              {{if region.active "Active" "Inactive"}}
             </div>
           {{/if}}
         </li>
