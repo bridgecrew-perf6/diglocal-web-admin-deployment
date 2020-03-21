@@ -1,31 +1,29 @@
 <div class="dig-card">
-  <div class="flex mb-3 justify-between">
-    <h1 class="dig-section-title"> {{if this.isReadonly "Business Details" "Edit Business Details"}} </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit business details">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" @size="lg" />
-      </CrunchyButton>
-    {{/if}}
-  </div>
-
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @debounceSubmit={{true}}
-    @isReadonly={{this.isReadonly}}
-    as |form|>
+    @isReadonly={{this.isReadonly}} as |form|>
+    <div class="flex mb-3 justify-between">
+      <h1 class="dig-section-title"> {{if this.isReadonly "Business Details" "Edit Business Details"}} </h1>
+      {{#if this.isReadonly}}
+        <CrunchyButton
+          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @class="crunchy-button--icon"
+          @aria-label="Edit business details">
+          <FaIcon @icon="edit" @size="lg" />
+        </CrunchyButton>
+      {{else}}
+        <CrunchyButton
+          @onClick={{form.resetForm}}
+          @class="crunchy-button--icon"
+          @aria-label="Close form">
+          <FaIcon @icon="times" @size="lg" />
+        </CrunchyButton>
+      {{/if}}
+    </div>
 
     <form.text-field
       @field="name"
@@ -53,7 +51,7 @@
       @aria-label="An insider tip or suggestion about the business"
     />
 
-    <div class="w-full flex">
+    <div class="w-full flex flex-wrap md:flex-no-wrap">
       <div class="mr-4 flex-grow">
         <form.field
           @label="Logo"
@@ -66,37 +64,27 @@
         </form.field>
       </div>
       <div class="flex-grow">
-        <form.text-field
-          @field="website"
-          @label="Website"
-          @aria-label="Url for business website"
-        />
-      </div>
-    </div>
-
-    <form.field @field="categories" @label="Categories">
-      {{#if this.isEditing}}
-        <PowerSelectMultiple
-          @searchEnabled={{true}}
-          @searchField="longName"
-          @options={{this.categoryOptions}}
-          @selected={{@model.categories}}
-          @placeholder="Select category tags..."
-          @onChange={{action (mut @model.categories)}} as |category|>
-          {{category.longName}}
-        </PowerSelectMultiple>
-      {{else}}
-        <ul>
-          {{#each @model.categories as |category|}}
+        <form.field @field="categories" @label="Categories">
+          {{#if this.isEditing}}
+          <PowerSelectMultiple @searchEnabled={{true}} @searchField="longName" @options={{this.categoryOptions}}
+            @selected={{@model.categories}} @placeholder="Select category tags..." @onChange={{action (mut @model.categories)}}
+            as |category|>
+            {{category.longName}}
+          </PowerSelectMultiple>
+          {{else}}
+          <ul>
+            {{#each @model.categories as |category|}}
             <CrunchyChip @tagName="li">
               {{category.longName}}
             </CrunchyChip>
-          {{else}}
+            {{else}}
             <span class="text-sm text-gray-600 italic">None</span>
-          {{/each}}
-        </ul>
-      {{/if}}
-    </form.field>
+            {{/each}}
+          </ul>
+          {{/if}}
+        </form.field>
+      </div>
+    </div>
 
     <div class="flex justify-start items-center crunchy-form__group">
       <XToggle
