@@ -65,6 +65,7 @@ export default function(server) {
   });
   server.createList('business', 2, 'withLocation', 'withImages', 'withScoops', {
     region: region1,
+    role: '2types',
     categories: [ region1Categories[0], region1Categories[1] ],
     users: [ multiBusinessOwner ]
   });
@@ -72,14 +73,17 @@ export default function(server) {
   /* Random businesses with randomly created owners */
   server.createList('business', 2, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region1,
+    role: '2types',
     categories: [ region1Categories[2], region1Categories[3] ]
   });
   server.createList('business', 2, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region2,
+    role: '2types',
     categories: [ region2Categories[0], region2Categories[1] ]
   });
   server.createList('business', 2, 'withLocation', 'withBusinessOwner', 'withImages', 'withScoops', {
     region: region2,
+    role: '2types',
     categories: [ region2Categories[2], region2Categories[3] ]
   });
 }
