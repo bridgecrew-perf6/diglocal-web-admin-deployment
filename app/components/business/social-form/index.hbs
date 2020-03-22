@@ -1,49 +1,47 @@
 <div class="dig-card">
-  <div class="flex mb-6 justify-between">
-    <h1 class="dig-section-title"> {{if this.isReadonly "Social Media" "Edit Social Media"}} </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit social media details for business">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" @size="lg" />
-      </CrunchyButton>
-    {{/if}}
-  </div>
-
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
-    @debounceSubmit={{true}}
-    as |form|>
+    @debounceSubmit={{true}} as |form|>
+    <div class="flex mb-6 justify-between">
+      <h1 class="dig-section-title"> {{if this.isReadonly "Web & Social" "Edit Web & Social"}} </h1>
+      {{#if this.isReadonly}}
+        <CrunchyButton
+          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @class="crunchy-button--icon"
+          @aria-label="Edit social media details for business">
+          <FaIcon @icon="edit" @size="lg" />
+        </CrunchyButton>
+      {{else}}
+        <CrunchyButton
+          @onClick={{form.resetForm}}
+          @class="crunchy-button--icon"
+          @aria-label="Close form">
+          <FaIcon @icon="times" @size="lg" />
+        </CrunchyButton>
+      {{/if}}
+    </div>
 
-    <form.text-field
-      @field="twitterUrl"
-      @label="Twitter"
-      @aria-label="Twitter url"
-    />
+    <form.text-field @field="website" @label="Business Website" @aria-label="Url for business website" />
 
-    <form.text-field
-      @field="instagramUrl"
-      @label="Instagram"
-      @aria-label="Instagram url"
-    />
-
-    <form.text-field
-      @field="facebookUrl"
-      @label="Facebook"
-      @aria-label="Facebook url"
-    />
+    <Ui::CollapsibleSection @title="Social Media Links" @open={{false}}>
+      <form.text-field @field="twitterUrl" @label="Twitter" @aria-label="Twitter url" />
+    
+      <form.text-field @field="instagramUrl" @label="Instagram" @aria-label="Instagram url" />
+    
+      <form.text-field @field="facebookUrl" @label="Facebook" @aria-label="Facebook url" />
+    </Ui::CollapsibleSection>
+    
+    <Ui::CollapsibleSection @title="Delivery Info" @open={{false}} @class="mb-8">
+      <form.text-field @field="grubhubUrl" @label="Grubhub" @aria-label="Url for GrubHub profile" />
+      <form.text-field @field="postmatesUrl" @label="Postmates" @aria-label="Url for Postmates profile" />
+      <form.text-field @field="kickbackAvlUrl" @label="Kickback AVL" @aria-label="Url for Kickback AVL profile" />
+      <form.text-field @field="takeoutCentralUrl" @label="Takeout Central" @aria-label="Url for Takeout Central profile" />
+      <form.text-field @field="doordashUrl" @label="DoorDash" @aria-label="Url for DoorDash profile" />
+    </Ui::CollapsibleSection>
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 

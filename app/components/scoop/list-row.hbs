@@ -43,10 +43,22 @@
         </CrunchyChip>
       {{/each}}
 
+      {{#if @model.isDeal}}
+      <CrunchyChip @tagName="li" @title="This scoop is a deal">
+        <FaIcon @icon="tag" /> Deal
+      </CrunchyChip>
+      {{/if}}
+
       {{#if @model.ticketUrl}}
         <CrunchyChip @tagName="li" @title={{@model.ticketUrl}}>
           <FaIcon @icon="ticket-alt" />
         </CrunchyChip>
+      {{/if}}
+
+      {{#if @model.virtualUrl}}
+      <CrunchyChip @tagName="li" @title={{@model.virtualUrl}}>
+        <FaIcon @icon="eye" />
+      </CrunchyChip>
       {{/if}}
     </ul>
   </card.body>

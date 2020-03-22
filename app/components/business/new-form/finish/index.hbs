@@ -1,15 +1,7 @@
 <h1 class="dig-section-title mb-4">Success!</h1>
 
-<CrunchyForm
-  @model={{@model}}
-  @formSchema={{@model.validationSchema}}
-  @onSubmit={{@save}}
-  @onCancel={{@cancel}}
-  @debounceSubmit={{true}}
-  @isReadonly={{this.isReadonly}}
-  as |form|>
-
-  <div class="">
+{{#with @form as |form|}}
+  <div>
     <p class="mb-8 text-xl">
       The listing for <span class="font-semibold text-brand-primary">{{@model.name}}</span>
       has been created and saved.
@@ -34,8 +26,4 @@
 
     <p class="mb-2"><span class="font-semibold">Only active businesses are visible to users.</span> If you have added members to this business, they will not be able to view or edit until the listing is activated.</p>
   </div>
-
-  <div class="flex justify-end mt-8">
-    <form.submit @value="Finish" @class="mr-2 md:w-32" />
-  </div>
-</CrunchyForm>
+{{/with}}

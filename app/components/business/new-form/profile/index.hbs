@@ -1,14 +1,6 @@
 <h1 class="dig-section-title mb-4">Additional Profile Details</h1>
 
-<CrunchyForm
-  @model={{@model}}
-  @formSchema={{@model.validationSchema}}
-  @onSubmit={{@save}}
-  @onCancel={{@cancel}}
-  @debounceSubmit={{true}}
-  @isReadonly={{this.isReadonly}}
-  as |form|>
-
+{{#with @form as |form|}}
   <Ui::CollapsibleSection @title="Logo" @open={{true}} @disabled={{true}}>
     <AttributeImageUploader
       @model={{@model}}
@@ -107,7 +99,12 @@
       @aria-label="Facebook url"
     />
   </Ui::CollapsibleSection>
-  <div class="flex justify-end mt-8">
-    <form.submit @value="Next" @class="mr-2 md:w-32" />
-  </div>
-</CrunchyForm>
+
+  <Ui::CollapsibleSection @title="Delivery Info" @open={{false}}>
+    <form.text-field @field="grubhubUrl" @label="Grubhub" @aria-label="Url for GrubHub profile" />
+    <form.text-field @field="postmatesUrl" @label="Postmates" @aria-label="Url for Postmates profile" />
+    <form.text-field @field="kickbackAvlUrl" @label="Kickback AVL" @aria-label="Url for Kickback AVL profile" />
+    <form.text-field @field="takeoutCentralUrl" @label="Takeout Central" @aria-label="Url for Takeout Central profile" />
+    <form.text-field @field="doordashUrl" @label="DoorDash" @aria-label="Url for DoorDash profile" />
+  </Ui::CollapsibleSection>
+{{/with}}

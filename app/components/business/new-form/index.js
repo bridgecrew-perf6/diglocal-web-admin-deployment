@@ -9,27 +9,8 @@ export default class BusinessNewFormComponent extends Component {
   @service regions;
   @service router;
 
-  @tracked showPartOne = true;
-  @tracked showPartTwo = false;
-  @tracked showPartThree = false;
-  @tracked showPartFour = false;
-  @tracked showPartFive = false;
-
-  get partOneComplete() {
-    return this.showPartTwo || this.showPartThree || this.showPartFour || this.showPartFive;
-  }
-
-  get partTwoComplete() {
-    return this.showPartThree || this.showPartFour || this.showPartFive;
-  }
-
-  get partThreeComplete() {
-    return this.showPartFour || this.showPartFive;
-  }
-
-  get partFourComplete() {
-    return this.showPartFive;
-  }
+  @tracked sectionIndex = 0;
+  maxIndex = 4;
 
   willDestroy() {
     return this.args.rollbackModel();
@@ -44,25 +25,15 @@ export default class BusinessNewFormComponent extends Component {
   })
   saveTask;
 
-  @task(function*(next) {
+  @task(function*() {
     let saved = yield this.saveTask.perform();
-    if (next === 2) {
+    if (this.sectionIndex === 1) {
       yield this.args.model.hasMany('locations').reload();
-      this.showPartOne = false;
-      this.showPartTwo = true;
     }
-    if (next === 3) {
-      this.showPartTwo = false;
-      this.showPartThree = true;
+    if (this.sectionIndex === this.maxIndex) {
+      return this.args.afterSave ? yield this.args.afterSave(this.args.model) : saved;
     }
-    if (next === 4) {
-      this.showPartThree = false;
-      this.showPartFour = true;
-    }
-    if (next === 5) {
-      this.showPartFour = false;
-      this.showPartFive = true;
-    }
+    this.sectionIndex += 1;
     return saved;
   })
   saveAndNext;
@@ -76,8 +47,8 @@ export default class BusinessNewFormComponent extends Component {
   saveAndComplete;
 
   @action
-  complete() {
-    return this.saveAndComplete.perform();
+  goBack() {
+    this.sectionIndex -= 1;
   }
 
   @action

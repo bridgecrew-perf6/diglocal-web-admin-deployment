@@ -1,14 +1,6 @@
 <h1 class="dig-section-title mb-4">Edit Locations</h1>
 
-<CrunchyForm
-  @model={{@model}}
-  @formSchema={{@model.validationSchema}}
-  @onSubmit={{@save}}
-  @onCancel={{@cancel}}
-  @debounceSubmit={{true}}
-  @isReadonly={{this.isReadonly}}
-  as |form|>
-
+{{#with @form as |form|}}
   {{#each @model.locations as |location index|}}
     <Ui::CollapsibleSection @title={{concat "Location " (add index 1)}} @open={{true}}>
       <div class="pb-4">
@@ -94,7 +86,4 @@
       <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Location
     </CrunchyButton>
   </div>
-  <div class="flex justify-end mt-8">
-    <form.submit @value="Next" @class="w-32" />
-  </div>
-</CrunchyForm>
+{{/with}}

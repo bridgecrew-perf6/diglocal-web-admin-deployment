@@ -22,7 +22,7 @@
     </XToggle>
   </div>
 
-  <div class="flex justify-start items-center my-4 crunchy-form__group">
+  <div class="flex flex-col items-start my-4 crunchy-form__group">
     <XToggle
       @showLabels={{true}}
       @size="small"
@@ -41,6 +41,7 @@
         @offLabel='No'
       />
     </XToggle>
+    <p class="text-gray-600 text-sm">Events can be in-person or online.</p>
   </div>
 
   {{#if this.showEventFields}}
@@ -55,7 +56,11 @@
     <form.text-field
       @field="ticketUrl"
       @label="Ticket Url"
-      @aria-label="Ticket Url"
+    />
+
+    <form.text-field
+      @field="virtualUrl"
+      @label="Virtual Event Url"
     />
   {{/if}}
 
