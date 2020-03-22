@@ -30,13 +30,13 @@ export default class BusinessSerializer extends ApplicationSerializer {
     return json;
   }
 
-  normalizeResponse(store, primaryModelClass, payload) {
+  normalize(typeClass, hash) {
     this.deliveryAttrs.forEach((attr) => {
-      payload.data.attributes[`${attr}Url`] = payload.data.attributes.deliveryOptions[attr] || '';
+      hash.attributes[`${attr}Url`] = hash.attributes.deliveryOptions[attr] || '';
     });
 
-    delete payload.data.attributes.deliveryOptions;
+    delete hash.attributes.deliveryOptions;
 
-    return super.normalizeResponse(...arguments);
+    return super.normalize(...arguments);
   }
 }
