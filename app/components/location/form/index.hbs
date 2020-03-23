@@ -114,6 +114,14 @@
 
     <Location::OperatingHoursForm @location={{@model}} @form={{form}} />
 
+    <Ui::CollapsibleSection @title="Delivery Info" @open={{false}} @class="mb-8 mt-4">
+      <form.text-field @field="grubhubUrl" @label="Grubhub" @aria-label="Url for GrubHub profile" />
+      <form.text-field @field="postmatesUrl" @label="Postmates" @aria-label="Url for Postmates profile" />
+      <form.text-field @field="kickbackAvlUrl" @label="Kickback AVL" @aria-label="Url for Kickback AVL profile" />
+      <form.text-field @field="takeoutCentralUrl" @label="Takeout Central" @aria-label="Url for Takeout Central profile" />
+      <form.text-field @field="doordashUrl" @label="DoorDash" @aria-label="Url for DoorDash profile" />
+    </Ui::CollapsibleSection>
+
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     {{#if this.isEditing}}

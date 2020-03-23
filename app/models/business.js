@@ -22,18 +22,6 @@ export default class Business extends Trackable {
   @attr() role;
   @attr('boolean', { defaultValue: false }) active;
 
-  /*
-  * deliveryOptions is an object that we never touch directly,
-  * we deserialize/serialize the urls into deliveryOptions 
-  * in the serializer for business
-  */  
-  // @attr() deliveryOptions; 
-  @attr() grubhubUrl;
-  @attr() postmatesUrl;
-  @attr() kickbackAvlUrl;
-  @attr() takeoutCentralUrl;
-  @attr() doordashUrl;
-
   /*************************
   **  Relationships       **
   *************************/
@@ -80,11 +68,6 @@ export default class Business extends Trackable {
     instagramUrl: yup.string().nullable().url("Instagram link must be a valid URL, starting with 'https://' or 'http://'").label('Instagram URL'),
     website: yup.string().nullable().url("Website must be a valid URL, starting with 'https://' or 'http://'").label('Website URL'),
     role: yup.string().required().label("Account Type"),
-    grubhubUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('Grubhub URL'),
-    postmatesUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('Postmates URL'),
-    kickbackAvlUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('Kickback AVL URL'),
-    takeoutCentralUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('Takeout Central URL'),
-    doordashUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('DoorDash URL'),
     categories: yup.mixed()
       .when('role', {
         is: '2types',
