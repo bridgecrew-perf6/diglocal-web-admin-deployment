@@ -16,13 +16,13 @@ const filterUsers = function(users, request) {
     * IT WILL CAUSE TEST FAILURES IF YOU LEAVE IT FOR TESTING
     ***/
     /* uncomment below to login as an admin user */
-    // filters.push(user => user.admin);
+    filters.push(user => user.admin);
 
     /* uncomment below to login as a multi-region, multi-business owner */
     // filters.push(user => user.id === '2222');
 
     /* uncomment below to login as a single-region, multi-business owner */
-    filters.push(user => user.id === '3333');
+    // filters.push(user => user.id === '3333');
 
     /* uncomment below to login as a single business owner */
     // filters.push(user => user.id === '4444');

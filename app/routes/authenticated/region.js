@@ -18,6 +18,8 @@ export default class AuthenticatedRegionRoute extends Route {
   afterModel(model) {
     this.activeSettingsStorage.set('regionId', model.id);
     this.regionsService.activeRegion = model;
+    this.activeSettingsStorage.set('businessId', null);
+    this.regionsService.activeBusiness = null;
   }
 
   @action
