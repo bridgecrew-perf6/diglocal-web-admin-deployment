@@ -1,14 +1,5 @@
 <h1 class="dig-section-title mb-4">Add New Business</h1>
-
-<CrunchyForm
-  @model={{@model}}
-  @formSchema={{@model.validationSchema}}
-  @onSubmit={{@save}}
-  @onCancel={{@cancel}}
-  @debounceSubmit={{true}}
-  @isReadonly={{this.isReadonly}}
-  as |form|>
-
+{{#with @form as |form|}}
   <form.text-field
     @field="name"
     @label="Name"
@@ -56,8 +47,4 @@
     </XToggle>
     <p class="text-gray-600 text-sm">Featured businesses will appear within Dig Deeper content.</p>
   </div>
-
-  <div class="flex justify-end mt-8">
-    <form.submit @value="Next" @class="mr-2 md:w-32" />
-  </div>
-</CrunchyForm>
+{{/with}}

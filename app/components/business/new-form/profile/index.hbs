@@ -1,14 +1,6 @@
 <h1 class="dig-section-title mb-4">Additional Profile Details</h1>
 
-<CrunchyForm
-  @model={{@model}}
-  @formSchema={{@model.validationSchema}}
-  @onSubmit={{@save}}
-  @onCancel={{@cancel}}
-  @debounceSubmit={{true}}
-  @isReadonly={{this.isReadonly}}
-  as |form|>
-
+{{#with @form as |form|}}
   <Ui::CollapsibleSection @title="Logo" @open={{true}} @disabled={{true}}>
     <AttributeImageUploader
       @model={{@model}}
@@ -107,7 +99,4 @@
       @aria-label="Facebook url"
     />
   </Ui::CollapsibleSection>
-  <div class="flex justify-end mt-8">
-    <form.submit @value="Next" @class="mr-2 md:w-32" />
-  </div>
-</CrunchyForm>
+{{/with}}

@@ -1,49 +1,39 @@
 <div class="dig-card">
-  <div class="flex mb-6 justify-between">
-    <h1 class="dig-section-title"> {{if this.isReadonly "Social Media" "Edit Social Media"}} </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit social media details for business">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" @size="lg" />
-      </CrunchyButton>
-    {{/if}}
-  </div>
-
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @isReadonly={{this.isReadonly}}
-    @debounceSubmit={{true}}
-    as |form|>
+    @debounceSubmit={{true}} as |form|>
+    <div class="flex mb-6 justify-between">
+      <h1 class="dig-section-title"> {{if this.isReadonly "Web & Social" "Edit Web & Social"}} </h1>
+      {{#if this.isReadonly}}
+        <CrunchyButton
+          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @class="crunchy-button--icon"
+          @aria-label="Edit social media details for business">
+          <FaIcon @icon="edit" @size="lg" />
+        </CrunchyButton>
+      {{else}}
+        <CrunchyButton
+          @onClick={{form.resetForm}}
+          @class="crunchy-button--icon"
+          @aria-label="Close form">
+          <FaIcon @icon="times" @size="lg" />
+        </CrunchyButton>
+      {{/if}}
+    </div>
 
-    <form.text-field
-      @field="twitterUrl"
-      @label="Twitter"
-      @aria-label="Twitter url"
-    />
+    <form.text-field @field="website" @label="Business Website" @aria-label="Url for business website" />
 
-    <form.text-field
-      @field="instagramUrl"
-      @label="Instagram"
-      @aria-label="Instagram url"
-    />
-
-    <form.text-field
-      @field="facebookUrl"
-      @label="Facebook"
-      @aria-label="Facebook url"
-    />
+    <Ui::CollapsibleSection @title="Social Media Links" @open={{true}}>
+      <form.text-field @field="twitterUrl" @label="Twitter" @aria-label="Twitter url" />
+    
+      <form.text-field @field="instagramUrl" @label="Instagram" @aria-label="Instagram url" />
+    
+      <form.text-field @field="facebookUrl" @label="Facebook" @aria-label="Facebook url" />
+    </Ui::CollapsibleSection>
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 

@@ -21,6 +21,7 @@ export default class Scoop extends Trackable {
   @attr() recurringDisplayFrom;
   @attr() recurringDisplayTo;
   @attr() ticketUrl;
+  @attr() virtualUrl;
 
   /*************************
   **  Relationships       **
@@ -40,6 +41,7 @@ export default class Scoop extends Trackable {
     description: yup.string().required().max(100).label('Description'),
     fineText: yup.string().nullable().max(500).label('Additional Details'),
     ticketUrl: yup.string().nullable().url("Ticket URL must be a valid URL, starting with 'https://' or 'http://'").label('Ticket URL'),
+    virtualUrl: yup.string().nullable().url("Virtual event URL must be a valid URL, starting with 'https://' or 'http://'").label('Virtual Event URL'),
     isRecurring: yup.boolean(),
     daysOfWeek: yup.array().nullable()
     .when('isRecurring', {

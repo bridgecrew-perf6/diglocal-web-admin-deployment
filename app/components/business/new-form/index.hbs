@@ -1,30 +1,52 @@
-<div class="dig-card max-w-4xl mx-auto">
-  <div class="mb-10 mx-2">
-    <Ui::SteppedProgressBar as |bar|>
-      <bar.step @isActive={{this.showPartOne}} @isComplete={{this.partOneComplete}}>Account Setup</bar.step>
-      <bar.step @isActive={{this.showPartTwo}} @isComplete={{this.partTwoComplete}}>Locations</bar.step>
-      <bar.step @isActive={{this.showPartThree}} @isComplete={{this.partThreeComplete}}>Profile</bar.step>
-      <bar.step @isActive={{this.showPartFour}} @isComplete={{this.partFourComplete}}>Members</bar.step>
-      <bar.step @isActive={{this.showPartFive}}>Activate</bar.step>
-    </Ui::SteppedProgressBar>
+{{#let this.sectionIndex as |section|}}
+  <div class="dig-card max-w-4xl mx-auto">
+    <div class="mb-10 mx-2">
+      <Ui::SteppedProgressBar as |bar|>
+        <bar.step @isActive={{eq section 0}} @isComplete={{gt section 0}}>Account Setup</bar.step>
+        <bar.step @isActive={{eq section 1}} @isComplete={{gt section 1}}>Locations</bar.step>
+        <bar.step @isActive={{eq section 2}} @isComplete={{gt section 2}}>Profile</bar.step>
+        <bar.step @isActive={{eq section 3}} @isComplete={{gt section 3}}>Members</bar.step>
+        <bar.step @isActive={{eq section 4}} @isComplete={{gt section 4}}>Activate</bar.step>
+      </Ui::SteppedProgressBar>
+    </div>
+
+    <CrunchyForm
+      @model={{@model}}
+      @formSchema={{@model.validationSchema}}
+      @onSubmit={{perform this.saveAndNext}}
+      @onCancel={{this.cancel}}
+      @debounceSubmit={{false}}
+      as |form|>
+      {{#if (eq section 0)}}
+        <Business::NewForm::InitialSetup @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 1)}}
+        <Business::NewForm::Locations @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 2)}}
+        <Business::NewForm::Profile @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 3)}}
+        <Business::NewForm::Users @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      {{#if (eq section 4)}}
+        <Business::NewForm::Finish @form={{form}} @model={{@model}} />
+      {{/if}}
+
+      <div class="mt-8 flex  {{if (eq section 0) "justify-end" "justify-between"}}">
+        <div class="w-full">
+          {{#if (gt section 0)}}
+          <CrunchyButton @onClick={{this.goBack}} @value="Previous" @class="crunchy-button--outline sm:w-48"
+            @testId="previous" />
+          {{/if}}
+        </div>
+        <form.submit @value={{if (lt section this.maxIndex) "Next" "Finish"}} @class="w-48"
+          @testId={{if (lt section this.maxIndex) "next" "finish"}} />
+      </div>
+    </CrunchyForm>
   </div>
-  {{#if this.showPartOne}}
-    <Business::NewForm::InitialSetup @model={{@model}} @save={{perform saveAndNext 2}} @cancel={{action "cancel"}} />
-  {{/if}}
-
-  {{#if this.showPartTwo}}
-    <Business::NewForm::Locations @model={{@model}} @save={{perform saveAndNext 3}} @cancel={{action "cancel"}} />
-  {{/if}}
-
-  {{#if this.showPartThree}}
-    <Business::NewForm::Profile @model={{@model}} @save={{perform saveAndNext 4}} @cancel={{action "cancel"}} />
-  {{/if}}
-
-  {{#if this.showPartFour}}
-    <Business::NewForm::Users @model={{@model}} @save={{perform saveAndNext 5}} @cancel={{action "cancel"}} />
-  {{/if}}
-
-  {{#if this.showPartFive}}
-    <Business::NewForm::Finish @model={{@model}} @save={{action "complete"}} @cancel={{action "cancel"}} />
-  {{/if}}
-</div>
+{{/let}}

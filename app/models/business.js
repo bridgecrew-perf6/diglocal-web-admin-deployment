@@ -1,4 +1,3 @@
-import { computed } from '@ember/object';
 import { attr, hasMany, belongsTo } from '@ember-data/model';
 import Trackable from './trackable';
 import * as yup from 'yup';
@@ -38,7 +37,6 @@ export default class Business extends Trackable {
   ** Computed  Properties **
   *************************/
 
-  @computed('role')
   get displayRole() {
     let role = this.role;
     let display;

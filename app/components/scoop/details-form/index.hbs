@@ -1,43 +1,41 @@
 <div class="dig-card" data-test-id="scoop-details-form" data-test-editing="{{this.isEditing}}">
-  <div class="flex mb-3 justify-between">
-    <h1 class="font-semibold text-lg">
-      {{#if @model.isNew}}
-        Create New Scoop
-      {{else}}
-        {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}}
-      {{/if}}
-    </h1>
-    {{#unless @model.isNew}}
-      {{#if this.isReadonly}}
-        <CrunchyButton
-          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-          @class="crunchy-button--icon"
-          @aria-label="Edit scoop details"
-          @testId="edit-scoop"
-        >
-          <FaIcon @icon="edit" @size="lg" />
-        </CrunchyButton>
-      {{else}}
-        <CrunchyButton
-          @onClick={{action "cancel"}}
-          @class="crunchy-button--icon"
-          @aria-label="Close form"
-          @testId="cancel-edit"
-        >
-          <FaIcon @icon="times" @size="lg" />
-        </CrunchyButton>
-      {{/if}}
-    {{/unless}}
-  </div>
-
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
-    @isReadonly={{this.isReadonly}}
-    @debounceSubmit={{true}}
-    as |form|>
+    @isReadonly={{this.isReadonly}} @debounceSubmit={{true}} as |form|>
+    
+    <div class="flex mb-3 justify-between">
+      <h1 class="font-semibold text-lg">
+        {{#if @model.isNew}}
+          Create New Scoop
+        {{else}}
+          {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}}
+        {{/if}}
+      </h1>
+      {{#unless @model.isNew}}
+        {{#if this.isReadonly}}
+          <CrunchyButton
+            @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+            @class="crunchy-button--icon"
+            @aria-label="Edit scoop details"
+            @testId="edit-scoop"
+          >
+            <FaIcon @icon="edit" @size="lg" />
+          </CrunchyButton>
+        {{else}}
+          <CrunchyButton
+            @onClick={{form.resetForm}}
+            @class="crunchy-button--icon"
+            @aria-label="Close form"
+            @testId="cancel-edit"
+          >
+            <FaIcon @icon="times" @size="lg" />
+          </CrunchyButton>
+        {{/if}}
+      {{/unless}}
+    </div>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-4">
       <div class="h-48 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100 relative" style={{background-image @model.image.sizes.full}}>
@@ -145,7 +143,11 @@
     <form.text-field
       @field="ticketUrl"
       @label="Ticket Url"
-      @aria-label="Ticket Url"
+    />
+
+    <form.text-field
+      @field="virtualUrl"
+      @label="Virtual Event Url"
     />
 
     <Scoop::DetailsForm::PostAtFields
