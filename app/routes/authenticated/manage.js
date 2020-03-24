@@ -8,14 +8,21 @@ export default class AuthenticatedManageRoute extends Route {
   breadCrumb = null;
 
   redirect() {
-    let activeRegion = this.regionsService.activeRegion;
+    let activeBusiness = this.regionsService.activeBusiness;
 
-    let needsToSelectRegion = !activeRegion && this.currentUser.isAdmin;
+    let needsToSelectBusiness = !activeBusiness && !this.currentUser.isAdmin;
 
-    if (needsToSelectRegion) {
-      this.replaceWith('authenticated.select-region');
-    } else if (this.currentUser.isAdmin) {
-      this.replaceWith('authenticated.region.businesses', this.regionsService.activeRegion.id);
+    if (this.currentUser.isAdmin) {
+      this.replaceWith('authenticated.index');
+    }
+
+    if (needsToSelectBusiness) {
+      this.replaceWith('authenticated.select-business');
+    } else {
+      return this.currentUser.isAdmin ?
+        this.replaceWith('authenticated.index') :
+        null;
+        // this.replaceWith('authenticated.manage.business.index', this.regionsService.activeBusiness.id);
     }
   }
 }

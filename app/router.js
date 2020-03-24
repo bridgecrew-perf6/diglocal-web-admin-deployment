@@ -53,7 +53,7 @@ Router.map(function() {
     this.route('select-region');
     this.route('new-region');
     this.route('manage', function() {
-      this.route('business', { path: ':business_id' }, function() {
+      this.route('business', { path: 'business/:business_model_id' }, function() {
         this.route('scoops');
         this.route('users');
         this.route('photos');

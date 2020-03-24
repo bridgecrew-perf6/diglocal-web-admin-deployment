@@ -11,6 +11,7 @@ export default Factory.extend({
   geocodedLong: -82.5302039,
   phone() { return faker.phone.phoneNumberFormat() },
   menuUrl: 'https://menupages.com/',
+  deliveryOptions() { return {} },
 
   withHours: trait({
     afterCreate(location, server) {

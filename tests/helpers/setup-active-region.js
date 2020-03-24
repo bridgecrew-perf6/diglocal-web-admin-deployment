@@ -1,7 +1,6 @@
 import resetStorages from 'ember-local-storage/test-support/reset-storage';
 import StorageObject from 'ember-local-storage/local/object';
 
-
 /*
 * Acceptance test setup that creates and sets the active region
 * in local storage, so visiting '/' in tests will not redirect
@@ -22,12 +21,13 @@ export default function(hooks) {
     mockStorage.reopenClass({
       initialState() {
         return {
-          regionId
+          regionId,
+          businessId: null
         };
       }
     });
 
-    this.owner.register('storage:active-region', mockStorage);
+    this.owner.register('storage:active-settings', mockStorage);
   });
 
   hooks.afterEach(function() {

@@ -8,11 +8,17 @@ export default class AuthenticatedIndexRoute extends Route {
   breadCrumb = null;
 
   redirect() {
+    if (this.currentUser.isRestricted) {
+      return;
+    }
+    
     let activeRegion = this.regionsService.activeRegion;
     let activeBusiness = this.regionsService.activeBusiness;
 
     let needsToSelectRegion = !activeRegion && this.currentUser.isAdmin;
     let needsToSelectBusiness = !activeBusiness && this.currentUser.isMultiBusinessOwner;
+
+    console.log(activeRegion.name);
   
     if (needsToSelectRegion) {
       this.replaceWith('authenticated.select-region');
@@ -20,8 +26,8 @@ export default class AuthenticatedIndexRoute extends Route {
       this.replaceWith('authenticated.select-business');
     } else {
       this.currentUser.isAdmin ?
-        this.replaceWith('authenticated.region.businesses', this.regionsService.activeRegion.id) :
-        this.replaceWith('authenticated.manage.business', this.regionsService.activeBusiness.id);
+        this.replaceWith('authenticated.region.businesses', activeRegion.id) :
+        this.replaceWith('authenticated.manage.business.index', activeBusiness.id);
     }
   }
 }

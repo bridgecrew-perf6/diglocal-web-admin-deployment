@@ -39,7 +39,7 @@ module('Acceptance | Header | Single Business Owner User', function (hooks) {
     await authenticateSession();
     await visit('/');
 
-    assert.equal(currentURL(), `/region/${this.activeRegion.id}/businesses`);
+    assert.equal(currentURL(), `/manage/business/${this.business.id}`);
     assert.dom(testId('nav-link')).exists({
       count: 5
     });
@@ -57,8 +57,8 @@ module('Acceptance | Header | Single Business Owner User', function (hooks) {
 
     await asyncForEach(this.expectedLinks, async (route) => {
       await click(testLinkTo(route));
-      assert.equal(currentRouteName(), `${route}.index`, 'Link goes to correct route');
-      assert.ok(currentURL().split('/').includes(this.activeRegion.id), 'Active region exists correctly in url');
+      assert.equal(currentRouteName(), route, 'Link goes to correct route');
+      assert.ok(currentURL().split('/').includes(this.business.id), 'Active business exists correctly in url');
     });
   });
 

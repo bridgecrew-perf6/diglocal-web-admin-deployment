@@ -30,10 +30,11 @@ class AuthenticatedRoute extends Route.extend(AuthenticatedRouteMixin) {
       let defaultRegion = business.belongsTo('region').value();
       this.regionsService.activeRegion = defaultRegion;
       this.regionsService.activeBusiness = business;
+
       return;
     }
 
-    if (this.currentUser.isMultiOwner) {
+    if (this.currentUser.isMultiBusinessOwner) {
       let lastActiveBusinessId = this.activeSettingsStorage.get('businessId');
       let foundActiveBusiness = this.currentUser.user.hasMany('businesses').value().toArray().findBy('id', lastActiveBusinessId);
       this.regionsService.activeBusiness = foundActiveBusiness ? foundActiveBusiness : null;

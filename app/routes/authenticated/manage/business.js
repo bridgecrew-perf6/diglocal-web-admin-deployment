@@ -12,12 +12,13 @@ export default class AuthenticatedManageBusinessRoute extends Route {
   breadCrumb = null;
 
   model(params) {
-    return this.store.findRecord('business', params.business_id);
+    return this.store.findRecord('business', params.business_model_id);
   }
 
   afterModel(model) {
     this.activeSettingsStorage.set('businessId', model.id);
     this.regionsService.activeBusiness = model;
+    this.regionsService.activeRegion = model.belongsTo('region').value();
   }
 
   @action

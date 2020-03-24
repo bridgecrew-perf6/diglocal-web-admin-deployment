@@ -12,7 +12,6 @@ export default class HeaderSelectBusinessComponent extends Component {
     dd.actions.close();
     this.regionsService.activeBusiness = business;
     this.regionsService.activeRegion = business.region;
-
     this.router.transitionTo('authenticated.manage.business.index', business.id);
   }
 }

@@ -8,10 +8,18 @@ export default class AuthenticatedRegionRoute extends Route {
   @storageFor('active-settings') activeSettingsStorage;
   @service('regions') regionsService;
   @service store;
+  @service currentUser;
   
   breadCrumb = null;
 
+  beforeModel() {
+    if (!this.currentUser.isAdmin) {
+      this.replaceWith('authenticated.index');
+    }
+  }
+
   model(params) {
+    console.log(params);
     return this.store.findRecord('region', params.region_id);
   }
 

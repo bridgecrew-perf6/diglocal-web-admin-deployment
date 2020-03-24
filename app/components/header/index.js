@@ -3,5 +3,6 @@ import Component from '@glimmer/component';
 
 export default class Header extends Component {
   @service session;
+  @service currentUser;
   @service('regions') regionsService;
 }
