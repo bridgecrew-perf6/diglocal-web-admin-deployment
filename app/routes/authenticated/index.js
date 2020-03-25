@@ -18,16 +18,15 @@ export default class AuthenticatedIndexRoute extends Route {
     let needsToSelectRegion = !activeRegion && this.currentUser.isAdmin;
     let needsToSelectBusiness = !activeBusiness && this.currentUser.isMultiBusinessOwner;
 
-    console.log(activeRegion.name);
   
     if (needsToSelectRegion) {
       this.replaceWith('authenticated.select-region');
     } else if (needsToSelectBusiness) {
       this.replaceWith('authenticated.select-business');
-    } else {
+    } else {    
       this.currentUser.isAdmin ?
-        this.replaceWith('authenticated.region.businesses', activeRegion.id) :
-        this.replaceWith('authenticated.manage.business.index', activeBusiness.id);
+        this.replaceWith('authenticated.region.businesses.index', activeRegion) :
+        this.replaceWith('authenticated.manage.business.index', activeBusiness);
     }
   }
 }

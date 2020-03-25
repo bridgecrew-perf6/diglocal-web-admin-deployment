@@ -112,11 +112,6 @@ module('Acceptance | Index | Admin User', function(hooks) {
 
     test('I can visit a url with region specified and see my active region updated', async function(assert) {
       await authenticateSession();
-      // await visit('/');
-
-      // assert.equal(currentURL(), `/region/${this.activeRegion.id}/businesses`);
-      // assert.dom(testId('active-region')).hasText(this.activeRegion.longName);
-
       let otherRegion = this.regions[2];
 
       await visit(`/region/${otherRegion.id}/businesses`);

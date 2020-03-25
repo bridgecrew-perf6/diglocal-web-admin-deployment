@@ -19,7 +19,6 @@ export default class AuthenticatedRegionRoute extends Route {
   }
 
   model(params) {
-    console.log(params);
     return this.store.findRecord('region', params.region_id);
   }
 

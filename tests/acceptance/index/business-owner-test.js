@@ -157,12 +157,8 @@ module('Acceptance | Index | Business Owner User', function(hooks) {
 
     test('I can visit a url with business specified and see my active business updated', async function (assert) {
       await authenticateSession();
-      await visit('/');
 
-      assert.equal(currentURL(), `/manage/business/${this.activeBusiness.id}`);
-      assert.dom(testId('active-business')).hasText(this.activeBusiness.name);
-
-      await visit(`/manage/business/`);
+      await visit(`/manage/business/${this.otherBusiness.id}`);
 
       assert.equal(currentURL(), `/manage/business/${this.otherBusiness.id}`);
       assert.dom(testId('active-business')).hasText(this.otherBusiness.name);
