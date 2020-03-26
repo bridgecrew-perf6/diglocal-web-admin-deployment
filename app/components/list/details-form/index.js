@@ -9,14 +9,13 @@ export default class DetailsForm extends Component {
   @service router;
 
   rollbackModel() {
-    if (this.args.model && this.args.model.hasDirtyAttributes) {
-      this.args.model.rollbackAttributes();
+    if (this.args.rollbackModel) {
+      return this.args.rollbackModel();
     }
   }
 
   willDestroy() {
-    this.rollbackModel();
-    super.willDestroy(...arguments);
+    return this.rollbackModel();
   }
 
   @task(function* () {
@@ -35,6 +34,6 @@ export default class DetailsForm extends Component {
 
   @action
   cancel() {
-    this.rollbackModel();
+    return this.rollbackModel();
   }
 }

@@ -48,7 +48,7 @@
   }
 
   &__checkbox {
-    @apply form-checkbox;
+    @apply mr-2;
   }
 
   &__radio {

@@ -24,5 +24,6 @@ export default class List extends Trackable {
   **  Validation Schema   **
   *************************/
   validationSchema = yup.object().shape({
+    name: yup.string().required().label('Name'),
   });
 }
