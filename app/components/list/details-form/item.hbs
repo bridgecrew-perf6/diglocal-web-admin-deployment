@@ -1,0 +1,15 @@
+{{#with @form as |form|}}
+  <div class="dig-card flex flex-wrap sm:flex-no-wrap">
+    <div class="w-full sm:w-auto flex-no-shrink">
+      {{#let (peek-record-from-id @model.id @itemType) as |record|}}
+        <p class="font-bold text-lg mb-2">{{record.name}}</p>
+        <div class="rounded h-56 sm:h-32 w-full sm:w-48 bg-gray-200 mb-2 bg-cover" style={{background-image record.businessImages.firstObject.sizes.mobile}}></div>
+      {{/let}}
+    </div>
+    <div class="w-full sm:ml-4 mt-4 sm:mt-8">
+      <form.fields-for @model={{@model}} as |itemForm|>
+        <itemForm.text-area @field="description" @label="Description" @rows="3" />
+      </form.fields-for>
+    </div>
+  </div>
+{{/with}}

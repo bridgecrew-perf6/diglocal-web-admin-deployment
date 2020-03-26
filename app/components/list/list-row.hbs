@@ -1,0 +1,51 @@
+<CrunchyMediaObject @style="horizontal" @class="h-40 w-full overflow-hidden" data-test-id="list-listing" as |card|>
+  {{#if (media "isMediumUp")}}
+    <card.image
+      @height="160px"
+      @width="160px"
+      @url={{@model.image.sizes.thumbx2}}
+      class="border-r crunchy-media-object__image--cover"
+    />
+  {{/if}}
+  <card.header class="flex justify-between">
+    <div class="flex w-full mr-2">
+      <p class="font-bold text-brand-primary-accent inline-block tracking-wide text-sm" title="Updated at">
+        {{moment-format @model.updatedAt "MMM Do YYYY"}}
+      </p>
+    </div>
+    <LinkTo @route="authenticated.region.lists.view"
+      @model={{@model.id}}
+      @aria-label="View scoop details" class="font-bold text-brand-primary whitespace-no-wrap text-sm"
+      data-test-id={{concat "view-list-" @model.id}}>
+      {{if (media "isMobile") "View" "View List"}}
+    </LinkTo>
+  </card.header>
+  <card.body>
+    <p class="font-bold text-sm sm:text-base lg:text-lg">
+      {{#if @model.pinned}}
+        <FaIcon @icon="thumbtack" @size="sm" class="text-brand-primary mr-1" />
+      {{/if}}
+      {{@model.name}}
+    </p>
+    <p class="py-2 text-sm leading-tight lg:mr-6">
+      {{truncate-text @model.description limit=(if (media "isMobile") "100" "200")}}</p>
+
+    <div class="flex items-center absolute left-0 bottom-0 p-1 pt-0 w-full bg-white">
+      <div class="flex items-center mr-4">
+        <div
+          class="w-6 h-6 rounded-full mr-2 bg-cover bg-center bg-no-repeat text-center overflow-hidden bg-gray-200 border border-gray-200"
+          style={{background-image @model.user.profileImages.firstObject.sizes.mobile}}>
+          {{#unless @model.user.profileImages.length}}
+          <div class="flex w-full h-full items-center justify-center">
+            <FaIcon @icon="user" @size="lg" class="text-gray-400 mt-2 text-center" />
+          </div>
+          {{/unless}}
+        </div>
+        <p class="text-sm font-semibold">{{@model.user.publicName}}</p>
+      </div>
+      <CrunchyChip @title={{concat @model.likesCount " likes"}}>
+        <FaIcon @icon="heart" />&nbsp;<span class="ml-px">{{@model.likesCount}}</span>
+      </CrunchyChip>
+    </div>
+  </card.body>
+</CrunchyMediaObject>

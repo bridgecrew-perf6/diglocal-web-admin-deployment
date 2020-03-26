@@ -1,0 +1,29 @@
+<CrunchyForm
+  @model={{@model}}
+  @formSchema={{@model.validationSchema}}
+  @onSubmit={{action "save"}}
+  @onCancel={{action "cancel"}}
+  @debounceSubmit={{true}}
+as |form|>
+
+  <form.text-field @field="name" @label="Name" @aria-label="List Name" />
+
+  <form.text-area @field="description" @label="Description" @rows="3" />
+
+  <Ui::CollapsibleSection @title="List Items ({{@model.items.length}})" @open={{true}}>
+    <ul>
+      {{#each @model.items as |item|}}
+        <List::DetailsForm::Item @model={{item}} @itemType={{@model.itemType}} @form={{form}} />
+      {{/each}}
+    </ul>
+  </Ui::CollapsibleSection>
+
+  <form.errors @errorHeading="Unable to save due to the following errors:" />
+
+  <div class="flex justify-end mt-8">
+    <div class="flex flex-wrap">
+      <form.submit @value="Submit" @class="mr-2 md:w-32" />
+      <form.cancel @value="Cancel" />
+    </div>
+  </div>
+</CrunchyForm>
