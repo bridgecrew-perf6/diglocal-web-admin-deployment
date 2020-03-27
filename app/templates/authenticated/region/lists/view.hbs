@@ -1,0 +1,12 @@
+<div class="treadmill-content__fixed-header text-sm">
+  <div class="flex items-center h-10">
+    <CrunchyBreadcrumbs />
+  </div>
+</div>
+
+<div class="treadmill-content__table-body pt-20 container">
+  <div class="dig-card">
+    <h1 class="dig-section-title mb-3">List Details</h1>
+    <List::DetailsForm @model={{@model}} @rollbackModel={{this.rollbackModel}} />
+  </div>
+</div>
