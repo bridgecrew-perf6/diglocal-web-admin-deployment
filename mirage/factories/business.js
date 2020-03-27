@@ -12,7 +12,6 @@ export default Factory.extend({
   tip() { return faker.hacker.phrase() },
   role: 'premium',
   website: 'https://www.google.com',
-  deliveryOptions() { return {} },
 
   withImages: trait({
     afterCreate(business, server) {
