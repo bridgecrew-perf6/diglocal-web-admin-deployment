@@ -1,5 +1,6 @@
 import { attr, belongsTo } from '@ember-data/model';
 import { isPresent } from '@ember/utils';
+import { alias } from '@ember/object/computed';
 import Trackable from './trackable';
 import * as yup from 'yup';
 
@@ -28,6 +29,13 @@ export default class Scoop extends Trackable {
   *************************/
 
   @belongsTo('business') business;
+
+  /*************************
+  ** Computed Properties  **
+  *************************/
+  
+  /* List items can be businesses or scoops -- a list item will reference the attr "name" */
+  @alias('description') name;
 
   /*************************
   **  Validation Schema   **

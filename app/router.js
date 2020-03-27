@@ -48,6 +48,10 @@ Router.map(function() {
         this.route('view', { path: ':scoop_id' });
         this.route('new');
       });
+      this.route('lists', function() {
+        this.route('index', { path: '/' });
+        this.route('view', { path: ':list_id' });
+      });
     });
 
     this.route('select-region');

@@ -5,12 +5,16 @@
   }
 
   &__group-label {
-    @apply block text-base font-poppins font-bold text-black mb-2;
+    @apply block text-base font-poppins font-medium text-black mb-2;
 
     &--checkbox {
       @apply font-medium text-brand-primary;
       @apply mb-0;
     }
+  }
+
+  &__toggle-label {
+    @apply font-medium pr-2;
   }
 
   &__group-control {
@@ -34,9 +38,9 @@
   }
 
   &__input, &__textarea {
-    @apply border border-gray-400 rounded py-3 px-4 block w-full leading-normal;
+    @apply border border-gray-300 rounded py-3 px-4 block w-full leading-normal;
     &:focus, &:active {
-      @apply bg-white border-gray-400;
+      @apply bg-white border-gray-300;
     }
     &:disabled {
       @apply bg-gray-100 border-transparent;
@@ -44,7 +48,7 @@
   }
 
   &__checkbox {
-    @apply form-checkbox;
+    @apply mr-2;
   }
 
   &__radio {
