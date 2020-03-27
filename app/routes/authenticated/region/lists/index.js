@@ -8,8 +8,7 @@ export default class AuthenticatedRegionListsIndexRoute extends Route {
 
   queryParams = {
     search: { refreshModel: true },
-    // sort: { refreshModel: true },
-    // listTypes: { refreshModel: true },
+    listTypes: { refreshModel: true }
   };
 
   breadCrumb = {
@@ -25,9 +24,9 @@ export default class AuthenticatedRegionListsIndexRoute extends Route {
         offset: get(range, 'start') || 0
       };
       // Route specific query formatting
-      // this._formatQuery(params);
+      let formatted = this._formatQuery({ ...params});
 
-      let filter = removeEmpty(params);
+      let filter = removeEmpty(formatted);
 
       filter.region = regionId;
 
@@ -50,13 +49,16 @@ export default class AuthenticatedRegionListsIndexRoute extends Route {
     });
   }
 
-  // _formatQuery(query) {
-  //   debugger
-  //   if (query.listTypes.contains('pinned')) {
-  //     query.pinned = true;
-  //     query.listTypes = query.listTypes.filter(type => type !== 'pinned');
-  //   }
+  _formatQuery(query) {
+    query.itemType = query.listTypes;
 
-  //   return query;
-  // }
+    if (query.listTypes.find(type => type === 'pinned')) {
+      query.pinned = true;
+      query.itemType = query.listTypes.filter(type => type !== 'pinned');
+    }
+
+    delete query.listTypes;
+
+    return query;
+  }
 }

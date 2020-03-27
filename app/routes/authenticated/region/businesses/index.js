@@ -29,9 +29,9 @@ export default Route.extend({
       };
 
       // Route specific query formatting
-      this._formatQuery(params);
+      let formatted = this._formatQuery({...params});
 
-      let filter = removeEmpty(params);
+      let filter = removeEmpty(formatted);
 
       filter.region = regionId;
 

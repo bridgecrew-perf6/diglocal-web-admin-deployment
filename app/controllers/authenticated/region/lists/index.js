@@ -10,20 +10,18 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default class AuthenticatedRegionListsIndexController extends Controller {
   queryParams = [
     'search',
-    // 'sort',
-    // 'listTypes'
+    'listTypes'
   ];
 
   listTypeOptions = [
     { value: 'pinned', label: 'Pinned Lists' },
-    { value: 'business', label: 'Business Lists' },
-    { value: 'scoop', label: 'Scoop Lists' }
+    { value: 'Business', label: 'Business Lists' },
+    { value: 'Scoop', label: 'Scoop Lists' }
   ];
 
   @tracked listTypes = [];
 
   @tracked search = '';
-  @tracked sort = "-created_at";
 
   @oneWay('search')
   searchString;
