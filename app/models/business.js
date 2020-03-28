@@ -10,7 +10,6 @@ export default class Business extends Trackable {
   @attr() embedTwitterEnabled;
   @attr() facebookUrl;
   @attr('boolean', { defaultValue: false }) featured;
-  @attr() followersCount;
   @attr() instagramUrl;
   @attr() likesCount;
   @attr() logo;
