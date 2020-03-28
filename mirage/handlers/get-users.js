@@ -9,7 +9,7 @@ const filterUsers = function(users, request) {
   let firebaseId = request.queryParams['filter[firebaseId]'];
 
   if (firebaseId) {
-    // filters.push(user => user.firebaseId === firebaseId);
+    filters.push(user => user.firebaseId === firebaseId);
 
     /***
     * BELOW CODE IS JUST FOR MIRAGE DEV ENVIRONMENT
@@ -22,7 +22,7 @@ const filterUsers = function(users, request) {
     // filters.push(user => user.id === '2222');
 
     /* uncomment below to login as a single-region, multi-business owner */
-    filters.push(user => user.id === '3333');
+    // filters.push(user => user.id === '3333');
 
     /* uncomment below to login as a single business owner */
     // filters.push(user => user.id === '4444');

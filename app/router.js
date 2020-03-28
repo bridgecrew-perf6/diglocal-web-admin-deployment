@@ -36,7 +36,6 @@ Router.map(function() {
             this.route('view', { path: ':scoop_id' });
             this.route('new');
           });
-          this.route('social');
           this.route('users');
         });
         this.route('new');

@@ -7,10 +7,16 @@ import { task } from 'ember-concurrency';
 export default class DetailsForm extends Component {
   @service store;
   @service regions;
-  @service router;
+  @service currentUser;
   @tracked showDestroyModal = false;
   @tracked showUploadModal = false;
   @tracked categoryOptions = [];
+
+  roleOptions = [
+    'temporary',
+    'premium',
+    '2types'
+  ];
 
   constructor() {
     super(...arguments);
@@ -20,6 +26,10 @@ export default class DetailsForm extends Component {
   willDestroy() {
     this.rollbackModel();
     this.showDestroyModal = false;
+  }
+
+  get canAddMultiCategories() {
+    return this.args.model.role === '2types';
   }
 
   @task(function* () {

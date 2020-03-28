@@ -23,13 +23,23 @@
       <div class="w-full md:pl-6">
         <h1 class="dig-section-title mb-4">Business Details</h1>
         <form.text-field @field="name" @label="Name" @aria-label="Business Name" @controlClass="font-bold" />
-        <form.field @field="categories" @label="Categories">
+        <form.field @field="categories" @label={{if this.canAddMultiCategories "Categories" "Category"}}>
           <PowerSelectMultiple @searchEnabled={{true}} @searchField="longName" @options={{this.categoryOptions}}
             @selected={{@model.categories}} @placeholder="Select category tags..." @onChange={{action (mut @model.categories)}}
             as |category|>
             {{category.longName}}
           </PowerSelectMultiple>
         </form.field>
+
+        {{#if currentUser.isAdmin}}
+          <form.field @field="role" @label="Listing Type">
+            <PowerSelect @placeholder="Select a listing type for this business" @options={{this.roleOptions}}
+              @selected={{@model.role}} @allowClear={{false}} @disabled={{form.isReadonly}} @onChange={{action (mut @model.role)}}
+              as |role|>
+              <span data-test-id="selected-role">{{role-display-name role}}</span>
+            </PowerSelect>
+          </form.field>
+        {{/if}}
 
         <Ui::CollapsibleSection @title="About" @open={{true}}>
           <form.text-area @field="description" @label="What You Need To Know"
