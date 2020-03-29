@@ -1,1 +1,10 @@
-{{outlet}}
+<div class="container py-8">
+  <Location::Create @business={{@model.business}} class="mb-4" />
+  {{#each @model.locations as |item|}}
+    <Location::Form @model={{item}} @class="border border-gray-300 rounded" />
+  {{else}}
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No locations. </p>
+    </div>
+  {{/each}}
+</div>

@@ -65,10 +65,12 @@
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
-    <div class="flex justify-between mt-8">
-      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
+    <div class="flex mt-8 {{if this.currentUser.isAdmin "justify-between" "justify-end"}}">
+      {{#if this.currentUser.isAdmin}}
+        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
+      {{/if}}
       <div class="flex flex-wrap">
-        <form.submit @value="Submit" @class="mr-2 md:w-32" />
+        <form.submit @value="Save" @class="mr-2 md:w-32" />
         <form.cancel @value="Cancel" />
       </div>
     </div>
@@ -111,11 +113,11 @@
                 {{/if}}
                 <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
                   {{#if (or task.isRunning (eq task.status "pending"))}}
-                  <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                    <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
                   {{else if (eq task.status "complete")}}
-                  <FaIcon @icon="check-circle" class="text-green-600" />
+                    <FaIcon @icon="check-circle" class="text-green-600" />
                   {{else if (eq task.status "error")}}
-                  <FaIcon @icon="times-circle" class="text-brand-error" />
+                    <FaIcon @icon="times-circle" class="text-brand-error" />
                   {{/if}}
                 </div>
               </div>

@@ -1,1 +1,119 @@
-{{outlet}}
+<div class="treadmill-content__fixed-header text-sm">
+  <div class="container">
+    <div class="flex h-10 justify-between">
+      {{#if this.selectedPhotos.length}}
+        <div class="mx-4 flex items-center">
+          <p>{{pluralize this.selectedPhotos.length "photo"}} selected</p>
+          <button {{action "clearAllSelected"}} type="button" class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
+            <FaIcon @icon="times" @size="xs" class="mr-1" /> Clear Selected
+          </button>
+        </div>
+        <CrunchyButton
+          @onClick={{action (mut this.showDestroyModal) true}}
+          @aria-label="Delete selected photos"
+          @class="crunchy-button--primary whitespace-no-wrap"
+          @disabled={{not this.selectedPhotos.length}}>
+          <FaIcon @icon="trash" @size="sm" class="mr-1" /> Delete Photos ({{this.selectedPhotos.length}})
+        </CrunchyButton>
+      {{else}}
+        <p class="flex items-center mx-2">Select photos to remove or drag photos to change sort order.</p>
+        <CrunchyButton
+          @onClick={{action (mut this.showUploadModal) true}}
+          @aria-label="Upload a new photo"
+          @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
+          <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Photos
+        </CrunchyButton>
+      {{/if}}
+    </div>
+    {{#if this.errorMessage}}
+      <div class="flex justify-end">
+        <p class="text-brand-error text-sm mx-4 my-1">{{this.errorMessage}}</p>
+      </div>
+    {{/if}}
+  </div>
+</div>
+<div class="treadmill-content__table-body container pt-20">
+  <Photo::Grid @model={{reject-by "isNew" @model.businessImages}} @selectedPhotos={{this.selectedPhotos}} />
+</div>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{action "deleteSelected"}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
+>
+  <p>
+    Are you sure you want to delete the selected
+    <span class="font-semibold text-brand-primary whitespace-no-wrap">
+      {{pluralize this.selectedPhotos.length "photo"}}
+    </span>?
+  </p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
+
+{{#if this.showUploadModal}}
+  <CrunchyModal
+    @clickOutsideToClose={{false}}
+    @translucentOverlay={{true}}
+    @onClose={{this.cancelUpload}}
+    as |modal|>
+    <DigImageUploader
+      @modelType="business-image"
+      @belongsToModelType="business"
+      @belongsToModel={{@model.business}}
+      @onUploadComplete={{perform this.onUploadComplete}}
+      @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}}
+      as |uploader|>
+      <modal.header>
+        Upload photos
+      </modal.header>
+      <modal.body>
+        <div class="h-48 rounded border border-brand-gray border-dashed my-6">
+            <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
+              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
+                {{#unless uploader.uploadTasks.length}}
+                  <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                    <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                    Click or drop file here
+                  </span>
+                {{/unless}}
+                <div class="flex flex-wrap justify-start">
+                  {{#each uploader.uploadTasks as |task|}}
+                    <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                      {{#if (not (eq task.status "pending"))}}
+                        <img src={{task.preview}} alt="File Upload Preview">
+                      {{/if}}
+                      <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
+                          <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                        {{else if (eq task.status "complete")}}
+                          <FaIcon @icon="check-circle" class="text-green-600" />
+                        {{else if (eq task.status "error")}}
+                          <FaIcon @icon="times-circle" class="text-brand-error" />
+                        {{/if}}
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              {{/x-file-input}}
+            </CrunchyDraggableDropzone>
+        </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <ul class="text-sm">
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
+            {{#if uploader.errorTasks.length}}
+              <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+            {{/if}}
+          {{/if}}
+          {{#if uploader.uploadImageTask.isRunning}}
+            <li>{{uploader.uploadImageTask.numQueued}} of {{pluralize uploader.uploadTasks.length "file"}} remaining.</li>
+          {{/if}}
+        </ul>
+      </modal.footer>
+    </DigImageUploader>
+  </CrunchyModal>
+{{/if}}

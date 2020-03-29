@@ -1,10 +1,10 @@
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { task, all } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
-export default class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
+export default class AuthenticatedManageBusinessPhotosController extends Controller {
   @service store;
   @service session;
 
