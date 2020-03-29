@@ -31,10 +31,12 @@ export default class AuthenticatedRegionRoute extends Route {
 
   @action
   error(error) {
-   if (error instanceof NotFoundError || error instanceof ForbiddenError) {
+    if (error instanceof NotFoundError || error instanceof ForbiddenError) {
+      this.activeSettingsStorage.set('regionId', null);
+      this.regionsService.activeRegion = null;
      this.replaceWith('/');
-   } else {
-     return true;
-   }
+    } else {
+      return true;
+    }
   }
 }

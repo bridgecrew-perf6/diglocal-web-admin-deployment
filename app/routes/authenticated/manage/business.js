@@ -24,6 +24,8 @@ export default class AuthenticatedManageBusinessRoute extends Route {
   @action
   error(error) {
     if (error instanceof NotFoundError || error instanceof ForbiddenError) {
+      this.activeSettingsStorage.set('businessId', null);
+      this.regionsService.activeBusiness = null;
       this.replaceWith('/');
     } else {
       return true;

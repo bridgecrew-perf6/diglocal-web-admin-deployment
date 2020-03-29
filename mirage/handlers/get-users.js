@@ -1,5 +1,6 @@
 import { Collection } from 'ember-cli-mirage';
 import { camelize } from '@ember/string';
+import config from 'diglocal-manage/config/environment';
 
 const filterUsers = function(users, request) {
   let filters = [];
@@ -9,26 +10,28 @@ const filterUsers = function(users, request) {
   let firebaseId = request.queryParams['filter[firebaseId]'];
 
   if (firebaseId) {
-    filters.push(user => user.firebaseId === firebaseId);
+    if (config.environment === 'test') {
+      filters.push(user => user.firebaseId === firebaseId);
+    } else {
+      /***
+      * BELOW CODE IS JUST FOR MIRAGE DEV ENVIRONMENT
+      * TO MOCK THE FIREBASE CURRENT USER RESPONSE
+      ***/
+      /* uncomment below to login as an admin user */
+      filters.push(user => user.admin);
 
-    /***
-    * BELOW CODE IS JUST FOR MIRAGE DEV ENVIRONMENT
-    * IT WILL CAUSE TEST FAILURES IF YOU LEAVE IT FOR TESTING
-    ***/
-    /* uncomment below to login as an admin user */
-    // filters.push(user => user.admin);
+      /* uncomment below to login as a multi-region, multi-business owner */
+      // filters.push(user => user.id === '2222');
 
-    /* uncomment below to login as a multi-region, multi-business owner */
-    // filters.push(user => user.id === '2222');
+      /* uncomment below to login as a single-region, multi-business owner */
+      // filters.push(user => user.id === '3333');
 
-    /* uncomment below to login as a single-region, multi-business owner */
-    // filters.push(user => user.id === '3333');
+      /* uncomment below to login as a single business owner */
+      // filters.push(user => user.id === '4444');
 
-    /* uncomment below to login as a single business owner */
-    // filters.push(user => user.id === '4444');
-
-    /* uncomment below to login as a regular user (restricted) */
-    // filters.push(user => !user.businesses.length);
+      /* uncomment below to login as a regular user (restricted) */
+      // filters.push(user => !user.businesses.length);
+    }
   }
 
   if (search) {

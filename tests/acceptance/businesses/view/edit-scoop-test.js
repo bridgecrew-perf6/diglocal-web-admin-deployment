@@ -34,6 +34,7 @@ module('Acceptance | View Business | Scoops | Edit', function(hooks) {
 
       let detailsForm = find(testId('scoop-details-form'));
       assert.dom(detailsForm).exists();
+
       assert.dom(testId('save-scoop')).exists();
     });
   });

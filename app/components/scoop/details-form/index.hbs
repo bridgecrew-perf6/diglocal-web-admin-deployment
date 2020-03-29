@@ -68,13 +68,12 @@
       <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business"
         @class="crunchy-button--outline" />
       <div class="flex flex-wrap">
-        <form.submit @value="Submit" @class="mr-2 md:w-32" />
+        <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
         <form.cancel @value="Cancel" />
       </div>
     </div>
   </CrunchyForm>
 </div>
-
 
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
