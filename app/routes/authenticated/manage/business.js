@@ -24,7 +24,7 @@ export default class AuthenticatedManageBusinessRoute extends Route {
   @action
   error(error) {
     if (error instanceof NotFoundError || error instanceof ForbiddenError) {
-      this.replaceWith('authenticated.select-business');
+      this.replaceWith('/');
     } else {
       return true;
     }

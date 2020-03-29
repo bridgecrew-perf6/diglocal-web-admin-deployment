@@ -32,7 +32,7 @@ export default class AuthenticatedRegionRoute extends Route {
   @action
   error(error) {
    if (error instanceof NotFoundError || error instanceof ForbiddenError) {
-     this.replaceWith('authenticated.select-region');
+     this.replaceWith('/');
    } else {
      return true;
    }

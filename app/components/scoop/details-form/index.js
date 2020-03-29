@@ -26,8 +26,8 @@ export default class DetailsForm extends Component {
   }
 
   rollbackModel() {
-    if (this.args.model && this.args.model.hasDirtyAttributes) {
-      this.args.model.rollbackAttributes();
+    if (this.args.rollbackModel) {
+      return this.args.rollbackModel();
     }
   }
 
@@ -77,7 +77,7 @@ export default class DetailsForm extends Component {
 
   @action
   cancel() {
-    this.rollbackModel();
+    return this.rollbackModel();
   }
 
   @action
