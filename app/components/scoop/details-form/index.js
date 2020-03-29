@@ -1,8 +1,7 @@
 import { action } from '@ember/object';
-import { not } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { isPresent, isBlank } from '@ember/utils';
+import { isBlank } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
