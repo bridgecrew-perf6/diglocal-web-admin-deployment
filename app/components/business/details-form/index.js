@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 export default class DetailsForm extends Component {
   @service store;
   @service regions;
+  @service router;
   @service currentUser;
   @tracked showDestroyModal = false;
   @tracked showUploadModal = false;

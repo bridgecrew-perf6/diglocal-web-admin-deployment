@@ -1,57 +1,24 @@
-<div class="dig-card" data-test-id="scoop-details-form" data-test-editing="{{this.isEditing}}">
+<div class="dig-card" data-test-id="scoop-details-form">
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
-    @isReadonly={{this.isReadonly}} @debounceSubmit={{true}} as |form|>
+    @debounceSubmit={{true}} as |form|>
     
-    <div class="flex mb-3 justify-between">
-      <h1 class="font-semibold text-lg">
-        {{#if @model.isNew}}
-          Create New Scoop
-        {{else}}
-          {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}}
-        {{/if}}
-      </h1>
-      {{#unless @model.isNew}}
-        {{#if this.isReadonly}}
-          <CrunchyButton
-            @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-            @class="crunchy-button--icon"
-            @aria-label="Edit scoop details"
-            @testId="edit-scoop"
-          >
-            <FaIcon @icon="edit" @size="lg" />
-          </CrunchyButton>
-        {{else}}
-          <CrunchyButton
-            @onClick={{form.resetForm}}
-            @class="crunchy-button--icon"
-            @aria-label="Close form"
-            @testId="cancel-edit"
-          >
-            <FaIcon @icon="times" @size="lg" />
-          </CrunchyButton>
-        {{/if}}
-      {{/unless}}
+    <div class="flex mb-3 justify-start">
+      <h1 class="dig-section-title mb-4">Scoop Details</h1>
     </div>
 
     <div class="flex flex-wrap md:flex-no-wrap mb-4">
       <div class="h-48 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100 relative" style={{background-image @model.image.sizes.full}}>
-        {{#if (and this.isEditing (not @model.isNew))}}
-          <CrunchyButton
-            @onClick={{action (mut this.showUploadModal) true}}
-            @class="absolute top-0 right-0 crunchy-button--icon m-2"
-            @aria-label="Upload scoop image"
-          >
-            <FaIcon @icon="camera" />
-          </CrunchyButton>
-        {{else if @model.isNew}}
-          <div class="flex h-full w-full items-center justify-center text-sm text-gray-600">
-            Save scoop to add photo
-          </div>
-        {{/if}}
+        <CrunchyButton
+          @onClick={{action (mut this.showUploadModal) true}}
+          @class="absolute top-0 right-0 crunchy-button--icon m-2"
+          @aria-label="Upload scoop image"
+        >
+          <FaIcon @icon="camera" />
+        </CrunchyButton>
       </div>
       <div class="w-full md:w-2/3 md:pl-4">
         <form.field @field="business" @label="Business">
@@ -65,15 +32,15 @@
             @disabled={{or form.isReadonly (is-active "authenticated.region.businesses.view")}}
             @onChange={{action (mut @model.business)}} as |business|
             >
-              <span data-test-id="selected-business-name">{{business.name}}</span>
+              <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
           </PowerSelect>
         </form.field>
 
         <form.text-field
           @field="description"
-          @label="Description"
-          @aria-label="Description"
+          @label="Title"
           @placeholder="Add a headline for this scoop"
+          @controlClass="font-bold"
         />
       </div>
     </div>
@@ -107,28 +74,26 @@
       </XToggle>
     </div>
 
-    {{#if this.isEditing}}
-      <div class="flex justify-start items-center my-4 crunchy-form__group">
-        <XToggle
-          @showLabels={{true}}
-          @size="small"
-          @value={{this.showEventFields}}
-          @onToggle={{action "toggleEventFields"}}
-          @disabled={{form.isReadonly}}
-          data-test-id="isEvent-toggle"
-          as |toggle|
-        >
-          <toggle.label @value={{this.showEventFields}}>
-            <span class="crunchy-form__toggle-label">Is this an event?</span>
-          </toggle.label>
-          <toggle.switch
-            @theme='light'
-            @onLabel='Yes'
-            @offLabel='No'
-          />
-        </XToggle>
-      </div>
-    {{/if}}
+    <div class="flex justify-start items-center my-4 crunchy-form__group">
+      <XToggle
+        @showLabels={{true}}
+        @size="small"
+        @value={{this.showEventFields}}
+        @onToggle={{action "toggleEventFields"}}
+        @disabled={{form.isReadonly}}
+        data-test-id="isEvent-toggle"
+        as |toggle|
+      >
+        <toggle.label @value={{this.showEventFields}}>
+          <span class="crunchy-form__toggle-label">Is this an event?</span>
+        </toggle.label>
+        <toggle.switch
+          @theme='light'
+          @onLabel='Yes'
+          @offLabel='No'
+        />
+      </XToggle>
+    </div>
 
     {{#if this.showEventFields}}
       <Scoop::DetailsForm::EventFields
@@ -178,15 +143,13 @@
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
-    {{#if this.isEditing}}
-      <div class="flex justify-between mt-8">
-        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
-        <div class="flex flex-wrap">
-          <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
-          <form.cancel @value="Cancel" />
-        </div>
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
+      <div class="flex flex-wrap">
+        <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
+        <form.cancel @value="Cancel" />
       </div>
-    {{/if}}
+    </div>
   </CrunchyForm>
 </div>
 

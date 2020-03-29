@@ -15,18 +15,12 @@ export default class DetailsForm extends Component {
   @service store;
   @service router;
 
-  @tracked isEditing = false;
   @tracked showDestroyModal = false;
   @tracked showEventFields = true;
   @tracked showUploadModal = false;
 
-  @not('isEditing') isReadonly;
-
   constructor() {
     super(...arguments);
-    if (isPresent(this.args.isEditing)) {
-      this.isEditing = this.args.isEditing
-    }
     if (isBlank(this.args.model.eventDate)) {
       this.showEventFields = false;
     }
@@ -41,7 +35,6 @@ export default class DetailsForm extends Component {
   willDestroy() {
     this.rollbackModel();
     this.showDestroyModal = false;
-    this.isEditing = false;
     super.willDestroy(...arguments);
   }
 
@@ -86,7 +79,6 @@ export default class DetailsForm extends Component {
   @action
   cancel() {
     this.rollbackModel();
-    this.isEditing = false;
   }
 
   @action
