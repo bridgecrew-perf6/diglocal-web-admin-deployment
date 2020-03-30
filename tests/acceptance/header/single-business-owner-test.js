@@ -23,7 +23,7 @@ const expectedLinks = [
   'authenticated.manage.business.index',
   'authenticated.manage.business.locations',
   'authenticated.manage.business.photos',
-  'authenticated.manage.business.scoops',
+  'authenticated.manage.business.scoops.index',
   'authenticated.manage.business.users'
 ];
 

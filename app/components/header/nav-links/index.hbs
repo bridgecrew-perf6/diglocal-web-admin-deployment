@@ -14,6 +14,6 @@
   <Header::NavLinks::Link @route="authenticated.manage.business.index" @model={{this.activeBusiness}}>Profile</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.manage.business.locations" @model={{this.activeBusiness}}>Locations</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.manage.business.photos" @model={{this.activeBusiness}}>Photos</Header::NavLinks::Link>
-  <Header::NavLinks::Link @route="authenticated.manage.business.scoops" @model={{this.activeBusiness}} @query={{hash sort="-default"}}>Scoops</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.scoops.index" @model={{this.activeBusiness}}>Scoops</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.manage.business.users" @model={{this.activeBusiness}}>Members</Header::NavLinks::Link>
 {{/if}}

@@ -56,8 +56,12 @@ Router.map(function() {
     this.route('select-region');
     this.route('new-region');
     this.route('manage', function() {
-      this.route('business', { path: 'business/:business_model_id' }, function() {
-        this.route('scoops');
+      this.route('business', { path: 'business/:manage_business_id' }, function() {
+        this.route('scoops', function() {
+          this.route('index', { path: '/' })
+          this.route('view', { path: '/:manage_scoop_id'});
+          this.route('new');
+        });
         this.route('users');
         this.route('photos');
         this.route('locations');

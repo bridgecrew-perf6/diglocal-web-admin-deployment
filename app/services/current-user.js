@@ -40,7 +40,7 @@ export default class CurrentUserService extends Service {
       return 'admin';
     }
     if (this.user && !this.user.admin) {
-      let businesses = this.user.hasMany('businesses').value() || [];
+      let businesses = this.user.businesses || [];
       if (isEmpty(businesses)) { return 'restricted'; }
       return businesses.length > 1 ? 'multi_owner' : 'single_owner';
     }
