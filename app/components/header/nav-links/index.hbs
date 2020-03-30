@@ -16,4 +16,7 @@
   <Header::NavLinks::Link @route="authenticated.manage.business.photos" @model={{this.activeBusiness}}>Photos</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.manage.business.scoops.index" @model={{this.activeBusiness}}>Scoops</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.manage.business.users" @model={{this.activeBusiness}}>Members</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.scoops.new" @model={{this.activeBusiness}} class="w-full flex justify-end">
+    <FaIcon @icon="plus" @size="xs" class="mr-1" /> New Scoop
+  </Header::NavLinks::Link>
 {{/if}}

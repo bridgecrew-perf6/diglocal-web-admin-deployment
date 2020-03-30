@@ -16,8 +16,8 @@
         </div>
         <div class="w-full py-8 px-4">
           <p class="font-semibold mb-4">{{@model.likesCount}} likes</p>
-          <form.checkbox @field="active" @label="Active" />
-          <form.checkbox @field="featured" @label="Featured" />
+          <form.checkbox @field="active" @label="Active" @disabled={{not this.currentUser.isAdmin}} />
+          <form.checkbox @field="featured" @label="Featured" @disabled={{not this.currentUser.isAdmin}} />
         </div>
       </div>
       <div class="w-full md:pl-6">

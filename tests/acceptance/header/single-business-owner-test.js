@@ -24,7 +24,8 @@ const expectedLinks = [
   'authenticated.manage.business.locations',
   'authenticated.manage.business.photos',
   'authenticated.manage.business.scoops.index',
-  'authenticated.manage.business.users'
+  'authenticated.manage.business.users',
+  'authenticated.manage.business.scoops.new'
 ];
 
 module('Acceptance | Header | Single Business Owner User', function (hooks) {
@@ -41,7 +42,7 @@ module('Acceptance | Header | Single Business Owner User', function (hooks) {
 
     assert.equal(currentURL(), `/manage/business/${this.business.id}`);
     assert.dom(testId('nav-link')).exists({
-      count: 5
+      count: this.expectedLinks.length
     });
 
     this.expectedLinks.forEach((route) => {

@@ -1,6 +1,11 @@
 <div class="dig-card">
-  <CrunchyForm @model={{@model}} @formSchema={{@model.validationSchema}} @onSubmit={{action "save"}}
-    @onCancel={{action "cancel"}} @debounceSubmit={{true}} as |form|>
+  <CrunchyForm
+    @model={{@model}}
+    @formSchema={{@model.validationSchema}}
+    @onSubmit={{action "save"}}
+    @onCancel={{action "cancel"}}
+    @debounceSubmit={{true}}
+  as |form|>
     <div class="flex flex-col md:flex-row mb-4">
       <div class="flex flex-col items-center">
         <div style={{background-image @model.image.sizes.full}}
@@ -17,55 +22,60 @@
       </div>
       <div class="w-full md:pl-6">
         <h1 class="dig-section-title mb-4">Scoop Details</h1>
-              <form.field @field="business" @label="Business">
-                <PowerSelect @search={{perform this.searchBusinesses}} @searchEnabled={{true}}
-                  @loadingMessage="Searching businesses...." @placeholder="Click to search" @selected={{@model.business}}
-                  @allowClear={{false}} @disabled={{or form.isReadonly (is-active "authenticated.region.businesses.view")}}
-                  @onChange={{action (mut @model.business)}} as |business|>
-                  <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
-                </PowerSelect>
-              </form.field>
-            
-              <form.text-field @field="description" @label="Title" @placeholder="Add a headline for this scoop"
-                @controlClass="font-bold" />
-            
-            <form.text-area @field="fineText" @label="Additional Details" @aria-label="Additional Details" @rows="5"
-              @placeholder="Add some additional details" />
-            
-            <div class="flex justify-start items-center my-4 crunchy-form__group">
-              <XToggle @showLabels={{true}} @size="small" @value={{this.showEventFields}} @onToggle={{action "toggleEventFields"}}
-                @disabled={{form.isReadonly}} data-test-id="isEvent-toggle" as |toggle|>
-                <toggle.label @value={{this.showEventFields}}>
-                  <span class="crunchy-form__toggle-label">Is this an event?</span>
-                </toggle.label>
-                <toggle.switch @theme='light' @onLabel='Yes' @offLabel='No' />
-              </XToggle>
-            </div>
-            
-            {{#if this.showEventFields}}
-              <Scoop::DetailsForm::EventFields
-                @form={{form}}
-                @model={{@model}}
-                @onChangeEventDate={{action (mut @model.eventDate)}}
-                @onChangeEventStart={{action (mut @model.eventStartTime)}}
-                @onChangeEventEnd={{action (mut @model.eventEndTime)}}
-              />
-              <Ui::CollapsibleSection @title="Tickets & Event Links" @open={{false}}>
-                <form.text-field @field="ticketUrl" @label="Ticket Url" />
-                <form.text-field @field="virtualUrl" @label="Virtual Event Url" />
-              </Ui::CollapsibleSection>
-            {{/if}}
-            
-            <Ui::CollapsibleSection @title="Post Schedule" @open={{false}}>
-              <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{action (mut @model.daysOfWeek)}} />
-            </Ui::CollapsibleSection>
+        <form.field @field="business" @label="Business">
+          <PowerSelect
+            @search={{perform this.searchBusinesses}}
+            @searchEnabled={{true}}
+            @loadingMessage="Searching businesses...."
+            @placeholder="Click to search" @selected={{@model.business}}
+            @allowClear={{false}}
+            @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
+            @onChange={{action (mut @model.business)}}
+          as |business|>
+            <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
+          </PowerSelect>
+        </form.field>
+      
+        <form.text-field @field="description" @label="Title" @placeholder="Add a headline for this scoop"
+          @controlClass="font-bold" />
+        
+        <form.text-area @field="fineText" @label="Additional Details" @aria-label="Additional Details" @rows="5"
+          @placeholder="Add some additional details" />
+        
+        <div class="flex justify-start items-center my-4 crunchy-form__group">
+          <XToggle @showLabels={{true}} @size="small" @value={{this.showEventFields}} @onToggle={{action "toggleEventFields"}}
+            @disabled={{form.isReadonly}} data-test-id="isEvent-toggle" as |toggle|>
+            <toggle.label @value={{this.showEventFields}}>
+              <span class="crunchy-form__toggle-label">Is this an event?</span>
+            </toggle.label>
+            <toggle.switch @theme='light' @onLabel='Yes' @offLabel='No' />
+          </XToggle>
+        </div>
+        
+        {{#if this.showEventFields}}
+          <Scoop::DetailsForm::EventFields
+            @form={{form}}
+            @model={{@model}}
+            @onChangeEventDate={{action (mut @model.eventDate)}}
+            @onChangeEventStart={{action (mut @model.eventStartTime)}}
+            @onChangeEventEnd={{action (mut @model.eventEndTime)}}
+          />
+          <Ui::CollapsibleSection @title="Tickets & Event Links" @open={{false}}>
+            <form.text-field @field="ticketUrl" @label="Ticket Url" />
+            <form.text-field @field="virtualUrl" @label="Virtual Event Url" />
+          </Ui::CollapsibleSection>
+        {{/if}}
+        
+        <Ui::CollapsibleSection @title="Post Schedule" @open={{false}}>
+          <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{action (mut @model.daysOfWeek)}} />
+        </Ui::CollapsibleSection>
       </div>
     </div>
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     <div class="flex justify-between mt-8">
-      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business"
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop"
         @class="crunchy-button--outline" />
       <div class="flex flex-wrap">
         <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
@@ -90,13 +100,13 @@
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
     @onClose={{action "cancelUpload"}}
-    as |modal|>
+  as |modal|>
     <AttributeImageUploader
       @model={{@model}}
       @modelType="scoop"
       @keyForImage="image"
       @onAllFilesUploadComplete={{perform this.onUploadImageComplete}}
-      as |uploader|>
+    as |uploader|>
       <modal.header>
         Upload Image
       </modal.header>

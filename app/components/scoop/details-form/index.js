@@ -12,6 +12,7 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default class DetailsForm extends Component {
   @service regions;
   @service store;
+  @service currentUser;
   @service router;
 
   @tracked showDestroyModal = false;
