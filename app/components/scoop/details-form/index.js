@@ -1,8 +1,7 @@
 import { action } from '@ember/object';
-import { not } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { isPresent, isBlank } from '@ember/utils';
+import { isBlank } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
@@ -13,35 +12,29 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default class DetailsForm extends Component {
   @service regions;
   @service store;
+  @service currentUser;
   @service router;
 
-  @tracked isEditing = false;
   @tracked showDestroyModal = false;
   @tracked showEventFields = true;
   @tracked showUploadModal = false;
 
-  @not('isEditing') isReadonly;
-
   constructor() {
     super(...arguments);
-    if (isPresent(this.args.isEditing)) {
-      this.isEditing = this.args.isEditing
-    }
     if (isBlank(this.args.model.eventDate)) {
       this.showEventFields = false;
     }
   }
 
   rollbackModel() {
-    if (this.args.model && this.args.model.hasDirtyAttributes) {
-      this.args.model.rollbackAttributes();
+    if (this.args.rollbackModel) {
+      return this.args.rollbackModel();
     }
   }
 
   willDestroy() {
     this.rollbackModel();
     this.showDestroyModal = false;
-    this.isEditing = false;
     super.willDestroy(...arguments);
   }
 
@@ -85,8 +78,7 @@ export default class DetailsForm extends Component {
 
   @action
   cancel() {
-    this.rollbackModel();
-    this.isEditing = false;
+    return this.rollbackModel();
   }
 
   @action

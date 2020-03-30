@@ -29,6 +29,12 @@
       data-test-id={{concat "view-list-" @model.id}}>
       {{if (media "isMobile") "View" "View List"}}
     </LinkTo>
+    <CrunchyButton
+      @onClick={{fn @onSelect @model.id}}
+      @class="crunchy-button--link"
+      @testId={{concat "view-list-" @model.id}}
+      @value={{if (media "isMobile") "View" "View List"}}
+    />
   </card.header>
   <card.body>
     <p class="font-bold text-sm sm:text-base lg:text-lg">

@@ -3,7 +3,7 @@ import { storageFor } from 'ember-local-storage';
 import { tracked } from '@glimmer/tracking';
 
 export default class RegionsService extends Service {
-  @storageFor('active-region') activeRegionStorage;
+  @storageFor('active-settings') activeSettingsStorage;
 
   constructor() {
     super(...arguments);
@@ -12,4 +12,5 @@ export default class RegionsService extends Service {
 
   @tracked regions = null;
   @tracked activeRegion = null;
+  @tracked activeBusiness = null;
 }

@@ -5,130 +5,75 @@
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
     @debounceSubmit={{true}}
-    @isReadonly={{this.isReadonly}} as |form|>
-    <div class="flex mb-3 justify-between">
-      <h1 class="dig-section-title"> {{if this.isReadonly "Business Details" "Edit Business Details"}} </h1>
-      {{#if this.isReadonly}}
-        <CrunchyButton
-          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-          @class="crunchy-button--icon"
-          @aria-label="Edit business details">
-          <FaIcon @icon="edit" @size="lg" />
-        </CrunchyButton>
-      {{else}}
-        <CrunchyButton
-          @onClick={{form.resetForm}}
-          @class="crunchy-button--icon"
-          @aria-label="Close form">
-          <FaIcon @icon="times" @size="lg" />
-        </CrunchyButton>
-      {{/if}}
-    </div>
-
-    <form.text-field
-      @field="name"
-      @label="Name"
-      @aria-label="Business Name"
-    />
-
-    <form.text-area
-      @field="description"
-      @label="What You Need To Know"
-      @aria-label="What you need to know about the business"
-      @rows="3"
-    />
-
-    <form.text-area
-      @field="description2"
-      @label="What The Locals Say"
-      @aria-label="What the locals say about the business"
-      @rows="3"
-    />
-
-    <form.text-field
-      @field="tip"
-      @label="Local's Tip"
-      @aria-label="An insider tip or suggestion about the business"
-    />
-
-    <div class="w-full flex flex-wrap md:flex-no-wrap">
-      <div class="mr-4 flex-grow">
-        <form.field
-          @label="Logo"
-          @aria-label="Business logo">
-          {{#if (and @model.logo @model.logo.url)}}
-            <img class="h-10 w-auto" src={{@model.logo.url}} alt={{concat "Logo for " @model.name}}>
-          {{else}}
-            <span class="text-sm text-gray-600 italic">None</span>
-          {{/if}}
-        </form.field>
+  as |form|>
+    <div class="flex flex-col md:flex-row mb-4">
+      <div class="flex flex-col items-center">
+        <div style={{background-image @model.logo.url}} class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
+          <CrunchyButton @onClick={{action (mut this.showUploadModal) true}} @aria-label="Upload a new logo"
+            @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
+            <FaIcon @icon="pencil-alt" />
+          </CrunchyButton>
+        </div>
+        <div class="w-full py-8 px-4">
+          <p class="font-semibold mb-4">{{@model.likesCount}} likes</p>
+          <form.checkbox @field="active" @label="Active" @disabled={{not this.currentUser.isAdmin}} />
+          <form.checkbox @field="featured" @label="Featured" @disabled={{not this.currentUser.isAdmin}} />
+        </div>
       </div>
-      <div class="flex-grow">
-        <form.field @field="categories" @label="Categories">
-          {{#if this.isEditing}}
+      <div class="w-full md:pl-6">
+        <h1 class="dig-section-title mb-4">Business Details</h1>
+        <form.text-field @field="name" @label="Name" @aria-label="Business Name" @controlClass="font-bold" />
+        <form.field @field="categories" @label={{if this.canAddMultiCategories "Categories" "Category"}}>
           <PowerSelectMultiple @searchEnabled={{true}} @searchField="longName" @options={{this.categoryOptions}}
             @selected={{@model.categories}} @placeholder="Select category tags..." @onChange={{action (mut @model.categories)}}
             as |category|>
             {{category.longName}}
           </PowerSelectMultiple>
-          {{else}}
-          <ul>
-            {{#each @model.categories as |category|}}
-            <CrunchyChip @tagName="li">
-              {{category.longName}}
-            </CrunchyChip>
-            {{else}}
-            <span class="text-sm text-gray-600 italic">None</span>
-            {{/each}}
-          </ul>
-          {{/if}}
         </form.field>
+
+        {{#if currentUser.isAdmin}}
+          <form.field @field="role" @label="Listing Type">
+            <PowerSelect @placeholder="Select a listing type for this business" @options={{this.roleOptions}}
+              @selected={{@model.role}} @allowClear={{false}} @disabled={{form.isReadonly}} @onChange={{action (mut @model.role)}}
+              as |role|>
+              <span data-test-id="selected-role">{{role-display-name role}}</span>
+            </PowerSelect>
+          </form.field>
+        {{/if}}
+
+        <Ui::CollapsibleSection @title="About" @open={{true}}>
+          <form.text-area @field="description" @label="What You Need To Know"
+            @aria-label="What you need to know about the business" @rows="4" />
+        
+          <form.text-area @field="description2" @label="What The Locals Say"
+            @aria-label="What the locals say about the business" @rows="3" />
+        
+          <form.text-field @field="tip" @label="Local's Tip" @aria-label="An insider tip or suggestion about the business" />
+        </Ui::CollapsibleSection>
+        
+        <Ui::CollapsibleSection @title="Website & Social Media" @open={{false}}>
+          <form.text-field @field="website" @label="Website" @aria-label="Url for business website" />
+        
+          <form.text-field @field="twitterUrl" @label="Twitter" @aria-label="Twitter url" />
+        
+          <form.text-field @field="instagramUrl" @label="Instagram" @aria-label="Instagram url" />
+        
+          <form.text-field @field="facebookUrl" @label="Facebook" @aria-label="Facebook url" />
+        </Ui::CollapsibleSection>
       </div>
-    </div>
-
-    <div class="flex justify-start items-center crunchy-form__group">
-      <XToggle
-        @showLabels={{true}}
-        @size="small"
-        @value={{@model.active}}
-        @onToggle={{action (mut @model.active)}}
-        @disabled={{this.isReadonly}}
-        as |toggle|
-      >
-        <toggle.label @value={{@model.active}}>
-          <span class="crunchy-form__toggle-label">Active</span>
-        </toggle.label>
-        <toggle.switch @theme='light' />
-      </XToggle>
-    </div>
-
-    <div class="flex justify-start items-center crunchy-form__group">
-      <XToggle
-        @showLabels={{true}}
-        @size="small"
-        @value={{@model.featured}}
-        @onToggle={{action (mut @model.featured)}}
-        @disabled={{this.isReadonly}}
-        as |toggle|
-      >
-        <toggle.label @value={{@model.featured}}>
-          <span class="crunchy-form__toggle-label">Featured</span>
-        </toggle.label>
-        <toggle.switch @theme='light' />
-      </XToggle>
     </div>
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
-    {{#if this.isEditing}}
-      <div class="flex justify-between mt-8">
+    <div class="flex mt-8 {{if this.currentUser.isAdmin "justify-between" "justify-end"}}">
+      {{#if this.currentUser.isAdmin}}
         <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
-        <div class="flex flex-wrap">
-          <form.submit @value="Submit" @class="mr-2 md:w-32" />
-          <form.cancel @value="Cancel" />
-        </div>
+      {{/if}}
+      <div class="flex flex-wrap">
+        <form.submit @value="Save" @class="mr-2 md:w-32" />
+        <form.cancel @value="Cancel" />
       </div>
-    {{/if}}
+    </div>
   </CrunchyForm>
 </div>
 
@@ -141,3 +86,62 @@
   <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.name}}</span> and all related content?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>
+
+{{#if this.showUploadModal}}
+  <CrunchyModal @clickOutsideToClose={{false}} @translucentOverlay={{true}} @onClose={{action "cancelUpload"}} as |modal|>
+    <AttributeImageUploader @model={{@model}} @modelType="business" @keyForImage="logo"
+      @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}} as |uploader|>
+      <modal.header>
+        Upload logo
+      </modal.header>
+      <modal.body>
+        <div class="h-48 rounded border border-brand-gray border-dashed my-6">
+          <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}}
+            class="w-full h-full flex justify-center items-center">
+            {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
+            {{#unless uploader.uploadTasks.length}}
+              <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                Click or drop file here
+              </span>
+            {{/unless}}
+            <div class="flex flex-wrap justify-start">
+              {{#each uploader.uploadTasks as |task|}}
+              <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                {{#if (not (eq task.status "pending"))}}
+                  <img src={{task.preview}} alt="File Upload Preview">
+                {{/if}}
+                <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                  {{#if (or task.isRunning (eq task.status "pending"))}}
+                    <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                  {{else if (eq task.status "complete")}}
+                    <FaIcon @icon="check-circle" class="text-green-600" />
+                  {{else if (eq task.status "error")}}
+                    <FaIcon @icon="times-circle" class="text-brand-error" />
+                  {{/if}}
+                </div>
+              </div>
+              {{/each}}
+            </div>
+            {{/x-file-input}}
+          </CrunchyDraggableDropzone>
+        </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <ul class="text-sm">
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
+            {{#if uploader.errorTasks.length}}
+              <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+            {{/if}}
+          {{/if}}
+          {{#if uploader.uploadImageTask.isRunning}}
+            <li>Uploading logo...</li>
+          {{/if}}
+        </ul>
+      </modal.footer>
+    </AttributeImageUploader>
+  </CrunchyModal>
+{{/if}}

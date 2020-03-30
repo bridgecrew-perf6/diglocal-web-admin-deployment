@@ -5,28 +5,38 @@ import { action } from '@ember/object';
 import { NotFoundError, ForbiddenError } from '@ember-data/adapter/error';
 
 export default class AuthenticatedRegionRoute extends Route {
-  @storageFor('active-region') activeRegionStorage;
+  @storageFor('active-settings') activeSettingsStorage;
   @service('regions') regionsService;
   @service store;
-  @service moment;
-
+  @service currentUser;
+  
   breadCrumb = null;
+
+  beforeModel() {
+    if (!this.currentUser.isAdmin) {
+      this.replaceWith('authenticated.index');
+    }
+  }
 
   model(params) {
     return this.store.findRecord('region', params.region_id);
   }
 
   afterModel(model) {
-    this.activeRegionStorage.set('regionId', model.id);
+    this.activeSettingsStorage.set('regionId', model.id);
     this.regionsService.activeRegion = model;
+    this.activeSettingsStorage.set('businessId', null);
+    this.regionsService.activeBusiness = null;
   }
 
   @action
   error(error) {
-   if (error instanceof NotFoundError || error instanceof ForbiddenError) {
-     this.replaceWith('authenticated.select-region');
-   } else {
-     return true;
-   }
+    if (error instanceof NotFoundError || error instanceof ForbiddenError) {
+      this.activeSettingsStorage.set('regionId', null);
+      this.regionsService.activeRegion = null;
+     this.replaceWith('/');
+    } else {
+      return true;
+    }
   }
 }

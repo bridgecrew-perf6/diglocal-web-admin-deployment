@@ -9,7 +9,7 @@
       @placeholder="Click to search"
       @selected={{@model.business}}
       @allowClear={{false}}
-      @disabled={{or form.isReadonly (is-active "authenticated.region.businesses.view")}}
+      @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
       @onChange={{action (mut @model.business)}} as |business|
       >
         <span data-test-id="selected-business-name">{{business.name}}</span>

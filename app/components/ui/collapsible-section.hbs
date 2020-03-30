@@ -6,14 +6,14 @@
     </div>
   {{else}}
     <panel.toggle>
-      <div class="border-b font-bold py-4 px-1 text-lg text-brand-primary flex items-center">
+      <div class="{{if (not panel.isOpen) "border-b"}} font-bold py-4 px-1 text-lg text-brand-primary flex items-center">
         {{svg-jar "arrow_down" class=(concat (if (not panel.isOpen) "transform -rotate-90 ") "brand-primary-svg mr-2 transition") width="12px"}}
         <span>{{@title}}</span>
       </div>
     </panel.toggle>
   {{/if}}
   <panel.body>
-    <div class="px-2 py-2">
+    <div class="px-2 py-2 pb-4 {{if panel.isOpen "border-b"}}">
       {{yield}}
     </div>
   </panel.body>

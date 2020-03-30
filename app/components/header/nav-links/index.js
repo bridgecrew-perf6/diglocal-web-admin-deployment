@@ -7,4 +7,5 @@ export default class Header extends Component {
   @service currentUser;
 
   @alias('regionsService.activeRegion') activeRegion;
+  @alias('regionsService.activeBusiness') activeBusiness;
 }

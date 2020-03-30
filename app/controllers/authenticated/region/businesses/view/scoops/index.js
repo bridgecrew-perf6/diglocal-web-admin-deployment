@@ -1,12 +1,15 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { oneWay } from '@ember/object/computed';
-import {  action } from '@ember/object';
+import { get, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import config from 'diglocal-manage/config/environment';
+import { inject as service } from '@ember/service';
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default class AuthenticatedRegionBusinessesViewScoopsIndexController extends Controller {
+  @service router;
+
   queryParams = [
     'search',
     'sort'
@@ -31,5 +34,12 @@ export default class AuthenticatedRegionBusinessesViewScoopsIndexController exte
   clearSearch() {
     this.search = '';
     this.searchString = '';
+  }
+
+  @action
+  viewScoop(scoop) {
+    // scoop is a proxy object, must use 'get' to access properties
+    let scoopId = get(scoop, "id");
+    this.router.transitionTo('authenticated.region.businesses.view.scoops.view', scoopId);
   }
 }

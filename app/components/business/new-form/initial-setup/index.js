@@ -22,7 +22,7 @@ export default class BusinessNewFormInitialSetupComponent extends Component {
 
   @task(function* () {
     let regionId = this.regions.activeRegion.id;
-    let categories = yield this.store.query('category', { region: regionId });
+    let categories = yield this.store.query('category', { filter: { region: regionId }});
     this.categoryOptions = categories;
   })
   loadCategories;
