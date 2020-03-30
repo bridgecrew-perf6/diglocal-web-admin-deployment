@@ -1,74 +1,84 @@
 import config from 'diglocal-manage/config/environment';
 import Controller from '@ember/controller';
-import { oneWay, union } from '@ember/object/computed';
-import { set, setProperties } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
+import { get, action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
-export default Controller.extend({
-  sortMenuOptions: Object.freeze({
+export default class AuthenticatedRegionScoopsIndexController extends Controller {
+  @service router;
+
+  sortMenuOptions = {
     created_at: 'Sort by creation date',
     paid_rank: 'Sort by paid rank',
     event_date: 'Sort by event date',
     default: 'Sort by default'
-  }),
+  };
 
-  isList: true,
-
-  queryParams: [
+  queryParams = [
     'search',
     'sort',
     'categories'
-  ],
+  ];
 
-  init() {
-    this._super(...arguments);
-    this.set('categories', []);
-  },
+  @tracked categories = [];
+  @tracked search = '';
+  @tracked sort = '-default';
+  @tracked search = '';
 
-  search: '',
-  sort: '-default',
+  @oneWay('search')
+  searchString;
 
-  searchString: oneWay('search'),
-
-  didSearch: task(function* () {
+  @(task(function* () {
     yield timeout(INPUT_DEBOUNCE);
-    set(this, 'search', this.searchString);
-  }).restartable(),
+    this.search = this.searchString;
+  }).restartable())
+  didSearch;
 
-  collectedFilters: union(
-    'categories'
-  ),
+  get collectedFilters() {
+    return this.categories;
+  }
 
-  actions: {
-    toggleView() {
-      this.toggleProperty('isList');
-    },
-    clearSearch() {
-      setProperties(this, {
-        search: '',
-        searchString: ''
-      });
-    },
-    sortChanged(key) {
-      set(this, 'sort', key);
-    },
-    addFilter(filter, arrayName, event) {
-      let { target: { checked } } = event;
-      if (checked) {
-        this.get(arrayName).addObject(filter);
-      } else {
-        this.get(arrayName).removeObject(filter);
-      }
-    },
-    removeFilter(filter, arrayName) {
-      this.get(arrayName).removeObject(filter);
-    },
-    clearAllFilters() {
-      this.setProperties({
-        categories: []
-      });
+  @action
+  sortChanged(key) {
+    this.sort = key;
+  }
+
+  @action
+  clearSearch() {
+    this.search = '';
+    this.searchString = '';
+  }
+
+  @action
+  addFilter(filter, arrayName, event) {
+    let { target: { checked } } = event;
+    if (checked) {
+      this[arrayName].addObject(filter);
+    } else {
+      this[arrayName].removeObject(filter);
     }
   }
-});
+
+  @action
+  removeFilter(filter, arrayName) {
+    this[arrayName].removeObject(filter);
+  }
+
+  @action
+  clearAllFilters() {
+    this.listTypes = [];
+  }
+
+  @action
+  viewScoop(scoop) {
+    // business and scoop are proxies, must use 'get' to access properties
+    let business = get(scoop, 'business');
+    let businessId = get(business, 'id');
+    let scoopId = get(scoop, 'id');
+    this.router.transitionTo('authenticated.region.businesses.view.scoops.view', businessId, scoopId);
+  }
+}

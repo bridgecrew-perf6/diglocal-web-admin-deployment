@@ -1,21 +1,6 @@
 <div class="border rounded p-4 mb-4 bg-white">
-  <div class="flex mb-3 justify-between">
-    <h1 class="font-bold text-2xl text-brand-primary"> {{if this.isReadonly @model.email "Edit User Details"}} </h1>
-    {{#if this.isReadonly}}
-      <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-        @class="crunchy-button--icon"
-        @aria-label="Edit user details">
-        <FaIcon @icon="edit" @size="lg" />
-      </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @aria-label="Close form">
-        <FaIcon @icon="times" @size="lg" />
-      </CrunchyButton>
-    {{/if}}
+  <div class="flex mb-3 justify-start">
+    <h1 class="font-bold text-2xl text-brand-primary">User Details</h1>
   </div>
 
   <CrunchyForm
@@ -23,7 +8,6 @@
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
-    @isReadonly={{this.isReadonly}}
     @debounceSubmit={{true}}
     as |form|>
 
@@ -31,18 +15,21 @@
       @field="email"
       @label="Email (Login)"
       @aria-label="Email Login"
+      @disabled={{true}}
     />
 
     <form.text-field
       @field="user"
       @label="User Name"
       @aria-label="User Name"
+      @disabled={{true}}
     />
 
     <form.text-field
       @field="publicName"
       @label="Public Name"
       @aria-label="Public Name"
+      @disabled={{true}}
     />
 
     <form.checkbox
@@ -55,27 +42,15 @@
       @label="Active?"
     />
 
-    <form.checkbox
-      @field="hasProfile"
-      @label="Has profile?"
-    />
-
-    <form.checkbox
-      @field="isPublic"
-      @label="Profile is public?"
-    />
-
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
-    {{#if this.isEditing}}
-      <div class="flex justify-between mt-8">
-        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete user" @class="crunchy-button--outline" />
-        <div class="flex flex-wrap">
-          <form.submit @value="Submit" @class="mr-2 md:w-32" />
-          <form.cancel @value="Cancel" />
-        </div>
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete user" @class="crunchy-button--outline" />
+      <div class="flex flex-wrap">
+        <form.submit @value="Submit" @class="mr-2 md:w-32" />
+        <form.cancel @value="Cancel" />
       </div>
-    {{/if}}
+    </div>
   </CrunchyForm>
 </div>
 

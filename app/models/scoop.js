@@ -46,7 +46,7 @@ export default class Scoop extends Trackable {
       'Business is a required field',
       value => isPresent(value.content || value.id)
     ),
-    description: yup.string().required().max(100).label('Description'),
+    description: yup.string().required().max(100).label('Title'),
     fineText: yup.string().nullable().max(500).label('Additional Details'),
     ticketUrl: yup.string().nullable().url("Ticket URL must be a valid URL, starting with 'https://' or 'http://'").label('Ticket URL'),
     virtualUrl: yup.string().nullable().url("Virtual event URL must be a valid URL, starting with 'https://' or 'http://'").label('Virtual Event URL'),

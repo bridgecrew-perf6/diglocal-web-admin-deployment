@@ -1,0 +1,77 @@
+<div class="treadmill-content__fixed-header text-sm">
+  <div class="container flex h-10 justify-between">
+    <p class="flex items-center mx-2">Manage users with admin privileges for this business.</p>
+    <CrunchyButton
+      @onClick={{action (mut this.showAddUserModal) true}}
+      @aria-label="Add a new location"
+      @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap"
+      @disabled={{this.showAddUserModal}}>
+      <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Member
+    </CrunchyButton>
+  </div>
+</div>
+<div class="treadmill-content__table-body container pt-20">
+  <EllaTreadmill
+    @content={{@model.users}}
+    @minColumnWidth="100%"
+    @row="140" as |item|
+  >
+    {{#if item.is_loading}}
+      <div class="flex items-center justify-center">
+        <FaIcon @icon="spinner" @pulse={{true}} class="text-gray-500" />
+      </div>
+    {{else}}
+      <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
+    {{/if}}
+  </EllaTreadmill>
+
+  {{#if @model.users.loading}}
+    <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
+      <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
+    </div>
+  {{else if (eq @model.users.length 0)}}
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No members found. </p>
+    </div>
+  {{/if}}
+</div>
+
+{{#if this.showAddUserModal}}
+  <CrunchyModal
+    @clickOutsideToClose={{false}}
+    @translucentOverlay={{true}}
+    @onClose={{action "cancel"}}
+    as |modal|>
+    <modal.header>
+      Add a user
+    </modal.header>
+    <CrunchyForm @model={{this}} @onSubmit={{action "addUser"}} @onCancel={{action "cancel"}} as |form|>
+      <modal.body>
+          <p>Added users will have admin privileges for this business, including the ability to create, edit, and delete content.</p>
+          <form.field @label="Select user" class="mt-4">
+            <PowerSelect
+              @search={{perform this.searchUsers}}
+              @searchEnabled={{true}}
+              @loadingMessage="Searching users...."
+              @placeholder="Click to search"
+              @selected={{this.userToAdd}}
+              @allowClear={{true}}
+              @onChange={{action (mut this.userToAdd)}} as |user|
+              >
+                <span class="ml-1">{{user.email}}</span>
+                {{#if (not (eq user.id this.userToAdd.id))}}<span class="text-sm text-gray-600">@{{user.user}}</span>{{/if}}
+            </PowerSelect>
+          </form.field>
+          <div class="my-4">
+            {{#if this.userToAdd}}
+              <Business::Owner::ListRow @model={{this.userToAdd}} @isRemovable={{false}} />
+            {{/if}}
+          </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <form.cancel @value="Cancel" />
+        <form.submit @class="ml-2">Add Member</form.submit>
+      </modal.footer>
+    </CrunchyForm>
+  </CrunchyModal>
+{{/if}}

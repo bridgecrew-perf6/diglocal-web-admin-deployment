@@ -1,8 +1,22 @@
-{{#if this.activeRegion}}
+{{#if (and this.regionsService.activeRegion this.currentUser.isAdmin)}}
   <Header::NavLinks::Link @route="authenticated.region.businesses" @model={{this.activeRegion}} @query={{hash sort="-created_at"}}>Businesses</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.analytics" @model={{this.activeRegion}}>Analytics</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.users" @model={{this.activeRegion}}>Users</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.scoops" @model={{this.activeRegion}} @query={{hash sort="-default"}}>Scoops</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.lists" @model={{this.activeRegion}}>Lists</Header::NavLinks::Link>
   <Header::NavLinks::Link @route="authenticated.region.site-settings" @model={{this.activeRegion}}>Region Settings</Header::NavLinks::Link>
+{{/if}}
+
+{{#if (and
+  this.regionsService.activeBusiness
+  (or this.currentUser.isSingleBusinessOwner this.currentUser.isMultiBusinessOwner)
+  )}}
+  <Header::NavLinks::Link @route="authenticated.manage.business.index" @model={{this.activeBusiness}}>Profile</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.locations" @model={{this.activeBusiness}}>Locations</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.photos" @model={{this.activeBusiness}}>Photos</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.scoops.index" @model={{this.activeBusiness}}>Scoops</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.users" @model={{this.activeBusiness}}>Members</Header::NavLinks::Link>
+  <Header::NavLinks::Link @route="authenticated.manage.business.scoops.new" @model={{this.activeBusiness}} class="w-full flex justify-end">
+    <FaIcon @icon="plus" @size="xs" class="mr-1" /> New Scoop
+  </Header::NavLinks::Link>
 {{/if}}

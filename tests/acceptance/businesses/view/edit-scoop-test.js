@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, currentURL, click, find } from '@ember/test-helpers';
+import { visit, currentURL, find } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { testId } from 'diglocal-manage/tests/helpers';
 import setupAdminUserTest from 'diglocal-manage/tests/helpers/setup-admin-user-test';
@@ -26,7 +26,7 @@ module('Acceptance | View Business | Scoops | Edit', function(hooks) {
       this.url = `/region/${this.region.id}/businesses/${this.business.id}/scoops/${this.scoop.id}`;
     });
 
-    test('I can view scoop fields as readonly and then click to toggle edit', async function(assert) {
+    test('I can view expected scoop fields', async function(assert) {
       await authenticateSession();
       await visit(this.url);
 
@@ -34,11 +34,7 @@ module('Acceptance | View Business | Scoops | Edit', function(hooks) {
 
       let detailsForm = find(testId('scoop-details-form'));
       assert.dom(detailsForm).exists();
-      assert.dom(detailsForm).hasAttribute('data-test-editing', 'false');
 
-      await click(testId('edit-scoop'));
-      assert.dom(detailsForm).hasAttribute('data-test-editing', 'true');
-      assert.dom(testId('cancel-edit')).exists();
       assert.dom(testId('save-scoop')).exists();
     });
   });

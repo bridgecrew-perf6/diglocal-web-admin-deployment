@@ -1,18 +1,17 @@
-import classic from 'ember-classic-decorator';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import { set, action } from '@ember/object';
+import { action } from '@ember/object';
 import { task, all } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 
-@classic
-class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
+export default class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
   @service store;
   @service session;
 
-  init() {
-    super.init(...arguments);
-    set(this, 'selectedPhotos', []);
-  }
+  @tracked selectedPhotos = [];
+  @tracked errorMessage;
+  @tracked showDestroyModal = false;
+  @tracked showUploadModal = false;
 
   @task(function*(items) {
     try {
@@ -23,9 +22,9 @@ class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
       if (this.selectedPhotos.length) {
         this.selectedPhotos.forEach(model => model.rollbackAttributes());
       }
-      set(this, 'errorMessage', 'Oops! An error occurred. Unable to delete all selected photos.');
+      this.errorMessage = 'Oops! An error occurred. Unable to delete all selected photos.';
     }
-    set(this, 'showDestroyModal', false);
+    this.showDestroyModal = false;
   })
   deleteItems;
 
@@ -35,18 +34,18 @@ class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
 
   @task(function*() {
     yield this.model.business.hasMany('businessImages').reload();
-    set(this, 'showUploadModal', false);
+    this.showUploadModal = false;
   })
   onAllFilesUploadComplete;
 
   @action
   cancelUpload() {
-    set(this, 'showUploadModal', false);
+    this.showUploadModal = false;
   }
 
   @action
   deleteSelected() {
-    set(this, 'errorMessage', null);
+    this.errorMessage = null;
     this.deleteItems.perform(this.selectedPhotos);
   }
 
@@ -55,5 +54,3 @@ class AuthenticatedRegionBusinessesViewPhotosController extends Controller {
     this.selectedPhotos.clear();
   }
 }
-
-export default AuthenticatedRegionBusinessesViewPhotosController;

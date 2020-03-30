@@ -13,15 +13,12 @@
         {{format-event-date @model.eventDate}}
       </p>
     </div>
-    <LinkTo
-      @route="authenticated.region.businesses.view.scoops.view"
-      @models={{array @model.business.id @model.id}}
-      @aria-label="View scoop details"
-      class="font-bold text-brand-primary whitespace-no-wrap text-sm"
-      data-test-id={{concat "view-scoop-" @model.id}}
-    >
-      {{if (media "isMobile") "View" "View Scoop"}}
-    </LinkTo>
+    <CrunchyButton
+      @onClick={{fn @onSelect @model}}
+      @class="crunchy-button--link"
+      @testId={{concat "view-scoop-" @model.id}}
+      @value="View"
+    />
   </card.header>
   <card.body>
     <p class="font-bold text-sm sm:text-base lg:text-lg">{{@model.description}}</p>

@@ -5,7 +5,7 @@
 }
 
 .ember-power-select-trigger {
-  @apply border border-gray-400 rounded py-3 px-4 bg-white;
+  @apply border border-gray-300 rounded py-2 px-4 bg-white;
   line-height: 1.5;
   min-height: 1.5rem;
   color: inherit;
@@ -21,7 +21,7 @@
 }
 
 .ember-power-select-multiple-option {
-  @apply border-transparent rounded-sm;
+  @apply border-transparent rounded-sm font-medium;
   @apply bg-gray-200 text-gray-800;
   padding: 0 .5rem;
   display: inline-block;

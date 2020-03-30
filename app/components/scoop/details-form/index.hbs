@@ -1,192 +1,87 @@
-<div class="dig-card" data-test-id="scoop-details-form" data-test-editing="{{this.isEditing}}">
+<div class="dig-card">
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
     @onSubmit={{action "save"}}
     @onCancel={{action "cancel"}}
-    @isReadonly={{this.isReadonly}} @debounceSubmit={{true}} as |form|>
-    
-    <div class="flex mb-3 justify-between">
-      <h1 class="font-semibold text-lg">
-        {{#if @model.isNew}}
-          Create New Scoop
-        {{else}}
-          {{if this.isReadonly "Scoop Details" "Edit Scoop Details"}}
-        {{/if}}
-      </h1>
-      {{#unless @model.isNew}}
-        {{#if this.isReadonly}}
-          <CrunchyButton
-            @onClick={{action (mut this.isEditing) (not this.isEditing)}}
-            @class="crunchy-button--icon"
-            @aria-label="Edit scoop details"
-            @testId="edit-scoop"
-          >
-            <FaIcon @icon="edit" @size="lg" />
+    @debounceSubmit={{true}}
+  as |form|>
+    <div class="flex flex-col md:flex-row mb-4">
+      <div class="flex flex-col items-center">
+        <div style={{background-image @model.image.sizes.full}}
+          class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
+          <CrunchyButton @onClick={{action (mut this.showUploadModal) true}} @aria-label="Upload a new scoop image"
+            @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
+            <FaIcon @icon="pencil-alt" />
           </CrunchyButton>
-        {{else}}
-          <CrunchyButton
-            @onClick={{form.resetForm}}
-            @class="crunchy-button--icon"
-            @aria-label="Close form"
-            @testId="cancel-edit"
-          >
-            <FaIcon @icon="times" @size="lg" />
-          </CrunchyButton>
-        {{/if}}
-      {{/unless}}
-    </div>
-
-    <div class="flex flex-wrap md:flex-no-wrap mb-4">
-      <div class="h-48 w-full md:w-1/3 rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-gray-100 relative" style={{background-image @model.image.sizes.full}}>
-        {{#if (and this.isEditing (not @model.isNew))}}
-          <CrunchyButton
-            @onClick={{action (mut this.showUploadModal) true}}
-            @class="absolute top-0 right-0 crunchy-button--icon m-2"
-            @aria-label="Upload scoop image"
-          >
-            <FaIcon @icon="camera" />
-          </CrunchyButton>
-        {{else if @model.isNew}}
-          <div class="flex h-full w-full items-center justify-center text-sm text-gray-600">
-            Save scoop to add photo
-          </div>
-        {{/if}}
+        </div>
+        <div class="w-full py-8 px-4">
+          <form.checkbox @field="active" @label="Active" />
+          <form.checkbox @field="isDeal" @label="This is a deal or special" />
+        </div>
       </div>
-      <div class="w-full md:w-2/3 md:pl-4">
+      <div class="w-full md:pl-6">
+        <h1 class="dig-section-title mb-4">Scoop Details</h1>
         <form.field @field="business" @label="Business">
           <PowerSelect
             @search={{perform this.searchBusinesses}}
             @searchEnabled={{true}}
             @loadingMessage="Searching businesses...."
-            @placeholder="Click to search"
-            @selected={{@model.business}}
+            @placeholder="Click to search" @selected={{@model.business}}
             @allowClear={{false}}
-            @disabled={{or form.isReadonly (is-active "authenticated.region.businesses.view")}}
-            @onChange={{action (mut @model.business)}} as |business|
-            >
-              <span data-test-id="selected-business-name">{{business.name}}</span>
+            @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
+            @onChange={{action (mut @model.business)}}
+          as |business|>
+            <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
           </PowerSelect>
         </form.field>
-
-        <form.text-field
-          @field="description"
-          @label="Description"
-          @aria-label="Description"
-          @placeholder="Add a headline for this scoop"
-        />
-      </div>
-    </div>
-
-    <form.text-area
-      @field="fineText"
-      @label="Additional Details"
-      @aria-label="Additional Details"
-      @rows="5"
-      @placeholder="Add some additional details"
-    />
-
-    <div class="flex justify-start items-center my-4 crunchy-form__group">
-      <XToggle
-        @showLabels={{true}}
-        @size="small"
-        @value={{@model.isDeal}}
-        @onToggle={{action (mut @model.isDeal)}}
-        @disabled={{form.isReadonly}}
-        data-test-id="isDeal-toggle"
-        as |toggle|
-      >
-        <toggle.label @value={{@model.isDeal}}>
-          <span class="crunchy-form__toggle-label">Is this a deal or special?</span>
-        </toggle.label>
-        <toggle.switch
-          @theme='light'
-          @onLabel='Yes'
-          @offLabel='No'
-        />
-      </XToggle>
-    </div>
-
-    {{#if this.isEditing}}
-      <div class="flex justify-start items-center my-4 crunchy-form__group">
-        <XToggle
-          @showLabels={{true}}
-          @size="small"
-          @value={{this.showEventFields}}
-          @onToggle={{action "toggleEventFields"}}
-          @disabled={{form.isReadonly}}
-          data-test-id="isEvent-toggle"
-          as |toggle|
-        >
-          <toggle.label @value={{this.showEventFields}}>
-            <span class="crunchy-form__toggle-label">Is this an event?</span>
-          </toggle.label>
-          <toggle.switch
-            @theme='light'
-            @onLabel='Yes'
-            @offLabel='No'
+      
+        <form.text-field @field="description" @label="Title" @placeholder="Add a headline for this scoop"
+          @controlClass="font-bold" />
+        
+        <form.text-area @field="fineText" @label="Additional Details" @aria-label="Additional Details" @rows="5"
+          @placeholder="Add some additional details" />
+        
+        <div class="flex justify-start items-center my-4 crunchy-form__group">
+          <XToggle @showLabels={{true}} @size="small" @value={{this.showEventFields}} @onToggle={{action "toggleEventFields"}}
+            @disabled={{form.isReadonly}} data-test-id="isEvent-toggle" as |toggle|>
+            <toggle.label @value={{this.showEventFields}}>
+              <span class="crunchy-form__toggle-label">Is this an event?</span>
+            </toggle.label>
+            <toggle.switch @theme='light' @onLabel='Yes' @offLabel='No' />
+          </XToggle>
+        </div>
+        
+        {{#if this.showEventFields}}
+          <Scoop::DetailsForm::EventFields
+            @form={{form}}
+            @model={{@model}}
+            @onChangeEventDate={{action (mut @model.eventDate)}}
+            @onChangeEventStart={{action (mut @model.eventStartTime)}}
+            @onChangeEventEnd={{action (mut @model.eventEndTime)}}
           />
-        </XToggle>
+          <Ui::CollapsibleSection @title="Tickets & Event Links" @open={{false}}>
+            <form.text-field @field="ticketUrl" @label="Ticket Url" />
+            <form.text-field @field="virtualUrl" @label="Virtual Event Url" />
+          </Ui::CollapsibleSection>
+        {{/if}}
+        
+        <Ui::CollapsibleSection @title="Post Schedule" @open={{false}}>
+          <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{action (mut @model.daysOfWeek)}} />
+        </Ui::CollapsibleSection>
       </div>
-    {{/if}}
-
-    {{#if this.showEventFields}}
-      <Scoop::DetailsForm::EventFields
-        @form={{form}}
-        @model={{@model}}
-        @onChangeEventDate={{action (mut @model.eventDate)}}
-        @onChangeEventStart={{action (mut @model.eventStartTime)}}
-        @onChangeEventEnd={{action (mut @model.eventEndTime)}}
-      />
-    {{/if}}
-
-    <form.text-field
-      @field="ticketUrl"
-      @label="Ticket Url"
-    />
-
-    <form.text-field
-      @field="virtualUrl"
-      @label="Virtual Event Url"
-    />
-
-    <Scoop::DetailsForm::PostAtFields
-      @form={{form}}
-      @model={{@model}}
-      @didUpdateDays={{action (mut @model.daysOfWeek)}}
-    />
-
-    <div class="flex justify-start items-center mt-8 crunchy-form__group">
-      <XToggle
-        @showLabels={{true}}
-        @size="small"
-        @value={{@model.active}}
-        @onToggle={{action (mut @model.active)}}
-        @disabled={{this.isReadonly}}
-        as |toggle|
-      >
-        <toggle.label @value={{@model.active}}>
-          <span class="crunchy-form__toggle-label">Is scoop active?</span>
-        </toggle.label>
-        <toggle.switch
-          @theme='light'
-          @onLabel='Yes'
-          @offLabel='No'
-        />
-      </XToggle>
     </div>
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
-    {{#if this.isEditing}}
-      <div class="flex justify-between mt-8">
-        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop" @class="crunchy-button--outline" />
-        <div class="flex flex-wrap">
-          <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
-          <form.cancel @value="Cancel" />
-        </div>
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop"
+        @class="crunchy-button--outline" />
+      <div class="flex flex-wrap">
+        <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
+        <form.cancel @value="Cancel" />
       </div>
-    {{/if}}
+    </div>
   </CrunchyForm>
 </div>
 
@@ -205,13 +100,13 @@
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
     @onClose={{action "cancelUpload"}}
-    as |modal|>
+  as |modal|>
     <AttributeImageUploader
       @model={{@model}}
       @modelType="scoop"
       @keyForImage="image"
       @onAllFilesUploadComplete={{perform this.onUploadImageComplete}}
-      as |uploader|>
+    as |uploader|>
       <modal.header>
         Upload Image
       </modal.header>

@@ -9,6 +9,7 @@ const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default class ScoopNewFormInitialSetupComponent extends Component {
   @service store;
   @service regions;
+  @service currentUser;
 
   @(task(function* (search) {
     yield timeout(INPUT_DEBOUNCE);

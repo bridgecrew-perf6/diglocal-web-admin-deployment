@@ -27,6 +27,7 @@ module('Acceptance | View Business | Scoops Index', function(hooks) {
       assert.dom(testId('scoop-listing')).exists({ count: 2 });
 
       await click(testLinkTo('authenticated.region.scoops'));
+
       assert.equal(currentURL(), `/region/${this.region.id}/scoops`);
       assert.dom(testId('scoop-listing')).exists({ count: 5 }, 'When I visit main scoops route, I see all scoops');
       assert.equal(this.server.schema.scoops.all().models.length, 5);

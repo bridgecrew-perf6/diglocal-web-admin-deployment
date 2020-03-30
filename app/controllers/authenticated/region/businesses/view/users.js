@@ -7,7 +7,7 @@ import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
-const INPUT_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
+const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default class AuthenticatedRegionBusinessesViewUsersController extends Controller {
   @service store;

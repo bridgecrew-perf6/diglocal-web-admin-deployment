@@ -9,4 +9,9 @@ export default class AuthenticatedRegionSiteSettingsCategoriesNewController exte
   afterSave(model) {
     this.router.transitionTo('authenticated.region.site-settings.categories.view', model.id);
   }
+
+  @action
+  rollbackModel() {
+    this.model.rollbackAttributes();
+  }
 }
