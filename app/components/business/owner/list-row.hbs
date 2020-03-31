@@ -20,15 +20,8 @@
   <card.header class="flex justify-between">
     <div class="flex items-end mb-1">
       <p class="font-bold text-lg mr-1">{{@model.email}}</p>
-      <ul class="hidden sm:block">
-        <CrunchyChip
-          @tagName="li"
-          @label={{capitalize @model.role}}
-          @title={{concat (capitalize @model.role) " Role"}}
-        />
-      </ul>
     </div>
-    {{#if @isRemovable}}
+    {{#if (and @isRemovable this.isNotCurrentUser)}}
       <CrunchyButton @class="crunchy-button--link" @onClick={{action (mut this.showRemoveModal) true}}>
         <FaIcon @icon="trash" /> Remove
       </CrunchyButton>
@@ -40,21 +33,11 @@
         <dt class="pr-1 text-gray-600">Username:</dt>
         <dd class="">{{@model.user}}</dd>
       </div>
-      <div class="flex mb-1">
-        <dt class="pr-1 text-gray-600">Last signed in at:</dt>
-        <dd class="">
-          {{#if @model.lastSignInAt}}
-            {{moment-calendar @model.lastSignInAt}}
-          {{else}}
-            N/A
-          {{/if}}
-        </dd>
-      </div>
     </dl>
   </card.body>
 </CrunchyMediaObject>
 
-{{#if @isRemovable}}
+{{#if (and @isRemovable this.isNotCurrentUser)}}
   <CrunchyConfirm
     @show={{this.showRemoveModal}}
     @confirmText="Remove"

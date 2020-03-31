@@ -56,5 +56,6 @@ export default class Form extends Component {
   delete() {
     this.args.model.deleteRecord();
     this.args.model.save();
+    this.showDestroyModal = false;
   }
 }

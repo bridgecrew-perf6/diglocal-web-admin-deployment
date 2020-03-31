@@ -3,7 +3,7 @@
   @disabled={{eq this.regionsService.regions.length 1}}
   as |dd|>
   <dd.Trigger class="flex items-center focus:outline-none mr-3" data-test-id="select-region-dd-trigger">
-    <span class="mr-1" data-test-id="active-region">{{this.activeRegion.longName}}</span>
+    <span class="mr-1 font-bold" data-test-id="active-region">{{this.activeRegion.longName}}</span>
     <FaIcon @icon="angle-down" @size="xs" />
   </dd.Trigger>
   <dd.Content class="shadow p-1 mt-2 border rounded-sm">
