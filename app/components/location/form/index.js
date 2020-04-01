@@ -16,6 +16,9 @@ export default class Form extends Component {
     if (isPresent(this.args.isEditing)) {
       this.isEditing = this.args.isEditing
     }
+    if (this.args.model.isNew) {
+      this.isEditing = true;
+    }
   }
 
   willDestroy() {
@@ -25,11 +28,9 @@ export default class Form extends Component {
   }
 
   rollbackModel() {
-    if (this.args.model && this.args.model.hasDirtyAttributes) {
-      this.args.model.rollbackAttributes();
+    if (this.args.rollbackModel) {
+      return this.args.rollbackModel();
     }
-    let operatingHours = (this.args.model && this.args.model.hasMany('operatingHours').value() || []).toArray();
-    operatingHours.invoke('rollbackAttributes');
   }
 
   @task(function*() {
@@ -54,8 +55,7 @@ export default class Form extends Component {
 
   @action
   delete() {
-    this.args.model.deleteRecord();
-    this.args.model.save();
+    this.args.delete();
     this.showDestroyModal = false;
   }
 }

@@ -9,14 +9,6 @@
         @aria-label="Edit location details">
         <FaIcon @icon="edit" @size="lg" />
       </CrunchyButton>
-    {{else}}
-      <CrunchyButton
-        @onClick={{action "cancel"}}
-        @class="crunchy-button--icon"
-        @testId="close-form"
-        @aria-label="Close form">
-        <FaIcon @icon="times" @size="lg" />
-      </CrunchyButton>
     {{/if}}
   </div>
 
@@ -100,6 +92,7 @@
             @field="geocodedLat"
             @label="Geocoded Latitude"
             @aria-label="Geocoded Latitude"
+            @disabled={{true}}
           />
         </div>
         <div class="flex-grow">
@@ -107,6 +100,7 @@
             @field="geocodedLong"
             @label="Geocoded Longitude"
             @aria-label="Geocoded Longitude"
+            @disabled={{true}}
           />
         </div>
       </div>
@@ -125,8 +119,10 @@
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     {{#if this.isEditing}}
-      <div class="flex justify-between mt-8">
-        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" @testId="delete" />
+      <div class="flex mt-8 {{if @model.isNew "justify-end" "justify-between"}}">
+        {{#unless @model.isNew}}
+          <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" @testId="delete" />
+        {{/unless}}
         <div class="flex flex-wrap">
           <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save" />
           <form.cancel @value="Cancel" />
