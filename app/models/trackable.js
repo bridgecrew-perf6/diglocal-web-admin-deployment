@@ -1,9 +1,9 @@
 import Model, { attr } from '@ember-data/model';
 
 export default class TrackableModel extends Model {
-  @attr() deletedAt;
-  @attr() createdAt;
+  @attr('date') deletedAt;
+  @attr('date') createdAt;
   @attr() createdBy;
-  @attr() updatedAt;
+  @attr('date') updatedAt;
   @attr() updatedBy;
 }
