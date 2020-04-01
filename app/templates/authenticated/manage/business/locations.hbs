@@ -1,10 +1,27 @@
-<div class="container py-8">
-  <Location::Create @business={{@model.business}} class="mb-4" />
-  {{#each @model.locations as |item|}}
-    <Location::Form @model={{item}} @class="border border-gray-300 rounded" />
+<div class="treadmill-content__fixed-header text-sm">
+  <div class="container flex h-10 justify-between">
+    <p class="flex items-center mx-2">Manage locations for this business.</p>
+    <CrunchyButton
+      @onClick={{fn this.addLocation}}
+      @aria-label="Add a new location"
+      @testId="add-location"
+      @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
+      <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Location
+    </CrunchyButton>
+  </div>
+</div>
+<div class="treadmill-content__table-body container pt-20">
+  {{#each (sort-by "createdAt:desc" @model.locations) as |item|}}
+    <Location::Form @model={{item}} @rollbackModel={{fn this.rollbackModel item}} @delete={{fn this.remove item}} @class="border border-gray-300 rounded" />
   {{else}}
-    <div class="border rounded bg-white m-4 p-6">
-      <p> No locations. </p>
-    </div>
+    {{#if @model.loading}}
+      <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
+        <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
+      </div>
+    {{else if (eq @model.locations.length 0)}}
+      <div class="border rounded bg-white m-4 p-6">
+        <p> No locations found. </p>
+      </div>
+    {{/if}}
   {{/each}}
 </div>
