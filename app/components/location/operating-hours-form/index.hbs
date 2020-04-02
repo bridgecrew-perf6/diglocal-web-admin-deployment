@@ -5,7 +5,7 @@
 
   {{#unless (or @form.isReadonly this.isEditing)}}
     <CrunchyButton
-      @onClick={{action "editHours"}}
+      @onClick={{this.editHours}}
       @class="crunchy-button--icon mx-2 mb-2"
       @testId="edit-hours"
       @aria-label="Edit operating hours">
@@ -20,7 +20,7 @@
   @location.operatingHours.length)}}
   <div class="max-w-md flex justify-center mb-2">
     <CrunchyButton
-      @onClick={{action "deleteHours"}}
+      @onClick={{this.deleteHours}}
       @class="crunchy-button--link mx-6 mb-2"
       @testId="delete-hours"
       @aria-label="Delete operating hours">

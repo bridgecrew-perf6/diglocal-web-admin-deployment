@@ -1,4 +1,5 @@
 <button
+  {{on "click" this.click}}
   class={{concat
     "crunchy-button "
     (concat "crunchy-button--" type " ")
@@ -7,8 +8,7 @@
   type={{@type}}
   aria-label={{@aria-label}}
   data-test-id={{@testId}}
-  disabled={{this.disabled}}
-  onclick={{action "click"}}>
+  disabled={{this.disabled}}>
   {{#if (has-block)}}
     {{yield (hash isRunning=this.isRunning)}}
   {{else}}

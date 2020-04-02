@@ -3,7 +3,7 @@
     <h1 class="dig-section-title"> {{if this.isReadonly @model.title "Edit Location"}} </h1>
     {{#if this.isReadonly}}
       <CrunchyButton
-        @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+        @onClick={{fn (mut this.isEditing) (not this.isEditing)}}
         @class="crunchy-button--icon"
         @testId={{concat "edit-location-" @model.id}}
         @aria-label="Edit location details">
@@ -15,8 +15,8 @@
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
-    @onSubmit={{action "save"}}
-    @onCancel={{action "cancel"}}
+    @onSubmit={{this.save}}
+    @onCancel={{this.cancel}}
     @isReadonly={{this.isReadonly}}
     @debounceSubmit={{true}}
     data-test-id={{concat "location-form-" @model.id}}
@@ -121,7 +121,7 @@
     {{#if this.isEditing}}
       <div class="flex mt-8 {{if @model.isNew "justify-end" "justify-between"}}">
         {{#unless @model.isNew}}
-          <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" @testId="delete" />
+          <CrunchyButton @onClick={{fn (mut this.showDestroyModal) true}} @value="Delete Location" @class="crunchy-button--outline" @testId="delete" />
         {{/unless}}
         <div class="flex flex-wrap">
           <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save" />
@@ -135,8 +135,8 @@
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
   @confirmText="Delete"
-  @onConfirm={{action "delete"}}
-  @onCancel={{action (mut this.showDestroyModal) false}}
+  @onConfirm={{this.delete}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
 >
   <p>Are you sure you want to delete the location <span class="font-semibold text-brand-primary">{{@model.title}}</span>?</p>
   <strong>This cannot be undone.</strong>

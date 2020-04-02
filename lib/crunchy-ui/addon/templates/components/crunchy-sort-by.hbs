@@ -8,7 +8,7 @@
   <dd.Content class="crunchy-sort-by__dd-menu shadow p-2 border">
     <ul role="menu">
       {{#each-in @sortMenuOptions as |key label|}}
-        <li class="crunchy-sort-by__menu-item py-2 cursor-pointer hover:text-brand-primary" role="menuitem" {{action "didSelectSortAttr" key dd}}>
+        <li class="crunchy-sort-by__menu-item py-2 cursor-pointer hover:text-brand-primary" role="menuitem" {{fn this.didSelectSortAttr key dd}}>
           {{label}}
         </li>
       {{/each-in}}
@@ -18,7 +18,7 @@
 
 <CrunchyButton
   @class="crunchy-sort-by__toggle p-1 ml-1"
-  @onClick={{action "toggleSort"}}
+  @onClick={{this.toggleSort}}
   @aria-label={{this.ariaLabelForToggle}}>
   {{#if this.sortDescending}}
     <FaIcon @icon="sort-amount-down" />

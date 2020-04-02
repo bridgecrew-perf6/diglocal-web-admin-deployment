@@ -2,14 +2,14 @@
   <CrunchyModal
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
-    @onClose={{action "cancel"}}
+    @onClose={{this.cancel}}
     as |modal|>
     <modal.body class="crunchy-confirm__modal-body">
       {{yield}}
     </modal.body>
     <modal.footer class="crunchy-confirm__modal-footer">
       {{#if this.showCancel}}
-        <CrunchyButton @class="crunchy-button--modal-cancel" @onClick={{action "cancel"}} @disabled={{this.isDisabled}} @testId="confirm-cancel">
+        <CrunchyButton @class="crunchy-button--modal-cancel" @onClick={{this.cancel}} @disabled={{this.isDisabled}} @testId="confirm-cancel">
           {{this.cancelText}}
         </CrunchyButton>
       {{/if}}

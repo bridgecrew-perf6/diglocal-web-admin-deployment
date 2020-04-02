@@ -4,7 +4,7 @@
   @containerClass="crunchy-modal relative"
 >
   <CrunchyButton
-    @onClick={{action "close"}}
+    @onClick={{this.close}}
     @disabled={{this.isDisabled}}
     @aria-label="Close modal window"
     @class="crunchy-modal__close absolute top-0 right-0 py-1 px-2 leading-none overflow-hidden"

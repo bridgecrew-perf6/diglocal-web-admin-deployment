@@ -16,7 +16,7 @@
       @rows={{@rows}}
       @placeholder={{@placeholder}}
       @disabled={{@disabled}}
-      @focus-out={{action group.validateField @field}}
+      @focus-out={{fn group.validateField @field}}
       aria-label={{@aria-label}}
       @data-test-id={{concat @field "-field"}}
       @class={{concat "crunchy-form__textarea "

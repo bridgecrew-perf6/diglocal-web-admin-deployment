@@ -10,14 +10,14 @@
     {{#if this.canToggleEdit}}
       {{#if this.isReadonly}}
         <CrunchyButton
-          @onClick={{action (mut this.isEditing) (not this.isEditing)}}
+          @onClick={{fn (mut this.isEditing) (not this.isEditing)}}
           @class="crunchy-button--icon"
           @aria-label="Edit region details">
           <FaIcon @icon="edit" @size="lg" />
         </CrunchyButton>
       {{else}}
         <CrunchyButton
-          @onClick={{action "cancel"}}
+          @onClick={{this.cancel}}
           @class="crunchy-button--icon"
           @aria-label="Close form">
           <FaIcon @icon="times" @size="lg" />
@@ -29,8 +29,8 @@
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
-    @onSubmit={{action "save"}}
-    @onCancel={{action "cancel"}}
+    @onSubmit={{this.save}}
+    @onCancel={{this.cancel}}
     @isReadonly={{this.isReadonly}}
     @debounceSubmit={{true}}
     as |form|>
@@ -93,7 +93,7 @@
     </fieldset>
 
     <div class="flex flex-col items-start crunchy-form__group">
-      <XToggle @showLabels={{true}} @size="small" @value={{@model.active}} @onToggle={{action (mut @model.active)}}
+      <XToggle @showLabels={{true}} @size="small" @value={{@model.active}} @onToggle={{fn (mut @model.active)}}
         @disabled={{this.isReadonly}} as |toggle|>
         <toggle.label @value={{@model.active}}>
           <span class="crunchy-form__toggle-label">Active</span>

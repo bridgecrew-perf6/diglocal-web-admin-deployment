@@ -22,7 +22,7 @@
       <p class="font-bold text-lg mr-1">{{@model.email}}</p>
     </div>
     {{#if (and @isRemovable this.isNotCurrentUser)}}
-      <CrunchyButton @class="crunchy-button--link" @onClick={{action (mut this.showRemoveModal) true}}>
+      <CrunchyButton @class="crunchy-button--link" @onClick={{fn (mut this.showRemoveModal) true}}>
         <FaIcon @icon="trash" /> Remove
       </CrunchyButton>
     {{/if}}
@@ -41,8 +41,8 @@
   <CrunchyConfirm
     @show={{this.showRemoveModal}}
     @confirmText="Remove"
-    @onConfirm={{action "remove" @model}}
-    @onCancel={{action (mut this.showRemoveModal) false}}
+    @onConfirm={{fn this.remove @model}}
+    @onCancel={{fn (mut this.showRemoveModal) false}}
   >
     <p class="mb-4">Are you sure you want to remove <span class="font-semibold text-brand-accent">{{@model.email}}</span> as a business admin?</p>
   </CrunchyConfirm>

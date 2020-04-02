@@ -6,7 +6,7 @@
       <div class="pb-4">
         {{#if (and location.isNew (gte index 1))}}
           <CrunchyButton
-            @onClick={{action "remove" location}}
+            @onClick={{fn this.remove location}}
             @class="crunchy-button--link text-sm font-medium float-right"
             @testId="remove-location"
           >
@@ -78,7 +78,7 @@
   {{/each}}
   <div class="flex items-center justify-center my-6">
     <CrunchyButton
-      @onClick={{action "addLocation"}}
+      @onClick={{this.addLocation}}
       @aria-label="Add a new location"
       @class="crunchy-button--outline crunchy-button--text-sm"
       @testId="add-location"

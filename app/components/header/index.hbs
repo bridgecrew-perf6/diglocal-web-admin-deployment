@@ -19,7 +19,7 @@
         <Header::CurrentUserDropdown />
 
         {{#if this.isMobile}}
-          <button {{action (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button" data-test-id="open-mobile-menu"> &#9776; </button>
+          <button {{fn (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button" data-test-id="open-mobile-menu"> &#9776; </button>
         {{/if}}
       </div>
     </div>
@@ -41,7 +41,7 @@
         {{#if (media "isMobile")}}
           <div class="flex justify-end">
             <button
-              {{action (mut @showSidebar) false}}
+              {{fn (mut @showSidebar) false}}
               class="px-6 text-5xl text-gray-600"
               aria-label="Close"
               type="button"
