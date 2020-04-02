@@ -1,15 +1,5 @@
-{{#bread-crumbs
-  tagName="ul"
-  linkable=this.linkable
-  crumbClass=this.crumbClass
-  linkClass=this.linkClass
-  as |component crumb|
-}}
-  {{#bread-crumb
-    route=crumb
-    breadCrumbs=component
-    class="inline"
-  }}
+<BreadCrumbs @tagName="ul" @linkable={{this.linkable}} @crumbClass={{this.crumbClass}} @linkClass={{this.linkClass}} as |component crumb|>
+  <BreadCrumb @route={{crumb}} @breadCrumbs={{component}} @class="inline">
     <span
       class={{if (or
           (eq crumb.path this.router.currentRouteName)
@@ -18,5 +8,5 @@
     >
       {{crumb.title}}
     </span>
-  {{/bread-crumb}}
-{{/bread-crumbs}}
+  </BreadCrumb>
+</BreadCrumbs>

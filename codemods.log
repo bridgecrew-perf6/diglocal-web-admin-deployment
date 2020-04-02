@@ -116,3 +116,37 @@ Validation errors:
 2020-01-28T17:23:28.078Z [info] [app/components/photo/upload-modal/component.js]: SUCCESS
 2020-01-28T17:23:28.193Z [warn] [app/tailwind/tailwind-base.js]: SKIPPED Could not find runtime data NO_RUNTIME_DATA
 2020-01-28T17:23:28.371Z [info] [app/services/permissions.js]: SUCCESS
+2020-04-02T04:56:15.733Z [info] [lib/crunchy-ui/addon/components/crunchy-mobiledoc/editor.js]: SUCCESS
+2020-04-02T04:56:15.752Z [info] [lib/crunchy-ui/addon/components/crunchy-modal/header.js]: SUCCESS
+2020-04-02T04:56:15.778Z [info] [lib/crunchy-ui/addon/components/crunchy-media-object/image.js]: SUCCESS
+2020-04-02T04:56:15.817Z [info] [lib/crunchy-ui/addon/components/crunchy-mobiledoc/toolbar.js]: SUCCESS
+2020-04-02T04:56:15.876Z [info] [lib/crunchy-ui/addon/components/crunchy-media-object.js]: SUCCESS
+2020-04-02T04:56:15.919Z [info] [lib/crunchy-ui/addon/components/crunchy-form/group/control.js]: SUCCESS
+2020-04-02T04:56:15.943Z [info] [lib/crunchy-ui/addon/components/crunchy-form/field.js]: SUCCESS
+2020-04-02T04:56:15.943Z [info] [lib/crunchy-ui/addon/components/crunchy-media-object/body.js]: SUCCESS
+2020-04-02T04:56:15.967Z [info] [lib/crunchy-ui/addon/components/crunchy-media-object/header.js]: SUCCESS
+2020-04-02T04:56:15.951Z [info] [lib/crunchy-ui/addon/components/crunchy-sort-by.js]: SUCCESS
+2020-04-02T04:56:16.009Z [info] [lib/crunchy-ui/addon/components/crunchy-form/group/label.js]: SUCCESS
+2020-04-02T04:56:16.014Z [info] [lib/crunchy-ui/addon/components/crunchy-yield.js]: SUCCESS
+2020-04-02T04:56:16.007Z [info] [lib/crunchy-ui/addon/components/crunchy-form/errors.js]: SUCCESS
+2020-04-02T04:56:16.103Z [info] [lib/crunchy-ui/addon/components/crunchy-form/fields/checkbox.js]: SUCCESS
+2020-04-02T04:56:16.086Z [info] [lib/crunchy-ui/addon/components/crunchy-form/group.js]: SUCCESS
+2020-04-02T04:56:16.124Z [info] [lib/crunchy-ui/addon/components/crunchy-form/group/errors.js]: SUCCESS
+2020-04-02T04:56:16.148Z [warn] [lib/crunchy-ui/addon/components/crunchy-form.js]: FAILURE 
+Validation errors: 
+	[validateField]: Transform not supported - calling the passed action would cause an infinite loop. See https://github.com/scalvert/eslint-plugin-ember-es6-class/pull/2 for more details
+2020-04-02T04:56:16.167Z [info] [lib/crunchy-ui/addon/components/crunchy-modal/body.js]: SUCCESS
+2020-04-02T04:56:16.171Z [info] [lib/crunchy-ui/addon/components/crunchy-breadcrumbs.js]: SUCCESS
+2020-04-02T04:56:16.052Z [info] [lib/crunchy-ui/addon/components/crunchy-form/submit.js]: SUCCESS
+2020-04-02T04:56:16.170Z [info] [lib/crunchy-ui/addon/components/crunchy-kitchen-sink.js]: SUCCESS
+2020-04-02T04:56:16.207Z [info] [lib/crunchy-ui/addon/components/crunchy-modal/footer.js]: SUCCESS
+2020-04-02T04:56:16.253Z [info] [lib/crunchy-ui/addon/components/crunchy-modal.js]: SUCCESS
+2020-04-02T04:56:16.278Z [info] [lib/crunchy-ui/addon/components/crunchy-form/fields/tag-input.js]: SUCCESS
+2020-04-02T04:56:16.208Z [info] [lib/crunchy-ui/addon/components/crunchy-draggable-dropzone.js]: SUCCESS
+2020-04-02T04:56:16.309Z [info] [lib/crunchy-ui/addon/components/crunchy-confirm.js]: SUCCESS
+2020-04-02T04:56:16.304Z [info] [lib/crunchy-ui/addon/components/crunchy-chip.js]: SUCCESS
+2020-04-02T04:56:16.361Z [warn] [lib/crunchy-ui/addon/components/crunchy-button.js]: FAILURE 
+Validation errors: 
+	[click]: Transform not supported - action name matches one of the lifecycle hooks. Rename and try again. See https://github.com/scalvert/ember-native-class-codemod/issues/34 for more details
+2020-04-02T04:56:16.373Z [info] [lib/crunchy-ui/addon/components/crunchy-form/fields/textarea.js]: SUCCESS
+2020-04-02T04:56:16.428Z [info] [lib/crunchy-ui/addon/components/crunchy-form/fields/text.js]: SUCCESS
