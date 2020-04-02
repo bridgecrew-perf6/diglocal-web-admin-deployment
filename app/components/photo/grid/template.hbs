@@ -4,20 +4,20 @@
   @dragEndAction={{this.dragEnd}} as |item|>
   <div
     class={{concat "w-48 h-48 m-4 border rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-white relative cursor-pointer "
-      (if (contains item this.selectedPhotos) "shadow-outline ")
+      (if (contains item @selectedPhotos) "shadow-outline ")
     }}
     style={{background-image (if item.isNew item.url item.sizes.mobile)}}
     role="button"
     aria-label="Select photo"
-    {{fn this.select item}}
+    {{on "click" (fn this.select item)}}
   >
     <div class="absolute top-0 right-0 w-6 h-6 flex items-center justify-center m-1">
       <Input
         @type="checkbox"
-        @checked={{contains item this.selectedPhotos}}
-        @keyPress={{fn checkboxSelect item}}
-        @click={{fn checkboxSelect item}}
-        @touchStart={{fn checkboxSelect item}}
+        @checked={{contains item @selectedPhotos}}
+        @keyPress={{fn this.checkboxSelect item}}
+        @click={{fn this.checkboxSelect item}}
+        @touchStart={{fn this.checkboxSelect item}}
         @aria-label="Is photo selected?"
       />
     </div>

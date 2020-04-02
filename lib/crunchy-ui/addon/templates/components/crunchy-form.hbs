@@ -4,7 +4,7 @@
   didSubmit=this.didSubmit
   isSubmitting=this.isSubmitting
   formErrors=this.formErrors
-  validateField=(action "validateField")
+  validateField=this.validateField
   ) as |groupComponent|}}
 
   {{yield (hash
@@ -51,8 +51,8 @@
     isSubmitting=this.isSubmitting
     didSubmit=this.didSubmit
     isReadonly=this.isReadonly
-    validateField=(action "validateField")
-    resetForm=(action "resetForm")
+    validateField=this.validateField
+    resetForm=this.resetForm
     formErrors=this.formErrors
     formMessages=this.formMessages
   )}}

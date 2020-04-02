@@ -33,7 +33,7 @@
   </div>
 </div>
 <div class="treadmill-content__table-body container pt-20">
-  <Photo::Grid @model={{reject-by "isNew" @model.businessImages}} @selectedPhotos={{this.selectedPhotos}} />
+  <Photo::Grid @model={{reject-by "isNew" @model.businessImages}} @selectedPhotos={{this.selectedPhotos}} @didUpdateSelected={{fn (mut this.selectedPhotos)}} />
 </div>
 
 <CrunchyConfirm
