@@ -4,12 +4,12 @@
       {{#if this.selectedPhotos.length}}
         <div class="mx-4 flex items-center">
           <p>{{pluralize this.selectedPhotos.length "photo"}} selected</p>
-          <button {{action "clearAllSelected"}} type="button" class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
+          <button {{on "click" this.clearAllSelected}} type="button" class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
             <FaIcon @icon="times" @size="xs" class="mr-1" /> Clear Selected
           </button>
         </div>
         <CrunchyButton
-          @onClick={{action (mut this.showDestroyModal) true}}
+          @onClick={{fn (mut this.showDestroyModal) true}}
           @aria-label="Delete selected photos"
           @class="crunchy-button--primary whitespace-no-wrap"
           @disabled={{not this.selectedPhotos.length}}>
@@ -18,7 +18,7 @@
       {{else}}
         <p class="flex items-center mx-2">Select photos to remove or drag photos to change sort order.</p>
         <CrunchyButton
-          @onClick={{action (mut this.showUploadModal) true}}
+          @onClick={{fn (mut this.showUploadModal) true}}
           @aria-label="Upload a new photo"
           @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
           <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Photos
@@ -33,14 +33,14 @@
   </div>
 </div>
 <div class="treadmill-content__table-body container pt-20">
-  <Photo::Grid @model={{reject-by "isNew" @model.businessImages}} @selectedPhotos={{this.selectedPhotos}} />
+  <Photo::Grid @model={{reject-by "isNew" @model.businessImages}} @selectedPhotos={{this.selectedPhotos}} @didUpdateSelected={{fn (mut this.selectedPhotos)}} />
 </div>
 
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
   @confirmText="Delete"
-  @onConfirm={{action "deleteSelected"}}
-  @onCancel={{action (mut this.showDestroyModal) false}}
+  @onConfirm={{this.deleteSelected}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
 >
   <p>
     Are you sure you want to delete the selected
@@ -55,7 +55,7 @@
   <CrunchyModal
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
-    @onClose={{action "cancelUpload"}}
+    @onClose={{this.cancelUpload}}
     as |modal|>
     <DigImageUploader
       @modelType="business-image"

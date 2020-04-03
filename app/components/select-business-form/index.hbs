@@ -17,7 +17,7 @@
       @placeholder="Select business"
       @selected={{this.selected}}
       @allowClear={{false}}
-      @onChange={{action (mut this.selected)}} as |business|
+      @onChange={{fn (mut this.selected)}} as |business|
       >
         <div class="flex flex-col">
           <span class="leading-tight">{{business.name}}</span>

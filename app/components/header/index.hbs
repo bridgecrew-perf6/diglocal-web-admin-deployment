@@ -19,7 +19,7 @@
         <Header::CurrentUserDropdown />
 
         {{#if this.isMobile}}
-          <button {{action (mut @showSidebar) true}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button" data-test-id="open-mobile-menu"> &#9776; </button>
+          <button {{on "click" @toggleSidebar}} class="px-1 text-brand-primary text-2xl" aria-label="Menu" type="button" data-test-id="open-mobile-menu"> &#9776; </button>
         {{/if}}
       </div>
     </div>
@@ -34,14 +34,13 @@
       {{/unless}}
     </div>
   </nav>
-
   {{#if @showSidebar}}
     <div id="sidebar" class="fixed inset-0 h-full bg-white z-90 w-full block" data-test-id="mobile-menu">
       <div id="nav_wrapper" class="h-full overflow-y-auto scrolling-touch relative bg-white">
         {{#if (media "isMobile")}}
           <div class="flex justify-end">
             <button
-              {{action (mut @showSidebar) false}}
+              {{on "click" @toggleSidebar}}
               class="px-6 text-5xl text-gray-600"
               aria-label="Close"
               type="button"

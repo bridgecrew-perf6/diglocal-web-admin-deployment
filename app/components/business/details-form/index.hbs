@@ -2,14 +2,14 @@
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
-    @onSubmit={{action "save"}}
-    @onCancel={{action "cancel"}}
+    @onSubmit={{this.save}}
+    @onCancel={{this.cancel}}
     @debounceSubmit={{true}}
   as |form|>
     <div class="flex flex-col md:flex-row mb-4">
       <div class="flex flex-col items-center">
         <div style={{background-image @model.logo.url}} class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
-          <CrunchyButton @onClick={{action (mut this.showUploadModal) true}} @aria-label="Upload a new logo"
+          <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new logo"
             @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
             <FaIcon @icon="pencil-alt" />
           </CrunchyButton>
@@ -25,16 +25,16 @@
         <form.text-field @field="name" @label="Name" @aria-label="Business Name" @controlClass="font-bold" />
         <form.field @field="categories" @label={{if this.canAddMultiCategories "Categories" "Category"}}>
           <PowerSelectMultiple @searchEnabled={{true}} @searchField="longName" @options={{this.categoryOptions}}
-            @selected={{@model.categories}} @placeholder="Select category tags..." @onChange={{action (mut @model.categories)}}
+            @selected={{@model.categories}} @placeholder="Select category tags..." @onChange={{fn (mut @model.categories)}}
             as |category|>
             {{category.longName}}
           </PowerSelectMultiple>
         </form.field>
 
-        {{#if currentUser.isAdmin}}
+        {{#if this.currentUser.isAdmin}}
           <form.field @field="role" @label="Listing Type">
             <PowerSelect @placeholder="Select a listing type for this business" @options={{this.roleOptions}}
-              @selected={{@model.role}} @allowClear={{false}} @disabled={{form.isReadonly}} @onChange={{action (mut @model.role)}}
+              @selected={{@model.role}} @allowClear={{false}} @disabled={{form.isReadonly}} @onChange={{fn (mut @model.role)}}
               as |role|>
               <span data-test-id="selected-role">{{role-display-name role}}</span>
             </PowerSelect>
@@ -67,7 +67,7 @@
 
     <div class="flex mt-8 {{if this.currentUser.isAdmin "justify-between" "justify-end"}}">
       {{#if this.currentUser.isAdmin}}
-        <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
+        <CrunchyButton @onClick={{fn (mut this.showDestroyModal) true}} @value="Delete Business" @class="crunchy-button--outline" />
       {{/if}}
       <div class="flex flex-wrap">
         <form.submit @value="Save" @class="mr-2 md:w-32" />
@@ -80,15 +80,15 @@
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
   @confirmText="Delete"
-  @onConfirm={{action "delete"}}
-  @onCancel={{action (mut this.showDestroyModal) false}}
+  @onConfirm={{this.delete}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
 >
   <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.name}}</span> and all related content?</p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>
 
 {{#if this.showUploadModal}}
-  <CrunchyModal @clickOutsideToClose={{false}} @translucentOverlay={{true}} @onClose={{action "cancelUpload"}} as |modal|>
+  <CrunchyModal @clickOutsideToClose={{false}} @translucentOverlay={{true}} @onClose={{this.cancelUpload}} as |modal|>
     <AttributeImageUploader @model={{@model}} @modelType="business" @keyForImage="logo"
       @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}} as |uploader|>
       <modal.header>
@@ -98,31 +98,31 @@
         <div class="h-48 rounded border border-brand-gray border-dashed my-6">
           <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}}
             class="w-full h-full flex justify-center items-center">
-            {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
-            {{#unless uploader.uploadTasks.length}}
-              <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
-                <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
-                Click or drop file here
-              </span>
-            {{/unless}}
-            <div class="flex flex-wrap justify-start">
-              {{#each uploader.uploadTasks as |task|}}
-              <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
-                {{#if (not (eq task.status "pending"))}}
-                  <img src={{task.preview}} alt="File Upload Preview">
-                {{/if}}
-                <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
-                  {{#if (or task.isRunning (eq task.status "pending"))}}
-                    <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
-                  {{else if (eq task.status "complete")}}
-                    <FaIcon @icon="check-circle" class="text-green-600" />
-                  {{else if (eq task.status "error")}}
-                    <FaIcon @icon="times-circle" class="text-brand-error" />
+            {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles}}
+              {{#unless uploader.uploadTasks.length}}
+                <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                  <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                  Click or drop file here
+                </span>
+              {{/unless}}
+              <div class="flex flex-wrap justify-start">
+                {{#each uploader.uploadTasks as |task|}}
+                <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                  {{#if (not (eq task.status "pending"))}}
+                    <img src={{task.preview}} alt="File Upload Preview">
                   {{/if}}
+                  <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                    {{#if (or task.isRunning (eq task.status "pending"))}}
+                      <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                    {{else if (eq task.status "complete")}}
+                      <FaIcon @icon="check-circle" class="text-green-600" />
+                    {{else if (eq task.status "error")}}
+                      <FaIcon @icon="times-circle" class="text-brand-error" />
+                    {{/if}}
+                  </div>
                 </div>
+                {{/each}}
               </div>
-              {{/each}}
-            </div>
             {{/x-file-input}}
           </CrunchyDraggableDropzone>
         </div>

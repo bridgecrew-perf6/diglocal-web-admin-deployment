@@ -6,7 +6,7 @@
       @showLabels={{true}}
       @size="small"
       @value={{@model.isDeal}}
-      @onToggle={{action (mut @model.isDeal)}}
+      @onToggle={{fn (mut @model.isDeal)}}
       @disabled={{form.isReadonly}}
       data-test-id="isDeal-toggle"
       as |toggle|
@@ -27,7 +27,7 @@
       @showLabels={{true}}
       @size="small"
       @value={{this.showEventFields}}
-      @onToggle={{action "toggleEventFields"}}
+      @onToggle={{this.toggleEventFields}}
       @disabled={{form.isReadonly}}
       data-test-id="isEvent-toggle"
       as |toggle|
@@ -48,9 +48,9 @@
     <Scoop::DetailsForm::EventFields
       @form={{form}}
       @model={{@model}}
-      @onChangeEventDate={{action (mut @model.eventDate)}}
-      @onChangeEventStart={{action (mut @model.eventStartTime)}}
-      @onChangeEventEnd={{action (mut @model.eventEndTime)}}
+      @onChangeEventDate={{fn (mut @model.eventDate)}}
+      @onChangeEventStart={{fn (mut @model.eventStartTime)}}
+      @onChangeEventEnd={{fn (mut @model.eventEndTime)}}
     />
 
     <form.text-field

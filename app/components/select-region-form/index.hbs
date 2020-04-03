@@ -17,7 +17,7 @@
       @placeholder="Select region"
       @selected={{this.selected}}
       @allowClear={{false}}
-      @onChange={{action (mut this.selected)}} as |region|
+      @onChange={{fn (mut this.selected)}} as |region|
       >
         <span class="">{{region.longName}}</span>
     </PowerSelect>

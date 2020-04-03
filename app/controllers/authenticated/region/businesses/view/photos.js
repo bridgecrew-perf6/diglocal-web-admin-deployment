@@ -53,4 +53,9 @@ export default class AuthenticatedRegionBusinessesViewPhotosController extends C
   clearAllSelected() {
     this.selectedPhotos.clear();
   }
+
+  @action
+  updateSelected(array) {
+    this.selectedPhotos = array;
+  }
 }

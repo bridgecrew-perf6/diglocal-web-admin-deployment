@@ -1,8 +1,8 @@
 <CrunchyForm
   @model={{@model}}
   @formSchema={{@model.validationSchema}}
-  @onSubmit={{action "save"}}
-  @onCancel={{action "cancel"}}
+  @onSubmit={{this.save}}
+  @onCancel={{this.cancel}}
   @debounceSubmit={{true}}
 as |form|>
 

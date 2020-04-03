@@ -11,7 +11,7 @@
         @showLabels={{true}}
         @size="small"
         @value={{@model.active}}
-        @onToggle={{action (mut @model.active)}}
+        @onToggle={{fn (mut @model.active)}}
         @disabled={{this.isReadonly}}
         as |toggle|
       >

@@ -9,7 +9,7 @@
         @value={{this.searchString}}
         @key-up={{perform this.didSearch}}
         @focus-out={{perform this.didSearch}}
-        @escape-press={{action "clearSearch"}}
+        @escape-press={{this.clearSearch}}
         @placeholder="Search..."
         aria-label="Search scoops"
         data-test-id="search"
@@ -31,7 +31,7 @@
                     data-test-id={{concat "category-" category.id}}
                     name={{category.longName}}
                     checked={{contains category.id this.categories}}
-                    onchange={{action "addFilter" category.id "categories"}}
+                    onchange={{fn this.addFilter category.id "categories"}}
                   >
                   <label for={{category.id}}>{{category.longName}}</label>
                 </div>
@@ -56,7 +56,7 @@
   {{#if this.collectedFilters.length}}
     <div class="flex pt-2 px-2 justify-between">
         <div class="flex items-center">
-          <button {{action "clearAllFilters"}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+          <button {{on "click" this.clearAllFilters}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
             Clear Filters
           </button>
           <ul aria-label="Applied filters">
@@ -66,7 +66,7 @@
                   @tagName="li"
                   @label={{record.longName}}
                   @allowClear={{true}}
-                  @onClear={{action "removeFilter" record.id "categories"}}
+                  @onClear={{fn this.removeFilter record.id "categories"}}
                 />
               {{/let}}
             {{/each}}

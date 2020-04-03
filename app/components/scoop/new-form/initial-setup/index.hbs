@@ -10,7 +10,7 @@
       @selected={{@model.business}}
       @allowClear={{false}}
       @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
-      @onChange={{action (mut @model.business)}} as |business|
+      @onChange={{fn (mut @model.business)}} as |business|
       >
         <span data-test-id="selected-business-name">{{business.name}}</span>
     </PowerSelect>

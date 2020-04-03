@@ -2,7 +2,7 @@
   <div class="container flex h-10 justify-between">
     <p class="flex items-center mx-2">Manage users with admin privileges for this business.</p>
     <CrunchyButton
-      @onClick={{action (mut this.showAddUserModal) true}}
+      @onClick={{fn (mut this.showAddUserModal) true}}
       @aria-label="Add a new location"
       @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap"
       @disabled={{this.showAddUserModal}}>
@@ -21,7 +21,7 @@
         <FaIcon @icon="spinner" @pulse={{true}} class="text-gray-500" />
       </div>
     {{else}}
-      <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{action "removeUser"}} />
+      <Business::Owner::ListRow @model={{item}} @isRemovable={{true}} @onRemove={{this.removeUser}} />
     {{/if}}
   </EllaTreadmill>
 
@@ -40,12 +40,12 @@
   <CrunchyModal
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
-    @onClose={{action "cancel"}}
+    @onClose={{this.cancel}}
     as |modal|>
     <modal.header>
       Add a user
     </modal.header>
-    <CrunchyForm @model={{this}} @onSubmit={{action "addUser"}} @onCancel={{action "cancel"}} as |form|>
+    <CrunchyForm @model={{this}} @onSubmit={{this.addUser}} @onCancel={{this.cancel}} as |form|>
       <modal.body>
           <p>Added users will have admin privileges for this business, including the ability to create, edit, and delete content.</p>
           <form.field @label="Select user" class="mt-4">
@@ -56,7 +56,7 @@
               @placeholder="Click to search"
               @selected={{this.userToAdd}}
               @allowClear={{true}}
-              @onChange={{action (mut this.userToAdd)}} as |user|
+              @onChange={{fn (mut this.userToAdd)}} as |user|
               >
                 <span class="ml-1">{{user.email}}</span>
                 {{#if (not (eq user.id this.userToAdd.id))}}<span class="text-sm text-gray-600">@{{user.user}}</span>{{/if}}

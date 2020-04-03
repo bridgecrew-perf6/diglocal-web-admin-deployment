@@ -4,10 +4,12 @@
     "ember-addon"
   ],
   "dependencies": {
+    "ember-classic-decorator": "^1.0.8",
     "ember-cli-babel": "*",
     "ember-cli-htmlbars": "*",
     "ember-concurrency": "^1.0.0",
     "ember-crumbly": "^3.0.1",
+    "ember-decorators": "^6.1.1",
     "ember-mobiledoc-editor": "github:crunchybananas/ember-mobiledoc-editor#fix-hash-override",
     "ember-modal-dialog": "^3.0.0-beta.4",
     "ember-power-select": "^3.0.4",

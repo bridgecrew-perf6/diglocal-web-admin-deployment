@@ -6,8 +6,8 @@
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
-    @onSubmit={{action "save"}}
-    @onCancel={{action "cancel"}}
+    @onSubmit={{this.save}}
+    @onCancel={{this.cancel}}
     @debounceSubmit={{true}}
     as |form|>
 
@@ -45,7 +45,7 @@
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     <div class="flex justify-between mt-8">
-      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete user" @class="crunchy-button--outline" />
+      <CrunchyButton @onClick={{fn (mut this.showDestroyModal) true}} @value="Delete user" @class="crunchy-button--outline" />
       <div class="flex flex-wrap">
         <form.submit @value="Submit" @class="mr-2 md:w-32" />
         <form.cancel @value="Cancel" />
@@ -57,8 +57,8 @@
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
   @confirmText="Delete"
-  @onConfirm={{action "delete"}}
-  @onCancel={{action (mut this.showDestroyModal) false}}
+  @onConfirm={{this.delete}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
 >
   <p>Are you sure you want to delete the user <span class="font-semibold text-brand-primary">{{@model.user}}</span>?</p>
   <strong>This cannot be undone.</strong>
