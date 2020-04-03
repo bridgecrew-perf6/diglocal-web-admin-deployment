@@ -9,7 +9,7 @@
         @value={{this.searchString}}
         @key-up={{perform this.didSearch}}
         @focus-out={{perform this.didSearch}}
-        @escape-press={{action "clearSearch"}}
+        @escape-press={{this.clearSearch}}
         @placeholder="Search..."
         aria-label="Search users"
         data-test-id="search"
@@ -24,7 +24,7 @@
           <form>
             {{#each this.roleOptions as |option|}}
               <div class="p-1">
-                <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{action "addFilter" option.value "roles"}} >
+                <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{fn this.addFilter option.value "roles"}} >
                 <label for={{option.value}}>{{option.label}}</label>
               </div>
             {{/each}}
@@ -36,7 +36,7 @@
   </div>
   {{#if (or this.roles.length)}}
     <div class="flex pt-2">
-      <button {{action "clearAllFilters"}} type="button" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+      <button {{on "click" this.clearAllFilters}} type="button" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
         Clear Filters
       </button>
       <ul aria-label="Applied filters">
@@ -46,7 +46,7 @@
               @tagName="li"
               @label={{option.label}}
               @allowClear={{true}}
-              @onClear={{action "removeFilter" option.value "roles"}}
+              @onClear={{fn this.removeFilter option.value "roles"}}
             />
           {{/let}}
         {{/each}}

@@ -22,7 +22,7 @@
     <hr class="py-1">
     <ul>
       <li class="py-2 px-4 w-full">
-        <CrunchyButton @onClick={{action "logout" dd}} @class="crunchy-button--link w-full" @testId="logout">
+        <CrunchyButton @onClick={{fn this.logout dd}} @class="crunchy-button--link w-full" @testId="logout">
           Logout
         </CrunchyButton>
       </li>

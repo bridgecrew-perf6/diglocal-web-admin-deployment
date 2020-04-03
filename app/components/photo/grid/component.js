@@ -1,44 +1,54 @@
-import Component from '@ember/component';
-import { get, set } from '@ember/object';
-import { assert } from '@ember/debug';
+import Component from '@glimmer/component';
+import { get, set, action } from '@ember/object';
 
-export default Component.extend({
-  init() {
-    this._super(...arguments);
-    assert(`Component 'photo/grid' expects an array 'selectedPhotos'`, this.selectedPhotos);
-  },
+export default class PhotoGridComponent extends Component {
+  @action
+  dragEnd ({sourceList, sourceIndex, targetList, targetIndex}) {
+    if (sourceList === targetList && sourceIndex === targetIndex) { return; }
+    let item = sourceList.objectAt(sourceIndex);
 
-  actions: {
-    dragEnd ({sourceList, sourceIndex, targetList, targetIndex}) {
-      if (sourceList === targetList && sourceIndex === targetIndex) { return; }
-      let item = sourceList.objectAt(sourceIndex);
+    sourceList.removeAt(sourceIndex);
+    sourceList.insertAt(targetIndex, item)
 
-      sourceList.removeAt(sourceIndex);
-      sourceList.insertAt(targetIndex, item)
-
-      sourceList.forEach((element, index) => {
-        if (get(element, 'position') !== index) {
-          set(element, 'position', index);
-          element.save();
-        }
-      });
-    },
-    select(photo) {
-      let alreadySelected = this.selectedPhotos.findBy('id', photo.id);
-      if (alreadySelected) {
-        this.selectedPhotos.removeObject(photo);
-      } else {
-        this.selectedPhotos.addObject(photo);
+    sourceList.forEach((element, index) => {
+      if (get(element, 'position') !== index) {
+        set(element, 'position', index);
+        element.save();
       }
-    },
-    checkboxSelect(photo, event) {
-      event.stopPropagation();
-      let { target: { checked } } = event;
-      if (checked) {
-        this.selectedPhotos.addObject(photo);
-      } else {
-        this.selectedPhotos.removeObject(photo);
-      }
-    }
+    });
   }
-});
+
+  updateSelected(array) {
+    return this.args.didUpdateSelected(array);
+  }
+
+  @action
+  select(photo) {
+    let selectedPhotos = [ ...this.args.selectedPhotos ];
+    let alreadySelected = selectedPhotos.findBy('id', photo.id);
+
+    if (alreadySelected) {
+      selectedPhotos.removeObject(photo);
+    } else {
+      selectedPhotos.addObject(photo);
+    }
+
+    this.updateSelected(selectedPhotos);
+  }
+
+  @action
+  checkboxSelect(photo, event) {
+    event.stopPropagation();
+    let { target: { checked } } = event;
+    let selectedPhotos = [ ...this.args.selectedPhotos ];
+
+    if (checked) {
+      selectedPhotos.addObject(photo);
+    } else {
+      selectedPhotos.removeObject(photo);
+    }
+
+    this.updateSelected(selectedPhotos);
+  }
+}
+

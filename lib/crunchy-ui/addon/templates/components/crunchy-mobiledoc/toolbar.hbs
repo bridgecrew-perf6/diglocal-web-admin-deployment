@@ -2,8 +2,8 @@
   <button
     type="button"
     title="Bold"
-    class="mobiledoc-toolbar__button {{if editor.activeMarkupTagNames.isStrong "active"}}"
-    {{action editor.toggleMarkup "strong"}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeMarkupTagNames.isStrong "active"}}"
+    {{on "click" (fn this.editor.toggleMarkup "strong")}}>
     <FaIcon @icon="bold" />
   </button>
 </li>
@@ -11,8 +11,8 @@
   <button
     type="button"
     title="Italic"
-    class="mobiledoc-toolbar__button {{if editor.activeMarkupTagNames.isEm "active"}}"
-    {{action editor.toggleMarkup "em"}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeMarkupTagNames.isEm "active"}}"
+    {{on "click" (fn this.editor.toggleMarkup "em")}}>
     <FaIcon @icon="italic" />
   </button>
 </li>
@@ -20,8 +20,8 @@
   <button
     type="button"
     title="Link"
-    class="mobiledoc-toolbar__button {{if editor.activeMarkupTagNames.isA 'active'}}"
-    {{action editor.toggleLink}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeMarkupTagNames.isA "active"}}"
+    {{on "click" this.editor.toggleLink}}>
     <FaIcon @icon="link" />
   </button>
 </li>
@@ -29,8 +29,8 @@
   <button
     type="button"
     title="Heading"
-    class="mobiledoc-toolbar__button {{if editor.activeSectionTagNames.isH1 "active"}}"
-    {{action editor.toggleSection "h1"}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeSectionTagNames.isH1 "active"}}"
+    {{on "click" (fn this.editor.toggleSection "h1")}}>
     <FaIcon @icon="heading" />
   </button>
 </li>
@@ -39,7 +39,7 @@
     type="button"
     title="Subheading"
     class="mobiledoc-toolbar__button {{if editor.activeSectionTagNames.isH2 "active"}}"
-    {{action editor.toggleSection "h2"}}>
+    {{on "click" (fn editor.toggleSection "h2")}}>
     <FaIcon @icon="h2" />
   </button>
 </li> --}}
@@ -47,8 +47,8 @@
   <button
     type="button"
     title="Block Quote"
-    class="mobiledoc-toolbar__button {{if editor.activeSectionTagNames.isBlockquote "active"}}"
-    {{action editor.toggleSection "blockquote"}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeSectionTagNames.isBlockquote "active"}}"
+    {{on "click" (fn this.editor.toggleSection "blockquote")}}>
     <FaIcon @icon="quote-right" />
   </button>
 </li>
@@ -57,7 +57,7 @@
     type="button"
     title="Pull Quote"
     class="mobiledoc-toolbar__button {{if editor.activeSectionTagNames.isPullQuote "active"}}"
-    {{action editor.toggleSection "pull-quote"}}>
+    {{on "click" (fn editor.toggleSection "pull-quote")}}>
     Pull-quote
   </button>
 </li> --}}
@@ -65,8 +65,8 @@
   <button
     type="button"
     title="List"
-    class="mobiledoc-toolbar__button {{if editor.activeSectionTagNames.isUl "active"}}"
-    {{action editor.toggleSection "ul"}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeSectionTagNames.isUl "active"}}"
+    {{on "click" (fn this.editor.toggleSection "ul")}}>
     <FaIcon @icon="list-ul" />
   </button>
 </li>
@@ -74,8 +74,8 @@
   <button
     type="button"
     title="Numbered List"
-    class="mobiledoc-toolbar__button {{if editor.activeSectionTagNames.isOl "active"}}"
-    {{action editor.toggleSection "ol"}}>
+    class="mobiledoc-toolbar__button {{if this.editor.activeSectionTagNames.isOl "active"}}"
+    {{on "click" (fn this.editor.toggleSection "ol")}}>
     <FaIcon @icon="list-ol" />
   </button>
 </li>

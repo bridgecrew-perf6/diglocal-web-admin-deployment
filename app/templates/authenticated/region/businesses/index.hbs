@@ -9,7 +9,7 @@
         @value={{this.searchString}}
         @key-up={{perform this.didSearch}}
         @focus-out={{perform this.didSearch}}
-        @escape-press={{action "clearSearch"}}
+        @escape-press={{this.clearSearch}}
         @placeholder="Search..."
         aria-label="Search businesses"
         data-test-id="search"
@@ -25,20 +25,20 @@
             <form>
               <fieldset>
                 <div class="p-1">
-                  <input id="active-filter" type="checkbox" name="active-filter" checked={{this.active}} onchange={{action (mut this.active) value="target.checked"}} >
+                  <input id="active-filter" type="checkbox" name="active-filter" checked={{this.active}} onchange={{fn (mut this.active) value="target.checked"}} >
                   <label for="active-filter">Active</label>
                 </div>
                 <div class="p-1">
-                  <input id="archived-filter" type="checkbox" name="archived-filter" checked={{this.archived}} onchange={{action (mut this.archived) value="target.checked"}} >
+                  <input id="archived-filter" type="checkbox" name="archived-filter" checked={{this.archived}} onchange={{fn (mut this.archived) value="target.checked"}} >
                   <label for="archived-filter">Inactive</label>
                 </div>
                 <div class="p-1">
-                  <input id="featured-filter" type="checkbox" name="featured-filter" checked={{this.featured}} onchange={{action (mut this.featured) value="target.checked"}} >
+                  <input id="featured-filter" type="checkbox" name="featured-filter" checked={{this.featured}} onchange={{fn (mut this.featured) value="target.checked"}} >
                   <label for="featured-filter">Featured</label>
                 </div>
                 {{#each this.roleOptions as |option|}}
                   <div class="p-1">
-                    <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{action "addFilter" option.value "roles"}} >
+                    <input id={{option.value}} type="checkbox" name={{option.label}} checked={{contains option.value this.roles}} onchange={{fn this.addFilter option.value "roles"}} >
                     <label for={{option.value}}>{{option.label}}</label>
                   </div>
                 {{/each}}
@@ -61,7 +61,7 @@
                       data-test-id={{concat "category-" category.id}}
                       name={{category.longName}}
                       checked={{contains category.id this.categories}}
-                      onchange={{action "addFilter" category.id "categories"}}
+                      onchange={{fn this.addFilter category.id "categories"}}
                     >
                     <label for={{category.id}}>{{category.longName}}</label>
                   </div>
@@ -85,7 +85,7 @@
   </div>
   {{#if (or this.collectedFilters.length this.featured this.active this.archived)}}
     <div class="flex pt-2 px-2 items-center">
-      <button {{action "clearAllFilters"}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
+      <button {{on "click" this.clearAllFilters}} type="button" data-test-id="clear-filters" class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
         Clear Filters
       </button>
       {{#if this.featured}}
@@ -93,7 +93,7 @@
           @tagName="li"
           @label="Featured"
           @allowClear={{true}}
-          @onClear={{action (mut this.featured) false}}
+          @onClear={{fn (mut this.featured) false}}
         />
       {{/if}}
       {{#if this.active}}
@@ -101,7 +101,7 @@
           @tagName="li"
           @label="Active"
           @allowClear={{true}}
-          @onClear={{action (mut this.active) false}}
+          @onClear={{fn (mut this.active) false}}
         />
       {{/if}}
       {{#if this.archived}}
@@ -109,7 +109,7 @@
           @tagName="li"
           @label="Inactive"
           @allowClear={{true}}
-          @onClear={{action (mut this.archived) false}}
+          @onClear={{fn (mut this.archived) false}}
         />
       {{/if}}
       <ul aria-label="Applied filters">
@@ -119,7 +119,7 @@
               @tagName="li"
               @label={{option.label}}
               @allowClear={{true}}
-              @onClear={{action "removeFilter" option.value "roles"}}
+              @onClear={{fn this.removeFilter option.value "roles"}}
             />
           {{/let}}
         {{/each}}
@@ -129,7 +129,7 @@
               @tagName="li"
               @label={{record.longName}}
               @allowClear={{true}}
-              @onClear={{action "removeFilter" record.id "categories"}}
+              @onClear={{fn this.removeFilter record.id "categories"}}
             />
           {{/let}}
         {{/each}}

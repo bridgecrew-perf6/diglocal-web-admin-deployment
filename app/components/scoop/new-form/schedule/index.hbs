@@ -5,7 +5,7 @@
     @form={{form}}
     @model={{@model}}
     @isNewForm={{true}}
-    @didUpdateDays={{action (mut @model.daysOfWeek)}}
+    @didUpdateDays={{fn (mut @model.daysOfWeek)}}
     @hideRecurringLabel={{true}}
   />
 {{/with}}

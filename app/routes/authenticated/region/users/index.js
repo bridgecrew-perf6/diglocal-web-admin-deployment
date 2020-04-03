@@ -47,7 +47,6 @@ export default Route.extend({
   resetController(controller, isExiting, transition) {
     if (isExiting && transition.targetName !== 'error') {
       controller.setProperties({
-        sort: '',
         search: '',
         searchString: '',
         roles: []

@@ -3,7 +3,7 @@
     <RadioButton
       @value={{false}}
       @groupValue={{@model.isRecurring}}
-      @changed={{action "changeRecurring"}}
+      @changed={{this.changeRecurring}}
       @disabled={{form.isReadonly}}
     >
       <span class="mr-2" data-test-id="post-scoop-once">Once</span>
@@ -11,7 +11,7 @@
     <RadioButton
       @value={{true}}
       @groupValue={{@model.isRecurring}}
-      @changed={{action "changeRecurring"}}
+      @changed={{this.changeRecurring}}
       @disabled={{form.isReadonly}}
     >
       <span class="mr-2" data-test-id="post-scoop-weekly">Weekly</span>
@@ -27,9 +27,9 @@
             <Input
               @type="checkbox"
               @checked={{contains day.value this.selectedDays}}
-              @keyPress={{action "selectDay" day.value}}
-              @click={{action "selectDay" day.value}}
-              @touchStart={{action "selectDay" day.value}}
+              @keyPress={{fn this.selectDay day.value}}
+              @click={{fn this.selectDay day.value}}
+              @touchStart={{fn this.selectDay day.value}}
               @aria-label={{concat "Post scoop every " day.label}}
               @disabled={{form.isReadonly}}
               data-test-id={{concat "post-on-" day.label}}
@@ -53,7 +53,7 @@
             @dateFormat="Y-m-d"
             @enableTime={{false}}
             @mode="single"
-            @onChange={{action "changeDisplayFrom"}}
+            @onChange={{this.changeDisplayFrom}}
             @placeholder="Select a date"
             @disabled={{form.isReadonly}}
             class="w-full crunchy-form__input"
@@ -72,7 +72,7 @@
             @dateFormat="Y-m-d"
             @enableTime={{false}}
             @mode="single"
-            @onChange={{action "changeDisplayTo"}}
+            @onChange={{this.changeDisplayTo}}
             @placeholder="Select a date"
             @disabled={{form.isReadonly}}
             class="w-full crunchy-form__input"
@@ -92,7 +92,7 @@
         @dateFormat="Y-m-d"
         @enableTime={{false}}
         @mode="single"
-        @onChange={{action "changePostAtDate"}}
+        @onChange={{this.changePostAtDate}}
         @placeholder="Select a date"
         @disabled={{form.isReadonly}}
         class="w-full crunchy-form__input"

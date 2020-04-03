@@ -10,7 +10,7 @@
     <ul>
       {{#each this.regionsService.regions as |region|}}
         <li class="py-2 px-4 flex w-full" data-test-id={{concat "select-region-" region.id}}>
-          <CrunchyButton @onClick={{action "selectRegion" region dd}} @class="crunchy-button--link">
+          <CrunchyButton @onClick={{fn this.selectRegion region dd}} @class="crunchy-button--link">
             <span class={{if (eq region.id regionsService.activeRegion.id) "font-bold"}}>{{region.longName}}</span>
           </CrunchyButton>
           {{#if this.currentUser.isAdmin}}

@@ -2,15 +2,15 @@
   <CrunchyForm
     @model={{@model}}
     @formSchema={{@model.validationSchema}}
-    @onSubmit={{action "save"}}
-    @onCancel={{action "cancel"}}
+    @onSubmit={{this.save}}
+    @onCancel={{this.cancel}}
     @debounceSubmit={{true}}
   as |form|>
     <div class="flex flex-col md:flex-row mb-4">
       <div class="flex flex-col items-center">
         <div style={{background-image @model.image.sizes.full}}
           class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
-          <CrunchyButton @onClick={{action (mut this.showUploadModal) true}} @aria-label="Upload a new scoop image"
+          <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new scoop image"
             @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
             <FaIcon @icon="pencil-alt" />
           </CrunchyButton>
@@ -30,7 +30,7 @@
             @placeholder="Click to search" @selected={{@model.business}}
             @allowClear={{false}}
             @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
-            @onChange={{action (mut @model.business)}}
+            @onChange={{fn (mut @model.business)}}
           as |business|>
             <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
           </PowerSelect>
@@ -43,7 +43,7 @@
           @placeholder="Add some additional details" />
         
         <div class="flex justify-start items-center my-4 crunchy-form__group">
-          <XToggle @showLabels={{true}} @size="small" @value={{this.showEventFields}} @onToggle={{action "toggleEventFields"}}
+          <XToggle @showLabels={{true}} @size="small" @value={{this.showEventFields}} @onToggle={{this.toggleEventFields}}
             @disabled={{form.isReadonly}} data-test-id="isEvent-toggle" as |toggle|>
             <toggle.label @value={{this.showEventFields}}>
               <span class="crunchy-form__toggle-label">Is this an event?</span>
@@ -56,9 +56,9 @@
           <Scoop::DetailsForm::EventFields
             @form={{form}}
             @model={{@model}}
-            @onChangeEventDate={{action (mut @model.eventDate)}}
-            @onChangeEventStart={{action (mut @model.eventStartTime)}}
-            @onChangeEventEnd={{action (mut @model.eventEndTime)}}
+            @onChangeEventDate={{fn (mut @model.eventDate)}}
+            @onChangeEventStart={{fn (mut @model.eventStartTime)}}
+            @onChangeEventEnd={{fn (mut @model.eventEndTime)}}
           />
           <Ui::CollapsibleSection @title="Tickets & Event Links" @open={{false}}>
             <form.text-field @field="ticketUrl" @label="Ticket Url" />
@@ -67,7 +67,7 @@
         {{/if}}
         
         <Ui::CollapsibleSection @title="Post Schedule" @open={{false}}>
-          <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{action (mut @model.daysOfWeek)}} />
+          <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{fn (mut @model.daysOfWeek)}} />
         </Ui::CollapsibleSection>
       </div>
     </div>
@@ -75,7 +75,7 @@
     <form.errors @errorHeading="Unable to save due to the following errors:" />
 
     <div class="flex justify-between mt-8">
-      <CrunchyButton @onClick={{action (mut this.showDestroyModal) true}} @value="Delete Scoop"
+      <CrunchyButton @onClick={{fn (mut this.showDestroyModal) true}} @value="Delete Scoop"
         @class="crunchy-button--outline" />
       <div class="flex flex-wrap">
         <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
@@ -88,8 +88,8 @@
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
   @confirmText="Delete"
-  @onConfirm={{action "delete"}}
-  @onCancel={{action (mut this.showDestroyModal) false}}
+  @onConfirm={{this.delete}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
 >
   <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.description}}</span>?</p>
   <strong>This cannot be undone.</strong>
@@ -99,7 +99,7 @@
   <CrunchyModal
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
-    @onClose={{action "cancelUpload"}}
+    @onClose={{this.cancelUpload}}
   as |modal|>
     <AttributeImageUploader
       @model={{@model}}

@@ -1,6 +1,6 @@
-{{#component group
-  field=field
-  model=model
+{{#component this.group
+  field=this.field
+  model=this.model
   as |group|}}
 
   {{#if @label}}
@@ -14,9 +14,9 @@
       name={{control.controlId}}
       @tags={{@tags}}
       @readOnly={{@disabled}}
-      @addTag={{action "addTag"}}
-      @onKeyUp={{action group.validateField @field}}
-      @removeTagAtIndex={{action "removeTagAtIndex"}}
+      @addTag={{this.addTag}}
+      @onKeyUp={{fn group.validateField @field}}
+      @removeTagAtIndex={{this.removeTagAtIndex}}
       as |tag|>
       {{tag}}
     </TagInput>

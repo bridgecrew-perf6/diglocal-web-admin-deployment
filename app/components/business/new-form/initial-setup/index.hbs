@@ -13,7 +13,7 @@
       @options={{this.categoryOptions}}
       @selected={{@model.categories}}
       @placeholder="Select category tags..."
-      @onChange={{action (mut @model.categories)}} as |category|>
+      @onChange={{fn (mut @model.categories)}} as |category|>
       {{category.longName}}
     </PowerSelectMultiple>
   </form.field>
@@ -25,7 +25,7 @@
       @selected={{@model.role}}
       @allowClear={{false}}
       @disabled={{form.isReadonly}}
-      @onChange={{action (mut @model.role)}} as |role|
+      @onChange={{fn (mut @model.role)}} as |role|
       >
         <span data-test-id="selected-role">{{role-display-name role}}</span>
     </PowerSelect>
@@ -36,7 +36,7 @@
       @showLabels={{true}}
       @size="small"
       @value={{@model.featured}}
-      @onToggle={{action (mut @model.featured)}}
+      @onToggle={{fn (mut @model.featured)}}
       @disabled={{this.isReadonly}}
       as |toggle|
     >

@@ -12,7 +12,7 @@
           @dateFormat="Y-m-d"
           @enableTime={{false}}
           @mode="single"
-          @onChange={{action "changeEventDate"}}
+          @onChange={{this.changeEventDate}}
           @placeholder="Select a date"
           @disabled={{form.isReadonly}}
           class="w-full crunchy-form__input"
@@ -32,9 +32,9 @@
             @noCalendar={{true}}
             @date={{this.eventStartTime}}
             @dateFormat="H:i:S"
-            @onOpen={{action "onOpen" "start"}}
-            @onClose={{action "onClose" "start"}}
-            @onChange={{action "changeEventTime" "start"}}
+            @onOpen={{fn this.onOpen "start"}}
+            @onClose={{fn this.onClose "start"}}
+            @onChange={{fn this.changeEventTime "start"}}
             @placeholder="Start"
             @disabled={{form.isReadonly}}
             class="crunchy-form__input"
@@ -55,9 +55,9 @@
             @noCalendar={{true}}
             @date={{this.eventEndTime}}
             @dateFormat="H:i:S"
-            @onOpen={{action "onOpen" "end"}}
-            @onClose={{action "onClose" "end"}}
-            @onChange={{action "changeEventTime" "end"}}
+            @onOpen={{fn this.onOpen "end"}}
+            @onClose={{fn this.onClose "end"}}
+            @onChange={{fn this.changeEventTime "end"}}
             @placeholder="End"
             @disabled={{form.isReadonly}}
             class="crunchy-form__input"

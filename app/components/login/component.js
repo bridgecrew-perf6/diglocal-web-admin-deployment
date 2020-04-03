@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { get, getProperties, set } from '@ember/object';
+import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
 import firebase from 'firebase/app';
 import { capitalize } from '@ember/string';
+import { tracked } from '@glimmer/tracking';
 import * as yup from 'yup';
 
 const loginSchema = yup.object().shape({
@@ -12,82 +12,74 @@ const loginSchema = yup.object().shape({
   password: yup.string().required().label('Password')
 });
 
-const Validations = buildValidations({
-  'username': validator('presence', {
-    presence: true,
-    message: 'Please provide your email'
-  }),
-  'password': validator('presence', {
-    presence: true,
-    description: 'Password'
-  }),
-});
+export default class LoginComponent extends Component {
+  @service session;
+  @service firebaseApp;
+  @service store;
 
-export default Component.extend(Validations, {
-  session: service('session'),
-  firebaseApp: service(),
-  store: service(),
+  loginSchema = loginSchema;
 
-  loginSchema,
+  @tracked isLogin = true;
+  @tracked authenticating = false;
+  @tracked error;
 
-  isLogin: true,
-  authenticating: false,
-  error: null,
+  @tracked username = '';
+  @tracked password = '';
 
-  username: '',
-  password: '',
-
-  authenticateWithEmail: task(function* (email, password) {
-    set(this, 'authenticating', true);
-    const auth = yield get(this, 'firebaseApp').auth();
+  @task(function* (email, password) {
+    this.authenticating = true;
+    const auth = yield this.firebaseApp.auth();
     try {
       let authenticatedUser = yield auth.signInWithEmailAndPassword(email, password);
       return authenticatedUser;
     } catch(e) {
       // console.log(e);
-      set(this, 'error', e);
+      this.error = e;
     }
-    set(this, 'authenticating', false);
-  }),
+    this.authenticating = false;
+  })
+  authenticateWithEmail;
 
-  authenticateWithProvider: task(function* (provider) {
-    set(this, 'authenticating', true);
-    const auth = yield get(this, 'firebaseApp').auth();
+  @task(function* (provider) {
+    this.authenticating = true;
+    const auth = yield this.firebaseApp.auth();
     try {
       const authProvider = new firebase.auth[`${capitalize(provider)}AuthProvider`]();
       let authenticatedUser = yield auth.signInWithPopup(authProvider);
       return authenticatedUser;
     } catch(e) {
       // console.log(e);
-      set(this, 'error', e);
+      this.error = e;
     }
-    set(this, 'authenticating', false);
-  }),
+    this.authenticating = false;
+  })
+  authenticateWithProvider;
 
-  signupWithEmail: task(function* (email, password) {
-    set(this, 'authenticating', true);
-    const auth = yield get(this, 'firebaseApp').auth();
+  @task(function* (email, password) {
+    this.authenticating = true;
+    const auth = yield this.firebaseApp.auth();
     try {
       let createdUser = yield auth.createUserWithEmailAndPassword(email, password);
       return createdUser;
     } catch(e) {
       // console.log(e);
-      set(this, 'error', e);
+      this.error = e;
     }
-    set(this, 'authenticating', false);
-  }),
+    this.authenticating = false;
+  })
+  signupWithEmail;
 
-  actions: {
-    submit() {
-      let { username, password } = getProperties(this, 'username', 'password');
-
-      return this.isLogin ?
-        this.authenticateWithEmail.perform(username, password) :
-        this.signupWithEmail.perform(username, password);
-    },
-    switchActionType() {
-      set(this, 'isLogin', !this.isLogin);
-      set(this, 'errors', null);
-    }
+  @action
+  submit() {
+    return this.isLogin ?
+      this.authenticateWithEmail.perform(this.username, this.password) :
+      this.signupWithEmail.perform(this.username, this.password);
   }
-});
+  @action
+  switchActionType() {
+    this.isLogin = !this.isLogin;
+    this.error = null;
+  }
+
+}
+

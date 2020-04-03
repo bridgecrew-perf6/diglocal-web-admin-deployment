@@ -2,7 +2,7 @@
   <div class="container flex h-10 justify-between">
     <p class="flex items-center mx-2">Manage locations for this business.</p>
     <CrunchyButton
-      @onClick={{fn this.addLocation}}
+      @onClick={{this.addLocation}}
       @aria-label="Add a new location"
       @testId="add-location"
       @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">

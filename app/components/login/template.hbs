@@ -1,6 +1,6 @@
 <CrunchyForm
   @model={{this}}
-  @onSubmit={{action "submit"}}
+  @onSubmit={{this.submit}}
   @formSchema={{this.loginSchema}}
   as |form|
 >
@@ -41,7 +41,7 @@
       {{if @isLogin "Log In" "Sign Up"}}
     </form.submit>
 
-    <CrunchyButton @class="crunchy-button--link" @onClick={{action "switchActionType"}}>
+    <CrunchyButton @class="crunchy-button--link" @onClick={{this.switchActionType}}>
       {{if this.isLogin "Sign Up" "Log In"}}
     </CrunchyButton>
   </div>

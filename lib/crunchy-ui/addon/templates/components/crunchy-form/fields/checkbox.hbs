@@ -1,6 +1,6 @@
-{{#component group
-  field=field
-  model=model
+{{#component this.group
+  field=this.field
+  model=this.model
   as |group|}}
 
   <div class="flex w-full">
@@ -12,9 +12,9 @@
         @disabled={{@disabled}}
         aria-label={{@aria-label}}
         @data-test-id={{concat @field "-checkbox"}}
-        @keyPress={{action group.validateField @field}}
-        @click={{action group.validateField @field}}
-        @touchStart={{action group.validateField @field}}
+        @keyPress={{fn group.validateField @field}}
+        @click={{fn group.validateField @field}}
+        @touchStart={{fn group.validateField @field}}
         @class={{concat "crunchy-form__checkbox "
           @controlClass
         }}

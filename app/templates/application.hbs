@@ -1,5 +1,5 @@
 {{#if (and this.session.isAuthenticated this.currentUser.canViewContent)}}
-  <Header @showSidebar={{showSidebar}} />
+  <Header @showSidebar={{this.showSidebar}} @toggleSidebar={{fn (mut this.showSidebar) (not this.showSidebar)}}  />
 {{/if}}
 
 {{outlet}}
@@ -8,7 +8,7 @@
   <CrunchyModal
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
-    @onClose={{action "invalidate"}}
+    @onClose={{this.invalidate}}
     class="mx-2"
     data-test-id="forbidden-alert"
     as |modal|>
@@ -22,7 +22,7 @@
       <p class="mb-4">Please try a different account or contact DigLocal if you think this is an error.</p>
     </modal.body>
     <modal.footer class="flex justify-end">
-      <CrunchyButton @class="crunchy-button--primary w-24" @onClick={{action "invalidate"}} @value="OK" @testId="confirm-forbidden-alert" />
+      <CrunchyButton @class="crunchy-button--primary w-24" @onClick={{this.invalidate}} @value="OK" @testId="confirm-forbidden-alert" />
     </modal.footer>
   </CrunchyModal>
 {{/if}}

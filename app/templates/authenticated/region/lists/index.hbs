@@ -8,7 +8,7 @@
         @type="search"
         @value={{this.searchString}} @key-up={{perform this.didSearch}}
         @focus-out={{perform this.didSearch}}
-        @escape-press={{action "clearSearch"}}
+        @escape-press={{this.clearSearch}}
         @placeholder="Search..."
         aria-label="Search lists" data-test-id="search"
         class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
@@ -26,7 +26,7 @@
                 {{#each this.listTypeOptions as |option|}}
                 <div class="p-1">
                   <input id={{option.value}} type="checkbox" name={{option.label}}
-                    checked={{contains option.value this.listTypes}} onchange={{action "addFilter" option.value "listTypes"}}>
+                    checked={{contains option.value this.listTypes}} onchange={{fn this.addFilter option.value "listTypes"}}>
                   <label for={{option.value}}>{{option.label}}</label>
                 </div>
                 {{/each}}
@@ -39,7 +39,7 @@
   </div>
   {{#if this.listTypes.length}}
     <div class="flex pt-2 px-2 items-center">
-      <button {{action "clearAllFilters"}} type="button" data-test-id="clear-filters"
+      <button {{on "click" this.clearAllFilters}} type="button" data-test-id="clear-filters"
         class="inline border border-gray-500 rounded text-xs mr-2 py-1 px-2 text-gray-600">
         Clear Filters
       </button>
@@ -47,7 +47,7 @@
         {{#each this.listTypes as |value|}}
           {{#let (find-by "value" value this.listTypeOptions) as |option|}}
             <CrunchyChip @tagName="li" @label={{option.label}} @allowClear={{true}}
-              @onClear={{action "removeFilter" option.value "listTypes"}} />
+              @onClear={{fn this.removeFilter option.value "listTypes"}} />
           {{/let}}
         {{/each}}
       </ul>
