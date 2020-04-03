@@ -16,7 +16,8 @@ export default class AuthenticatedRegionsUsersIndexController extends Controller
 
   sortMenuOptions = {
     user: 'Sort by username',
-    email: 'Sort by email'
+    email: 'Sort by email',
+    created_at: 'Sort by creation date'
   };
 
   roleOptions = [
@@ -27,7 +28,7 @@ export default class AuthenticatedRegionsUsersIndexController extends Controller
 
   @tracked search = '';
   @oneWay('search') searchString;
-  @tracked sort = '';
+  @tracked sort = '-created_at';
   @tracked roles = [];
 
   @(task(function* () {
