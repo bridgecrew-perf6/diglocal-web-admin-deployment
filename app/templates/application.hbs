@@ -1,5 +1,5 @@
 {{#if (and this.session.isAuthenticated this.currentUser.canViewContent)}}
-  <Header @showSidebar={{this.showSidebar}} />
+  <Header @showSidebar={{this.showSidebar}} @toggleSidebar={{fn (mut this.showSidebar) (not this.showSidebar)}}  />
 {{/if}}
 
 {{outlet}}

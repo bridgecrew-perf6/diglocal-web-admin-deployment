@@ -30,7 +30,7 @@
     type="button"
     title="Heading"
     class="mobiledoc-toolbar__button {{if this.editor.activeSectionTagNames.isH1 "active"}}"
-    {{fn this.editor.toggleSection "h1"}}>
+    {{on "click" (fn this.editor.toggleSection "h1")}}>
     <FaIcon @icon="heading" />
   </button>
 </li>
