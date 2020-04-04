@@ -4,8 +4,11 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
 import { task, all } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 export default class Form extends Component {
+  @service currentUser;
+
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
 

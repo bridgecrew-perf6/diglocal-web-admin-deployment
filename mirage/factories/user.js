@@ -23,7 +23,7 @@ export default Factory.extend({
   customerUser: trait({
     role: 'customer',
     publicName(i) {
-      return `Customer User ${i + 1}`
+      return `Member User ${i + 1}`
     },
     headline() { return `${faker.commerce.productAdjective()} Experiences, ${faker.commerce.productAdjective()} Food` },
     bio() { return `The best ${faker.commerce.product()} in town! Come visit us for a truly incredible local experience! Ask us about our seasonal deals and discounts.` }

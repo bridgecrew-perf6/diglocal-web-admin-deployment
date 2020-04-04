@@ -1,13 +1,6 @@
 <div class="treadmill-content__fixed-header text-sm">
-  <div class="container flex h-10 justify-between">
+  <div class="container flex h-10 justify-start">
     <p class="flex items-center mx-2">Manage locations for this business.</p>
-    <CrunchyButton
-      @onClick={{this.addLocation}}
-      @aria-label="Add a new location"
-      @testId="add-location"
-      @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
-      <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Location
-    </CrunchyButton>
   </div>
 </div>
 <div class="treadmill-content__table-body container pt-20">

@@ -7,8 +7,7 @@
       <Input
         @type="search"
         @value={{this.searchString}}
-        @key-up={{perform this.didSearch}}
-        @focus-out={{perform this.didSearch}}
+        @input={{perform this.didSearch}}
         @escape-press={{this.clearSearch}}
         @placeholder="Search..."
         aria-label="Search for business..."
