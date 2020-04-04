@@ -51,7 +51,6 @@ export default class AuthenticatedRegionBusinessesViewScoopsIndexRoute extends R
     if (isExiting && transition.targetName !== 'error') {
       controller.search = '';
       controller.searchString = '';
-      controller.sort = '-default';
     }
   }
 }
