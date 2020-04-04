@@ -12,7 +12,7 @@ export default class AuthenticatedRegionScoopsIndexController extends Controller
   @service router;
 
   sortMenuOptions = {
-    created_at: 'Sort by creation date',
+    created_at: 'Sort by date created',
     paid_rank: 'Sort by paid rank',
     event_date: 'Sort by event date',
     default: 'Sort by default'

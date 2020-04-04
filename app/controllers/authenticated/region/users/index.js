@@ -17,18 +17,19 @@ export default class AuthenticatedRegionsUsersIndexController extends Controller
   sortMenuOptions = {
     user: 'Sort by username',
     email: 'Sort by email',
-    created_at: 'Sort by creation date'
+    created_at: 'Sort by date created',
+    last_login: 'Sort by last login date'
   };
 
   roleOptions = [
     { value: 'admin', label: 'Admin'},
-    { value: 'customer', label: 'Customer'},
+    { value: 'customer', label: 'Member'},
     { value: 'user', label: 'User'},
   ];
 
   @tracked search = '';
   @oneWay('search') searchString;
-  @tracked sort = '-created_at';
+  @tracked sort = '-last_login';
   @tracked roles = [];
 
   @(task(function* () {

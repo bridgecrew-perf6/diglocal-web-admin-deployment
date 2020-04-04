@@ -1,4 +1,5 @@
 import { helper } from '@ember/component/helper';
+import { capitalize } from '@ember/string';
 
 export function roleDisplayName([ role ]) {
   let display;
@@ -12,8 +13,11 @@ export function roleDisplayName([ role ]) {
     case 'temporary':
     display = 'Non-Paying (Temporary)';
     break;
+    case 'customer':
+    display = 'Member';
+    break;
     default:
-    display = role;
+    display = capitalize(role);
   }
   return display;
 }

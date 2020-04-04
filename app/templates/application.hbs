@@ -19,7 +19,7 @@
       <p class="mb-6 font-semibold">
         The account associated with <span class="text-brand-primary" data-test-id="forbidden-user-email">{{this.currentUser.user.email}}</span> does not have admin privileges.
       </p>
-      <p class="mb-4">Please try a different account or contact DigLocal if you think this is an error.</p>
+      <p class="mb-4">Please try a different account or contact Dig Local if you think this is an error.</p>
     </modal.body>
     <modal.footer class="flex justify-end">
       <CrunchyButton @class="crunchy-button--primary w-24" @onClick={{this.invalidate}} @value="OK" @testId="confirm-forbidden-alert" />
