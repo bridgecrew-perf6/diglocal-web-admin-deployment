@@ -21,7 +21,7 @@ export default class AuthenticatedRegionBusinessesIndexController extends Contro
   sortMenuOptions = {
     likes_count: 'Sort by likes',
     name: 'Sort by name',
-    created_at: 'Sort by created at'
+    created_at: 'Sort by date created'
   };
 
   roleOptions = [

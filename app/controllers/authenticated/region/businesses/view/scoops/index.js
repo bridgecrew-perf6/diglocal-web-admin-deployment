@@ -16,7 +16,7 @@ export default class AuthenticatedRegionBusinessesViewScoopsIndexController exte
   ];
 
   sortMenuOptions = {
-    created_at: 'Sort by creation date',
+    created_at: 'Sort by date created',
     event_date: 'Sort by event date'
   };
 

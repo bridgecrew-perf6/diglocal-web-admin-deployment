@@ -50,7 +50,6 @@ export default class AuthenticatedManageBusinessScoopsIndexRoute extends Route {
     if (isExiting && transition.targetName !== 'error') {
       controller.search = '';
       controller.searchString = '';
-      controller.sort = '-event_date';
     }
   }
 }

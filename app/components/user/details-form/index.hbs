@@ -1,6 +1,27 @@
 <div class="border rounded p-4 mb-4 bg-white">
-  <div class="flex mb-3 justify-start">
-    <h1 class="font-bold text-2xl text-brand-primary">User Details</h1>
+  <div class="flex mb-3 justify-start items-center">
+    <div
+      class="w-8 h-8 rounded-full mr-2 bg-cover bg-center bg-no-repeat text-center overflow-hidden bg-gray-200 border border-gray-200"
+      style={{background-image @model.profileImages.firstObject.sizes.mobile}}>
+      {{#unless @model.profileImages.length}}
+      <div class="flex w-full h-full items-center justify-center">
+        <FaIcon @icon="user" @size="lg" class="text-gray-400 mt-2 text-center" />
+      </div>
+      {{/unless}}
+    </div>
+    <h1 class="font-bold text-2xl text-brand-primary">{{@model.email}}</h1>
+    <ul>
+      <CrunchyChip
+        @tagName="li"
+        @label={{role-display-name @model.role}}
+        @title={{concat (role-display-name @model.role) " Role"}}
+      />
+      <CrunchyChip
+        @tagName="li"
+        @label={{@model.profileStatus}}
+        @title={{concat "Profile is " @model.profileStatus}}
+      />
+    </ul>
   </div>
 
   <CrunchyForm
