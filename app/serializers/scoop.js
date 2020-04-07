@@ -9,10 +9,10 @@ export default class ScoopSerializer extends ApplicationSerializer {
     ];
     if (toSkip.includes(key)) { return; }
 
-    // let isRecurring = snapshot.record && snapshot.record.isRecurring;
-    // if (isRecurring && key === 'eventDate') {
-    //   return;
-    // }
+    let isRecurring = snapshot.record && snapshot.record.isRecurring;
+    if (isRecurring && key === 'eventDate') {
+      return;
+    }
 
     return super.serializeAttribute(snapshot, json, key, attributes);
   }
