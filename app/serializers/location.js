@@ -2,11 +2,13 @@ import ApplicationSerializer from 'diglocal-manage/serializers/application';
 
 export default class LocationSerializer extends ApplicationSerializer {
   deliveryAttrs = [
-    'grubhub',
-    'postmates',
     'kickbackAvl',
+    'avlRide',
+    'grubhub',
     'takeoutCentral',
-    'doordash'
+    'doordash',
+    'uberEats',
+    'postmates'
   ];
 
   serialize() {
