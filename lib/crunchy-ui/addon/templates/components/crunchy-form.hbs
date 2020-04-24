@@ -33,10 +33,11 @@
       disabled=this.isReadonly
       form=this)
     submit=(component "crunchy-form/submit"
-      task=this.submitTask)
+      task=this.submitTask
+      disabled=this.disableSubmit)
     cancel=(component "crunchy-button"
-      type="button"
       class="crunchy-button--cancel"
+      disabled=this.disableSubmit
       task=this.cancelTask)
     errors=(component "crunchy-form/errors"
       model=this.model

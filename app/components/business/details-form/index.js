@@ -9,6 +9,7 @@ export default class DetailsForm extends Component {
   @service regions;
   @service router;
   @service currentUser;
+  @service notifications;
   @tracked showDestroyModal = false;
   @tracked showUploadModal = false;
   @tracked categoryOptions = [];
@@ -35,7 +36,7 @@ export default class DetailsForm extends Component {
 
   @task(function* () {
     let regionId = this.regions.activeRegion.id;
-    
+
     let categories = yield this.store.query('category', { filter: { region: regionId }});
     this.categoryOptions = categories;
   })
@@ -52,6 +53,10 @@ export default class DetailsForm extends Component {
     if (this.args.afterSave) {
       return this.args.afterSave(this.args.model);
     }
+    this.notifications.success('Saved successfully!', {
+      autoClear: true,
+      clearDuration: 1200
+    });
     return this.args.model;
   })
   saveTask;
@@ -72,6 +77,12 @@ export default class DetailsForm extends Component {
     this.showUploadModal = false;
   })
   onAllFilesUploadComplete;
+
+  @action
+  didChangeCategories(updated) {
+    this.args.model.categories = updated;
+    this.args.model.updatedAt = Date.now();
+  }
 
   @action
   cancelUpload() {

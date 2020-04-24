@@ -1,5 +1,6 @@
 {{#if (and this.session.isAuthenticated this.currentUser.canViewContent)}}
   <main role="main" class="pt-24 w-full bg-brand-gray-light">
+    <NotificationContainer @position="bottom-left" />
     {{outlet}}
   </main>
 {{/if}}
