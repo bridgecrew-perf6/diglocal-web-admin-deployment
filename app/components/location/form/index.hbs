@@ -34,7 +34,7 @@
         @label="Area Name"
         @aria-label="Area Name"
       />
-      <p class="text-gray-600 text-xs -mt-3 mb-2">ex. West Asheville, South Slope, River Arts District</p> 
+      <p class="text-gray-600 text-xs -mt-3 mb-2">ex. West Asheville, South Slope, River Arts District</p>
     {{/if}}
 
     <form.text-field
@@ -116,12 +116,14 @@
     <Location::OperatingHoursForm @location={{@model}} @form={{form}} />
 
     <Ui::CollapsibleSection @title="Delivery Info" @open={{false}} @class="mb-8 mt-4">
-      <p class="text-gray-600 text-sm mb-3">Links to order online delivery for this location:</p> 
-      <form.text-field @field="grubhubUrl" @label="Grubhub" @aria-label="Url for GrubHub profile" />
-      <form.text-field @field="postmatesUrl" @label="Postmates" @aria-label="Url for Postmates profile" />
+      <p class="text-gray-600 text-sm mb-3">Links to order online delivery for this location:</p>
       <form.text-field @field="kickbackAvlUrl" @label="Kickback AVL" @aria-label="Url for Kickback AVL profile" />
+      <form.text-field @field="avlRideUrl" @label="AVL Ride" @aria-label="Url for AVL Ride profile" />
+      <form.text-field @field="grubhubUrl" @label="Grubhub" @aria-label="Url for GrubHub profile" />
       <form.text-field @field="takeoutCentralUrl" @label="Takeout Central" @aria-label="Url for Takeout Central profile" />
       <form.text-field @field="doordashUrl" @label="DoorDash" @aria-label="Url for DoorDash profile" />
+      <form.text-field @field="uberEatsUrl" @label="Uber Eats" @aria-label="Url for Uber Eats profile" />
+      <form.text-field @field="postmatesUrl" @label="Postmates" @aria-label="Url for Postmates profile" />
     </Ui::CollapsibleSection>
 
     <form.errors @errorHeading="Unable to save due to the following errors:" />
