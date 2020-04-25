@@ -23,10 +23,23 @@ as |form|>
 
   <form.errors @errorHeading="Unable to save due to the following errors:" />
 
-  <div class="flex justify-end mt-8">
+  <div class="flex mt-8 {{if this.currentUser.isAdmin "justify-between" "justify-end"}}">
+    {{#if this.currentUser.isAdmin}}
+      <CrunchyButton @onClick={{fn (mut this.showDestroyModal) true}} @value="Delete List" @class="crunchy-button--outline" />
+    {{/if}}
     <div class="flex flex-wrap">
       <form.submit @value="Save" @class="mr-2 md:w-32" />
       <form.cancel @value="Cancel" />
     </div>
   </div>
 </CrunchyForm>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{this.delete}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.name}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
