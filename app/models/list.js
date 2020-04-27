@@ -10,6 +10,7 @@ export default class List extends Trackable {
   @attr() followingCount;
   @attr() likesCount;
   @attr('boolean') pinned;
+  @attr() heroImage;
 
   /*************************
   **  Relationships       **
