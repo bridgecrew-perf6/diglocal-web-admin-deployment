@@ -44,6 +44,8 @@ as |form|>
   </div>
 </CrunchyForm>
 
+<ConfirmUnsaved @model={{@model}} />
+
 <CrunchyConfirm
   @show={{this.showDestroyModal}}
   @confirmText="Delete"

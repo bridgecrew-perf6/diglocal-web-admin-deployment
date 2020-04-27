@@ -1,0 +1,11 @@
+<div {{did-insert this.addTransitionHandler}}>
+  <CrunchyConfirm
+    @show={{this.showUnsavedAlert}}
+    @confirmText="Leave page"
+    @cancelText="Stay on page"
+    @onConfirm={{this.leave}}
+    @onCancel={{this.stay}}
+  >
+    <p class="mb-4">You have unsaved changes. Are you sure you want to leave this page?</p>
+  </CrunchyConfirm>
+</div>

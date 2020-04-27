@@ -39,7 +39,7 @@
 }
 
 .crunchy-modal {
-  @apply py-8;
+  @apply py-8 pt-12;
   @apply rounded bg-brand-gray-light border-brand-gray relative max-w-xl text-xl;
 
   &__close {
