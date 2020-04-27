@@ -53,10 +53,7 @@ export default class DetailsForm extends Component {
     if (this.args.afterSave) {
       return this.args.afterSave(this.args.model);
     }
-    this.notifications.success('Saved successfully!', {
-      autoClear: true,
-      clearDuration: 1200
-    });
+    this.notifications.success('Saved successfully!');
     return this.args.model;
   })
   saveTask;

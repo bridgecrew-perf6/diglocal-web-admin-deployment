@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 
 export default class Form extends Component {
   @service currentUser;
+  @service notifications;
 
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
@@ -41,6 +42,7 @@ export default class Form extends Component {
     let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
     yield all(operatingHours.invoke('save'));
     this.isEditing = false;
+    this.notifications.success('Saved successfully!');
     return this.args.model;
   })
   saveTask;
