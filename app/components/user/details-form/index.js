@@ -1,9 +1,12 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class DetailsForm extends Component {
+  @service notifications;
+
   @tracked showDestroyModal = false;
 
   willDestroy() {
@@ -18,7 +21,9 @@ export default class DetailsForm extends Component {
   }
 
   @task(function*() {
-    return yield this.args.model.save();
+    let model = yield this.args.model.save();
+    this.notifications.success('Saved successfully!');
+    return model;
   })
   saveTask;
 
