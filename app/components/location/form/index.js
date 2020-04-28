@@ -46,6 +46,9 @@ export default class Form extends Component {
     yield all(operatingHours.invoke('save'));
     this.isEditing = false;
     this.notifications.success('Saved successfully!');
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['operatingHours', 'deliveryOptions']);
+    }
     return this.args.model;
   })
   saveTask;

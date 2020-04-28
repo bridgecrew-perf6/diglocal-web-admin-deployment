@@ -35,6 +35,9 @@ export default class DetailsForm extends Component {
       return this.args.afterSave(list);
     }
     this.notifications.success('Saved successfully!');
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['items']);
+    }
     return list;
   })
   saveTask;
