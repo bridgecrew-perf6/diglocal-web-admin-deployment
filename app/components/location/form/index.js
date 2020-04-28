@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 
 export default class Form extends Component {
   @service currentUser;
+  @service notifications;
 
   @tracked isEditing = false;
   @tracked showDestroyModal = false;
@@ -21,6 +22,9 @@ export default class Form extends Component {
     }
     if (this.args.model.isNew) {
       this.isEditing = true;
+    }
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['operatingHours', 'deliveryOptions']);
     }
   }
 
@@ -41,6 +45,10 @@ export default class Form extends Component {
     let operatingHours = (this.args.model.hasMany('operatingHours').value() || []).toArray();
     yield all(operatingHours.invoke('save'));
     this.isEditing = false;
+    this.notifications.success('Saved successfully!');
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['operatingHours', 'deliveryOptions']);
+    }
     return this.args.model;
   })
   saveTask;

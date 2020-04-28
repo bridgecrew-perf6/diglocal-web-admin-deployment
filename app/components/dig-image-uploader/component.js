@@ -13,6 +13,7 @@ const UPLOAD_DEBOUNCE = config.environment !== 'test' ? 500 : 0;
 export default Component.extend({
   session: service(),
   store: service(),
+  notifications: service(),
   totalFiles: 0,
   totalFilesUploaded: 0,
   uploadTasks: A(),
@@ -97,6 +98,7 @@ export default Component.extend({
       this.incrementProperty('totalFilesUploaded');
       this.onUploadComplete(taskInstance.value);
       if (this.uploadImageTask.numQueued === 0) {
+        this.notifications.success('Images uploaded successfully!');
         this.onAllFilesUploadComplete();
       }
     }

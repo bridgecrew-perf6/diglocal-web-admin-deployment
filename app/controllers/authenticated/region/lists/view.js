@@ -5,6 +5,6 @@ export default class AuthenticatedRegionListsViewController extends Controller {
   @action
   rollbackModel() {
     this.model.rollbackAttributes();
-    this.model.reload();
+    this.model.rollbackSnapshotAttrs();
   }
 }

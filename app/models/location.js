@@ -1,7 +1,8 @@
-import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { attr, belongsTo, hasMany } from '@ember-data/model';
+import Snapshotable from './snapshotable';
 import * as yup from 'yup';
 
-export default class Location extends Model {
+export default class Location extends Snapshotable {
   @attr() address;
   @attr() city;
   @attr() state;

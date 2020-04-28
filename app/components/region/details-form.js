@@ -3,10 +3,12 @@ import { not } from '@ember/object/computed';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import TZ_MAPPING from 'diglocal-manage/data/time-zone-mapping';
 
 class RegionDetailsForm extends Component {
+  @service notifications;
   @tracked isEditing = false;
   @tracked canToggleEdit = true;
   @tracked showDestroyModal = false;
@@ -39,6 +41,7 @@ class RegionDetailsForm extends Component {
     if (this.args.afterSave) {
       return this.args.afterSave(this.args.model);
     }
+    this.notifications.success('Saved successfully!');
     return this.args.model;
   })
   saveTask;

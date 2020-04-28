@@ -3,12 +3,13 @@
   class={{concat
     "crunchy-button "
     (concat "crunchy-button--" @type " ")
+    (if (or @disabled this.isRunning) "crunchy-button--disabled ")
     @class
   }}
   type={{or @type "button"}}
   aria-label={{@aria-label}}
   data-test-id={{@testId}}
-  disabled={{this.disabled}}>
+  disabled={{or @disabled this.isRunning}}>
   {{#if (has-block)}}
     {{yield (hash isRunning=this.isRunning)}}
   {{else}}

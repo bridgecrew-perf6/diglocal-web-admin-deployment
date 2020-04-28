@@ -9,7 +9,15 @@ export default class DetailsForm extends Component {
   @service store;
   @service router;
   @service currentUser;
+  @service notifications;
   @tracked showDestroyModal;
+
+  constructor() {
+    super(...arguments);
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['items']);
+    }
+  }
 
   rollbackModel() {
     if (this.args.rollbackModel) {
@@ -22,11 +30,15 @@ export default class DetailsForm extends Component {
   }
 
   @task(function* () {
-    let created = yield this.args.model.save();
+    let list= yield this.args.model.save();
     if (this.args.afterSave) {
-      return this.args.afterSave(created);
+      return this.args.afterSave(list);
     }
-    return created;
+    this.notifications.success('Saved successfully!');
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['items']);
+    }
+    return list;
   })
   saveTask;
 

@@ -1,0 +1,7 @@
+.ember-cli-notifications-notification__container {
+  .c-notification__icon {
+    & svg {
+      display: inline-block;
+    }
+  }
+}

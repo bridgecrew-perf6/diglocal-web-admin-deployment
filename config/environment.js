@@ -31,6 +31,11 @@ module.exports = function(environment) {
     includeTimezone: 'all'
   };
 
+  ENV['ember-cli-notifications'] = {
+    autoClear: true,
+    clearDuration: 2000
+  };
+
   ENV['firebase'] = {
     apiKey: "AIzaSyC9m3rFmih3ZR1S6FtE19JpCgdMxK6hDew",
     authDomain: "dig-this.firebaseapp.com",
