@@ -1,8 +1,8 @@
 import { attr, hasMany, belongsTo } from '@ember-data/model';
-import Trackable from './trackable';
+import Snapshotable from './snapshotable';
 import * as yup from 'yup';
 
-export default class List extends Trackable {
+export default class List extends Snapshotable {
   @attr() name;
   @attr() description;
   @attr() items;

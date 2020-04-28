@@ -23,6 +23,9 @@ export default class Form extends Component {
     if (this.args.model.isNew) {
       this.isEditing = true;
     }
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['operatingHours']);
+    }
   }
 
   willDestroy() {

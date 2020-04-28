@@ -12,6 +12,13 @@ export default class DetailsForm extends Component {
   @service notifications;
   @tracked showDestroyModal;
 
+  constructor() {
+    super(...arguments);
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['items']);
+    }
+  }
+
   rollbackModel() {
     if (this.args.rollbackModel) {
       return this.args.rollbackModel();

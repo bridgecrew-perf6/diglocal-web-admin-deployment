@@ -4,6 +4,24 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { isPresent }  from '@ember/utils';
 
+/*
+* Adds a transition handler upon insertion that will
+* alert if a transition is attempted and unsaved changes
+* exist on either a single model or on any of an array of
+* models.
+*
+* <CrunchyConfirmUnsaved @model={{this.business}}
+*   or
+* <CrunchyConfirmUnsaved @models={{this.businesses}}
+*
+* IMPORTANT:
+* If using this component to track changes using a Snapshotable model,
+* make sure to manage taking the snapshot on the model outside of
+* this component. This component assumes if a snapshot exists, it
+* contains the appropriate entries that we want to track.
+* If snapshot is not initialized, no changes will be reported.
+*
+*/
 export default class ConfirmUnsavedComponent extends Component {
   @service router;
 
@@ -14,6 +32,12 @@ export default class ConfirmUnsavedComponent extends Component {
   checkDirty(model) {
     if (model.hasDirtyAttributes) {
       return true;
+    }
+    /*
+    * This applies to `Snapshotable` class only.
+    */  
+    if (typeof model.hasChangedSnapshot === 'function') {
+      return model.hasChangedSnapshot();
     }
     return false;
   }
