@@ -30,6 +30,8 @@ export default class ConfirmUnsavedComponent extends Component {
   previousTransition = null;
 
   checkDirty(model) {
+    if (!model) { return false; }
+
     if (model.hasDirtyAttributes) {
       return true;
     }
@@ -43,6 +45,8 @@ export default class ConfirmUnsavedComponent extends Component {
   }
 
   checkAnyDirty(models) {
+    if (!models) { return false; }
+
     let dirtyModels = models.toArray().filter(this.checkDirty);
     return dirtyModels.length > 0;
   }
