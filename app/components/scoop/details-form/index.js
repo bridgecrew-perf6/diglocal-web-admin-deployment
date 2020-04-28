@@ -14,6 +14,7 @@ export default class DetailsForm extends Component {
   @service store;
   @service currentUser;
   @service router;
+  @service notifications;
 
   @tracked showDestroyModal = false;
   @tracked showEventFields = true;
@@ -55,12 +56,13 @@ export default class DetailsForm extends Component {
   onUploadImageComplete;
 
   @task(function*() {
-    let created = yield this.args.model.save();
+    let model = yield this.args.model.save();
     this.isEditing = false;
     if (this.args.afterSave) {
-      return this.args.afterSave(created);
+      return this.args.afterSave(model);
     }
-    return created;
+    this.notifications.success('Saved successfully!');
+    return model;
   })
   saveTask;
 

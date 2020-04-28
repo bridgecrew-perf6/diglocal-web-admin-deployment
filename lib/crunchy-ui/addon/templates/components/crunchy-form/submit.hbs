@@ -1,7 +1,8 @@
 <CrunchyButton
   @type="submit"
-  @class={{concat "crunchy-button--submit " @class}}
+  @class={{@class}}
   @testId={{@testId}}
+  @disabled={{@disabled}}
   @task={{@task}} as |button|>
   {{#if button.isRunning}}
     <FaIcon @icon="spinner" @pulse="true" />

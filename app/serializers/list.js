@@ -6,4 +6,13 @@ export default class ListSerializer extends ApplicationSerializer {
     
     return super.serializeBelongsTo(snapshot, json, relationship);
   }
+
+
+  serializeAttribute(snapshot, json, key, attributes) {
+    if (key === 'heroImage') {
+      return;
+    }
+
+    return super.serializeAttribute(snapshot, json, key, attributes);
+  }
 }

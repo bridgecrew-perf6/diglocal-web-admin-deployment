@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service';
 
 class DetailsForm extends Component {
   @service router;
+  @service notifications;
 
   @tracked showDestroyModal = false;
 
@@ -25,6 +26,7 @@ class DetailsForm extends Component {
     if (this.args.afterSave) {
       return this.args.afterSave(this.args.model);
     }
+    this.notifications.success('Saved successfully!');
     return this.args.model;
   })
   saveTask;

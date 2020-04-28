@@ -6,20 +6,30 @@
   @debounceSubmit={{true}}
 as |form|>
 
-  <form.text-field @field="name" @label="Name" @aria-label="List Name" />
+  <div class="flex flex-col md:flex-row mb-4">
+    <div class="flex flex-col items-center">
+      <div style={{background-image @model.heroImage.medium}} class="m-2 h-56 w-full md:w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
+      </div>
+      <div class="w-full md:w-56 py-8 px-4">
+        <p class="font-semibold mb-4">{{@model.likesCount}} likes</p>
+        <form.checkbox @field="pinned" @label="Pinned?" />
+        <p class="text-gray-600 text-sm -mt-3 ml-2">Pinned lists will always appear at the top of list results.</p>
+      </div>
+    </div>
+    <div class="w-full md:pl-6">
+      <h1 class="dig-section-title mb-4">List Details</h1>
+      <form.text-field @field="name" @label="Name" @aria-label="List Name" @controlClass="font-bold" />
+      <form.text-area @field="description" @label="Description" @rows="3" />
 
-  <form.text-area @field="description" @label="Description" @rows="3" />
-
-  <form.checkbox @field="pinned" @label="Pinned?" />
-  <p class="text-gray-600 text-sm -mt-3 ml-2">Pinned lists will always appear at the top of list results.</p>
-
-  <Ui::CollapsibleSection @title="List Items ({{@model.items.length}})" @open={{true}}>
-    <ul>
-      {{#each @model.items as |item|}}
-        <List::DetailsForm::Item @model={{item}} @itemType={{@model.itemType}} @form={{form}} />
-      {{/each}}
-    </ul>
-  </Ui::CollapsibleSection>
+    <Ui::CollapsibleSection @title="List Items ({{@model.items.length}})" @open={{true}}>
+      <ul>
+        {{#each @model.items as |item|}}
+          <List::DetailsForm::Item @model={{item}} @itemType={{@model.itemType}} @form={{form}} />
+        {{/each}}
+      </ul>
+    </Ui::CollapsibleSection>
+    </div>
+  </div>
 
   <form.errors @errorHeading="Unable to save due to the following errors:" />
 
@@ -33,6 +43,8 @@ as |form|>
     </div>
   </div>
 </CrunchyForm>
+
+<CrunchyConfirmUnsaved @model={{@model}} />
 
 <CrunchyConfirm
   @show={{this.showDestroyModal}}

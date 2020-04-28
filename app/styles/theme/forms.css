@@ -104,7 +104,8 @@ button:disabled, input:disabled, textarea:disabled {
     }
 
     &:disabled {
-      @apply bg-brand-primary border-brand-primary opacity-75;
+      background-color: rgba(1, 115, 117, 0.6);
+      @apply border-transparent;
     }
   }
 
@@ -116,7 +117,9 @@ button:disabled, input:disabled, textarea:disabled {
     }
 
     &:disabled {
-      @apply bg-transparent text-brand-primary border-brand-primary;
+      @apply bg-transparent;
+      color: rgba(1, 115, 117, 0.6);
+      border-color: rgba(1, 115, 117, 0.6);
     }
   }
 
