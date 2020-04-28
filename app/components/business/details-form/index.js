@@ -23,6 +23,9 @@ export default class DetailsForm extends Component {
   constructor() {
     super(...arguments);
     this.loadCategories.perform();
+    if (typeof this.args.model.takeSnapshot === 'function') {
+      this.args.model.takeSnapshot(['categories']);
+    }
   }
 
   willDestroy() {
@@ -78,7 +81,6 @@ export default class DetailsForm extends Component {
   @action
   didChangeCategories(updated) {
     this.args.model.categories = updated;
-    this.args.model.updatedAt = Date.now();
   }
 
   @action

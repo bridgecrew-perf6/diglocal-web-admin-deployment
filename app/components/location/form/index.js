@@ -24,7 +24,7 @@ export default class Form extends Component {
       this.isEditing = true;
     }
     if (typeof this.args.model.takeSnapshot === 'function') {
-      this.args.model.takeSnapshot(['operatingHours']);
+      this.args.model.takeSnapshot(['operatingHours', 'deliveryOptions']);
     }
   }
 

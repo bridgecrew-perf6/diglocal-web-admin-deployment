@@ -17,7 +17,7 @@ import Trackable from './trackable';
 *
 * Rollback the snapshotted attributes to their previous snapshot values:
 *
-*  `blogpost.rollbackToSnapshot()`
+*  `blogpost.rollbackSnapshotAttrs()`
 */
 export default class Snapshotable extends Trackable {
   _snapshot = {};
