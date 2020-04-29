@@ -7,7 +7,9 @@ export default class AuthenticatedRegionBusinessesViewIndexController extends Co
 
   @action
   rollbackModel() {
+    if (!this.model.isDeleted) {
     this.model.rollbackAttributes();
     this.model.hasMany('categories').reload();
+    }
   }
 }
