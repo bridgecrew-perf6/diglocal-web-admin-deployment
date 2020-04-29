@@ -35,7 +35,7 @@ export default Component.extend({
   onUploadComplete() {},
   onAllFilesUploadComplete() {},
 
-  uploadUrl: computed('model', function() {
+  uploadUrl: computed('modelType', function() {
     let adapter = this.store.adapterFor(this.modelType);
     let url = adapter.buildURL(this.modelType, this.model.id);
     return url;
