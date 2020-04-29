@@ -3,10 +3,12 @@
     <div class="w-full sm:w-auto flex-no-shrink">
       {{#let (peek-record-from-id @model.id @itemType) as |record|}}
         <p class="font-bold text-lg mb-2">{{record.name}}</p>
-        <div
-          class="rounded h-56 sm:h-32 w-full sm:w-48 bg-gray-200 mb-2 bg-cover"
-          style={{background-image (or record.businessImages.firstObject.sizes.mobile record.logo.url)}}>
-        </div>
+        {{#let (sort-by "position" record.businessImages) as |images|}}
+          <div
+            class="rounded h-56 sm:h-32 w-full sm:w-48 bg-gray-200 mb-2 bg-cover"
+            style={{background-image (or images.firstObject.sizes.mobile record.logo.url)}}>
+          </div>
+        {{/let}}
       {{/let}}
     </div>
     <div class="w-full sm:ml-4 mt-4 sm:mt-8">
