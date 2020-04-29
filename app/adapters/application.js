@@ -1,15 +1,15 @@
-import DS from 'ember-data';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isArray } from '@ember/array';
 import config from 'diglocal-manage/config/environment';
 
-export default DS.JSONAPIAdapter.extend({
-  host: config.apiHost,
+export default class ApplicationAdapter extends JSONAPIAdapter {
+  host = config.apiHost;
 
-  namespace: 'api/v3',
+  namespace = 'api/v3';
 
-  session: service(),
+  @service() session;
 
   get headers() {
     const headers = {};
@@ -20,10 +20,10 @@ export default DS.JSONAPIAdapter.extend({
       }
     }
     return headers;
-  },
+  }
 
   handleResponse(status, headers, payload) {
-    let responseObject = this._super(...arguments);
+    let responseObject = super.handleResponse(...arguments);
 
     if (status === 403) {
       /*
@@ -53,4 +53,5 @@ export default DS.JSONAPIAdapter.extend({
 
     return responseObject;
   }
-});
+}
+
