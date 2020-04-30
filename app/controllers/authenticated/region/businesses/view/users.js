@@ -28,6 +28,7 @@ export default class AuthenticatedRegionBusinessesViewUsersController extends Co
   @task(function* () {
     this.business.get('users').addObject(this.userToAdd);
     yield this.business.save();
+    yield this.business.hasMany('users').reload();
     this.showAddUserModal = false;
     this.userToAdd = null;
   })
@@ -36,6 +37,7 @@ export default class AuthenticatedRegionBusinessesViewUsersController extends Co
   @task(function* (user) {
     this.business.get('users').removeObject(user);
     yield this.business.save();
+    yield this.business.hasMany('users').reload();
   })
   removeTask;
 
