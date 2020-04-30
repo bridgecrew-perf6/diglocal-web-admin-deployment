@@ -10,6 +10,12 @@
   &--accent-2 {
     @apply bg-brand-secondary-accent text-white;
   }
+  &--admin {
+    @apply bg-purple-600 text-white;
+  }
+  &--member {
+    @apply bg-blue-700 text-white;
+  }
   &--error {
     @apply bg-brand-error text-white;
   }

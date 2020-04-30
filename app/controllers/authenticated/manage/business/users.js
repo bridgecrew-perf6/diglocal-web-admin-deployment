@@ -26,6 +26,7 @@ export default class AuthenticatedManageBusinessUsersController extends Controll
   @task(function* () {
     this.business.get('users').addObject(this.userToAdd);
     yield this.business.save();
+    yield this.business.hasMany('users').reload();
     this.showAddUserModal = false;
     this.userToAdd = null;
   })
@@ -34,6 +35,8 @@ export default class AuthenticatedManageBusinessUsersController extends Controll
   @task(function* (user) {
     this.business.get('users').removeObject(user);
     yield this.business.save();
+    yield user.save();
+    yield this.business.hasMany('users').reload();
   })
   removeTask;
 
