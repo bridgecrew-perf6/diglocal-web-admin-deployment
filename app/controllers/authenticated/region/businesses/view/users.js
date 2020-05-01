@@ -37,6 +37,7 @@ export default class AuthenticatedRegionBusinessesViewUsersController extends Co
   @task(function* (user) {
     this.business.get('users').removeObject(user);
     yield this.business.save();
+    yield user.save();
     yield this.business.hasMany('users').reload();
   })
   removeTask;
