@@ -1,0 +1,21 @@
+<div data-test-id="newsletter-listing" class="rounded border bg-white p-4">
+  <div class="flex justify-between">
+    <div class="flex items-center">
+      <p class="font-bold text-base">{{@model.name}}</p>
+      <CrunchyChip class="ml-2">
+        {{@model.email}}
+      </CrunchyChip>
+      <CrunchyChip class="ml-2">
+        {{moment-format @model.createdAt "MMM Do YYYY"}}
+      </CrunchyChip>
+    </div>
+    <CrunchyButton
+      @onClick={{this.remove}}
+      @aria-label="Remove subscriber"
+      @class="crunchy-button--outline crunchy-button--text-sm"
+      @testId="remove-subscriber"
+    >
+      <FaIcon @icon="trash" @size="xs" class="mr-1" />
+    </CrunchyButton>
+  </div>
+</div>
