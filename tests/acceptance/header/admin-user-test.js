@@ -11,6 +11,7 @@ const expectedLinks = [
   'authenticated.region.scoops',
   'authenticated.region.lists',
   'authenticated.region.users',
+  'authenticated.region.newsletters',
   'authenticated.region.site-settings',
 ];
 
@@ -30,7 +31,7 @@ module('Acceptance | Header | Admin User', function(hooks) {
     await visit('/');
 
     assert.equal(currentURL(), `/region/${this.activeRegion.id}/businesses`);
-    assert.dom(testId('nav-link')).exists({ count: 6 });
+    assert.dom(testId('nav-link')).exists({ count: 7 });
 
     this.expectedLinks.forEach((route) => {
       assert.dom(testLinkTo(route)).exists();
