@@ -23,14 +23,14 @@
   <EllaTreadmill
     @content={{@model}}
     @minColumnWidth="100%"
-    @row="70" as |item|
+    @row="100" as |item|
   >
     {{#if item.is_loading}}
       <div class="flex items-center justify-center">
         <FaIcon @icon="spinner" @pulse={{true}} class="text-gray-500" />
       </div>
     {{else}}
-      <Newsletter::ListRow @model={{item}} @isLinkable={{true}} />
+      <Newsletter::ListRow @model={{item}} @removeAction={{this.removeSubscriber}} />
     {{/if}}
   </EllaTreadmill>
 
