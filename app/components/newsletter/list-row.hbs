@@ -1,0 +1,35 @@
+<div data-test-id="newsletter-listing" class="rounded border bg-white p-4">
+  <div class="flex justify-between">
+    <div>
+      <p class="font-bold text-base mb-1">{{or @model.email "Unknown email"}}</p>
+      <dl class="text-xs">
+        <div class="flex mb-1">
+          <dt class="pr-1 text-gray-600">Name:</dt>
+          <dd class="">{{@model.fullName}}</dd>
+        </div>
+        <div class="flex">
+          <dt class="pr-1 text-gray-600">Subscriber since:</dt>
+          <dd>{{moment-calendar @model.createdAt}}</dd>
+        </div>
+      </dl>
+    </div>
+    <CrunchyButton
+      @onClick={{fn (mut this.showDestroyModal) true}}
+      @aria-label="Remove subscriber"
+      @class="crunchy-button--icon self-start"
+      @testId="remove-subscriber"
+    >
+      <FaIcon @icon="trash" />
+    </CrunchyButton>
+  </div>
+</div>
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{fn this.unsubscribe @model}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to unsubscribe <span class="font-semibold text-brand-primary">{{or @model.email @model.fullName}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>

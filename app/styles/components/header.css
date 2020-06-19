@@ -48,3 +48,14 @@
     height: 100%;
   }
 }
+
+.corner-ribbon {
+  @apply fixed bg-purple-700;
+  @apply uppercase text-sm font-semibold text-center text-white leading-relaxed tracking-wider;
+  @apply shadow;
+  width: 175px;
+  top: 20px;
+  left: -55px;
+  transform: rotate(-45deg);
+  z-index: 200;
+}

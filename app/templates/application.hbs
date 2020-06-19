@@ -1,3 +1,9 @@
+{{#if this.showStagingBanner}}
+  <div class="corner-ribbon">
+    Demo
+  </div>
+{{/if}}
+
 {{#if (and this.session.isAuthenticated this.currentUser.canViewContent)}}
   <Header @showSidebar={{this.showSidebar}} @toggleSidebar={{fn (mut this.showSidebar) (not this.showSidebar)}}  />
 {{/if}}

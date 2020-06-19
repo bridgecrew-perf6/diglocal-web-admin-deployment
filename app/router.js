@@ -51,6 +51,9 @@ Router.map(function() {
         this.route('index', { path: '/' });
         this.route('view', { path: ':list_id' });
       });
+      this.route('newsletters', function() {
+        this.route('index', { path: '/' });
+      });
     });
 
     this.route('select-region');
