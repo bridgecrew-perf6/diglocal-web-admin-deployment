@@ -1,0 +1,54 @@
+<div class="treadmill-content__fixed-header text-sm">
+  <div class="flex h-10">
+    <div class="flex relative w-1/3">
+      <div class="absolute left-0 top-0 bottom-0 flex items-center text-teal-600 font-medium px-2">
+        <FaIcon @icon="search" />
+      </div>
+      <Input
+        @type="search"
+        @value={{this.searchString}}
+        @input={{perform this.didSearch}}
+        @escape-press={{this.clearSearch}}
+        @placeholder="Search..."
+        aria-label="Search homes"
+        data-test-id="search"
+        class="rounded border-0 p-3 pl-8 w-full border border-gray-300 bg-gray-100 focus:bg-white" />
+    </div>
+    <div class="flex w-2/3 pl-3 justify-between items-center text-gray-600">
+      {{!-- <CrunchySortBy @sort={{this.sort}} @sortMenuOptions={{this.sortMenuOptions}} /> --}}
+      <LinkTo
+        @route="authenticated.region.businesses.view.homes.new"
+        @class="crunchy-button--primary crunchy-button--text-sm"
+        data-test-id="add-new-home"
+      >
+        <FaIcon @icon="plus" @size="xs" class="mr-1" /> Home
+      </LinkTo>
+    </div>
+  </div>
+</div>
+
+<div class="treadmill-content__table-body container pt-20">
+  <EllaTreadmill
+    @content={{@model}}
+    @minColumnWidth="100%"
+    @row="172" as |item|
+  >
+    {{#if item.is_loading}}
+      <div class="flex items-center justify-center">
+        <FaIcon @icon="spinner" @pulse={{true}} class="text-gray-500" />
+      </div>
+    {{else}}
+      <Scoop::ListRow @model={{item}} @onSelect={{this.viewScoop}} />
+    {{/if}}
+  </EllaTreadmill>
+
+  {{#if (or this.didSearch.isRunning @model.loading)}}
+    <div class="absolute inset-0 flex p-10 items-center justify-center h-screen text-brand-primary">
+      <FaIcon @icon="spinner" @pulse={{true}} @size="2x" />
+    </div>
+  {{else if (eq @model.length 0)}}
+    <div class="border rounded bg-white m-4 p-6">
+      <p> No homes found. </p>
+    </div>
+  {{/if}}
+</div>

@@ -31,6 +31,11 @@ Router.map(function() {
         this.route('view', { path: ':business_id' }, function() {
           this.route('locations');
           this.route('photos');
+          this.route('homes', function() {
+            this.route('index', { path: '/' });
+            this.route('view', { path: ':home_id' });
+            this.route('new');
+          });
           this.route('scoops', function() {
             this.route('index', { path: '/' });
             this.route('view', { path: ':scoop_id' });
@@ -45,6 +50,10 @@ Router.map(function() {
       });
       this.route('scoops', function() {
         this.route('view', { path: ':scoop_id' });
+        this.route('new');
+      });
+      this.route('homes', function() {
+        this.route('view', { path: ':home_id' });
         this.route('new');
       });
       this.route('lists', function() {

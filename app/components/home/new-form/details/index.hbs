@@ -1,0 +1,78 @@
+<h1 class="dig-section-title mb-4">What type of home is this?</h1>
+
+{{#with @form as |form|}}
+  <div class="flex justify-start items-center my-4 crunchy-form__group">
+    <XToggle
+      @showLabels={{true}}
+      @size="small"
+      @value={{@model.isDeal}}
+      @onToggle={{fn (mut @model.isDeal)}}
+      @disabled={{form.isReadonly}}
+      data-test-id="isDeal-toggle"
+      as |toggle|
+    >
+      <toggle.label @value={{@model.isDeal}}>
+        <span class="crunchy-form__toggle-label">Is this a deal or special?</span>
+      </toggle.label>
+      <toggle.switch
+        @theme='light'
+        @onLabel='Yes'
+        @offLabel='No'
+      />
+    </XToggle>
+  </div>
+
+  <div class="mt-10">
+    <h1 class="dig-section-title mb-4">Add an image</h1>
+
+    <AttributeImageUploader
+      @model={{@model}}
+      @modelType="scoop"
+      @keyForImage="image"
+      @onAllFilesUploadComplete={{perform this.onAllFilesUploadComplete}}
+      as |uploader|
+    >
+      <div style={{background-image @model.image.sizes.full}} class="h-48 rounded border border-brand-gray border-dashed my-6 overflow-hidden bg-contain bg-no-repeat bg-center">
+          <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
+            {{#x-file-input tagName="div" name="files" multiple=false action=uploader.didSelectFiles}}
+              {{#unless uploader.uploadTasks.length}}
+                <span class="my-2 text-black p-4 text-sm mx-2 font-semibold flex flex-col items-center opacity-50 bg-white rounded">
+                  <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                  Click or drop file here
+                </span>
+              {{/unless}}
+              <div class="flex flex-wrap justify-start">
+                {{#each uploader.uploadTasks as |task|}}
+                  <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                    <img src={{task.preview}} alt="File Upload Preview">
+                    <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                      {{#if (or task.isRunning (eq task.status "pending"))}}
+                        <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                      {{else if (eq task.status "complete")}}
+                        <FaIcon @icon="check-circle" class="text-green-600" />
+                      {{else if (eq task.status "error")}}
+                        <FaIcon @icon="times-circle" class="text-brand-error" />
+                      {{/if}}
+                    </div>
+                  </div>
+                {{/each}}
+              </div>
+            {{/x-file-input}}
+          </CrunchyDraggableDropzone>
+      </div>
+      <ul class="text-sm">
+        {{#if (gt uploader.uploadImageTask.performCount 0)}}
+          {{#if uploader.completeTasks.length}}
+            <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+          {{/if}}
+          {{#if uploader.errorTasks.length}}
+            <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+          {{/if}}
+        {{/if}}
+        {{#if uploader.uploadImageTask.isRunning}}
+          <li>Uploading image...</li>
+        {{/if}}
+      </ul>
+    </AttributeImageUploader>
+  </div>
+{{/with}}

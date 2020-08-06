@@ -1,0 +1,52 @@
+<h1 class="dig-section-title mb-4">Create a new home</h1>
+
+{{#with @form as |form|}}
+  <form.field @field="business" @label="What business does this home belong to?">
+    <PowerSelect
+      @search={{perform this.searchBusinesses}}
+      @searchEnabled={{true}}
+      @loadingMessage="Searching businesses...."
+      @placeholder="Click to search"
+      @selected={{@model.business}}
+      @allowClear={{false}}
+      @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
+      @onChange={{fn (mut @model.business)}} as |business|
+      >
+        <span data-test-id="selected-business-name">{{business.name}}</span>
+    </PowerSelect>
+  </form.field>
+
+  <form.field @field="location" @label="What location does this home belong to?">
+    <PowerSelect
+      @search={{perform this.searchLocations}}
+      @searchEnabled={{true}}
+      @loadingMessage="Searching locations...."
+      @placeholder="Click to search"
+      @selected={{@model.business}}
+      @allowClear={{false}}
+      @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
+      @onChange={{fn (mut @model.business)}} as |business|
+      >
+        <span data-test-id="selected-location-name">{{business.name}}</span>
+    </PowerSelect>
+  </form.field>
+
+  <form.text-field
+    @field="title"
+    @label="Title"
+    @placeholder="3BR / 2BA 1300Sqft"
+  />
+
+  <form.text-field
+    @field="subTitle"
+    @label="Sub Title"
+    @placeholder="Single Family Home, Apartment, ..."
+  />
+
+  <form.text-area
+    @field="description"
+    @label="Additional Description"
+    @rows="5"
+    @placeholder="Add more in-depth description here"
+  />
+{{/with}}
