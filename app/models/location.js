@@ -34,6 +34,8 @@ export default class Location extends Snapshotable {
   @belongsTo('business') business;
   @hasMany('operatingHours') operatingHours;
   @hasMany('scoop') scoops;
+  @hasMany('home') homes;
+
   /*************************
   **  Validation Schema   **
   *************************/

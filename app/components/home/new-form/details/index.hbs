@@ -2,24 +2,35 @@
 
 {{#with @form as |form|}}
   <div class="flex justify-start items-center my-4 crunchy-form__group">
-    <XToggle
-      @showLabels={{true}}
-      @size="small"
-      @value={{@model.isDeal}}
-      @onToggle={{fn (mut @model.isDeal)}}
-      @disabled={{form.isReadonly}}
-      data-test-id="isDeal-toggle"
-      as |toggle|
-    >
-      <toggle.label @value={{@model.isDeal}}>
-        <span class="crunchy-form__toggle-label">Is this a deal or special?</span>
-      </toggle.label>
-      <toggle.switch
-        @theme='light'
-        @onLabel='Yes'
-        @offLabel='No'
-      />
-    </XToggle>
+    <form.text-field
+      @field="links.primary_listing"
+      @label="Primary Listing"
+      @placeholder="https://my-amazing-listing.com"
+    />
+  </div>
+
+  <div class="flex justify-start items-center my-4 crunchy-form__group">
+    <form.text-area
+      @field="address.street"
+      @label="Street"
+      @placeholder="123 Main St. Suite B"
+      @rows="3"
+    />
+    <form.text-field
+      @field="address.city"
+      @label="City"
+      @placeholder=""
+    />
+    <form.text-field
+      @field="address.state"
+      @label="State"
+      @placeholder=""
+    />
+    <form.text-field
+      @field="address.postal_code"
+      @label="Postal Code"
+      @placeholder=""
+    />
   </div>
 
   <div class="mt-10">

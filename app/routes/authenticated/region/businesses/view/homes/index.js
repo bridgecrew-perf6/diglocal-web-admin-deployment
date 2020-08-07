@@ -25,7 +25,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       };
       let filter = removeEmpty(params);
 
-      filter.business = businessId;
+      // filter.business = businessId;
       filter.active = [true,false];
 
       let sort = filter.sort;
@@ -34,11 +34,11 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
       query = Object.assign({ filter, page, sort }, query);
-      query.include = 'business,business.categories';
+      query.include = 'location,location.business,location.business.categories';
 
       // Return a Promise that resolves with the array of fetched data
       // and the total available records
-      return this.store.query('scoop', query).then((result) => {
+      return this.store.query('home', query).then((result) => {
         return {
           data: result,
           total: get(result, 'meta.page.total')

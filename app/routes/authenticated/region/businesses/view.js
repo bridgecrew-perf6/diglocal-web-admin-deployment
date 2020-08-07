@@ -6,7 +6,7 @@ export default class AuthenticatedRegionBusinessesViewRoute extends Route {
   @tracked breadCrumb;
 
   model(params) {
-    return this.store.findRecord('business', params.business_id, { include: 'categories,scoops,locations' });
+    return this.store.findRecord('business', params.business_id, { include: 'categories,scoops,locations,locations.homes' });
   }
 
   afterModel(model) {

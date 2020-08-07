@@ -5,7 +5,9 @@ export default class AuthenticatedRegionBusinessesViewHomesNewRoute extends Rout
     let businessId = this.paramsFor('authenticated.region.businesses.view').business_id;
     let business = this.store.peekRecord('business', businessId);
     return this.store.createRecord('home', {
-      business
+      address: {},
+      links: {},
+      location: business.locations.firstObject
     });
   }
 }

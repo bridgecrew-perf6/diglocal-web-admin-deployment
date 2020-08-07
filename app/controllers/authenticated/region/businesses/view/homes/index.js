@@ -17,10 +17,9 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexController exten
 
   sortMenuOptions = {
     created_at: 'Sort by date created',
-    event_date: 'Sort by event date'
   };
 
-  @tracked sort = '-event_date';
+  @tracked sort = '-created_at';
   @tracked search = '';
   @oneWay('search') searchString;
 
