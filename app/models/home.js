@@ -1,4 +1,4 @@
-import { attr, belongsTo } from '@ember-data/model';
+import { attr, belongsTo, hasMany } from '@ember-data/model';
 import { isPresent } from '@ember/utils';
 import { alias } from '@ember/object/computed';
 import Trackable from './trackable';
@@ -21,6 +21,7 @@ export default class Home extends Trackable {
   *************************/
 
   @belongsTo('location') location;
+  @hasMany('digitalAsset') digitalAssets;
 
   /*************************
   ** Computed Properties  **
