@@ -3,8 +3,8 @@
     <div class="mb-10 mx-2">
       <Ui::SteppedProgressBar as |bar|>
         <bar.step @isActive={{eq section 0}} @isComplete={{gt section 0}}>Create</bar.step>
-        <bar.step @isActive={{eq section 1}} @isComplete={{gt section 1}}>Image &amp; Details</bar.step>
-        <bar.step @isActive={{eq section 2}} @isComplete={{gt section 2}}>Schedule</bar.step>
+        <bar.step @isActive={{eq section 1}} @isComplete={{gt section 1}}>Home Details</bar.step>
+        <bar.step @isActive={{eq section 2}} @isComplete={{gt section 2}}>Images</bar.step>
         <bar.step @isActive={{eq section 3}} @isComplete={{gt section 3}}>Finish</bar.step>
       </Ui::SteppedProgressBar>
     </div>
@@ -15,7 +15,8 @@
       @onSubmit={{perform this.saveAndNext}}
       @onCancel={{this.cancel}}
       @debounceSubmit={{false}}
-      as |form|>
+      as |form|
+    >
       {{#if (eq section 0)}}
         <Home::NewForm::InitialSetup @form={{form}} @model={{@model}} />
       {{/if}}
@@ -25,7 +26,7 @@
       {{/if}}
 
       {{#if (eq section 2)}}
-        <Scoop::NewForm::Schedule @form={{form}} @model={{@model}} />
+        <Home::NewForm::Images @form={{form}} @model={{@model}} />
       {{/if}}
 
       {{#if (eq section 3)}}

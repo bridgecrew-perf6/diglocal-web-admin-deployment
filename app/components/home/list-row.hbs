@@ -1,0 +1,41 @@
+<CrunchyMediaObject @style="horizontal" @class="h-40 w-full overflow-hidden" data-test-id="home-listing" as |card|>
+  {{#if (media "isMediumUp")}}
+    <card.image
+      @height="160px"
+      @width="160px"
+      @url={{@model.digitalAssets.firstObject.downloadUrls.256_outside}}
+      class="border-r crunchy-media-object__image--cover"
+    />
+  {{/if}}
+  <card.header class="flex justify-between">
+    <CrunchyButton
+      @onClick={{fn @onSelect @model}}
+      @class="crunchy-button--link"
+      @testId={{concat "view-home-" @model.id}}
+      @value="View"
+    />
+  </card.header>
+  <card.body>
+    <p class="font-bold text-sm sm:text-base lg:text-lg">{{@model.title}}</p>
+    <p class="font-bold text-sm sm:text-base lg:text-lg text-gray-600">{{@model.subTitle}}</p>
+    <p class="text-sm font-medium">{{@model.location.business.name}}</p>
+    <ul class="absolute left-0 bottom-0 p-1 pt-0 w-full bg-white">
+      <CrunchyChip
+        @tagName="li"
+        @title="Home status"
+        @label={{if @model.active "Active" "Inactive"}}
+        @class={{if @model.active "crunchy-chip--accent" "crunchy-chip--accent-2"}}
+      />
+      {{#each @model.location.business.categories as |category|}}
+        <CrunchyChip @tagName="li">
+          {{category.longName}}
+        </CrunchyChip>
+      {{/each}}
+      {{#if @model.links.primary_listing}}
+        <CrunchyChip @tagName="li" @title={{@model.links.primary_listing}}>
+          <FaIcon @icon="ticket-alt" />
+        </CrunchyChip>
+      {{/if}}
+    </ul>
+  </card.body>
+</CrunchyMediaObject>

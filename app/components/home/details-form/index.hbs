@@ -1,0 +1,136 @@
+<div class="dig-card">
+  <CrunchyForm
+    @model={{@model}}
+    @formSchema={{@model.validationSchema}}
+    @onSubmit={{this.save}}
+    @onCancel={{this.cancel}}
+    @debounceSubmit={{true}}
+  as |form|>
+    <div class="flex flex-col md:flex-row mb-4">
+      <div class="flex flex-col items-center">
+        <div style={{background-image @model.digitalAssets.firstObject.downloadUrls.original}}
+          class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
+{{!--           <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new scoop image"
+            @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
+            <FaIcon @icon="pencil-alt" />
+          </CrunchyButton> --}}
+        </div>
+        <div class="w-full py-8 px-4">
+          <form.checkbox @field="active" @label="Active" />
+        </div>
+      </div>
+      <div class="w-full md:pl-6">
+        <h1 class="dig-section-title mb-4">Home Details</h1>
+        <form.field @field="business" @label="Business">
+          <PowerSelect
+            @search={{perform this.searchBusinesses}}
+            @searchEnabled={{true}}
+            @loadingMessage="Searching businesses...."
+            @placeholder="Click to search" @selected={{@model.business}}
+            @allowClear={{false}}
+            @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
+            @onChange={{fn (mut @model.business)}}
+          as |business|>
+            <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
+          </PowerSelect>
+        </form.field>
+
+        <form.text-field @field="title" @label="Title" @placeholder="Add a headline for this home"
+          @controlClass="font-bold" />
+        <form.text-field @field="subTitle" @label="Sub Title" @placeholder="Add a sub title for this home"
+          @controlClass="font-bold" />
+        <form.text-area @field="description" @label="Additional Details" @aria-label="Additional Details" @rows="5"
+          @placeholder="Add some additional details" />
+      </div>
+    </div>
+
+    <form.errors @errorHeading="Unable to save due to the following errors:" />
+
+    <div class="flex justify-between mt-8">
+      <CrunchyButton @onClick={{fn (mut this.showDestroyModal) true}} @value="Delete Scoop"
+        @class="crunchy-button--outline" />
+      <div class="flex flex-wrap">
+        <form.submit @value="Submit" @class="mr-2 md:w-32" @testId="save-scoop" />
+        <form.cancel @value="Cancel" />
+      </div>
+    </div>
+  </CrunchyForm>
+</div>
+
+<CrunchyConfirmUnsaved @model={{@model}} />
+
+<CrunchyConfirm
+  @show={{this.showDestroyModal}}
+  @confirmText="Delete"
+  @onConfirm={{this.delete}}
+  @onCancel={{fn (mut this.showDestroyModal) false}}
+>
+  <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.description}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
+
+{{#if this.showUploadModal}}
+  <CrunchyModal
+    @clickOutsideToClose={{false}}
+    @translucentOverlay={{true}}
+    @onClose={{this.cancelUpload}}
+  as |modal|>
+    <AttributeImageUploader
+      @model={{@model}}
+      @modelType="scoop"
+      @keyForImage="image"
+      @onAllFilesUploadComplete={{perform this.onUploadImageComplete}}
+    as |uploader|>
+      <modal.header>
+        Upload Image
+      </modal.header>
+      <modal.body>
+        <div class="h-48 rounded border border-brand-gray border-dashed my-6">
+            <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
+              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
+                {{#unless uploader.uploadTasks.length}}
+                  <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
+                    <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
+                    Click or drop file here
+                  </span>
+                {{/unless}}
+                <div class="flex flex-wrap justify-start">
+                  {{#each uploader.uploadTasks as |task|}}
+                    <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
+                      {{#if (not (eq task.status "pending"))}}
+                        <img src={{task.preview}} alt="File Upload Preview">
+                      {{/if}}
+                      <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
+                          <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
+                        {{else if (eq task.status "complete")}}
+                          <FaIcon @icon="check-circle" class="text-green-600" />
+                        {{else if (eq task.status "error")}}
+                          <FaIcon @icon="times-circle" class="text-brand-error" />
+                        {{/if}}
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+              {{/x-file-input}}
+            </CrunchyDraggableDropzone>
+        </div>
+      </modal.body>
+      <modal.footer class="flex justify-end">
+        <ul class="text-sm">
+          {{#if (gt uploader.uploadImageTask.performCount 0)}}
+            {{#if uploader.completeTasks.length}}
+              <li>{{pluralize uploader.completeTasks.length "file"}} uploaded successfully.</li>
+            {{/if}}
+            {{#if uploader.errorTasks.length}}
+              <li>{{pluralize uploader.errorTasks.length "error"}}</li>
+            {{/if}}
+          {{/if}}
+          {{#if uploader.uploadImageTask.isRunning}}
+            <li>Uploading image...</li>
+          {{/if}}
+        </ul>
+      </modal.footer>
+    </AttributeImageUploader>
+  </CrunchyModal>
+{{/if}}

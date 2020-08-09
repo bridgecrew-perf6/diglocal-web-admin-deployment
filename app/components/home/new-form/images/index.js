@@ -5,54 +5,41 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
-export default class HomeNewFormDetailsComponent extends Component {
+export default class HomeNewFormImagesComponent extends Component {
   @service ajax;
   @service store;
 
   @tracked showEventFields = false;
 
-  @action
-  toggleEventFields(value) {
-    this.showEventFields = value;
-    if (!value) {
-      this.args.model.eventDate = null;
-      this.args.model.eventStartTime = null;
-      this.args.model.eventEndTime = null;
-    }
-  }
+  assets = [];
 
   @action
-  async onFileUploadComplete(details) {
+  onFileUploadComplete(details) {
     let asset = this.store.createRecord('digitalAsset', {
       bucket: details.metadata.bucket,
-      downloadUrls: details.metadata.downloadURLs,
       filename: details.metadata.name,
       fullPath: details.metadata.fullPath,
       size: details.metadata.size,
       contentType: details.metadata.contentType,
       raw: details.metadata
     });
+    this.assets.addObject(asset);
+  }
 
-    this.ajax.post(`${config.firebase.cloudFunctions}/generateThumbnails`, {
+  @action
+  async onAllFilesUploadComplete() {
+    for (let asset of this.assets) {
+      asset.downloadUrls = (await this.ajax.post(`${config.firebase.cloudFunctions}/generateThumbnails`, {
       headers: {
         'content-type': 'application/json'
       },
       data: {
-        data: Object.assign(details.metadata, { sizes: ['256x256'] })
+        data: Object.assign(asset.raw, { sizes: ['256_outside'] })
       }
-    });
-
-    await asset.save();
-    this.args.model.digitalAssets.addObject(asset);
-  }
-
-  @action
-  onAllFilesUploadComplete() {
+    })).result.downloadURLs;
+      await asset.save();
+      this.args.model.digitalAssets.addObject(asset);
+    }
     this.args.model.save();
   }
-
-  @task(function*() {
-    return yield this.args.model.reload();
-  })
-  onAllFilesUploadComplete;
 }

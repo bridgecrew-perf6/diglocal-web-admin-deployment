@@ -73,11 +73,11 @@ export default class AuthenticatedRegionHomesIndexController extends Controller 
   }
 
   @action
-  viewScoop(scoop) {
+  viewHome(home) {
     // business and scoop are proxies, must use 'get' to access properties
-    let business = get(scoop, 'business');
+    let business = get(home, 'location.business');
     let businessId = get(business, 'id');
-    let scoopId = get(scoop, 'id');
+    let homeId = get(home, 'id');
     this.router.transitionTo('authenticated.region.businesses.view.homes.view', businessId, homeId);
   }
 }

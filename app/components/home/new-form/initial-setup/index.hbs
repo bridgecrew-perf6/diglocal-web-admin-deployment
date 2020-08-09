@@ -1,33 +1,4 @@
 <h1 class="dig-section-title mb-4">Create a new home</h1>
-
-<FirebaseUploader @pathName="homes" @uploadCompleteAction={{action "onFileUploadComplete"}} as |uploader|>
-  <Ui::DraggableDropzone @dropped={{uploader.didSelectFiles}}>
-    <XFileInput @tagName="div" @name="files" @multiple={{false}} @action={{uploader.didSelectFiles}}>
-      <div style="width: 100px; height: 100px; background-color:blue">
-        <img src={{uploader.uploadStatuses.firstObject.preview}} alt="upload preview">
-        {{#if (eq uploader.uploadStatuses.firstObject.state "running")}}
-          {{ui/ui-progress progress=uploader.uploadStatuses.firstObject.progress}}
-          {{uploader.uploadStatuses.firstObject.progressText}}
-        {{/if}}
-      </div>
-    </XFileInput>
-  </Ui::DraggableDropzone>
-  {{#if uploader.totalFiles}}
-    Completed uploading {{uploader.totalFilesUploaded}} of {{uploader.totalFiles}}
-  {{/if}}
-
-  Multi file use
-  {{#each uploader.uploadStatuses as |status|}}
-    <div style="width: 100px; height: 100px; background-color:blue">
-      <img src={{status.preview}} alt="status preview">
-      {{#if (eq status.state "running")}}
-        {{ui/ui-progress progress=status.progress}}
-        {{status.progressText}}
-      {{/if}}
-    </div>
-  {{/each}}
-</FirebaseUploader>
-
 {{#with @form as |form|}}
   <form.field @field="business" @label="What business does this home belong to?">
     <PowerSelect

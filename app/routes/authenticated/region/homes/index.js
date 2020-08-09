@@ -20,7 +20,7 @@ export default class AuthenticatedRegionHomesIndexRoute extends Route {
   model(params) {
     let regionId = this.paramsFor('authenticated.region').region_id;
 
-    let scoops = get(this, 'ellaSparse').array((range = {}, query = {}) => {
+    let homes = get(this, 'ellaSparse').array((range = {}, query = {}) => {
       let page = {
         limit: get(range, 'length') || 10,
         offset: get(range, 'start') || 0
@@ -55,7 +55,7 @@ export default class AuthenticatedRegionHomesIndexRoute extends Route {
     });
 
     return hash({
-      scoops,
+      homes,
       categories: this.store.query('category', { filter: { region: regionId }})
     });
   }

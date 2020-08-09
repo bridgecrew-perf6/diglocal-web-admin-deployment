@@ -27,3 +27,5 @@
 .DS_Store
 *.cache
 /functions/firebase-debug.log
+/firebase-debug.log
+/functions/ui-debug.log
