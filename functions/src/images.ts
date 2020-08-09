@@ -25,6 +25,7 @@ interface IDownloadResult {
 
 // @ts-ignore
 export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (object) => {
+  console.log(111);
   if (!object.sizes) { return { success: false, reason: 'no_size_provided' }; }
 
   const fileName = object.name;
@@ -47,8 +48,12 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
   const newPath = `${bucketDir}/media.${ext}`;
   await bucket.file(filePath).move(newPath);
 
+  //See below for errors about IAM
   // @ts-ignore
-  downloadURLs['original'] = `https://storage.googleapis.com/${object.bucket}/${newPath}`;
+  downloadURLs['original'] = (await bucket.file(newPath).getSignedUrl({
+    action: 'read',
+    expires: '03-15-2491'
+  }))[0];
 
   // 1. Ensure thumbnail dir exists
   await fs.ensureDir(workingDir);
@@ -102,12 +107,12 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
       withoutEnlargement: true
     }
   }];
-
+  console.log(`Attempt to run through sizes ${sizes}`);
   const uploadPromises = sizes.filter(size => object.sizes.includes(size.name)).map(async size => {
+    console.log(`Process ${size.name}`);
     const thumbName = `thumb@${size.name}_media.${ext}`;
     const thumbPath = join(workingDir, thumbName);
     // @ts-ignore
-    downloadURLs[size.name] = `https://storage.googleapis.com/${object.bucket}/${bucketDir}/${thumbName}`;
     // Resize source image
     await sharp(tmpFilePath)
       // @ts-ignore
@@ -115,11 +120,26 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
       .toFile(thumbPath);
     const fp = join(bucketDir, thumbName);
     // Upload to GCS
-    return await bucket.upload(thumbPath, {
+    await bucket.upload(thumbPath, {
       resumable: false,
       destination: fp,
       metadata: { cacheControl: 'public,max-age=31536000' }
     });
+    const file = bucket.file(fp);
+    try {
+      // @ts-ignore
+      downloadURLs[size.name] = (await file.getSignedUrl({
+        action: 'read',
+        expires: '03-15-2491'
+      }))[0];
+    } catch (e) {
+      // This error will most likely talk about IAM API Settings
+      console.log(e);
+    }
+    // @ts-ignore
+    console.log(downloadURLs[size.name]);
+    return;
+
   });
   // 4. Run the upload operations
   await Promise.all(uploadPromises);
