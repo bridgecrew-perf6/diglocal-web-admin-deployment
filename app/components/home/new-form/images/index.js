@@ -34,7 +34,7 @@ export default class HomeNewFormImagesComponent extends Component {
         'content-type': 'application/json'
       },
       data: {
-        data: Object.assign(asset.raw, { sizes: ['256_outside'] })
+        data: Object.assign(asset.raw, { sizes: ['256_outside', '512_outside', '1024_outside'] })
       }
     })).result.downloadURLs;
       await asset.save();

@@ -25,7 +25,6 @@ interface IDownloadResult {
 
 // @ts-ignore
 export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (object) => {
-  console.log(111);
   if (!object.sizes) { return { success: false, reason: 'no_size_provided' }; }
 
   const fileName = object.name;
@@ -107,9 +106,8 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
       withoutEnlargement: true
     }
   }];
-  console.log(`Attempt to run through sizes ${sizes}`);
+
   const uploadPromises = sizes.filter(size => object.sizes.includes(size.name)).map(async size => {
-    console.log(`Process ${size.name}`);
     const thumbName = `thumb@${size.name}_media.${ext}`;
     const thumbPath = join(workingDir, thumbName);
     // @ts-ignore
@@ -136,8 +134,6 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
       // This error will most likely talk about IAM API Settings
       console.log(e);
     }
-    // @ts-ignore
-    console.log(downloadURLs[size.name]);
     return;
 
   });
