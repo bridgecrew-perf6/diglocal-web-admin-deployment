@@ -1,0 +1,10 @@
+<PowerSelect
+  @options={{this.predictions}}
+  @search={{perform this.requestPredictions}}
+  @searchEnabled={{true}}
+  @allowClear={{true}}
+  @loadingMessage="Searching..."
+  @selected={{this.selectedPlace}}
+  @onChange={{action "findPlaceDetails"}} as |prediction|>
+  {{prediction.description}}
+</PowerSelect>

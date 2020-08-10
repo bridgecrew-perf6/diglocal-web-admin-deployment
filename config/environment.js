@@ -48,6 +48,10 @@ module.exports = function(environment) {
     cloudFunctions: 'https://us-central1-dig-this.cloudfunctions.net'
   };
 
+  ENV['place-autocomplete'] = {
+    key: 'AIzaSyC9m3rFmih3ZR1S6FtE19JpCgdMxK6hDew',
+   };
+
   ENV['ember-simple-auth'] = {
     authenticationRoute: 'login',
     routeAfterAuthentication: 'authenticated.region.index',

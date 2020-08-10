@@ -84,4 +84,12 @@ export default class DetailsForm extends Component {
   cancelUpload() {
     this.showUploadModal = false;
   }
+
+  @action
+  updateLocation(placeDetails) {
+    this.args.model.geoLocation = [
+      placeDetails.geometry.location.lat(),
+      placeDetails.geometry.location.lng()
+    ];
+  }
 }

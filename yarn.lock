@@ -6495,6 +6495,14 @@ ember-named-arguments-polyfill@^1.0.0:
     ember-cli-babel "^6.6.0"
     ember-cli-version-checker "^2.1.2"
 
+ember-place-autocomplete@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ember-place-autocomplete/-/ember-place-autocomplete-2.1.2.tgz#681d5fa0e5dfa0fc71e545736f1312e97276d133"
+  integrity sha512-wHh0cNiEIjD7psBTsMNSQHPBSECTTsx1hDkXMm3lQGqmlPWIKuhF9bORHM5p5SW1vISDAO3MIZIs0mfXfYkFqA==
+  dependencies:
+    ember-cli-babel "^7.1.2"
+    ember-cli-htmlbars "^3.0.0"
+
 ember-power-calendar-moment@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/ember-power-calendar-moment/-/ember-power-calendar-moment-0.1.7.tgz#2e79125f449bdcc94e62afff4e5411012792ed43"

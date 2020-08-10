@@ -8,15 +8,15 @@
       <LinkTo @route="authenticated.region.businesses.view.locations" @class="tabs__link">Locations</LinkTo>
     </li>
 
-    {{#if (contains "homes" (map-by "shortName" @model.categories))}}
+    {{!-- {{#if (contains "homes" (map-by "shortName" @model.categories))}} --}}
       <li class="tabs__tab">
         <LinkTo @route="authenticated.region.businesses.view.homes" @class="tabs__link">Homes</LinkTo>
       </li>
-    {{else}}
+    {{!-- {{else}} --}}
       <li class="tabs__tab">
         <LinkTo @route="authenticated.region.businesses.view.scoops" @class="tabs__link">Scoops</LinkTo>
       </li>
-    {{/if}}
+    {{!-- {{/if}} --}}
     <li class="tabs__tab">
       <LinkTo @route="authenticated.region.businesses.view.photos" @class="tabs__link">Photos</LinkTo>
     </li>
