@@ -1,11 +1,9 @@
-import classic from 'ember-classic-decorator';
 import { readOnly } from '@ember/object/computed';
-import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { attr, hasMany } from '@ember-data/model';
 import Trackable from './trackable';
-import { set, getProperties, computed } from '@ember/object';
+import { set, getProperties } from '@ember/object';
 import { isBlank } from '@ember/utils';
 
-@classic
 export default class DigitalAsset extends Trackable  {
   @attr() bucket;
   @attr() contentType;
@@ -32,7 +30,6 @@ export default class DigitalAsset extends Trackable  {
   **  Computed Properties **
   *************************/
 
-  @computed('name', 'filename')
   get presentableName() {
     let { name, filename } = getProperties(this, 'name', 'filename');
 

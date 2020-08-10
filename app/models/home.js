@@ -1,6 +1,5 @@
 import { attr, belongsTo, hasMany } from '@ember-data/model';
 import { isPresent } from '@ember/utils';
-import { alias } from '@ember/object/computed';
 import Trackable from './trackable';
 import * as yup from 'yup';
 

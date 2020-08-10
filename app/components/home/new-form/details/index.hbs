@@ -1,33 +1,52 @@
 {{#with @form as |form|}}
+  <form.text-field
+    @field="address.area_name"
+    @label="Area Name"
+    @aria-label="Area Name"
+  />
+  <p class="text-gray-600 text-xs -mt-3 mb-2">ex. West Asheville, South Slope, River Arts District</p>
+
+  <form.text-field
+    @field="address.street"
+    @label="Address"
+    @autocomplete="street-address"
+    @aria-label="Address"
+  />
+
+  <div class="w-full flex">
+    <div class="mr-4 flex-grow">
+      <form.text-field
+        @field="address.city"
+        @label="City"
+        @autocomplete="address-level2"
+        @aria-label="City"
+      />
+    </div>
+
+    <div class="mr-4 w-48 flex-shrink">
+      <form.text-field
+        @field="address.state"
+        @label="State"
+        @autocomplete="address-level1"
+        @aria-label="State"
+      />
+    </div>
+
+    <div class="w-32 flex-shrink">
+      <form.text-field
+        @field="address.postal_code"
+        @label="Postal Code"
+        @autocomplete="postal-code"
+        @aria-label="Postal Code"
+      />
+    </div>
+  </div>
+
   <div class="flex justify-start items-center my-4 crunchy-form__group">
     <form.text-field
       @field="links.primary_listing"
       @label="Primary Listing"
       @placeholder="https://my-amazing-listing.com"
-    />
-  </div>
-
-  <div class="flex justify-start items-center my-4 crunchy-form__group">
-    <form.text-area
-      @field="address.street"
-      @label="Street"
-      @placeholder="123 Main St. Suite B"
-      @rows="3"
-    />
-    <form.text-field
-      @field="address.city"
-      @label="City"
-      @placeholder=""
-    />
-    <form.text-field
-      @field="address.state"
-      @label="State"
-      @placeholder=""
-    />
-    <form.text-field
-      @field="address.postal_code"
-      @label="Postal Code"
-      @placeholder=""
     />
   </div>
 {{/with}}

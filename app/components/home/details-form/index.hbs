@@ -21,17 +21,18 @@
       </div>
       <div class="w-full md:pl-6">
         <h1 class="dig-section-title mb-4">Home Details</h1>
-        <form.field @field="business" @label="Business">
+        <form.field @field="business" @label="What business does this home belong to?">
           <PowerSelect
             @search={{perform this.searchBusinesses}}
             @searchEnabled={{true}}
             @loadingMessage="Searching businesses...."
-            @placeholder="Click to search" @selected={{@model.business}}
+            @placeholder="Click to search"
+            @selected={{@model.business}}
             @allowClear={{false}}
             @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
-            @onChange={{fn (mut @model.business)}}
-          as |business|>
-            <span data-test-id="selected-business-name" class="font-bold">{{business.name}}</span>
+            @onChange={{fn (mut @model.business)}} as |business|
+            >
+              <span data-test-id="selected-business-name">{{business.name}}</span>
           </PowerSelect>
         </form.field>
 

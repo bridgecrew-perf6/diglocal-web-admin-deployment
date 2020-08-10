@@ -16,7 +16,8 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
   };
 
   model(params) {
-    let businessId = this.paramsFor('authenticated.region.businesses.view').business_id;
+    // TODO: This needs to be restricted to location in a better way.
+    let locationId = this.modelFor('authenticated.region.businesses.view').locations.firstObject.id;
 
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
       let page = {
@@ -25,7 +26,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       };
       let filter = removeEmpty(params);
 
-      // filter.business = businessId;
+      filter.location = locationId;
       filter.active = [true,false];
 
       let sort = filter.sort;
