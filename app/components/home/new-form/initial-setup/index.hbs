@@ -28,16 +28,34 @@
         <span data-test-id="selected-location-name">{{business.name}}</span>
     </PowerSelect>
   </form.field>
-
   <form.text-field
-    @field="title"
-    @label="Title"
-    @placeholder="3BR / 2BA 1300Sqft"
+    @field="additionalDetails.mls_number"
+    @label="MLS #"
+    @placeholder="12312"
   />
-
   <form.text-field
-    @field="subTitle"
-    @label="Sub Title"
+    @field="additionalDetails.bedrooms"
+    @label="Bedrooms"
+    @placeholder="3"
+  />
+  <form.text-field
+    @field="additionalDetails.bathrooms"
+    @label="Bathrooms"
+    @placeholder="2"
+  />
+  <form.text-field
+    @field="additionalDetails.building_size"
+    @label="Building Size"
+    @placeholder="1200SQFT"
+  />
+  <form.text-field
+    @field="additionalDetails.lot_size"
+    @label="Lot Size"
+    @placeholder="1.9 Acre"
+  />
+  <form.text-field
+    @field="additionalDetails.building_type"
+    @label="Building Type"
     @placeholder="Single Family Home, Apartment, ..."
   />
 
@@ -46,5 +64,11 @@
     @label="Additional Description"
     @rows="5"
     @placeholder="Add more in-depth description here"
+  />
+
+  <form.text-field
+    @field="price"
+    @label="Price"
+    @placeholder="1000"
   />
 {{/with}}

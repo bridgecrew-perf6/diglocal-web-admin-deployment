@@ -36,10 +36,47 @@
           </PowerSelect>
         </form.field>
 
-        <form.text-field @field="title" @label="Title" @placeholder="Add a headline for this home"
-          @controlClass="font-bold" />
-        <form.text-field @field="subTitle" @label="Sub Title" @placeholder="Add a sub title for this home"
-          @controlClass="font-bold" />
+        <form.text-field
+          @field="title"
+          @label="Title"
+          @placeholder="Add a headline for this home"
+          @controlClass="font-bold"
+        />
+
+        <form.text-field
+          @field="additionalDetails.mls_number"
+          @label="MLS #"
+          @placeholder="1231"
+          @controlClass="font-bold"
+        />
+
+        <form.text-field
+          @field="additionalDetails.bedrooms"
+          @label="Bedrooms"
+          @placeholder="3"
+          @controlClass="font-bold"
+        />
+        <form.text-field
+          @field="additionalDetails.bathrooms"
+          @label="Bathrooms"
+          @placeholder="2"
+          @controlClass="font-bold"
+        />
+        <form.text-field
+          @field="additionalDetails.building_size"
+          @label="Building Size"
+          @placeholder="1200SQFT"
+        />
+        <form.text-field
+          @field="additionalDetails.lot_size"
+          @label="Lot Size"
+          @placeholder="1.9 Acre"
+        />
+        <form.text-field
+          @field="additionalDetails.building_type"
+          @label="Building Type"
+          @placeholder="Single Family Home, Apartment, ..."
+        />
         <form.text-area @field="description" @label="Additional Details" @aria-label="Additional Details" @rows="5"
           @placeholder="Add some additional details" />
         <form.text-field
@@ -92,29 +129,28 @@
             </div>
           </div>
 
-      <div class="w-full flex">
-        <div class="mr-4 flex-grow">
-          <form.text-field
-            @field="geoLocation.firstObject"
-            @label="Geocoded Latitude"
-            @aria-label="Geocoded Latitude"
-            @disabled={{true}}
-          />
-        </div>
-        <div class="flex-grow">
-          <form.text-field
-            @field="geoLocation.lastObject"
-            @label="Geocoded Longitude"
-            @aria-label="Geocoded Longitude"
-            @disabled={{true}}
-          />
-        </div>
-      </div>
+          <div class="w-full flex">
+            <div class="mr-4 flex-grow">
+              <form.text-field
+                @field="geoLocation.firstObject"
+                @label="Geocoded Latitude"
+                @aria-label="Geocoded Latitude"
+                @disabled={{true}}
+              />
+            </div>
+            <div class="flex-grow">
+              <form.text-field
+                @field="geoLocation.lastObject"
+                @label="Geocoded Longitude"
+                @aria-label="Geocoded Longitude"
+                @disabled={{true}}
+              />
+            </div>
+          </div>
 
-
-            <form.field @field="locationAddress" @label="Address">
-    <LocationAutocompleteInput @locationAddress={{model.locationAddress}} @onPlaceChange={{action "updateLocation"}} />
-  </form.field>
+          <form.field @field="locationAddress" @label="Address">
+            <LocationAutocompleteInput @locationAddress={{model.locationAddress}} @onPlaceChange={{action "updateLocation"}} />
+          </form.field>
         </Ui::CollapsibleSection>
       </div>
     </div>

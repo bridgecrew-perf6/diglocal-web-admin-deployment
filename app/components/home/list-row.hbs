@@ -17,7 +17,7 @@
   </card.header>
   <card.body>
     <p class="font-bold text-sm sm:text-base lg:text-lg">{{@model.title}}</p>
-    <p class="font-bold text-sm sm:text-base lg:text-lg text-gray-600">{{@model.subTitle}}</p>
+    <p class="font-bold text-sm sm:text-base lg:text-lg text-gray-600">{{@model.additionalDetails.bedrooms}}BR / {{@model.additionalDetails.bedrooms}}BA</p>
     <p class="text-sm font-medium">{{@model.location.business.name}}</p>
     <ul class="absolute left-0 bottom-0 p-1 pt-0 w-full bg-white">
       <CrunchyChip
@@ -33,7 +33,7 @@
       {{/each}}
       {{#if @model.links.primary_listing}}
         <CrunchyChip @tagName="li" @title={{@model.links.primary_listing}}>
-          <FaIcon @icon="home-alt" />
+          <FaIcon @icon="home" />{{#if @model.additionalDetails.mls_number}}&nbsp;{{@model.additionalDetails.mls_number}}{{/if}}
         </CrunchyChip>
       {{/if}}
     </ul>
