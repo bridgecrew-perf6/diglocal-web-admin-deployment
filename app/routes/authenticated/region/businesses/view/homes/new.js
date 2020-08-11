@@ -7,6 +7,7 @@ export default class AuthenticatedRegionBusinessesViewHomesNewRoute extends Rout
     return this.store.createRecord('home', {
       address: {},
       links: {},
+      additionalDetails: {},
       location: business.locations.firstObject
     });
   }
