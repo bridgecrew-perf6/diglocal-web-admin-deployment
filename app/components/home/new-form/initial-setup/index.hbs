@@ -28,6 +28,13 @@
         <span data-test-id="selected-location-name">{{business.name}}</span>
     </PowerSelect>
   </form.field>
+
+  <form.text-field
+    @field="title"
+    @label="Title"
+    @placeholder="Add a headline for this home"
+    @controlClass="font-bold"
+  />
   <form.text-field
     @field="additionalDetails.mls_number"
     @label="MLS #"
