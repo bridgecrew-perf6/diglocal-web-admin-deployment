@@ -55,4 +55,12 @@ export default class HomeNewFormDetailsComponent extends Component {
     return yield this.args.model.reload();
   })
   onAllFilesUploadComplete;
+
+  @action
+  updateLocation(placeDetails) {
+    this.args.model.geoLocation = [
+      placeDetails.geometry.location.lat(),
+      placeDetails.geometry.location.lng()
+    ];
+  }
 }
