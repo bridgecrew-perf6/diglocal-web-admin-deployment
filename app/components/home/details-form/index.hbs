@@ -74,6 +74,28 @@
           @label="Building Type"
           @placeholder="Single Family Home, Apartment, ..."
         />
+        <div class="flex flex-wrap md:flex-no-wrap">
+          <div class="w-full md:w-1/2 md:pr-2">
+            <form.text-field
+              @field="price"
+              @label="Price"
+              @placeholder="1000"
+            />
+          </div>
+          <div class="w-full md:w-1/2 md:pl-2">
+            <form.field @field="priceTerms" @label="Terms">
+              <PowerSelect
+                @options={{@model.priceTermsOptions}}
+                @selected={{@model.priceTerms}}
+                @placeholder="Select price terms"
+                @allowClear={{true}}
+                @onChange={{fn (mut @model.priceTerms)}} as |term|
+                >
+                  <span data-test-id="selected-price-term">{{term}}</span>
+              </PowerSelect>
+            </form.field>
+          </div>
+        </div>
         <form.text-area @field="description" @label="Additional Details" @aria-label="Additional Details" @rows="5"
           @placeholder="Add some additional details" />
         <form.text-field
