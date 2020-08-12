@@ -75,7 +75,7 @@ button:disabled, input:disabled, textarea:disabled {
       display: inline-block;
       height: 18px;
       vertical-align: middle;
-      width: 18px;
+      /*width: 18px;*/
       flex-shrink: 0;
     }
 
@@ -94,6 +94,11 @@ button:disabled, input:disabled, textarea:disabled {
   &--google {
     background-color: #fff;
     color: #757575;
+  }
+
+  &--apple {
+    background-color: #000;
+    color: #fff;
   }
 
   &--primary, &--submit, &--modal-confirm {

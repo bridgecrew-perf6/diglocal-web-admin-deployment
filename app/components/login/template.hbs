@@ -63,4 +63,8 @@
     <img class="auth-provider-icon" src="/icons/login/facebook.svg" alt="" role="presentation">
     <span class="auth-provider-text"> Sign in with Facebook </span>
   </CrunchyButton>
+  <CrunchyButton @class="crunchy-button--auth crunchy-button--apple w-full mb-4 max-w-xs" @onClick={{perform this.authenticateWithProvider "apple"}}>
+    <img class="auth-provider-icon" src="/icons/login/apple.svg" alt="" role="presentation">
+    <span class="auth-provider-text"> Sign in with Apple </span>
+  </CrunchyButton>
 </div>

@@ -44,7 +44,12 @@ export default class LoginComponent extends Component {
     this.authenticating = true;
     const auth = yield this.firebaseApp.auth();
     try {
-      const authProvider = new firebase.auth[`${capitalize(provider)}AuthProvider`]();
+      let authProvider;
+      if (provider === 'apple') {
+        authProvider = new firebase.auth.OAuthProvider('apple.com');
+      } else {
+        authProvider = new firebase.auth[`${capitalize(provider)}AuthProvider`]();
+      }
       let authenticatedUser = yield auth.signInWithPopup(authProvider);
       return authenticatedUser;
     } catch(e) {
