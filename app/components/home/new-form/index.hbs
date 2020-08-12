@@ -18,7 +18,7 @@
       as |form|
     >
       {{#if (eq section 0)}}
-        <Home::NewForm::InitialSetup @form={{form}} @model={{@model}} />
+        <Home::NewForm::InitialSetup @form={{form}} @model={{@model}} @preselectedBusiness={{@preselectedBusiness}} />
       {{/if}}
 
       {{#if (eq section 1)}}

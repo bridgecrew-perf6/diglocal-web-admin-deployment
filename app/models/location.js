@@ -1,6 +1,7 @@
 import { attr, belongsTo, hasMany } from '@ember-data/model';
 import Snapshotable from './snapshotable';
 import * as yup from 'yup';
+import { isBlank } from '@ember/utils';
 
 export default class Location extends Snapshotable {
   @attr() address;
@@ -53,4 +54,13 @@ export default class Location extends Snapshotable {
     uberEatsUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('DoorDash URL'),
     postmatesUrl: yup.string().nullable().url("Link must be a valid URL, starting with 'https://' or 'http://'").label('Postmates URL'),
   });
+
+  /*************************
+  ** Computed Properties  **
+  *************************/
+  get displayAddress() {
+    let secondary = `${this.city} ${this.state} ${this.zip}`;
+    let address = isBlank(this.address) ? secondary : `${this.address}, ${secondary}`;
+    return this.title ? `${this.title} - ${address}` : address;
+  }
 }
