@@ -41,7 +41,27 @@
       />
     </div>
   </div>
-
+  <div class="w-full flex">
+    <div class="mr-4 flex-grow">
+      <form.text-field
+        @field="geoLocation.firstObject"
+        @label="Geocoded Latitude"
+        @aria-label="Geocoded Latitude"
+        @disabled={{true}}
+      />
+    </div>
+    <div class="flex-grow">
+      <form.text-field
+        @field="geoLocation.lastObject"
+        @label="Geocoded Longitude"
+        @aria-label="Geocoded Longitude"
+        @disabled={{true}}
+      />
+    </div>
+  </div>
+  <form.field @field="locationAddress" @label="Address">
+    <LocationAutocompleteInput @locationAddress={{model.locationAddress}} @onPlaceChange={{action "updateLocation"}} />
+  </form.field>
   <div class="flex justify-start items-center my-4 crunchy-form__group">
     <form.text-field
       @field="links.primary_listing"

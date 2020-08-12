@@ -36,6 +36,6 @@ export default class Home extends Trackable {
     //   value => isPresent(value.content || value.id)
     // ),
     description: yup.string().required().label('Description'),
-    title: yup.string().required().max(100).label('Title')
+    // title: yup.string().required().max(100).label('Title')
   });
 }
