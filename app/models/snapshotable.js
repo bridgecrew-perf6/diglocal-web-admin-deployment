@@ -1,4 +1,5 @@
 import Trackable from './trackable';
+import equal from 'fast-deep-equal';
 
 /*
 * Expanded from https://github.com/Oreoz/ember-snapshots
@@ -87,7 +88,7 @@ export default class Snapshotable extends Trackable {
     const snapshot = this.snapshotDiff();
 
     let changed = Object.entries(snapshot).filter(([ , [ oldValue, newValue ] ]) => {
-      return JSON.stringify(oldValue) !== JSON.stringify(newValue);
+      return !equal(oldValue, newValue);
     });
     
     return changed.length > 0;
