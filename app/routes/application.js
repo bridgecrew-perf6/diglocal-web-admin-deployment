@@ -10,7 +10,9 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
   @service firebaseApp;
 
   async beforeModel() {
-    return await this._loadCurrentUser();
+    if (this.session.isAuthenticated) {
+      return await this._loadCurrentUser();
+    }
   }
 
   async sessionAuthenticated() {
@@ -32,11 +34,14 @@ class ApplicationRoute extends Route.extend(ApplicationRouteMixin) {
   }
 
   async _loadCurrentUser() {
-    return await this.currentUser.load().catch(() => {
+    try {
+      let user = await this.currentUser.load();
+      return user;
+    } catch(e) {
       let controller = this.controllerFor('application');
       controller.showForbiddenAlert = true;
       this.session.attemptedTransition = null;
-    });
+    }
   }
 }
 

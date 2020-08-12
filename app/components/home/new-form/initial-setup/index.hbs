@@ -6,35 +6,46 @@
       @searchEnabled={{true}}
       @loadingMessage="Searching businesses...."
       @placeholder="Click to search"
-      @selected={{@model.business}}
+      @selected={{this.selectedBusiness}}
       @allowClear={{false}}
       @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
-      @onChange={{fn (mut @model.business)}} as |business|
+      @onChange={{this.didSelectBusiness}} as |business|
       >
         <span data-test-id="selected-business-name">{{business.name}}</span>
     </PowerSelect>
   </form.field>
-  <form.field @field="location" @label="What location does this home belong to?">
+  <form.field @field="location" @label="Which business location does this home belong to?">
     <PowerSelect
-      @search={{@model.business.locations}}
-      @searchEnabled={{true}}
-      @loadingMessage="Searching locations...."
-      @placeholder="Click to search"
-      @selected={{@model.business.locations.firstObject}}
+      @options={{this.selectedBusiness.locations}}
+      @placeholder="Select location"
+      @selected={{@model.location}}
       @allowClear={{false}}
-      @disabled={{or (is-active "authenticated.region.businesses.view") (not this.currentUser.isAdmin)}}
-      @onChange={{fn (mut @model.business)}} as |business|
+      @onChange={{fn (mut @model.location)}} as |location|
       >
-        <span data-test-id="selected-location-name">{{business.name}}</span>
+        <span data-test-id="selected-location-name">{{location.displayAddress}}</span>
     </PowerSelect>
   </form.field>
 
   <form.text-field
     @field="title"
-    @label="Title"
-    @placeholder="Add a headline for this home"
+    @label="Listing Title"
+    @placeholder="Add a headline for this home listing"
     @controlClass="font-bold"
   />
+
+  <form.text-area
+    @field="description"
+    @label="Description"
+    @rows="5"
+    @placeholder="Add more in-depth description here"
+  />
+
+  <form.text-field
+    @field="subTitle"
+    @label="Subtitle"
+    @placeholder="Add a subtitle"
+  />
+
   <form.text-field
     @field="additionalDetails.mls_number"
     @label="MLS #"
@@ -66,16 +77,27 @@
     @placeholder="Single Family Home, Apartment, ..."
   />
 
-  <form.text-area
-    @field="description"
-    @label="Additional Description"
-    @rows="5"
-    @placeholder="Add more in-depth description here"
-  />
+  <div class="flex flex-wrap md:flex-no-wrap">
+    <div class="w-full md:w-1/2 md:pr-2">
+      <form.text-field
+        @field="price"
+        @label="Price"
+        @placeholder="1000"
+      />
+    </div>
 
-  <form.text-field
-    @field="price"
-    @label="Price"
-    @placeholder="1000"
-  />
+    <div class="w-full md:w-1/2 md:pl-2">
+      <form.field @field="priceTerms" @label="Terms">
+        <PowerSelect
+          @options={{@model.priceTermsOptions}}
+          @selected={{@model.priceTerms}}
+          @placeholder="Select price terms"
+          @allowClear={{true}}
+          @onChange={{fn (mut @model.priceTerms)}} as |term|
+          >
+            <span data-test-id="selected-price-term">{{term}}</span>
+        </PowerSelect>
+      </form.field>
+    </div>
+  </div>
 {{/with}}

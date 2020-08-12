@@ -12,6 +12,7 @@ export default class AuthenticatedRegionBusinessesViewHomesNewController extends
 
   @action
   rollbackModel() {
-    this.model.rollbackAttributes();
+    let { home } = this.model;
+    home.rollbackAttributes();
   }
 }
