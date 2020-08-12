@@ -8,6 +8,11 @@
     />
   {{/if}}
   <card.header class="flex justify-between">
+    <div class="flex w-full mr-2">
+      <p class="font-bold text-brand-primary-accent inline-block tracking-wide text-sm">
+        {{@model.location.business.name}}
+      </p>
+    </div>
     <CrunchyButton
       @onClick={{fn @onSelect @model}}
       @class="crunchy-button--link"
@@ -16,9 +21,18 @@
     />
   </card.header>
   <card.body>
-    <p class="font-bold text-sm sm:text-base lg:text-lg">{{@model.title}}</p>
-    <p class="font-bold text-sm sm:text-base lg:text-lg text-gray-600">{{@model.additionalDetails.bedrooms}}BR / {{@model.additionalDetails.bathrooms}}BA</p>
-    <p class="text-sm font-medium">{{@model.location.business.name}}</p>
+    <p class="font-bold text-sm sm:text-base lg:text-lg">{{or @model.title "Untitled Listing"}}</p>
+    <dl aria-label="Details for home listing" class="mb-1 text-xs lg:text-sm">
+      <div class="inline-flex mr-1">
+        <dt class="pr-1 text-gray-600">Beds:</dt>
+        <dd>{{or @model.additionalDetails.bedrooms "-"}}</dd>
+      </div>
+      <div class="inline-flex mr-1">
+        <dt class="pr-1 text-gray-600">Baths:</dt>
+        <dd>{{or @model.additionalDetails.bathrooms "-"}}</dd>
+      </div>
+    </dl>
+    <p class="text-xs lg:text-sm">{{truncate-text @model.description limit=(if (media "isMobile") "100" "200")}}</p>
     <ul class="absolute left-0 bottom-0 p-1 pt-0 w-full bg-white">
       <CrunchyChip
         @tagName="li"
@@ -26,11 +40,6 @@
         @label={{if @model.active "Active" "Inactive"}}
         @class={{if @model.active "crunchy-chip--accent" "crunchy-chip--accent-2"}}
       />
-      {{#each @model.location.business.categories as |category|}}
-        <CrunchyChip @tagName="li">
-          {{category.longName}}
-        </CrunchyChip>
-      {{/each}}
       {{#if @model.links.primary_listing}}
         <CrunchyChip @tagName="li" @title={{@model.links.primary_listing}}>
           <FaIcon @icon="home" />{{#if @model.additionalDetails.mls_number}}&nbsp;{{@model.additionalDetails.mls_number}}{{/if}}

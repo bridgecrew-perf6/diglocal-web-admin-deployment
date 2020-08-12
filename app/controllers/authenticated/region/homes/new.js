@@ -7,7 +7,8 @@ export default class AuthenticatedRegionHomesNewController extends Controller {
 
   @action
   afterSave(model) {
-    let business = model.belongsTo('business').value();
+    let location = model.belongsTo('location').value();
+    let business = location.belongsTo('business').value();
     this.router.transitionTo('authenticated.region.businesses.view.homes.view', business.id, model.id);
   }
 

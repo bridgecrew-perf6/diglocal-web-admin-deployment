@@ -26,16 +26,26 @@ export default class Home extends Trackable {
   ** Computed Properties  **
   *************************/
 
+  get priceTermsOptions() {
+    return [
+      'Month',
+      'Week',
+      'Night',
+      'Purchase'
+    ];
+  }
+
   /*************************
   **  Validation Schema   **
   *************************/
   validationSchema = yup.object().shape({
-    // location: yup.object().test(
-    //   'has-location',
-    //   'Location is a required field',
-    //   value => isPresent(value.content || value.id)
-    // ),
+    location: yup.object().test(
+      'has-location',
+      'Location is a required field',
+      value => isPresent(value.content || value.id)
+    ),
+    title: yup.string().required().max(100).label('Title'),
     description: yup.string().required().label('Description'),
-    // title: yup.string().required().max(100).label('Title')
+    // subTitle: yup.string().required().max(100).label('Subtitle')
   });
 }
