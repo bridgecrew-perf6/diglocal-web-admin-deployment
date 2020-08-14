@@ -21,6 +21,7 @@ export default class Home extends Trackable {
 
   @belongsTo('location') location;
   @hasMany('digitalAsset') digitalAssets;
+  @belongsTo('digitalAsset') avatar;
 
   /*************************
   ** Computed Properties  **
