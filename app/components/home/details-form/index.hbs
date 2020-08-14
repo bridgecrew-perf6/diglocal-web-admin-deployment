@@ -10,10 +10,10 @@
       <div class="flex flex-col items-center">
         <div style={{background-image @model.digitalAssets.firstObject.downloadUrls.original}}
           class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
-{{!--           <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new scoop image"
+          <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new home images"
             @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
             <FaIcon @icon="pencil-alt" />
-          </CrunchyButton> --}}
+          </CrunchyButton>
         </div>
         <div class="w-full py-8 px-4">
           <form.checkbox @field="active" @label="Active" />
@@ -52,24 +52,30 @@
           @label="Bedrooms"
           @placeholder="3"
           @controlClass="font-bold"
+          @type="number"
         />
         <form.text-field
           @field="additionalDetails.bathrooms"
           @label="Bathrooms"
           @placeholder="2"
           @controlClass="font-bold"
+          @type="number"
         />
         <form.text-field
           @field="additionalDetails.building_size"
-          @label="Building Size"
-          @placeholder="1200SQFT"
+          @label="Building Size (SQFT)"
+          @placeholder="1200"
+          @type="number"
         />
         <form.text-field
           @field="additionalDetails.lot_size"
-          @label="Lot Size"
-          @placeholder="1.9 Acre"
+          @label="Lot Size (Acre)"
+          @placeholder="1.9"
+          @type="number"
+          @step="0.01"
         />
         <form.text-field
+          @type="number"
           @field="additionalDetails.year_built"
           @label="Year Built"
           @placeholder="2013"
@@ -82,6 +88,7 @@
         <div class="flex flex-wrap md:flex-no-wrap">
           <div class="w-full md:w-1/2 md:pr-2">
             <form.text-field
+              @type="number"
               @field="price"
               @label="Price"
               @placeholder="1000"
@@ -210,12 +217,12 @@
     @translucentOverlay={{true}}
     @onClose={{this.cancelUpload}}
   as |modal|>
-    <AttributeImageUploader
-      @model={{@model}}
-      @modelType="home"
-      @keyForImage="image"
-      @onAllFilesUploadComplete={{perform this.onUploadImageComplete}}
-    as |uploader|>
+    <FirebaseUploader
+      @pathName="homes"
+      @uploadCompleteAction={{action "onFileUploadComplete"}}
+      @onAllFilesUploadComplete={{action "onAllFilesUploadComplete"}}
+      as |uploader|
+    >
       <modal.header>
         Upload Image
       </modal.header>
@@ -223,26 +230,28 @@
         <div class="h-48 rounded border border-brand-gray border-dashed my-6">
             <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
               {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
-                {{#unless uploader.uploadTasks.length}}
+                {{#unless uploader.uploadStatuses.length}}
                   <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
                     <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
                     Click or drop file here
                   </span>
                 {{/unless}}
                 <div class="flex flex-wrap justify-start">
-                  {{#each uploader.uploadTasks as |task|}}
+                  {{#each uploader.uploadStatuses as |task|}}
                     <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
-                      {{#if (not (eq task.status "pending"))}}
+                      {{#if (not (eq task.state "pending"))}}
                         <img src={{task.preview}} alt="File Upload Preview">
                       {{/if}}
                       <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
-                        {{#if (or task.isRunning (eq task.status "pending"))}}
+                        {{#if (or task.isRunning (eq task.state "pending"))}}
                           <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
                         {{else if (eq task.status "complete")}}
                           <FaIcon @icon="check-circle" class="text-green-600" />
                         {{else if (eq task.status "error")}}
                           <FaIcon @icon="times-circle" class="text-brand-error" />
                         {{/if}}
+                        <Ui::UiProgress @progress={{task.progres}} />
+                        {{task.state}}
                       </div>
                     </div>
                   {{/each}}
@@ -266,6 +275,6 @@
           {{/if}}
         </ul>
       </modal.footer>
-    </AttributeImageUploader>
+    </FirebaseUploader>
   </CrunchyModal>
 {{/if}}

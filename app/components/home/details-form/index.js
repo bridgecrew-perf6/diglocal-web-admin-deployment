@@ -9,15 +9,18 @@ import config from 'diglocal-manage/config/environment';
 const INPUT_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 
 export default class DetailsForm extends Component {
-  @service regions;
-  @service store;
+  @service ajax;
   @service currentUser;
-  @service router;
   @service notifications;
+  @service regions;
+  @service router;
+  @service store;
 
   @tracked showDestroyModal = false;
   @tracked showEventFields = true;
   @tracked showUploadModal = false;
+
+  assets = [];
 
   rollbackModel() {
     if (this.args.rollbackModel) {
@@ -91,5 +94,35 @@ export default class DetailsForm extends Component {
       placeDetails.geometry.location.lat(),
       placeDetails.geometry.location.lng()
     ];
+  }
+
+  @action
+  onFileUploadComplete(details) {
+    let asset = this.store.createRecord('digitalAsset', {
+      bucket: details.metadata.bucket,
+      filename: details.metadata.name,
+      fullPath: details.metadata.fullPath,
+      size: details.metadata.size,
+      contentType: details.metadata.contentType,
+      raw: details.metadata
+    });
+    this.assets.addObject(asset);
+  }
+
+  @action
+  async onAllFilesUploadComplete() {
+    for (let asset of this.assets) {
+      asset.downloadUrls = (await this.ajax.post(`${config.firebase.cloudFunctions}/generateThumbnails`, {
+      headers: {
+        'content-type': 'application/json'
+      },
+      data: {
+        data: Object.assign(asset.raw, { sizes: ['256_outside', '512_outside', '1024_outside'] })
+      }
+    })).result.downloadURLs;
+      await asset.save();
+      this.args.model.digitalAssets.addObject(asset);
+    }
+    this.args.model.save();
   }
 }

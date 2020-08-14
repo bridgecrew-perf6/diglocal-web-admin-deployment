@@ -63,18 +63,22 @@
   />
   <form.text-field
     @field="additionalDetails.building_size"
-    @label="Building Size"
-    @placeholder="1200SQFT"
+    @label="Building Size (SQFT)"
+    @placeholder="1200"
+    @type="number"
   />
   <form.text-field
     @field="additionalDetails.lot_size"
-    @label="Lot Size"
-    @placeholder="1.9 Acre"
+    @label="Lot Size Acre"
+    @placeholder="1.9"
+    @step="0.01"
+    @type="number"
   />
   <form.text-field
     @field="additionalDetails.year_built"
     @label="Year Built"
     @placeholder="2013"
+    @type="number"
   />
   <form.text-field
     @field="additionalDetails.building_type"
@@ -88,6 +92,7 @@
         @field="price"
         @label="Price"
         @placeholder="1000"
+        @type="number"
       />
     </div>
 

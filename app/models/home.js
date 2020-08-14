@@ -31,7 +31,9 @@ export default class Home extends Trackable {
       'Month',
       'Week',
       'Night',
-      'Purchase'
+      'Purchase',
+      'Coming Soon',
+      'Sold'
     ];
   }
 
@@ -46,6 +48,7 @@ export default class Home extends Trackable {
     ),
     title: yup.string().required().max(100).label('Title'),
     description: yup.string().required().label('Description'),
+    price: yup.number("Price is not a number").round().integer("Price must be rounded to nearest dollar"),
     // subTitle: yup.string().required().max(100).label('Subtitle')
   });
 }
