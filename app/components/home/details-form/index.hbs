@@ -243,15 +243,13 @@
                         <img src={{task.preview}} alt="File Upload Preview">
                       {{/if}}
                       <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
-                        {{#if (or task.isRunning (eq task.state "pending"))}}
+                        {{#if (eq task.state "running")}}
                           <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
-                        {{else if (eq task.status "complete")}}
+                        {{else if (eq task.state "success")}}
                           <FaIcon @icon="check-circle" class="text-green-600" />
-                        {{else if (eq task.status "error")}}
+                        {{else if (eq task.state "error")}}
                           <FaIcon @icon="times-circle" class="text-brand-error" />
                         {{/if}}
-                        <Ui::UiProgress @progress={{task.progres}} />
-                        {{task.state}}
                       </div>
                     </div>
                   {{/each}}
