@@ -54,7 +54,14 @@ export default class CurrentUserService extends Service {
     try {
       let { currentUser } = yield this.firebaseApp.auth();
 
-      let results = yield this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: 'profileImages,businesses,businesses.region' });
+      let includes = [
+        'profileImages',
+        'businesses',
+        'businesses.region',
+        'businesses.categories'
+      ];
+
+      let results = yield this.store.query('user', { filter: { firebaseId: currentUser.uid}, include: includes.join(',') });
       let userModel = results.firstObject;
       
       this.user = userModel;
