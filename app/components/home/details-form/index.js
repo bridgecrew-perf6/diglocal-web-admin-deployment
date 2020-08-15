@@ -64,7 +64,7 @@ export default class DetailsForm extends Component {
   @task(function*() {
     yield this.args.model.deleteRecord();
     yield this.args.model.save();
-    this.router.transitionTo('authenticated.region.businesses.view.scoops.index');
+    this.router.transitionTo('authenticated.region.businesses.view.homes.index');
   })
   deleteTask;
 
