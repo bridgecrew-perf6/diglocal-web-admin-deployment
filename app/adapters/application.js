@@ -2,7 +2,6 @@ import DS from 'ember-data';
 import { inject as service } from '@ember/service';
 import { isArray } from '@ember/array';
 import config from 'diglocal-manage/config/environment';
-import { Promise } from 'rsvp';
 
 export default DS.JSONAPIAdapter.extend({
   host: config.apiHost,

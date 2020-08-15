@@ -40,81 +40,114 @@
           @controlClass="font-bold"
         />
 
-        <form.text-field
-          @field="additionalDetails.mls_number"
-          @label="MLS #"
-          @placeholder="1231"
-          @controlClass="font-bold"
-        />
+        <form.text-area
+          @field="description"
+          @label="Description"
+          @aria-label="Description"
+          @rows="5"
+          @placeholder="Add some additional details" />
 
-        <form.text-field
-          @field="additionalDetails.bedrooms"
-          @label="Bedrooms"
-          @placeholder="3"
-          @controlClass="font-bold"
-          @type="number"
-        />
-        <form.text-field
-          @field="additionalDetails.bathrooms"
-          @label="Bathrooms"
-          @placeholder="2"
-          @controlClass="font-bold"
-          @type="number"
-        />
-        <form.text-field
-          @field="additionalDetails.building_size"
-          @label="Building Size (SQFT)"
-          @placeholder="1200"
-          @type="number"
-        />
-        <form.text-field
-          @field="additionalDetails.lot_size"
-          @label="Lot Size (Acre)"
-          @placeholder="1.9"
-          @type="number"
-          @step="0.01"
-        />
-        <form.text-field
-          @type="number"
-          @field="additionalDetails.year_built"
-          @label="Year Built"
-          @placeholder="2013"
-        />
-        <form.text-field
-          @field="additionalDetails.building_type"
-          @label="Building Type"
-          @placeholder="Single Family Home, Apartment, ..."
-        />
         <div class="flex flex-wrap md:flex-no-wrap">
-          <div class="w-full md:w-1/2 md:pr-2">
+          <div class="w-full md:w-1/4 md:pr-1">
             <form.text-field
-              @type="number"
-              @field="price"
-              @label="Price"
-              @placeholder="1000"
+                @field="additionalDetails.mls_number"
+                @label="MLS #"
+                @placeholder="1231"
+                class="pr-2"
+              />
+          </div>
+
+          <div class="w-full md:w-3/4 md:pl-1">
+            <form.text-field
+              @field="links.primary_listing"
+              @label="Primary Listing"
+              @placeholder="https://my-amazing-listing.com"
             />
           </div>
-          <div class="w-full md:w-1/2 md:pl-2">
-            <form.field @field="priceTerms" @label="Terms">
-              <PowerSelect
-                @options={{@model.priceTermsOptions}}
-                @selected={{@model.priceTerms}}
-                @placeholder="Select price terms"
-                @allowClear={{true}}
-                @onChange={{fn (mut @model.priceTerms)}} as |term|
-                >
-                  <span data-test-id="selected-price-term">{{term}}</span>
-              </PowerSelect>
-            </form.field>
-          </div>
         </div>
-        <form.text-area @field="description" @label="Additional Details" @aria-label="Additional Details" @rows="5"
-          @placeholder="Add some additional details" />
-        <form.text-field
-          @field="links.primary_listing"
-          @label="Primary Listing"
-          @placeholder="https://my-amazing-listing.com"
-        />
+
+        <Ui::CollapsibleSection @title="Property Information" @open={{true}}>
+          <div class="flex flex-wrap md:flex-no-wrap">
+            <div class="w-full md:w-1/4 md:pr-1">
+              <form.text-field
+                @field="additionalDetails.bedrooms"
+                @label="Bedrooms"
+                @placeholder="3"
+                @type="number"
+              />
+            </div>
+            <div class="w-full md:w-1/4 md:px-1">
+              <form.text-field
+                @field="additionalDetails.bathrooms"
+                @label="Bathrooms"
+                @placeholder="2"
+                @type="number"
+              />
+            </div>
+
+            <div class="w-full md:w-1/4 md:px-1">
+              <form.text-field
+                @field="additionalDetails.building_size"
+                @label="Building Size (SQFT)"
+                @placeholder="1200"
+                @type="number"
+                @labelClass="whitespace-no-wrap overflow-hidden"
+              />
+            </div>
+            <div class="w-full md:w-1/4 md:pl-1">
+              <form.text-field
+                @field="additionalDetails.lot_size"
+                @label="Lot Size (Acre)"
+                @placeholder="1.9"
+                @type="number"
+                @step="0.01"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap md:flex-no-wrap">
+            <div class="w-full md:w-1/4 md:pr-1">
+              <form.text-field
+                @type="number"
+                @field="additionalDetails.year_built"
+                @label="Year Built"
+                @placeholder="2013"
+              />
+            </div>
+
+            <div class="w-full md:w-3/4 md:pl-1">
+              <form.text-field
+                @field="additionalDetails.building_type"
+                @label="Building Type"
+                @placeholder="Single Family Home, Apartment, ..."
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap md:flex-no-wrap">
+            <div class="w-full md:w-1/2 md:pr-2">
+              <form.text-field
+                @type="number"
+                @field="price"
+                @label="Price"
+                @placeholder="1000"
+              />
+            </div>
+            <div class="w-full md:w-1/2 md:pl-2">
+              <form.field @field="priceTerms" @label="Terms">
+                <PowerSelect
+                  @options={{@model.priceTermsOptions}}
+                  @selected={{@model.priceTerms}}
+                  @placeholder="Select price terms"
+                  @allowClear={{true}}
+                  @onChange={{fn (mut @model.priceTerms)}} as |term|
+                  >
+                    <span data-test-id="selected-price-term">{{term}}</span>
+                </PowerSelect>
+              </form.field>
+            </div>
+          </div>
+        </Ui::CollapsibleSection>
 
         <Ui::CollapsibleSection @title="Address" @open={{false}}>
           <form.text-field

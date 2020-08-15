@@ -1,0 +1,10 @@
+<div class="fixed w-full border-b"></div>
+<div class="container pt-4">
+  <Home::NewForm
+    @model={{@model.home}}
+    @preselectedBusiness={{@model.business}}
+    @afterSave={{this.afterSave}}
+    @rollbackModel={{this.rollbackModel}}
+    @onFileUploadComplete={{this.onFileUploadComplete}}
+  />
+</div>

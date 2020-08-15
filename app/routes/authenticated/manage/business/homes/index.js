@@ -3,8 +3,8 @@ import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 import removeEmpty from 'diglocal-manage/helpers/remove-empty';
 
-export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Route {
-  @service ellaSparse;
+export default class AuthenticatedManageBusinessHomesIndexRoute extends Route {
+ @service ellaSparse;
 
   queryParams = {
     search: { refreshModel: true },
@@ -16,7 +16,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
   };
 
   model(params) {
-    let business = this.modelFor('authenticated.region.businesses.view');
+    let business = this.modelFor('authenticated.manage.business');
 
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
       let page = {
@@ -25,7 +25,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       };
       let filter = removeEmpty(params);
 
-      filter.businenss = business.id;
+      filter.business = business.id;
       filter.active = [true,false];
 
       let sort = filter.sort;

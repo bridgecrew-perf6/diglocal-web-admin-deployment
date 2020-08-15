@@ -77,6 +77,11 @@ Router.map(function() {
         this.route('users');
         this.route('photos');
         this.route('locations');
+        this.route('homes', function() {
+          this.route('index', { path: '/' });
+          this.route('view', { path: '/:manage_home_id'});
+          this.route('new');
+        });
       });
       this.route('select-business');
     });
