@@ -135,7 +135,6 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
       console.log(e);
     }
     return;
-
   });
   // 4. Run the upload operations
   await Promise.all(uploadPromises);
