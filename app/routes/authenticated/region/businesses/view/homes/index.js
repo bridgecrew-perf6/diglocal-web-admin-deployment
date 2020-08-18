@@ -25,7 +25,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       };
       let filter = removeEmpty(params);
 
-      filter.businenss = business.id;
+      filter.business = business.id;
       filter.active = [true,false];
 
       let sort = filter.sort;
