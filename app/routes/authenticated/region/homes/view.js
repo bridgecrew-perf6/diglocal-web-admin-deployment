@@ -5,7 +5,7 @@ export default class AuthenticatedRegionHomesViewRoute extends Route {
   @tracked breadCrumb;
 
   model(params) {
-    return this.store.findRecord('home', params.home_id, { include: 'location,location.business' } );
+    return this.store.findRecord('home', params.home_id, { include: 'location,location.business,digitalAssets,avatar' } );
   }
 
   afterModel(model) {

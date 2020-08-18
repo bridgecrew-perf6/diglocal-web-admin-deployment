@@ -5,7 +5,7 @@ export default class AuthenticatedManageBusinessHomesViewRoute extends Route {
   @tracked breadCrumb;
 
   model(params) {
-    return this.store.findRecord('home', params.manage_home_id, { include: 'location,location.business' } );
+    return this.store.findRecord('home', params.manage_home_id, { include: 'location,location.business,digitalAssets,avatar' } );
   }
 
   afterModel(model) {

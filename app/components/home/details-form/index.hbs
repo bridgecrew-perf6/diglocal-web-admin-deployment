@@ -249,38 +249,37 @@
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
     @onClose={{this.cancelUpload}}
-  as |modal|>
+    as |modal|>
     <FirebaseUploader
       @pathName="homes"
-      @uploadCompleteAction={{action "onFileUploadComplete"}}
-      @onAllFilesUploadComplete={{action "onAllFilesUploadComplete"}}
-      as |uploader|
-    >
+      @onUploadComplete={{this.onFileUploadComplete}}
+      @onAllFilesUploadComplete={{this.onAllFilesUploadComplete}}
+      as |uploader|>
       <modal.header>
-        Upload Image
+        Upload photos
       </modal.header>
       <modal.body>
         <div class="h-48 rounded border border-brand-gray border-dashed my-6">
             <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
-              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
-                {{#unless uploader.uploadStatuses.length}}
+              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles}}
+                {{#unless uploader.uploadTasks.length}}
                   <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
                     <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
                     Click or drop file here
                   </span>
                 {{/unless}}
                 <div class="flex flex-wrap justify-start">
-                  {{#each uploader.uploadStatuses as |task|}}
+                  {{#each uploader.uploadTasks as |task|}}
                     <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
-                      {{#if (not (eq task.state "pending"))}}
+                      {{#if (not (eq task.status "pending"))}}
                         <img src={{task.preview}} alt="File Upload Preview">
                       {{/if}}
                       <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
-                        {{#if (eq task.state "running")}}
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
                           <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
-                        {{else if (eq task.state "success")}}
+                        {{else if (eq task.status "complete")}}
                           <FaIcon @icon="check-circle" class="text-green-600" />
-                        {{else if (eq task.state "error")}}
+                        {{else if (eq task.status "error")}}
                           <FaIcon @icon="times-circle" class="text-brand-error" />
                         {{/if}}
                       </div>
@@ -302,10 +301,12 @@
             {{/if}}
           {{/if}}
           {{#if uploader.uploadImageTask.isRunning}}
-            <li>Uploading image...</li>
+            <li>{{uploader.uploadImageTask.numQueued}} of {{pluralize uploader.uploadTasks.length "file"}} remaining.</li>
           {{/if}}
         </ul>
       </modal.footer>
     </FirebaseUploader>
   </CrunchyModal>
 {{/if}}
+
+
