@@ -12,7 +12,7 @@ export default class AuthenticatedManageBusinessRoute extends Route {
   breadCrumb = null;
 
   model(params) {
-    return this.store.findRecord('business', params.manage_business_id);
+    return this.store.findRecord('business', params.manage_business_id, { include: 'categories,locations' });
   }
 
   afterModel(model) {

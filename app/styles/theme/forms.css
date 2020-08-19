@@ -114,6 +114,20 @@ button:disabled, input:disabled, textarea:disabled {
     }
   }
 
+  &--accent {
+    @apply transition bg-brand-primary-accent border-brand-primary-accent border text-white text-base font-medium py-2 px-4 rounded;
+
+    &:hover, &:active {
+      @apply border-transparent;
+      background-color: #82a043;
+    }
+
+    &:disabled {
+      background-color: rgba(138, 174, 63, 0.6);
+      @apply border-transparent;
+    }
+  }
+
   &--outline, &--cancel, &--modal-cancel {
     @apply transition bg-transparent text-brand-primary border-brand-primary text-base font-medium py-2 px-4 rounded border;
 

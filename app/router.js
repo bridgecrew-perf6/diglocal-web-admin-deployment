@@ -1,9 +1,7 @@
-import classic from 'ember-classic-decorator';
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
-@classic
-class Router extends EmberRouter {
+export default class Router extends EmberRouter {
   location = config.locationType;
   rootURL = config.rootURL;
 }
@@ -77,6 +75,11 @@ Router.map(function() {
         this.route('users');
         this.route('photos');
         this.route('locations');
+        this.route('homes', function() {
+          this.route('index', { path: '/' });
+          this.route('view', { path: '/:manage_home_id'});
+          this.route('new');
+        });
       });
       this.route('select-business');
     });
@@ -87,5 +90,3 @@ Router.map(function() {
 
   this.route('manage', function() {});
 });
-
-export default Router;

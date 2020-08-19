@@ -2,6 +2,14 @@ import Component from '@glimmer/component';
 import { get, set, action } from '@ember/object';
 
 export default class PhotoGridComponent extends Component {
+  get newImageSrcAttr() {
+    return this.args.newImageSrcAttr || 'url';
+  }
+
+  get imageSrcAttr() {
+    return this.args.imageSrcAttr || 'sizes.mobile';
+  }
+
   @action
   dragEnd ({sourceList, sourceIndex, targetList, targetIndex}) {
     if (sourceList === targetList && sourceIndex === targetIndex) { return; }

@@ -1,4 +1,8 @@
-{{yield (hash didSelectFiles=(action "didSelectFiles")
-              uploadStatuses=this.uploadStatuses
+{{yield (hash didSelectFiles=this.didSelectFiles
+              pathName=this.pathName
+              uploadImageTask=this.uploadImageTask
+              uploadTasks=this.uploadTasks
               totalFiles=this.totalFiles
-              totalFilesUploaded=this.totalFilesUploaded)}}
+              totalFilesUploaded=this.totalFilesUploaded
+              completeTasks=this.completeTasks
+              errorTasks=this.errorTasks)}}

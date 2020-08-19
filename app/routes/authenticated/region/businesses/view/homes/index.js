@@ -16,8 +16,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
   };
 
   model(params) {
-    // TODO: This needs to be restricted to location in a better way.
-    let locationId = this.modelFor('authenticated.region.businesses.view').locations.firstObject.id;
+    let business = this.modelFor('authenticated.region.businesses.view');
 
     return get(this, 'ellaSparse').array((range = {}, query = {}) => {
       let page = {
@@ -26,7 +25,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       };
       let filter = removeEmpty(params);
 
-      filter.location = locationId;
+      filter.business = business.id;
       filter.active = [true,false];
 
       let sort = filter.sort;
@@ -35,7 +34,7 @@ export default class AuthenticatedRegionBusinessesViewHomesIndexRoute extends Ro
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
       query = Object.assign({ filter, page, sort }, query);
-      query.include = 'location,location.business,location.business.categories,digitalAssets';
+      query.include = 'location,location.business,location.business.categories,avatar,digitalAssets';
 
       // Return a Promise that resolves with the array of fetched data
       // and the total available records

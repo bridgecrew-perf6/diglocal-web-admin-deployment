@@ -1,15 +1,15 @@
 import Route from '@ember/routing/route';
 import { tracked } from '@glimmer/tracking';
 
-export default class AuthenticatedRegionHomesViewRoute extends Route {
+export default class AuthenticatedManageBusinessHomesViewRoute extends Route {
   @tracked breadCrumb;
 
   model(params) {
-    return this.store.findRecord('home', params.home_id, { include: 'location,location.business,digitalAssets,avatar' } );
+    return this.store.findRecord('home', params.manage_home_id, { include: 'location,location.business,digitalAssets,avatar' } );
   }
 
   afterModel(model) {
-    let modelName = model.description;
+    let modelName = model.title;
 
     if (modelName) {
       this.breadCrumb = {

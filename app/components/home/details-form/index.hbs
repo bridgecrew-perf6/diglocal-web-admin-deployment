@@ -8,12 +8,12 @@
   as |form|>
     <div class="flex flex-col md:flex-row mb-4">
       <div class="flex flex-col items-center">
-        <div style={{background-image @model.digitalAssets.firstObject.downloadUrls.original}}
+        <div style={{background-image @model.avatar.downloadUrls.original}}
           class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
-          <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new home images"
+          {{!-- <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new home images"
             @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
             <FaIcon @icon="pencil-alt" />
-          </CrunchyButton>
+          </CrunchyButton> --}}
         </div>
         <div class="w-full py-8 px-4">
           <form.checkbox @field="active" @label="Active" />
@@ -40,81 +40,114 @@
           @controlClass="font-bold"
         />
 
-        <form.text-field
-          @field="additionalDetails.mls_number"
-          @label="MLS #"
-          @placeholder="1231"
-          @controlClass="font-bold"
-        />
+        <form.text-area
+          @field="description"
+          @label="Description"
+          @aria-label="Description"
+          @rows="5"
+          @placeholder="Add some additional details" />
 
-        <form.text-field
-          @field="additionalDetails.bedrooms"
-          @label="Bedrooms"
-          @placeholder="3"
-          @controlClass="font-bold"
-          @type="number"
-        />
-        <form.text-field
-          @field="additionalDetails.bathrooms"
-          @label="Bathrooms"
-          @placeholder="2"
-          @controlClass="font-bold"
-          @type="number"
-        />
-        <form.text-field
-          @field="additionalDetails.building_size"
-          @label="Building Size (SQFT)"
-          @placeholder="1200"
-          @type="number"
-        />
-        <form.text-field
-          @field="additionalDetails.lot_size"
-          @label="Lot Size (Acre)"
-          @placeholder="1.9"
-          @type="number"
-          @step="0.01"
-        />
-        <form.text-field
-          @type="number"
-          @field="additionalDetails.year_built"
-          @label="Year Built"
-          @placeholder="2013"
-        />
-        <form.text-field
-          @field="additionalDetails.building_type"
-          @label="Building Type"
-          @placeholder="Single Family Home, Apartment, ..."
-        />
         <div class="flex flex-wrap md:flex-no-wrap">
-          <div class="w-full md:w-1/2 md:pr-2">
+          <div class="w-full md:w-1/4 md:pr-1">
             <form.text-field
-              @type="number"
-              @field="price"
-              @label="Price"
-              @placeholder="1000"
+                @field="additionalDetails.mls_number"
+                @label="MLS #"
+                @placeholder="1231"
+                class="pr-2"
+              />
+          </div>
+
+          <div class="w-full md:w-3/4 md:pl-1">
+            <form.text-field
+              @field="links.primary_listing"
+              @label="Primary Listing"
+              @placeholder="https://my-amazing-listing.com"
             />
           </div>
-          <div class="w-full md:w-1/2 md:pl-2">
-            <form.field @field="priceTerms" @label="Terms">
-              <PowerSelect
-                @options={{@model.priceTermsOptions}}
-                @selected={{@model.priceTerms}}
-                @placeholder="Select price terms"
-                @allowClear={{true}}
-                @onChange={{fn (mut @model.priceTerms)}} as |term|
-                >
-                  <span data-test-id="selected-price-term">{{term}}</span>
-              </PowerSelect>
-            </form.field>
-          </div>
         </div>
-        <form.text-area @field="description" @label="Additional Details" @aria-label="Additional Details" @rows="5"
-          @placeholder="Add some additional details" />
-        <form.text-field
-          @field="links.primary_listing"
-          @label="Primary Listing"
-          @placeholder="https://my-amazing-listing.com"
-        />
+
+        <Ui::CollapsibleSection @title="Property Information" @open={{true}}>
+          <div class="flex flex-wrap md:flex-no-wrap">
+            <div class="w-full md:w-1/4 md:pr-1">
+              <form.text-field
+                @field="additionalDetails.bedrooms"
+                @label="Bedrooms"
+                @placeholder="3"
+                @type="number"
+              />
+            </div>
+            <div class="w-full md:w-1/4 md:px-1">
+              <form.text-field
+                @field="additionalDetails.bathrooms"
+                @label="Bathrooms"
+                @placeholder="2"
+                @type="number"
+              />
+            </div>
+
+            <div class="w-full md:w-1/4 md:px-1">
+              <form.text-field
+                @field="additionalDetails.building_size"
+                @label="Building Size (SQFT)"
+                @placeholder="1200"
+                @type="number"
+                @labelClass="whitespace-no-wrap overflow-hidden"
+              />
+            </div>
+            <div class="w-full md:w-1/4 md:pl-1">
+              <form.text-field
+                @field="additionalDetails.lot_size"
+                @label="Lot Size (Acre)"
+                @placeholder="1.9"
+                @type="number"
+                @step="0.01"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap md:flex-no-wrap">
+            <div class="w-full md:w-1/4 md:pr-1">
+              <form.text-field
+                @type="number"
+                @field="additionalDetails.year_built"
+                @label="Year Built"
+                @placeholder="2013"
+              />
+            </div>
+
+            <div class="w-full md:w-3/4 md:pl-1">
+              <form.text-field
+                @field="additionalDetails.building_type"
+                @label="Building Type"
+                @placeholder="Single Family Home, Apartment, ..."
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap md:flex-no-wrap">
+            <div class="w-full md:w-1/2 md:pr-2">
+              <form.text-field
+                @type="number"
+                @field="price"
+                @label="Price"
+                @placeholder="1000"
+              />
+            </div>
+            <div class="w-full md:w-1/2 md:pl-2">
+              <form.field @field="priceTerms" @label="Terms">
+                <PowerSelect
+                  @options={{@model.priceTermsOptions}}
+                  @selected={{@model.priceTerms}}
+                  @placeholder="Select price terms"
+                  @allowClear={{true}}
+                  @onChange={{fn (mut @model.priceTerms)}} as |term|
+                  >
+                    <span data-test-id="selected-price-term">{{term}}</span>
+                </PowerSelect>
+              </form.field>
+            </div>
+          </div>
+        </Ui::CollapsibleSection>
 
         <Ui::CollapsibleSection @title="Address" @open={{false}}>
           <form.text-field
@@ -180,8 +213,59 @@
           </div>
 
           <form.field @field="locationAddress" @label="Address">
-            <LocationAutocompleteInput @locationAddress={{model.locationAddress}} @onPlaceChange={{action "updateLocation"}} />
+            <LocationAutocompleteInput @locationAddress={{@model.locationAddress}} @onPlaceChange={{this.updateLocation}} />
           </form.field>
+        </Ui::CollapsibleSection>
+
+        <Ui::CollapsibleSection @title="Photos" @open={{true}}>
+          <div class="flex h-10 justify-between">
+            {{#if this.selectedPhotos.length}}
+              <div class="mx-4 flex items-center">
+                <p>{{pluralize this.selectedPhotos.length "photo"}} selected</p>
+                <button {{on "click" this.clearAllSelectedPhotos}} type="button" class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
+                  <FaIcon @icon="times" @size="xs" class="mr-1" /> Clear Selected
+                </button>
+              </div>
+              <div>
+                {{#if (eq this.selectedPhotos.length 1)}}
+                  <CrunchyButton
+                    @onClick={{this.promoteHero}}
+                    @aria-label="Make selected image the hero image for this home"
+                    @class="crunchy-button--accent crunchy-button--text-sm whitespace-no-wrap mr-1"
+                    @disabled={{or (gt this.selectedPhotos.length 1) this.promoteHeroImage.isRunning}}>
+                    <FaIcon @icon="star" @size="sm" class="mr-1" /> Make Hero Image
+                  </CrunchyButton>
+                {{/if}}
+                <CrunchyButton
+                  @onClick={{fn (mut this.showPhotoDestroyModal) true}}
+                  @aria-label="Delete selected photos"
+                  @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap"
+                  @disabled={{not this.selectedPhotos.length}}>
+                  <FaIcon @icon="trash" @size="sm" class="mr-1" /> Delete Photos ({{this.selectedPhotos.length}})
+                </CrunchyButton>
+              </div>
+            {{else}}
+              <p class="flex items-center mx-2">Select photos to remove or choose a hero image.</p>
+              <CrunchyButton
+                @onClick={{fn (mut this.showUploadModal) true}}
+                @aria-label="Upload a new photo"
+                @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
+                <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Photos
+              </CrunchyButton>
+            {{/if}}
+          </div>
+          {{#if this.photoErrorMessage}}
+            <div class="flex justify-end">
+              <p class="text-brand-error text-sm mx-4 my-1">{{this.photoErrorMessage}}</p>
+            </div>
+          {{/if}}
+          <Photo::Grid
+            @model={{reject-by "isNew" @model.digitalAssets}}
+            @newImageSrcAttr="downloadUrls.256_outside"
+            @imageSrcAttr="downloadUrls.256_outside"
+            @selectedPhotos={{this.selectedPhotos}}
+            @didUpdateSelected={{fn (mut this.selectedPhotos)}}
+          />
         </Ui::CollapsibleSection>
       </div>
     </div>
@@ -211,43 +295,57 @@
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>
 
+<CrunchyConfirm
+  @show={{this.showPhotoDestroyModal}}
+  @confirmText="Delete Photos"
+  @onConfirm={{this.deleteSelectedPhotos}}
+  @onCancel={{fn (mut this.showPhotoDestroyModal) false}}
+>
+  <p>
+    Are you sure you want to delete the selected
+    <span class="font-semibold text-brand-primary whitespace-no-wrap">
+      {{pluralize this.selectedPhotos.length "photo"}}
+    </span>?
+  </p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
+
 {{#if this.showUploadModal}}
   <CrunchyModal
     @clickOutsideToClose={{false}}
     @translucentOverlay={{true}}
     @onClose={{this.cancelUpload}}
-  as |modal|>
+    as |modal|>
     <FirebaseUploader
       @pathName="homes"
-      @uploadCompleteAction={{action "onFileUploadComplete"}}
-      @onAllFilesUploadComplete={{action "onAllFilesUploadComplete"}}
-      as |uploader|
-    >
+      @onUploadComplete={{this.onFileUploadComplete}}
+      @onAllFilesUploadComplete={{this.onAllFilesUploadComplete}}
+      as |uploader|>
       <modal.header>
-        Upload Image
+        Upload photos
       </modal.header>
       <modal.body>
         <div class="h-48 rounded border border-brand-gray border-dashed my-6">
             <CrunchyDraggableDropzone @dropped={{uploader.didSelectFiles}} class="w-full h-full flex justify-center items-center">
-              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles }}
-                {{#unless uploader.uploadStatuses.length}}
+              {{#x-file-input tagName="div" name="files" multiple=true action=uploader.didSelectFiles}}
+                {{#unless uploader.uploadTasks.length}}
                   <span class="my-2 text-black px-4 text-sm mx-2 font-semibold flex flex-col items-center">
                     <FaIcon @icon="file-upload" @size="lg" class="mb-1" />
                     Click or drop file here
                   </span>
                 {{/unless}}
                 <div class="flex flex-wrap justify-start">
-                  {{#each uploader.uploadStatuses as |task|}}
+                  {{#each uploader.uploadTasks as |task|}}
                     <div class="relative w-32 h-32 m-2 overflow-hidden rounded border">
-                      {{#if (not (eq task.state "pending"))}}
+                      {{#if (not (eq task.status "pending"))}}
                         <img src={{task.preview}} alt="File Upload Preview">
                       {{/if}}
                       <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
-                        {{#if (eq task.state "running")}}
+                        {{#if (or task.isRunning (eq task.status "pending"))}}
                           <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
-                        {{else if (eq task.state "success")}}
+                        {{else if (eq task.status "success")}}
                           <FaIcon @icon="check-circle" class="text-green-600" />
-                        {{else if (eq task.state "error")}}
+                        {{else if (eq task.status "error")}}
                           <FaIcon @icon="times-circle" class="text-brand-error" />
                         {{/if}}
                       </div>
@@ -269,10 +367,12 @@
             {{/if}}
           {{/if}}
           {{#if uploader.uploadImageTask.isRunning}}
-            <li>Uploading image...</li>
+            <li>{{uploader.uploadImageTask.numQueued}} of {{pluralize uploader.uploadTasks.length "file"}} remaining.</li>
           {{/if}}
         </ul>
       </modal.footer>
     </FirebaseUploader>
   </CrunchyModal>
 {{/if}}
+
+

@@ -10,7 +10,8 @@ const COMMON_READ_ONLY_KEYS = [
   'updatedAt',
   'updatedBy',
   'likesCount',
-  'followingCount'
+  'followingCount',
+  'uuid'
 ];
 
 export default class ApplicationSerializer extends JSONAPISerializer {

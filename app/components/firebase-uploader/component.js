@@ -1,88 +1,141 @@
-import Component from '@ember/component';
-import EmberObject, { set } from '@ember/object';
-import { A } from '@ember/array';
+import Component from '@glimmer/component';
+// Continue to use set in this file. Do not change. It is necessary for the inner task state.
+import { action, set } from '@ember/object';
+import { filterBy, equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { task, waitForProperty } from 'ember-concurrency';
+import { tracked } from "@glimmer/tracking";
 
-export default Component.extend({
-  firebaseApp: service(),
-  store: service(),
-  totalFiles: 0,
-  totalFilesUploaded: 0,
-  uploadTasks: A(),
-  uploadStatuses: A(),
+export default class FirebaseUploaderComponent extends Component {
+  @service ajax;
+  @service firebaseApp;
+  @service store;
+  @tracked totalFiles = 0;
+  @tracked totalFilesUploaded = 0;
+  @tracked uploadTasks = [];
 
-  didInsertElement() {
-    this._super(...arguments);
-    set(this, 'uploadStatuses', A());
-  },
+  noop() {}
 
-  actions: {
-    async didSelectFiles(files) {
-      let firebase = this.firebaseApp;
-      let storageRef = (await firebase.storage()).ref();
+  @filterBy('uploadTasks', 'isStatusError') errorTasks;
+  @filterBy('uploadTasks', 'isStatusComplete') completeTasks;
 
-      let uploadStatuses = this.uploadStatuses
+  @(task({
+    preview: null,
+    status: 'pending',
+    progress: 0,
+    progressText: '',
+    fileUrl: '',
 
-      set(this, 'totalFiles', files.length);
+    isStatusComplete: equal('status', 'success'),
+    isStatusError: equal('status', 'error'),
+    isStatusPending: equal('status', 'pending'),
+    isStatusRunning: equal('status', 'running'),
+    isStatusUploaded: equal('status', 'uploaded'),
 
-      for (let file of files) {
-        let status = EmberObject.create({
-          preview: '',
-          progress: 0,
-          state: ''
-        });
+    *perform(file) {
+      let firebaseApp = this.context.firebaseApp;
+      let storage = yield firebaseApp.storage();
+      let storageRef = storage.ref();
 
-        uploadStatuses.addObject(status);
+      let handler = (data) => { set(this, 'preview', data) };
+      handler.bind(this);
+      yield resizeImageToSpecificWidth(file, 128, handler);
 
-        resizeImageToSpecificWidth(file, 128, function(data) {
-          set(status, 'preview', data);
-        });
-        let uuid = a=>a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid);
-        let uploadTask = storageRef.child(`${this.pathName}/${uuid()}/${file.name}`).put(file, { cacheControl: 'public,max-age=31536000' });
+      let uuid = a=>a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid);
+      let firebaseUploadTask = storageRef.child(`${this.context.args.pathName}/${uuid()}/${file.name}`).put(file, { cacheControl: 'public,max-age=31536000' });
 
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            set(status, 'progressText', `Upload is ${Math.round(progress * 100) / 100} % done`);
-            set(status, 'progress', progress);
-            set(status, 'state', uploadTask.snapshot.state);
-          }, (error) => {
-          switch (error.code) {
-            case 'storage/unauthorized':
-              break;
-            case 'storage/canceled':
-              break;
-            case 'storage/unknown':
-              break;
-          }
-        }, () => {
-          set(status, 'state', uploadTask.snapshot.state);
-          set(status, 'fileUrl', uploadTask.snapshot.downloadURL);
-          this.incrementProperty('totalFilesUploaded');
+      firebaseUploadTask.on('state_changed',
+        (snapshot) => {
+        /**
+         * Observe Firebase upload task
+         */
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          set(this, 'progressText', `Upload is ${Math.round(progress * 100) / 100} % done`);
+          set(this, 'progress', progress);
+          set(this, 'status', firebaseUploadTask.snapshot.state);
+        }, (error) => {
+        /**
+         * Handle Firebase upload error 
+         */
+        switch (error.code) {
+          case 'storage/unauthorized':
+            break;
+          case 'storage/canceled':
+            break;
+          case 'storage/unknown':
+            break;
+        }
+        set(this, 'status', 'error');
+        this.context.onUploadErrored(error);
+      }, () => {
+        /**
+        * Handle Firebase upload success
+        */
+        set(this, 'fileUrl', firebaseUploadTask.snapshot.metadata.fullPath);
+        set(this, 'uploadedSnapshot', firebaseUploadTask.snapshot);
+        set(this, 'status', 'uploaded');
+      });
 
-          let handler = this.uploadCompleteAction;
+      // Pause the task until we can be sure the upload success handler has been called
+      yield waitForProperty(this, 'status', (status) => status === 'uploaded');
 
-          if (handler) {
-            handler(uploadTask.snapshot);
-          }
+      try {
+        let successHandler = this.context.onUploadSucceeded;
 
-          if( this.totalFilesUploaded === files.length) {
-            handler = this.onAllFilesUploadComplete;
-            if (handler) {
-              handler(uploadStatuses);
-            }
+        if (successHandler) {
+          yield successHandler(firebaseUploadTask.snapshot);
+        }
 
-            if (this.resetAfterUpload) {
-              set(this, 'uploadStatuses', A());
-            }
-          }
-        });
+        // TODO: Revisit when we call this -- if successHandler tears down this component, it never gets called
+        // Although, this is purely for state management to display in UI
+        set(this, 'status', firebaseUploadTask.snapshot.state);
+      } catch(error) {
+        set(this, 'status', 'error');
+        // eslint-disable-next-line no-console
+        console.error(error);
+        this.context.onUploadErrored(error);
+      }
+    }
+  }).enqueue().maxConcurrency(3)) uploadImageTask;
+
+  @action
+  async onUploadSucceeded(digitalAsset) {
+    this.totalFilesUploaded += 1;
+    await (this.args.onUploadComplete || this.noop)(digitalAsset);
+    // TODO: sort out this logic better, it could be tighter
+    if (this.uploadImageTask.numQueued === 0 && this.uploadImageTask.numRunning === 1) {
+      await (this.args.onAllFilesUploadComplete || this.noop)();
+      if (this.args.resetAfterUpload) {
+        this.resetUploader();
       }
     }
   }
-});
 
-function resizeImageToSpecificWidth(file, max, cb) {
+  @action
+  onUploadErrored(taskInstance, error) {
+    (this.args.onUploadError || this.noop)(error);
+  }
+
+  @action
+  didSelectFiles(files) {
+    this.totalFiles = files.length;
+    for (let file of files) {
+      this.uploadTasks.pushObject(this.uploadImageTask.perform(file));
+    }
+  }
+
+  resetUploader() {
+    this.uploadTasks = [];
+    this.totalFiles = 0;
+    this.totalFilesUploaded = 0;
+  }
+
+  willDestroy() {
+    this.resetUploader();
+  }
+}
+
+async function resizeImageToSpecificWidth(file, max, cb) {
   var data;
   var reader = new FileReader();
   reader.onload = function(event) {
@@ -91,6 +144,7 @@ function resizeImageToSpecificWidth(file, max, cb) {
       if (img.width > max) {
         var oc = document.createElement('canvas'),
             octx = oc.getContext('2d');
+
         oc.width = img.width;
         oc.height = img.height;
         octx.drawImage(img, 0, 0);
@@ -105,11 +159,12 @@ function resizeImageToSpecificWidth(file, max, cb) {
         octx.drawImage(img, 0, 0, oc.width, oc.height);
         data = oc.toDataURL();
       } else {
+        let oc = document.createElement('canvas');
         data = oc.toDataURL();
       }
       cb(data);
     };
     img.src = event.target.result;
   };
-  reader.readAsDataURL(file);
+  await reader.readAsDataURL(file);
 }
