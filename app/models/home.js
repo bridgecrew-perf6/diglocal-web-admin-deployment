@@ -8,8 +8,9 @@ export default class Home extends Trackable {
   @attr() additionalDetails;
   @attr() address;
   @attr() description;
-  @attr() links;
+  @attr() digitalAssetOrder;
   @attr() geoLocation;
+  @attr() links;
   @attr() price;
   @attr() priceTerms;
   @attr() subTitle;
