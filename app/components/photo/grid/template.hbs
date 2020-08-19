@@ -6,7 +6,7 @@
     class={{concat "w-48 h-48 m-4 border rounded overflow-hidden bg-contain bg-no-repeat bg-center bg-white relative cursor-pointer "
       (if (contains item @selectedPhotos) "shadow-outline ")
     }}
-    style={{background-image (if item.isNew item.url item.sizes.mobile)}}
+    style={{background-image (if item.isNew (get item this.newImageSrcAttr) (get item this.imageSrcAttr))}}
     role="button"
     aria-label="Select photo"
     {{on "click" (fn this.select item)}}

@@ -8,12 +8,12 @@
   as |form|>
     <div class="flex flex-col md:flex-row mb-4">
       <div class="flex flex-col items-center">
-        <div style={{background-image @model.digitalAssets.firstObject.downloadUrls.original}}
+        <div style={{background-image @model.avatar.downloadUrls.original}}
           class="m-2 h-56 w-56 bg-contain bg-no-repeat bg-center bg-gray-100 rounded border relative">
-          <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new home images"
+          {{!-- <CrunchyButton @onClick={{fn (mut this.showUploadModal) true}} @aria-label="Upload a new home images"
             @class="crunchy-button--primary crunchy-button--rounded h-10 w-10 absolute bottom-0 right-0 -m-2 shadow">
             <FaIcon @icon="pencil-alt" />
-          </CrunchyButton>
+          </CrunchyButton> --}}
         </div>
         <div class="w-full py-8 px-4">
           <form.checkbox @field="active" @label="Active" />
@@ -213,8 +213,59 @@
           </div>
 
           <form.field @field="locationAddress" @label="Address">
-            <LocationAutocompleteInput @locationAddress={{model.locationAddress}} @onPlaceChange={{action "updateLocation"}} />
+            <LocationAutocompleteInput @locationAddress={{@model.locationAddress}} @onPlaceChange={{this.updateLocation}} />
           </form.field>
+        </Ui::CollapsibleSection>
+
+        <Ui::CollapsibleSection @title="Photos" @open={{true}}>
+          <div class="flex h-10 justify-between">
+            {{#if this.selectedPhotos.length}}
+              <div class="mx-4 flex items-center">
+                <p>{{pluralize this.selectedPhotos.length "photo"}} selected</p>
+                <button {{on "click" this.clearAllSelectedPhotos}} type="button" class="inline border border-gray-500 rounded text-xs mx-2 py-1 px-2 text-gray-600 whitespace-no-wrap">
+                  <FaIcon @icon="times" @size="xs" class="mr-1" /> Clear Selected
+                </button>
+              </div>
+              <div>
+                {{#if (eq this.selectedPhotos.length 1)}}
+                  <CrunchyButton
+                    @onClick={{this.promoteHero}}
+                    @aria-label="Make selected image the hero image for this home"
+                    @class="crunchy-button--accent crunchy-button--text-sm whitespace-no-wrap mr-1"
+                    @disabled={{or (gt this.selectedPhotos.length 1) this.promoteHeroImage.isRunning}}>
+                    <FaIcon @icon="star" @size="sm" class="mr-1" /> Make Hero Image
+                  </CrunchyButton>
+                {{/if}}
+                <CrunchyButton
+                  @onClick={{fn (mut this.showPhotoDestroyModal) true}}
+                  @aria-label="Delete selected photos"
+                  @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap"
+                  @disabled={{not this.selectedPhotos.length}}>
+                  <FaIcon @icon="trash" @size="sm" class="mr-1" /> Delete Photos ({{this.selectedPhotos.length}})
+                </CrunchyButton>
+              </div>
+            {{else}}
+              <p class="flex items-center mx-2">Select photos to remove or choose a hero image.</p>
+              <CrunchyButton
+                @onClick={{fn (mut this.showUploadModal) true}}
+                @aria-label="Upload a new photo"
+                @class="crunchy-button--primary crunchy-button--text-sm whitespace-no-wrap">
+                <FaIcon @icon="plus" @size="xs" class="mr-1" /> Add Photos
+              </CrunchyButton>
+            {{/if}}
+          </div>
+          {{#if this.photoErrorMessage}}
+            <div class="flex justify-end">
+              <p class="text-brand-error text-sm mx-4 my-1">{{this.photoErrorMessage}}</p>
+            </div>
+          {{/if}}
+          <Photo::Grid
+            @model={{reject-by "isNew" @model.digitalAssets}}
+            @newImageSrcAttr="downloadUrls.256_outside"
+            @imageSrcAttr="downloadUrls.256_outside"
+            @selectedPhotos={{this.selectedPhotos}}
+            @didUpdateSelected={{fn (mut this.selectedPhotos)}}
+          />
         </Ui::CollapsibleSection>
       </div>
     </div>
@@ -241,6 +292,21 @@
   @onCancel={{fn (mut this.showDestroyModal) false}}
 >
   <p>Are you sure you want to delete <span class="font-semibold text-brand-primary">{{@model.title}}</span>?</p>
+  <strong>This cannot be undone.</strong>
+</CrunchyConfirm>
+
+<CrunchyConfirm
+  @show={{this.showPhotoDestroyModal}}
+  @confirmText="Delete Photos"
+  @onConfirm={{this.deleteSelectedPhotos}}
+  @onCancel={{fn (mut this.showPhotoDestroyModal) false}}
+>
+  <p>
+    Are you sure you want to delete the selected
+    <span class="font-semibold text-brand-primary whitespace-no-wrap">
+      {{pluralize this.selectedPhotos.length "photo"}}
+    </span>?
+  </p>
   <strong>This cannot be undone.</strong>
 </CrunchyConfirm>
 
@@ -277,7 +343,7 @@
                       <div class="absolute inset-0 flex justify-center items-center bg-white opacity-25">
                         {{#if (or task.isRunning (eq task.status "pending"))}}
                           <FaIcon @icon="spinner" @pulse={{true}} class="text-black" />
-                        {{else if (eq task.status "complete")}}
+                        {{else if (eq task.status "success")}}
                           <FaIcon @icon="check-circle" class="text-green-600" />
                         {{else if (eq task.status "error")}}
                           <FaIcon @icon="times-circle" class="text-brand-error" />

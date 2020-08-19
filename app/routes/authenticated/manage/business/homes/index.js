@@ -34,7 +34,7 @@ export default class AuthenticatedManageBusinessHomesIndexRoute extends Route {
       // Combine the pagination and filter parameters into one object
       // for Ember Data's .query() method
       query = Object.assign({ filter, page, sort }, query);
-      query.include = 'location,location.business,location.business.categories,digitalAssets';
+      query.include = 'location,location.business,location.business.categories,avatar,digitalAssets';
 
       // Return a Promise that resolves with the array of fetched data
       // and the total available records

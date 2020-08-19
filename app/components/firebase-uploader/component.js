@@ -1,13 +1,11 @@
 import Component from '@glimmer/component';
-// Continue to use set in this file. Do not change.
+// Continue to use set in this file. Do not change. It is necessary for the inner task state.
 import { action, set } from '@ember/object';
 import { filterBy, equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { task, waitForProperty } from 'ember-concurrency';
 import { tracked } from "@glimmer/tracking";
-import config from 'diglocal-manage/config/environment';
 
-const UPLOAD_DEBOUNCE = config.environment !== 'test' ? 250 : 0;
 export default class FirebaseUploaderComponent extends Component {
   @service ajax;
   @service firebaseApp;
@@ -23,14 +21,15 @@ export default class FirebaseUploaderComponent extends Component {
 
   @(task({
     preview: null,
-    status: 'paused',
+    status: 'pending',
     progress: 0,
     progressText: '',
     fileUrl: '',
 
     isStatusComplete: equal('status', 'success'),
     isStatusError: equal('status', 'error'),
-    isStatusPending: equal('status', 'paused'),
+    isStatusPending: equal('status', 'pending'),
+    isStatusRunning: equal('status', 'running'),
     isStatusUploaded: equal('status', 'uploaded'),
 
     *perform(file) {
@@ -45,7 +44,7 @@ export default class FirebaseUploaderComponent extends Component {
       let uuid = a=>a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,uuid);
       let firebaseUploadTask = storageRef.child(`${this.context.args.pathName}/${uuid()}/${file.name}`).put(file, { cacheControl: 'public,max-age=31536000' });
 
-      return firebaseUploadTask.on('state_changed',
+      firebaseUploadTask.on('state_changed',
         (snapshot) => {
         /**
          * Observe Firebase upload task
@@ -68,34 +67,43 @@ export default class FirebaseUploaderComponent extends Component {
         }
         set(this, 'status', 'error');
         this.context.onUploadErrored(error);
-      }, async () => {
+      }, () => {
         /**
         * Handle Firebase upload success
         */
-        try {
-          let digitalAsset = await this.context.createDigitalAssetFromSnapsnot(firebaseUploadTask.snapshot);
-
-          set(this, 'status', firebaseUploadTask.snapshot.state);
-          set(this, 'fileUrl', firebaseUploadTask.snapshot.metadata.fullPath);
-
-          let successHandler = this.context.onUploadSucceeded;
-
-          if (successHandler) {
-            return await successHandler(digitalAsset);
-          }
-        } catch(error) {
-          set(this, 'status', 'error');
-          this.context.onUploadErrored(error);
-        }
+        set(this, 'fileUrl', firebaseUploadTask.snapshot.metadata.fullPath);
+        set(this, 'uploadedSnapshot', firebaseUploadTask.snapshot);
+        set(this, 'status', 'uploaded');
       });
+
+      // Pause the task until we can be sure the upload success handler has been called
+      yield waitForProperty(this, 'status', (status) => status === 'uploaded');
+
+      try {
+        let successHandler = this.context.onUploadSucceeded;
+
+        if (successHandler) {
+          yield successHandler(firebaseUploadTask.snapshot);
+        }
+
+        // TODO: Revisit when we call this -- if successHandler tears down this component, it never gets called
+        // Although, this is purely for state management to display in UI
+        set(this, 'status', firebaseUploadTask.snapshot.state);
+      } catch(error) {
+        set(this, 'status', 'error');
+        // eslint-disable-next-line no-console
+        console.error(error);
+        this.context.onUploadErrored(error);
+      }
     }
-  }).enqueue().maxConcurrency(1)) uploadImageTask;
+  }).enqueue().maxConcurrency(3)) uploadImageTask;
 
   @action
   async onUploadSucceeded(digitalAsset) {
     this.totalFilesUploaded += 1;
     await (this.args.onUploadComplete || this.noop)(digitalAsset);
-    if (this.uploadImageTask.numQueued === 0) {
+    // TODO: sort out this logic better, it could be tighter
+    if (this.uploadImageTask.numQueued === 0 && this.uploadImageTask.numRunning === 1) {
       await (this.args.onAllFilesUploadComplete || this.noop)();
       if (this.args.resetAfterUpload) {
         this.resetUploader();
@@ -114,36 +122,6 @@ export default class FirebaseUploaderComponent extends Component {
     for (let file of files) {
       this.uploadTasks.pushObject(this.uploadImageTask.perform(file));
     }
-  }
-
-  @action
-  async createDigitalAssetFromSnapsnot(snapshot) {
-    let digitalAsset = this.store.createRecord('digitalAsset', {
-      bucket: snapshot.metadata.bucket,
-      filename: snapshot.metadata.name,
-      fullPath: snapshot.metadata.fullPath,
-      size: snapshot.metadata.size,
-      contentType: snapshot.metadata.contentType,
-      raw: snapshot.metadata
-    });
-    
-    return await this.generateThumbnailsForAsset(digitalAsset);
-  }
-
-  @action
-  async generateThumbnailsForAsset(digitalAsset) {
-    let thumbnails = await this.ajax.post(`${config.firebase.cloudFunctions}/generateThumbnails`, {
-      headers: {
-        'content-type': 'application/json'
-      },
-      data: {
-        data: Object.assign(digitalAsset.raw, { sizes: ['256_outside', '512_outside', '1024_outside'] })
-      }
-    });
-
-    digitalAsset.downloadUrls = thumbnails.result.downloadURLs;
-    await digitalAsset.save();
-    return digitalAsset;
   }
 
   resetUploader() {

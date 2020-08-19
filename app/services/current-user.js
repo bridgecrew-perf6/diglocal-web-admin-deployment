@@ -67,13 +67,11 @@ export default class CurrentUserService extends Service {
       this.user = userModel;
 
       if (this.userType && this.isRestricted) {
-        console.log('hi');
         throw new Error('User does not have web admin privileges');
       }
 
       return userModel;
     } catch(e) {
-      console.log('random', e);
       throw e;
     }
   })

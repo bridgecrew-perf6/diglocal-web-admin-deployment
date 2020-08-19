@@ -39,7 +39,6 @@ export default class AuthenticatedManageBusinessHomesIndexController extends Con
   viewHome(home) {
     // home is a proxy object, must use 'get' to access properties
     let homeId = get(home, "id");
-    console.log(homeId);
     this.router.transitionTo('authenticated.manage.business.homes.view', homeId);
   }
 }
