@@ -13,7 +13,7 @@ export default class AuthenticatedRegionHomesIndexController extends Controller 
 
   sortMenuOptions = {
     created_at: 'Sort by date created',
-    paid_rank: 'Sort by paid rank',
+    updated_at: 'Sort by date updated',
     default: 'Sort by default'
   };
 
