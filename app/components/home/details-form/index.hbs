@@ -260,7 +260,7 @@
             </div>
           {{/if}}
           <Photo::Grid
-            @model={{reject-by "isNew" @model.digitalAssets}}
+            @model={{@model.digitalAssets}}
             @newImageSrcAttr="downloadUrls.256_outside"
             @imageSrcAttr="downloadUrls.256_outside"
             @selectedPhotos={{this.selectedPhotos}}
