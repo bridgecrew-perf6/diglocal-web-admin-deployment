@@ -47,12 +47,8 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
   const newPath = `${bucketDir}/media.${ext}`;
   await bucket.file(filePath).move(newPath);
 
-  //See below for errors about IAM
   // @ts-ignore
-  downloadURLs['original'] = (await bucket.file(newPath).getSignedUrl({
-    action: 'read',
-    expires: '03-15-2491'
-  }))[0];
+  downloadURLs['original'] = `https://storage.googleapis.com/${object.bucket}/${newPath}`;
 
   // 1. Ensure thumbnail dir exists
   await fs.ensureDir(workingDir);
@@ -107,10 +103,12 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
     }
   }];
 
+
   const uploadPromises = sizes.filter(size => object.sizes.includes(size.name)).map(async size => {
     const thumbName = `thumb@${size.name}_media.${ext}`;
     const thumbPath = join(workingDir, thumbName);
     // @ts-ignore
+    downloadURLs[size.name] = `https://storage.googleapis.com/${object.bucket}/${bucketDir}/${thumbName}`;
     // Resize source image
     await sharp(tmpFilePath)
       // @ts-ignore
@@ -118,23 +116,11 @@ export const generateThumbnails = runWith(runtimeOpts).https.onCall(async (objec
       .toFile(thumbPath);
     const fp = join(bucketDir, thumbName);
     // Upload to GCS
-    await bucket.upload(thumbPath, {
+    return await bucket.upload(thumbPath, {
       resumable: false,
       destination: fp,
       metadata: { cacheControl: 'public,max-age=31536000' }
     });
-    const file = bucket.file(fp);
-    try {
-      // @ts-ignore
-      downloadURLs[size.name] = (await file.getSignedUrl({
-        action: 'read',
-        expires: '03-15-2491'
-      }))[0];
-    } catch (e) {
-      // This error will most likely talk about IAM API Settings
-      console.log(e);
-    }
-    return;
   });
   // 4. Run the upload operations
   await Promise.all(uploadPromises);
