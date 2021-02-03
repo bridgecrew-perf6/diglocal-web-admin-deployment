@@ -15,7 +15,7 @@ export default class ScoopDetailsFormEventFieldsComponent extends Component {
 
     constructor() {
       super(...arguments);
-      this.eventDate =  this.args.model.rawEventDate;
+      this.eventDate = this.args.model.rawEventDate;
       let startTime = this.args.model.eventStartTime;
       let endTime = this.args.model.eventEndTime;
       this.eventStartTime = startTime ? moment.tz(startTime, this.activeRegionTimeZone).format('HH:mm:ss') : null;
