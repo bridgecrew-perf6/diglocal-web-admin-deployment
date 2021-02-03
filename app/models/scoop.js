@@ -8,6 +8,7 @@ export default class Scoop extends Trackable {
   @attr() active;
   @attr() description;
   @attr() eventDate;
+  @attr() rawEventDate;
   @attr() nextDate;
   @attr() isPast;
   @attr() eventEndTime;

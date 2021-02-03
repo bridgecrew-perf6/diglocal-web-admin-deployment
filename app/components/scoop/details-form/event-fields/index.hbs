@@ -39,7 +39,9 @@
             @disabled={{form.isReadonly}}
             class="crunchy-form__input"
           />
-          <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+          {{#if this.eventDate}}
+            <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+          {{/if}}
         </div>
       </form.field>
     </div>
@@ -62,7 +64,9 @@
             @disabled={{form.isReadonly}}
             class="crunchy-form__input"
           />
-          <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+          {{#if this.eventDate}}
+            <span class="text-gray-600 ml-2 mr-1 italic">{{moment-format this.eventDate "z" timeZone=this.activeRegionTimeZone}}</span>
+          {{/if}}
         </div>
       </form.field>
     </div>

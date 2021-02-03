@@ -22,7 +22,7 @@ export default class DetailsForm extends Component {
 
   constructor() {
     super(...arguments);
-    if (isBlank(this.args.model.eventDate)) {
+    if (isBlank(this.args.model.rawEventDate)) {
       this.showEventFields = false;
     }
   }
@@ -92,7 +92,7 @@ export default class DetailsForm extends Component {
   toggleEventFields(value) {
     this.showEventFields = value;
     if (!value) {
-      this.args.model.eventDate = null;
+      this.args.model.rawEventDate = null;
       this.args.model.eventStartTime = null;
       this.args.model.eventEndTime = null;
     }

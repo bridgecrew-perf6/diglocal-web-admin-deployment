@@ -14,6 +14,10 @@ export default class ScoopSerializer extends ApplicationSerializer {
       return;
     }
 
+    if (key === 'eventDate' && snapshot.record?.rawEventDate === null) {
+      return;
+    }
+
     return super.serializeAttribute(snapshot, json, key, attributes);
   }
 }

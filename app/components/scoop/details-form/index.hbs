@@ -56,7 +56,7 @@
           <Scoop::DetailsForm::EventFields
             @form={{form}}
             @model={{@model}}
-            @onChangeEventDate={{fn (mut @model.eventDate)}}
+            @onChangeEventDate={{fn (mut @model.rawEventDate)}}
             @onChangeEventStart={{fn (mut @model.eventStartTime)}}
             @onChangeEventEnd={{fn (mut @model.eventEndTime)}}
           />
@@ -66,8 +66,12 @@
           </Ui::CollapsibleSection>
         {{/if}}
         
-        <Ui::CollapsibleSection @title="Post Schedule" @open={{false}}>
+        <Ui::CollapsibleSection @title="Post Schedule" @open={{true}}>
           <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{fn (mut @model.daysOfWeek)}} />
+          {{#if (and @model.isActive @model.isRecurring @model.nextDate)}}
+            <label class="crunchy-form__group-label" for="Next Date">Next scheduled post:</label>
+            <p class="font-bold text-brand-primary-accent" name="Next Date">{{format-event-date @model.eventDate}}</p>
+          {{/if}}
         </Ui::CollapsibleSection>
       </div>
     </div>
