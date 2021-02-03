@@ -46,7 +46,7 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
     if (isPresent(this.args.model.recurringDisplayTo)) {
       this.displayToDate = this.args.model.recurringDisplayTo;
     } else {
-      this.displayToDate = Date.now();
+      this.displayToDate = moment().add(1, "year").format(momentFormat)
     }
   }
 
