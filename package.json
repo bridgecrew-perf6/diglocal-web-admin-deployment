@@ -14,6 +14,7 @@
     "build": "ember build",
     "deploy:production": "firebase use dig-this && ember build -e production && firebase deploy --only hosting:dig-this",
     "deploy:staging": "firebase use dig-this && ember build -e staging && firebase deploy --only hosting:dig-this-staging",
+    "staging": "ember serve --env=staging",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
