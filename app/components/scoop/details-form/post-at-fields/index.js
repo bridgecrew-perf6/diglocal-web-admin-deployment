@@ -33,7 +33,7 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
     if (isPresent(this.args.model.postAt)) {
       this.postAtDate = this.args.model.postAt;
     } else {
-      this.postAtDate = Date.now();
+      this.postAtDate = moment().tz(this.activeRegionTimeZone).format(momentFormat);
       if (this.args.isNewForm) {
         this.args.model.postAt = moment.tz(this.postAtDate, this.activeRegionTimeZone).format(momentFormat);
       }
@@ -41,7 +41,7 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
     if (isPresent(this.args.model.recurringDisplayFrom)) {
       this.displayFromDate = this.args.model.recurringDisplayFrom;
     } else {
-      this.displayFromDate = Date.now();
+      this.displayFromDate = moment().tz(this.activeRegionTimeZone).format(momentFormat);
     }
     if (isPresent(this.args.model.recurringDisplayTo)) {
       this.displayToDate = this.args.model.recurringDisplayTo;
