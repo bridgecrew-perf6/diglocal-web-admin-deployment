@@ -31,10 +31,10 @@
           @onChangeEventStart={{fn (mut @model.eventStartTime)}}
           @onChangeEventEnd={{fn (mut @model.eventEndTime)}}
         />
-        <p class="text-gray-600 text-sm">If this scoop is one-time post, select the same event date as the post-at date.</p>
+        <p class="text-blue-600 text-sm">If this scoop is one-time post, select the same event date as the post-at date.</p>
       </fieldset>
     {{else}}
-      <CrunchyButton @onClick={{fn (mut this.showEventFields) true}} @class="crunchy-button--link">
+      <CrunchyButton @onClick={{fn (mut this.showEventFields) true}} @class="crunchy-button--accent">
         <FaIcon @icon="edit" />
         Edit scoop event date
       </CrunchyButton>
