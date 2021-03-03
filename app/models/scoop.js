@@ -1,5 +1,5 @@
 import { attr, belongsTo } from '@ember-data/model';
-import { isPresent, isEmpty } from '@ember/utils';
+import { isPresent, isEmpty, isNone } from '@ember/utils';
 import { alias } from '@ember/object/computed';
 import Trackable from './trackable';
 import moment from 'moment';
@@ -18,7 +18,7 @@ export default class Scoop extends Trackable {
   @attr() image;
   @attr() imageThumb;
   @attr('boolean', { defaultValue: false }) isDeal;
-  @attr('boolean', { defaultValue: false }) isRecurring;
+  @attr('boolean', { allowNull: true }) isRecurring;
   @attr() daysOfWeek;
   @attr() paidRank;
   @attr() postAt;
@@ -41,9 +41,16 @@ export default class Scoop extends Trackable {
   /* List items can be businesses or scoops -- a list item will reference the attr "name" */
   @alias('description') name;
 
+  get isPostAtRequired() {
+    if (isNone(this.isRecurring)) {
+      return false;
+    }
+    return !this.isRecurring;
+  }
+
   get isValidPostAt() {
     /* Post-at date cannot be after the event date */
-    if (!this.isRecurring && isPresent(this.rawEventDate)) {
+    if (this.isPostAtRequired && isPresent(this.rawEventDate)) {
       return moment(this.postAt).isSameOrBefore(this.rawEventDate, 'day');
     }
     return true;
@@ -51,7 +58,7 @@ export default class Scoop extends Trackable {
 
   get isValidRawEventDate() {
     /* If the scoop is not recurring, user should specify an event date */
-    if (!this.isRecurring && isEmpty(this.rawEventDate)) {
+    if (this.isPostAtRequired && isEmpty(this.rawEventDate)) {
       return false;
     }
     return true;
@@ -70,7 +77,8 @@ export default class Scoop extends Trackable {
     fineText: yup.string().nullable().max(500).label('Additional Details'),
     ticketUrl: yup.string().nullable().url("Ticket URL must be a valid URL, starting with 'https://' or 'http://'").label('Ticket URL'),
     virtualUrl: yup.string().nullable().url("Virtual event URL must be a valid URL, starting with 'https://' or 'http://'").label('Virtual Event URL'),
-    isRecurring: yup.boolean(),
+    isRecurring: yup.boolean().nullable(),
+    isPostAtRequired: yup.boolean(),
     daysOfWeek: yup.array().nullable()
       .when('isRecurring', {
         is: true,
@@ -78,8 +86,8 @@ export default class Scoop extends Trackable {
       }),
     rawEventDate: yup.date().nullable(),
     postAt: yup.date().nullable()
-      .when('isRecurring', {
-        is: false,
+      .when('isPostAtRequired', {
+        is: true,
         then: yup.date().required()
       }),
     isValidPostAt: yup.boolean().test(

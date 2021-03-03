@@ -6,6 +6,38 @@
     @model={{@model}}
     @isNewForm={{true}}
     @didUpdateDays={{fn (mut @model.daysOfWeek)}}
+    @didChangeRecurring={{this.didChangeRecurring}}
     @hideRecurringLabel={{true}}
   />
+
+  {{#if (or
+    (and
+      this.showEventFields
+      (eq @model.isRecurring false)
+    )
+    (and
+      form.didSubmit
+      (not @model.isValidRawEventDate)
+      (eq @model.isRecurring false)
+    )
+  )}}
+    {{#if this.showEventFields}}
+      <label for="eventFields" class="crunchy-form__group-label">Event Date</label>
+      <fieldset name="eventFields" class="border p-4 rounded mb-4">
+        <Scoop::DetailsForm::EventFields
+          @form={{form}}
+          @model={{@model}}
+          @onChangeEventDate={{fn (mut @model.rawEventDate)}}
+          @onChangeEventStart={{fn (mut @model.eventStartTime)}}
+          @onChangeEventEnd={{fn (mut @model.eventEndTime)}}
+        />
+        <p class="text-gray-600 text-sm">If this scoop is one-time post, select the same event date as the post-at date.</p>
+      </fieldset>
+    {{else}}
+      <CrunchyButton @onClick={{fn (mut this.showEventFields) true}} @class="crunchy-button--link">
+        <FaIcon @icon="edit" />
+        Edit scoop event date
+      </CrunchyButton>
+    {{/if}}
+  {{/if}}
 {{/with}}

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
+import { isPresent, isNone } from '@ember/utils';
 import moment from 'moment';
 
 const momentFormat = 'YYYY-MM-DDTHH:mm:ss.SSSSZ';
@@ -30,19 +30,26 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
     if (isPresent(this.args.model.daysOfWeek)) {
       this.selectedDays = [ ...this.args.model.daysOfWeek ];
     }
+
+    if (isNone(this.args.model.isRecurring)) {
+      this.args.model.isRecurring = false;
+    }
+
     if (isPresent(this.args.model.postAt)) {
       this.postAtDate = this.args.model.postAt;
     } else {
       this.postAtDate = moment().tz(this.activeRegionTimeZone).format(momentFormat);
-      if (this.args.isNewForm) {
+      if (this.args.isNewForm || this.args.model.isRecurring === false) {
         this.args.model.postAt = moment.tz(this.postAtDate, this.activeRegionTimeZone).format(momentFormat);
       }
     }
+
     if (isPresent(this.args.model.recurringDisplayFrom)) {
       this.displayFromDate = this.args.model.recurringDisplayFrom;
     } else {
       this.displayFromDate = moment().tz(this.activeRegionTimeZone).format(momentFormat);
     }
+
     if (isPresent(this.args.model.recurringDisplayTo)) {
       this.displayToDate = this.args.model.recurringDisplayTo;
     } else {
@@ -97,5 +104,6 @@ export default class ScoopDetailsFormPostAtFieldsComponent extends Component {
       this.args.didUpdateDays([]);
       this.args.model.postAt = this.postAtDate;
     }
+    this.args.didChangeRecurring?.(value);
   }
 }
