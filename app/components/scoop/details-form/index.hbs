@@ -46,7 +46,7 @@
           <XToggle @showLabels={{true}} @size="small" @value={{this.showEventFields}} @onToggle={{this.toggleEventFields}}
             @disabled={{form.isReadonly}} data-test-id="isEvent-toggle" as |toggle|>
             <toggle.label @value={{this.showEventFields}}>
-              <span class="crunchy-form__toggle-label">Is this an event?</span>
+              <span class="crunchy-form__toggle-label">Is this for an <b>event</b> or a <b>specific date</b>?</span>
             </toggle.label>
             <toggle.switch @theme='light' @onLabel='Yes' @offLabel='No' />
           </XToggle>
@@ -68,10 +68,12 @@
         
         <Ui::CollapsibleSection @title="Post Schedule" @open={{true}}>
           <Scoop::DetailsForm::PostAtFields @form={{form}} @model={{@model}} @didUpdateDays={{fn (mut @model.daysOfWeek)}} />
-          {{#if (and @model.isActive @model.isRecurring @model.nextDate)}}
-            <label class="crunchy-form__group-label" for="Next Date">Next scheduled post:</label>
-            <p class="font-bold text-brand-primary-accent" name="Next Date">{{format-event-date @model.eventDate}}</p>
-          {{/if}}
+          <div>
+            {{#if this.showNextDate}}
+              <label class="crunchy-form__group-label" for="Next Date">Next scheduled post:</label>
+              <p class="font-bold text-brand-primary-accent" name="Next Date">{{format-event-date @model.eventDate}}</p>
+            {{/if}}
+          </div>
         </Ui::CollapsibleSection>
       </div>
     </div>

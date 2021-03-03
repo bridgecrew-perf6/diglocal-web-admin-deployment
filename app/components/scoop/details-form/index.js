@@ -20,6 +20,21 @@ export default class DetailsForm extends Component {
   @tracked showEventFields = true;
   @tracked showUploadModal = false;
 
+  get showNextDate() {
+    let { active, isRecurring, nextDate, hasDirtyAttributes } = this.args.model;
+    if (hasDirtyAttributes) {
+      let changedAttrs = Object.keys(this.args.model.changedAttributes());
+      let hasChangedDates = changedAttrs.any((attr) => {
+        return ['rawEventDate', 'postAt', 'recurringDisplayFrom', 'recurringDisplayTo'].includes(attr);
+      });
+      if (hasChangedDates) {
+        return false;
+      }
+    }
+
+    return active && isRecurring && nextDate;
+  }
+
   constructor() {
     super(...arguments);
     if (isBlank(this.args.model.rawEventDate)) {

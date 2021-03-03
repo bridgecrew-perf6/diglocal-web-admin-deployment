@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import { task } from 'ember-concurrency';
 
 export default class ScoopNewFormDetailsComponent extends Component {
-  @tracked showEventFields = false;
+  @tracked showEventFields = true;
 
   @action
   toggleEventFields(value) {

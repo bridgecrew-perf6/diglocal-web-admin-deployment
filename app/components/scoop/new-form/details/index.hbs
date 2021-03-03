@@ -33,7 +33,7 @@
       as |toggle|
     >
       <toggle.label @value={{this.showEventFields}}>
-        <span class="crunchy-form__toggle-label">Is this an event?</span>
+        <span class="crunchy-form__toggle-label">Is this for an <b>event</b> or a <b>specific date</b>?</span>
       </toggle.label>
       <toggle.switch
         @theme='light'
@@ -41,14 +41,14 @@
         @offLabel='No'
       />
     </XToggle>
-    <p class="text-gray-600 text-sm">Events can be in-person or online.</p>
+    <p class="text-gray-600 text-sm">Events can be in-person or online. If this scoop is a deal or announcement for a specific date, select this option to choose the date.</p>
   </div>
 
   {{#if this.showEventFields}}
     <Scoop::DetailsForm::EventFields
       @form={{form}}
       @model={{@model}}
-      @onChangeEventDate={{fn (mut @model.eventDate)}}
+      @onChangeEventDate={{fn (mut @model.rawEventDate)}}
       @onChangeEventStart={{fn (mut @model.eventStartTime)}}
       @onChangeEventEnd={{fn (mut @model.eventEndTime)}}
     />
