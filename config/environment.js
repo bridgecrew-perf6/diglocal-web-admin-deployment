@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'diglocal-manage',
+    modulePrefix: "diglocal-manage",
     environment,
-    rootURL: '/',
-    locationType: 'auto',
+    rootURL: "/",
+    locationType: "auto",
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -13,8 +13,8 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
@@ -27,16 +27,16 @@ module.exports = function(environment) {
     // }
   };
 
-  ENV['moment'] = {
-    includeTimezone: 'all'
+  ENV["moment"] = {
+    includeTimezone: "all",
   };
 
-  ENV['ember-cli-notifications'] = {
+  ENV["ember-cli-notifications"] = {
     autoClear: true,
-    clearDuration: 2000
+    clearDuration: 2000,
   };
 
-  ENV['firebase'] = {
+  ENV["firebase"] = {
     apiKey: "AIzaSyC9m3rFmih3ZR1S6FtE19JpCgdMxK6hDew",
     authDomain: "dig-this.firebaseapp.com",
     databaseURL: "https://dig-this.firebaseio.com",
@@ -45,25 +45,25 @@ module.exports = function(environment) {
     messagingSenderId: "244853276058",
     appId: "1:244853276058:web:f55f46ff02a02a46840e23",
     measurementId: "G-CGFE62TFCC",
-    cloudFunctions: 'https://us-central1-dig-this.cloudfunctions.net'
+    cloudFunctions: "https://us-central1-dig-this.cloudfunctions.net",
   };
 
-  ENV['place-autocomplete'] = {
-    key: 'AIzaSyC9m3rFmih3ZR1S6FtE19JpCgdMxK6hDew',
-   };
-
-  ENV['ember-simple-auth'] = {
-    authenticationRoute: 'login',
-    routeAfterAuthentication: 'authenticated.region.index',
-    routeIfAlreadyAuthenticated: 'authenticated.region.index'
+  ENV["place-autocomplete"] = {
+    key: "AIzaSyC9m3rFmih3ZR1S6FtE19JpCgdMxK6hDew",
   };
 
-  ENV['ember-cli-mirage'] = {
-    enabled: false
+  ENV["ember-simple-auth"] = {
+    authenticationRoute: "login",
+    routeAfterAuthentication: "authenticated.region.index",
+    routeIfAlreadyAuthenticated: "authenticated.region.index",
   };
 
-  if (environment === 'development') {
-    ENV.apiHost = 'http://localhost:3000';
+  ENV["ember-cli-mirage"] = {
+    enabled: false,
+  };
+
+  if (environment === "development") {
+    ENV.apiHost = "http://localhost:3000";
 
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -72,34 +72,34 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
-  if (environment === 'test') {
+  if (environment === "test") {
     // Testem prefers this...
-    ENV.locationType = 'none';
+    ENV.locationType = "none";
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
-    ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.rootElement = "#ember-testing";
     ENV.APP.autoboot = false;
 
-    ENV['ember-cli-mirage'] = {
-      enabled: true
+    ENV["ember-cli-mirage"] = {
+      enabled: true,
     };
   }
 
-  if (environment === 'mirage') {
-    ENV['ember-cli-mirage'] = {
-      enabled: true
+  if (environment === "mirage") {
+    ENV["ember-cli-mirage"] = {
+      enabled: true,
     };
   }
 
-  if (environment === 'staging') {
-    ENV.apiHost = 'https://diglocal-staging.herokuapp.com';
+  if (environment === "staging") {
+    ENV.apiHost = "https://dl-api-dev.herokuapp.com";
   }
 
-  if (environment === 'production') {
-    ENV.apiHost = 'https://diglocal.herokuapp.com';
+  if (environment === "production") {
+    ENV.apiHost = "https://dl-api-production.herokuapp.com";
   }
 
   return ENV;
