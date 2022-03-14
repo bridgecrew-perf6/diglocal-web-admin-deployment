@@ -5,6 +5,6 @@
   @allowClear={{true}}
   @loadingMessage="Searching..."
   @selected={{this.selectedPlace}}
-  @onChange={{action "findPlaceDetails"}} as |prediction|>
+  @onChange={{on "findPlaceDetails"}} as |prediction|>
   {{prediction.description}}
 </PowerSelect>

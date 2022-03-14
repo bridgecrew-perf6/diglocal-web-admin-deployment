@@ -6,7 +6,7 @@ import { computed } from '@ember/object';
 @classic
 @attributeBindings('role', 'tabindex', 'aria-valuenow', 'aria-valuetext', 'aria-valuemax')
 @classNames('progress')
-export default class UiProgress extends Component {
+class UiProgress extends Component {
   progress = 0;
   role = 'progressbar';
   tabindex = 0;
@@ -22,3 +22,5 @@ export default class UiProgress extends Component {
     return `${this.progress} percent`;
   }
 }
+
+export default UiProgress
